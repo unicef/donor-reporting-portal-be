@@ -36,9 +36,6 @@ class SharePointClient:
             logger.exception(ctx_auth.get_last_error())
             raise SharePointClientException(ctx_auth.get_last_error())
 
-    def get_querystring(self, filters):
-        return QueryStringBuilder(filters).get_querystring()
-
     def get_folder(self, list_title):
         list_obj = self.context.web.lists.get_by_title(list_title)
         folder = list_obj.root_folder
@@ -58,7 +55,7 @@ class SharePointClient:
         return folders
 
     def read_files(self, filters=dict()):
-        querystring = self.get_querystring(filters)
+        querystring = QueryStringBuilder(filters).get_querystring()
         folder = self.get_folder(self.folder)
         files = folder.files.filter(querystring)
         self.context.load(files)
@@ -69,7 +66,7 @@ class SharePointClient:
         return files
 
     def read_items(self, filters=dict()):
-        querystring = self.get_querystring(filters)
+        querystring = QueryStringBuilder(filters).get_querystring()
         list_object = self.context.web.lists.get_by_title(self.folder)
         items = list_object.get_items().filter(querystring)
         self.context.load(items)
