@@ -1,0 +1,42 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin"
+        ],
+        "allow": [
+            "Allow",
+            "GET, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "SAMEORIGIN"
+        ],
+        "content-length": [
+            "Content-Length",
+            "177"
+        ]
+    },
+    "data": {
+        "id": 906,
+        "username": "user024",
+        "first_name": "Scott",
+        "last_name": "Hill",
+        "email": "m024@mailinator.com",
+        "pk": 906,
+        "donor": {
+            "name": "",
+            "code": ""
+        },
+        "group": {
+            "name": "",
+            "permissions": []
+        }
+    },
+    "content_type": null
+}

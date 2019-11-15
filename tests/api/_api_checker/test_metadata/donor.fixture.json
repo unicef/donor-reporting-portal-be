@@ -1,0 +1,15 @@
+{
+    "donor": {
+        "master": {
+            "model": "report_metadata.donor",
+            "pk": 205,
+            "fields": {
+                "created": "2019-10-16T12:04:51.455Z",
+                "modified": "2019-10-16T12:04:51.455Z",
+                "name": "",
+                "code": "code000"
+            }
+        },
+        "deps": []
+    }
+}
