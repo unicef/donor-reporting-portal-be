@@ -1,0 +1,44 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin, Cookie"
+        ],
+        "allow": [
+            "Allow",
+            "GET, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "SAMEORIGIN"
+        ],
+        "content-length": [
+            "Content-Length",
+            "615"
+        ]
+    },
+    "data": [
+        {
+            "unique_id": "9d5d2978-7022-4f72-8aaf-20a3e06f56a2",
+            "name": "PATH FACE615_Q5.pdf",
+            "type_name": "office365.sharepoint.file.File",
+            "linking_url": null,
+            "server_relative_url": "/teams/TST-SCS-DRP/Shared Documents/PATH FACE615_Q5.pdf",
+            "download_url": "http://localhost:8000/api/sharepoint/TST-SCS-DRP/PATH%20FACE615_Q5/download/"
+        },
+        {
+            "unique_id": "c9d31646-7998-411d-a913-93afd479fc46",
+            "name": "Macioce.pdf",
+            "type_name": "office365.sharepoint.file.File",
+            "linking_url": null,
+            "server_relative_url": "/teams/TST-SCS-DRP/Shared Documents/Macioce.pdf",
+            "download_url": "http://localhost:8000/api/sharepoint/TST-SCS-DRP/Macioce/download/"
+        }
+    ],
+    "content_type": null
+}

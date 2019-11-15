@@ -1,0 +1,56 @@
+{
+    "userrole": {
+        "master": {
+            "model": "roles.userrole",
+            "pk": 151,
+            "fields": {
+                "created": "2019-10-16T12:09:54.168Z",
+                "modified": "2019-10-16T12:09:54.168Z",
+                "user": 738,
+                "group": 212,
+                "donor": 213
+            }
+        },
+        "deps": [
+            {
+                "model": "unicef_security.user",
+                "pk": 738,
+                "fields": {
+                    "password": "password",
+                    "last_login": null,
+                    "is_superuser": false,
+                    "username": "user003",
+                    "first_name": "Kenneth",
+                    "last_name": "Baxter",
+                    "email": "m003@mailinator.com",
+                    "is_staff": false,
+                    "is_active": true,
+                    "date_joined": "2019-10-16T12:09:54.161Z",
+                    "azure_id": null,
+                    "job_title": null,
+                    "display_name": "Kenneth Baxter:",
+                    "groups": [],
+                    "user_permissions": []
+                }
+            },
+            {
+                "model": "auth.group",
+                "pk": 212,
+                "fields": {
+                    "name": "name000",
+                    "permissions": []
+                }
+            },
+            {
+                "model": "report_metadata.donor",
+                "pk": 213,
+                "fields": {
+                    "created": "2019-10-16T12:09:54.167Z",
+                    "modified": "2019-10-16T12:09:54.167Z",
+                    "name": "",
+                    "code": "code000"
+                }
+            }
+        ]
+    }
+}

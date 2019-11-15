@@ -1,0 +1,302 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin"
+        ],
+        "allow": [
+            "Allow",
+            "GET"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "SAMEORIGIN"
+        ],
+        "content-length": [
+            "Content-Length",
+            "3444"
+        ]
+    },
+    "data": {
+        "years": [
+            {
+                "code": 2000,
+                "label": 2000
+            },
+            {
+                "code": 2001,
+                "label": 2001
+            },
+            {
+                "code": 2002,
+                "label": 2002
+            },
+            {
+                "code": 2003,
+                "label": 2003
+            },
+            {
+                "code": 2004,
+                "label": 2004
+            },
+            {
+                "code": 2005,
+                "label": 2005
+            },
+            {
+                "code": 2006,
+                "label": 2006
+            },
+            {
+                "code": 2007,
+                "label": 2007
+            },
+            {
+                "code": 2008,
+                "label": 2008
+            },
+            {
+                "code": 2009,
+                "label": 2009
+            },
+            {
+                "code": 2010,
+                "label": 2010
+            },
+            {
+                "code": 2011,
+                "label": 2011
+            },
+            {
+                "code": 2012,
+                "label": 2012
+            },
+            {
+                "code": 2013,
+                "label": 2013
+            },
+            {
+                "code": 2014,
+                "label": 2014
+            },
+            {
+                "code": 2015,
+                "label": 2015
+            },
+            {
+                "code": 2016,
+                "label": 2016
+            },
+            {
+                "code": 2017,
+                "label": 2017
+            },
+            {
+                "code": 2018,
+                "label": 2018
+            },
+            {
+                "code": 2019,
+                "label": 2019
+            }
+        ],
+        "report_type": [
+            {
+                "code": "final",
+                "label": "Final"
+            },
+            {
+                "code": "interim",
+                "label": "Interim"
+            }
+        ],
+        "donor_document": [
+            {
+                "code": "certified_statement_of_account",
+                "label": "Certified Statement of Account"
+            },
+            {
+                "code": "certified_statement_of_account_EU",
+                "label": "Certified Statement of Account EU"
+            },
+            {
+                "code": "certified_statement_of_account_JPO",
+                "label": "Certified Statement of Account JPO"
+            },
+            {
+                "code": "donor_statement_CERF",
+                "label": "Donor Statement CERF"
+            },
+            {
+                "code": "donor_statement_innovation",
+                "label": "Donor Statement Innovation"
+            },
+            {
+                "code": "donor_statement_joint_programme",
+                "label": "Donor Statement Joint Programme"
+            },
+            {
+                "code": "donor_statement_joint_programme PUNO",
+                "label": "Donor Statement Joint Programme PUNO"
+            },
+            {
+                "code": "donor_statement_JPO_summary",
+                "label": "Donor Statement JPO Summary"
+            },
+            {
+                "code": "donor_statement_trust_fund",
+                "label": "Donor Statement Trust Fund"
+            },
+            {
+                "code": "donor_statement_UN",
+                "label": "Donor Statement UN"
+            },
+            {
+                "code": "donor_statement_UNICEF Hosted Funds",
+                "label": "Donor Statement UNICEF Hosted Funds"
+            },
+            {
+                "code": "JPO_expenditure_summary",
+                "label": "JPO Expenditure Summary"
+            },
+            {
+                "code": "MDTF_report",
+                "label": "MDTF Report"
+            },
+            {
+                "code": "Statement_of_account_thematic_funds",
+                "label": "Statement of Account Thematic Funds"
+            },
+            {
+                "code": "certified_financial_statement_EC",
+                "label": "Certified Financial Statement - EC"
+            },
+            {
+                "code": "certified_financial_statement_US_government",
+                "label": "Certified Financial Statement - US Government"
+            },
+            {
+                "code": "uncertified_financial_statements",
+                "label": "Uncertified Financial Statements"
+            },
+            {
+                "code": "progress_reports",
+                "label": "Progress Reports"
+            },
+            {
+                "code": "final_reports",
+                "label": "Final Reports"
+            },
+            {
+                "code": "inception_reports",
+                "label": "Inception Reports"
+            },
+            {
+                "code": "thematic_reports",
+                "label": "Thematic Reports"
+            },
+            {
+                "code": "consolidated_emergency_reports",
+                "label": "Consolidated Emergency Reports"
+            },
+            {
+                "code": "agreements",
+                "label": "Agreements"
+            },
+            {
+                "code": "agreement_amendments",
+                "label": "Agreement Amendments"
+            },
+            {
+                "code": "note_for_the_records",
+                "label": "Note for the Records"
+            },
+            {
+                "code": "correspondence",
+                "label": "Correspondence"
+            },
+            {
+                "code": "receipts",
+                "label": "Receipts"
+            }
+        ],
+        "donor_reporting_category": [
+            {
+                "code": "financial_cert",
+                "label": "Donor Financial Certified"
+            },
+            {
+                "code": "financial_uncert",
+                "label": "Donor Financial Uncertified"
+            },
+            {
+                "code": "narrative",
+                "label": "Donor Narrative"
+            }
+        ],
+        "reporting_group": [
+            {
+                "code": "STD",
+                "label": "Standard"
+            },
+            {
+                "code": "THE",
+                "label": "Thematic"
+            },
+            {
+                "code": "FFR",
+                "label": "Us Gov"
+            },
+            {
+                "code": "JPO",
+                "label": "JPO Summary"
+            }
+        ],
+        "recertified": [
+            {
+                "code": "yes",
+                "label": "Yes"
+            },
+            {
+                "code": "no",
+                "label": "No"
+            }
+        ],
+        "rp_status ": [
+            {
+                "code": "new",
+                "label": "New"
+            },
+            {
+                "code": "pending_rm",
+                "label": "Pending Review by Reporting Manager"
+            },
+            {
+                "code": "rejected_rm",
+                "label": "Rejected by Reporting Manager"
+            },
+            {
+                "code": "approved_rm",
+                "label": "Approved by Reporting Manager"
+            },
+            {
+                "code": "pending_cp",
+                "label": "Pending Approval by Comptroller"
+            },
+            {
+                "code": "rejected_cp",
+                "label": "Rejected by Comptroller"
+            },
+            {
+                "code": "certified_cp",
+                "label": "Certified by Comptroller"
+            }
+        ]
+    },
+    "content_type": null
+}

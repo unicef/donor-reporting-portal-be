@@ -1,0 +1,24 @@
+Release 0.3
+----------------
+* python 3.8
+* querystring builder
+* Sharepoint API items API
+* Sharepoint API file API
+* SharepointPropertyField
+
+Release 0.2
+----------------
+* fixed admin reverse SyncGrant
+* adapted GrantSynchronizer to new api
+* removed relation between Grant and ExternalGrant
+* Sharepoint API customizable site
+* increased coverage
+* added static endpoint (/api/metadata/static/)
+* added business area endpoint (/api/roles/business-area/)
+* tweaked init-setup
+* my profile API
+
+
+Release 0.1
+----------------
+* Initial release

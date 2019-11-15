@@ -1,0 +1,29 @@
+{
+    "status_code": 403,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin, Cookie"
+        ],
+        "allow": [
+            "Allow",
+            "GET, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "SAMEORIGIN"
+        ],
+        "content-length": [
+            "Content-Length",
+            "58"
+        ]
+    },
+    "data": {
+        "detail": "Authentication credentials were not provided."
+    },
+    "content_type": null
+}
