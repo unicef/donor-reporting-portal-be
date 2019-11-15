@@ -18,7 +18,7 @@ class SharePointItemSerializer(serializers.Serializer):
     modified = SharePointPropertyField()
     title = SharePointPropertyField()
     year = SharePointPropertyField()
-    donor0 = SharePointPropertyManyField()
+    donor = SharePointPropertyManyField()
     regenerated = SharePointPropertyField()
     grant_number = SharePointPropertyField()
     grant_issue_year = SharePointPropertyField()
