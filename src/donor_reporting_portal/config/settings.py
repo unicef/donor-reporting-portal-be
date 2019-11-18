@@ -63,9 +63,7 @@ MIDDLEWARE = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    # 'social_core.backends.azuread_b2c.AzureADB2COAuth2',
-    'unicef_security.graph.AzureADTenantOAuth2Ext',
-    # 'etools.applications.core.auth.CustomAzureADBBCOAuth2',
+    'donor_reporting_portal.apps.core.backends.UnicefAzureADBBCOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'donor_reporting_portal.apps.core.backends.DonorRoleBackend',
 )
@@ -277,7 +275,6 @@ BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
 
 
 SHAREPOINT_TENANT = {
-    # 'url': 'https://unitst.sharepoint.com/',
     'url': 'https://asantiagounicef.sharepoint.caaaaaom/',
     'user_credentials': {
         'username': env.str('SHAREPOINT_USERNAME', 'invalid_username'),
@@ -297,3 +294,20 @@ POST_OFFICE = {
 }
 
 DEFAULT_FROM_EMAIL = 'donor_reporting_portal@unicef.org'
+
+# AZURE GRAPH API
+# AZURE_TOKEN_URL = 'https://login.microsoftonline.com/unicef.org/oauth2/token'
+# AZURE_GRAPH_API_BASE_URL = 'https://graph.microsoft.com'
+# AZURE_GRAPH_API_VERSION = 'beta'
+# AZURE_GRAPH_API_PAGE_SIZE = 250
+
+
+KEY = os.getenv('AZURE_B2C_CLIENT_ID', None)
+SECRET = os.getenv('AZURE_B2C_CLIENT_SECRET', None)
+TENANT_ID = os.getenv('AZURE_B2C_TENANT', 'unicefpartners.onmicrosoft.com')
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_SANITIZE_REDIRECTS = False
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+POLICY = os.getenv('AZURE_B2C_POLICY_NAME', "B2C_1_signup_signin")
+SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
