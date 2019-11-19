@@ -320,7 +320,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.get_username',
     'donor_reporting_portal.apps.core.auth.get_username',
     'social_core.pipeline.social_auth.associate_by_email',
-    'donor_reporting_portal.apps.core.auth.create_user',
+    'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
