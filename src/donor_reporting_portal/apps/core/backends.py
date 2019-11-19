@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.backends import ModelBackend
+from django.urls import reverse
 
 from social_core.backends.azuread_b2c import AzureADB2COAuth2
 
@@ -25,9 +26,4 @@ class UnicefAzureADBBCOAuth2(AzureADB2COAuth2):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # self.redirect_uri = settings.HOST + '/social/complete/unicef-azuread-b2c-oauth2/'
-
-        from django.urls import reverse
         self.redirect_uri = settings.HOST + reverse('social:complete', kwargs={'backend': 'unicef-azuread-b2c-oauth2'})
-        print(self.redirect_uri, 333)
-        # '/socialcomplete/unicef-azuread-b2c-oauth2/

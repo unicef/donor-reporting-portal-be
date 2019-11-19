@@ -311,3 +311,19 @@ SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 POLICY = os.getenv('AZURE_B2C_POLICY_NAME', "B2C_1_signup_signin")
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'donor_reporting_portal.apps.core.auth.get_username',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'donor_reporting_portal.apps.core.auth.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+USER_FIELDS = ['username', 'email', 'first_name', 'last_name']
