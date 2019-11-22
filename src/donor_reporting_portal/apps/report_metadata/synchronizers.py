@@ -1,8 +1,7 @@
 import logging
 from datetime import datetime
 
-from django.conf import settings
-
+from unicef_security import config
 from unicef_security.models import BusinessArea
 from unicef_vision.synchronizers import VisionDataSynchronizer
 
@@ -36,8 +35,8 @@ class GrantSynchronizer(VisionDataSynchronizer):
     def _get_kwargs(self):
         kwargs = super()._get_kwargs()
         kwargs.update({
-            'url': 'https://unibiapitest.azure-api.net/biapi/v1/',
-            'headers': (('Ocp-Apim-Subscription-Key', settings.INSIGHT_SUB_KEY), )
+            'url': config.INSIGHT_URL,
+            'headers': (('Ocp-Apim-Subscription-Key', config.INSIGHT_SUB_KEY), )
         })
         return kwargs
 
