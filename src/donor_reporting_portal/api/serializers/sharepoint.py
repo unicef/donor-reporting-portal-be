@@ -24,6 +24,7 @@ class SharePointItemSerializer(serializers.Serializer):
     grant_number = SharePointPropertyField()
     grant_issue_year = SharePointPropertyField()
     grant_expiry_date = SharePointPropertyField()
+    external_reference = SharePointPropertyField()
     recipient_office = SharePointPropertyField()
     report_type = SharePointPropertyField()
     report_end_date = SharePointPropertyField()
