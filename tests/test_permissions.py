@@ -7,7 +7,7 @@ from donor_reporting_portal.api.permissions import DonorPermission
 def test_donor_permission_ko(request, logged_user, donor):
     request.user = logged_user
     view = MagicMock()
-    view.kwargs = {'donor_id':donor.id}
+    view.kwargs = {'donor_id': donor.id}
     assert not DonorPermission().has_permission(request, view)
 
 

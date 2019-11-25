@@ -4,9 +4,9 @@ from office365.runtime.client_request_exception import ClientRequestException
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import ErrorDetail
-from rest_framework.permissions import IsAuthenticated
 
 from donor_reporting_portal.api.filters import SharePointLibraryFilter
+from donor_reporting_portal.api.permissions import DonorPermission
 from donor_reporting_portal.api.serializers.metadata import SharePointLibrarySerializer, SharePointSiteSerializer
 from donor_reporting_portal.api.serializers.sharepoint import SharePointFileSerializer, SharePointItemSerializer
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
@@ -16,7 +16,7 @@ from donor_reporting_portal.libraries.sharepoint.file import SharePointFile
 
 
 class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
-    permission_classes = (IsAuthenticated, )  # DonorPermission
+    permission_classes = (DonorPermission, )
 
     lookup_field = 'filename'
 

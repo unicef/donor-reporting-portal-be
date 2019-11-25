@@ -5,7 +5,6 @@ from rest_framework.reverse import reverse
 
 from donor_reporting_portal.libraries.sharepoint.serializers import (
     SharePointPropertyField,
-    SharePointPropertyManyField,
     UpperSharePointPropertyField,
 )
 

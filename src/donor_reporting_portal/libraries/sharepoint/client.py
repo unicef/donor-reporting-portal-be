@@ -14,7 +14,7 @@ from donor_reporting_portal.libraries.sharepoint.querystring_builder import Quer
 logger = logging.getLogger(__name__)
 
 
-class SharePointClientException(Exception):
+class SharePointClientException(BaseException):
     """SharePoint Exception when initializing the client"""
 
 
