@@ -1,7 +1,7 @@
 # from donor_reporting_portal.libraries.sharepoint.client import SharePointClient
 #
 #
-# class TestShareP  ointAPI:
+# class TestSharePointAPI:
 #
 #     def test_download(self):
 #

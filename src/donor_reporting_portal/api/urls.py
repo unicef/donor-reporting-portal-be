@@ -10,7 +10,7 @@ from .views.sharepoint import (
     ItemSharePointViewSet,
     SharePointLibraryViewSet,
     SharePointSiteViewSet,
-)
+    ItemSharePointCamlViewSet)
 from .views.userrole import BusinessAreaViewSet, GroupViewSet, UserRoleViewSet, UserViewSet
 
 app_name = 'donors'
@@ -30,6 +30,8 @@ router.register(r'sharepoint/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)/fi
                 basename='sharepoint-files')
 router.register(r'sharepoint/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)', ItemSharePointViewSet,
                 basename='sharepoint')
+router.register(r'sharepoint-caml/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)', ItemSharePointCamlViewSet,
+                basename='sharepoint-caml')
 
 urlpatterns = [
     path('metadata/static/', view=MetadataStaticAPIView.as_view(http_method_names=['get']),

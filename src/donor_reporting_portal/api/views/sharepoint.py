@@ -90,6 +90,22 @@ class ItemSharePointViewSet(AbstractSharePointViewSet):
             raise Http404
 
 
+class ItemSharePointCamlViewSet(ItemSharePointViewSet):
+    def get_queryset(self):
+        kwargs = self.request.query_params.dict()
+        cache_dict = kwargs.copy()
+        cache_dict['caml'] = 'true'
+        try:
+            key = self.get_cache_key(**cache_dict)
+            response = cache.get(key)
+            if response is None:
+                response = self.client.read_caml_items(filters=kwargs)
+                cache.set(key, response)
+            return response
+        except ClientRequestException:
+            raise Http404
+
+
 class FileSharePointViewSet(AbstractSharePointViewSet):
     serializer_class = SharePointFileSerializer
 

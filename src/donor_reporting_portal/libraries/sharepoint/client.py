@@ -4,11 +4,11 @@ import os
 from django.conf import settings
 
 from office365.runtime.auth.authentication_context import AuthenticationContext
-from office365.sharepoint.caml_query import CamlQuery
 from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.file import File
 from office365.sharepoint.file_creation_information import FileCreationInformation
 
+from donor_reporting_portal.libraries.sharepoint.camlquery_builder import CamlQueryBuilder
 from donor_reporting_portal.libraries.sharepoint.querystring_builder import QueryStringBuilder
 
 logger = logging.getLogger(__name__)
@@ -64,7 +64,7 @@ class SharePointClient:
 
         return files
 
-    def read_items(self, filters=dict()):
+    def read_items(self, filters=dict):
         querystring = QueryStringBuilder(filters).get_querystring()
         list_object = self.context.web.lists.get_by_title(self.folder)
         items = list_object.get_items().filter(querystring)
@@ -80,15 +80,13 @@ class SharePointClient:
         logger.info(f'File name: {cur_file.properties["Name"]}')
         return cur_file
 
-    def read_folder_and_files_alt(self, list_title='Documents'):
+    def read_caml_items(self, filters=dict, scope=None):
         """Read a folder example"""
-        list_obj = self.context.web.lists.get_by_title(list_title)
-        qry = CamlQuery.create_all_items_query()
+        list_obj = self.context.web.lists.get_by_title(self.folder)
+        qry = CamlQueryBuilder(filters, scope).get_query()
         items = list_obj.get_items(qry)
-        self.context.load(items)
         self.context.execute_query()
-        for cur_item in items:
-            logger.info('File name: {cur_item.properties["Title"]}')
+        return items
 
     def upload_file_alt(self, target_folder, name, content):
         context = target_folder.context

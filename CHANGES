@@ -4,6 +4,7 @@ Release 0.5 (in development)
 * improved donor permission
 * us government flag
 * added cache
+* added caml-query support
 
 
 Release 0.4
