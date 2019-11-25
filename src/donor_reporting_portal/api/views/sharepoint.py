@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from office365.runtime.client_request_exception import ClientRequestException
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import ErrorDetail
 
 from donor_reporting_portal.api.filters import SharePointLibraryFilter
 from donor_reporting_portal.api.serializers.metadata import SharePointLibrarySerializer, SharePointSiteSerializer
@@ -48,6 +49,12 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
             return self.client.read_files(filters=kwargs)
         except ClientRequestException:
             raise Http404
+
+    def handle_exception(self, exc):
+        response = super().handle_exception(exc)
+        if isinstance(exc, Http404):
+            response.data['detail'] = ErrorDetail('No document found using selected filters', 'not_found')
+        return response
 
 
 class ItemSharePointViewSet(AbstractSharePointViewSet):
