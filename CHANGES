@@ -1,3 +1,11 @@
+Release 0.5 (in development)
+----------------
+* added external reference as dependency
+* improved donor permission
+* us government flag
+* added cache
+
+
 Release 0.4
 ----------------
 * azure integration
