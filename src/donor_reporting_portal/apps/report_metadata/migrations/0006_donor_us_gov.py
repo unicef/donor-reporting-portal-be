@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='donor',
             name='us_gov',
-            field=models.BooleanField(default=False, verbose_name='Us Government'),
+            field=models.BooleanField(default=False, verbose_name='Us Gov Flag'),
         ),
     ]
