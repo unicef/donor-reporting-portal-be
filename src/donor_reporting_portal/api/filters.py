@@ -64,6 +64,7 @@ class DonorFilter(filters.FilterSet):
         fields = {
             'name': ['exact', 'in'],
             'code': ['exact', 'in'],
+            'us_gov': ['exact'],
         }
 
 
