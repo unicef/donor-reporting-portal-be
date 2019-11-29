@@ -114,7 +114,8 @@ USE_TZ = True
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': env('REDIS_URL', default='redis://localhost:6379/0')
     }
 }
 

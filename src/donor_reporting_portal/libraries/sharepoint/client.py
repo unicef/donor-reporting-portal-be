@@ -22,7 +22,6 @@ class SharePointClient:
     """Client to access SharePoint Document Library"""
 
     def __init__(self, *args, **kwargs) -> None:
-
         self.site_path = kwargs.get('url', settings.SHAREPOINT_TENANT['url'])
         self.relative_url = kwargs.get('relative_url', settings.SHAREPOINT_TENANT['url'])
         username = kwargs.get('username', settings.SHAREPOINT_TENANT['user_credentials']['username'])
