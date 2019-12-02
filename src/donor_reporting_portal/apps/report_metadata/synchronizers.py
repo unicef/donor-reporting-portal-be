@@ -64,14 +64,14 @@ class GrantSynchronizer(VisionDataSynchronizer):
         logger.info(f'parsing {record["GRANT_REF"]}')
 
         donor, _ = Donor.objects.update_or_create(code=record['DONOR_CODE'], defaults={
-            'name': record['DONOR_NAME']
+            'name': record['DONOR_NAME'],
+            'us_gov': bool(record['USGOV_FLAG'])
         })
         grant_defaults = {
             'year': record['ISSUE_YEAR'],
             'expiry_date': get_date(record['EXPIRY_DATE']),
             'financial_close_date': get_date(record.get('FINANCIALLY_CLOSE_DATE', None)),
             'description': record['DESCRIPTION'],
-            # 'internal_ref': get_date(record['INTERNAL_REF']),
             'donor': donor,
             'category': get_type(record),
         }
