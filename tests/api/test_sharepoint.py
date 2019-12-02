@@ -24,22 +24,23 @@ def site(request, db):
 
 
 @frozenfixture()
-def library(request, db):
+def library(site, request, db):
     from tests.factories import SharePointLibraryFactory
-    return SharePointLibraryFactory()
+    return SharePointLibraryFactory(site=site)
 
-
-@contract()
-@VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/test_sharepoint.yml'))
-# @mock.patch.object('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext', 'acquire_token_for_user', macioce)
-@mock.patch.object('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext', 'acquire_token_for_user', macioce)
-def test_sharepoint_list(request, django_app):
-    # with mock.patch('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext') as auth_context:
-    # mocked_funct = ''
-    # with mock.patch.object(mocked_funct, 'acquire_token_for_user') as mmmm:
-    #     mmmm.return_value = True
-    #     auth_context.acquire_token_for_user.return_value = True
-    return reverse('api:sharepoint-list', kwargs={'site_name': 'TST-SCS-DRP'})
+#
+# @contract()
+# @pytest.mark.django_db
+# # @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/test_sharepoint.yml'))
+# # @mock.patch.object('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext', 'acquire_token_for_user', macioce)
+# # @mock.patch.object('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext', 'acquire_token_for_user', macioce)
+# def test_sharepoint_list(request, django_app):
+#     # with mock.patch('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext') as auth_context:
+#     # mocked_funct = ''
+#     # with mock.patch.object(mocked_funct, 'acquire_token_for_user') as mmmm:
+#     #     mmmm.return_value = True
+#     #     auth_context.acquire_token_for_user.return_value = True
+#     return reverse('api:sharepoint-list', kwargs={'site_name': 'GLB-DRP', 'folder_name': '2019 Certified Reports'})
 
 
 # @contract()

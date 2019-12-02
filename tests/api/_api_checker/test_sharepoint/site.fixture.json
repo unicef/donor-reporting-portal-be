@@ -2,13 +2,15 @@
     "site": {
         "master": {
             "model": "sharepoint.sharepointsite",
-            "pk": 1,
+            "pk": 3,
             "fields": {
-                "created": "2019-11-04T18:01:06.783Z",
-                "modified": "2019-11-04T18:01:06.783Z",
+                "created": "2019-12-02T22:36:50.257Z",
+                "modified": "2019-12-02T22:36:50.257Z",
                 "name": "name000",
                 "url": "",
-                "wrapper_name": ""
+                "site_type": "sites",
+                "username": null,
+                "password": null
             }
         },
         "deps": []

@@ -1,0 +1,30 @@
+{
+    "library": {
+        "master": {
+            "model": "sharepoint.sharepointlibrary",
+            "pk": 13,
+            "fields": {
+                "created": "2019-12-02T22:40:31.214Z",
+                "modified": "2019-12-02T22:40:31.214Z",
+                "name": "name000",
+                "site": 3,
+                "active": true
+            }
+        },
+        "deps": [
+            {
+                "model": "sharepoint.sharepointsite",
+                "pk": 3,
+                "fields": {
+                    "created": "2019-12-02T22:36:50.257Z",
+                    "modified": "2019-12-02T22:36:50.257Z",
+                    "name": "name000",
+                    "url": "",
+                    "site_type": "sites",
+                    "username": null,
+                    "password": null
+                }
+            }
+        ]
+    }
+}

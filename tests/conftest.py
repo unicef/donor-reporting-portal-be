@@ -1,6 +1,8 @@
 import os
 import tempfile
 
+from django.core.management import call_command
+
 import pytest
 from rest_framework.test import APIClient
 
@@ -9,6 +11,13 @@ def pytest_configure(config):
     # enable this to remove deprecations
     os.environ['CELERY_TASK_ALWAYS_EAGER'] = "1"
     os.environ['STATIC_ROOT'] = tempfile.gettempdir()
+
+
+
+@pytest.fixture(scope='session')
+def django_db_setup(django_db_setup, django_db_blocker):
+    with django_db_blocker.unblock():
+        call_command('loaddata', 'notifications.json')
 
 
 @pytest.fixture()

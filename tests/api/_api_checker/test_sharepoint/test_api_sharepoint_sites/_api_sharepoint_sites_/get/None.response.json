@@ -19,17 +19,19 @@
         ],
         "content-length": [
             "Content-Length",
-            "145"
+            "179"
         ]
     },
     "data": [
         {
-            "id": 1,
-            "created": "2019-11-04T12:01:06.783000-06:00",
-            "modified": "2019-11-04T12:01:06.783000-06:00",
+            "id": 3,
+            "created": "2019-12-02T16:36:50.257000-06:00",
+            "modified": "2019-12-02T16:36:50.257000-06:00",
             "name": "name000",
             "url": "",
-            "wrapper_name": ""
+            "site_type": "sites",
+            "username": null,
+            "password": null
         }
     ],
     "content_type": null

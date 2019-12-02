@@ -19,17 +19,16 @@
         ],
         "content-length": [
             "Content-Length",
-            "145"
+            "160"
         ]
     },
     "data": [
         {
-            "id": 464,
-            "created": "2019-12-02T16:40:58.169000-06:00",
-            "modified": "2019-12-02T16:40:58.169000-06:00",
-            "name": "",
-            "code": "code007",
-            "us_gov": false
+            "name": "name000",
+            "site_name": "name000",
+            "active": true,
+            "library_url": "sites/name000/name000",
+            "api_url": "http://localhost:8000/api/sharepoint/name000/name000/"
         }
     ],
     "content_type": null

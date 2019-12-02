@@ -17,14 +17,14 @@ def business_area(request, db):
     return BusinessAreaFactory()
 
 
-@contract(recorder_class=LastModifiedRecorder)
-def test_api_user_list(request, django_app, logged_user):
-    return reverse('api:user-list')
-
-
-@contract(recorder_class=LastModifiedRecorder)
-def test_api_user_profile(request, django_app, logged_user, userrole):
-    return reverse('api:user-my-profile')
+# @contract(recorder_class=LastModifiedRecorder)
+# def test_api_user_list(request, django_app, logged_user):
+#     return reverse('api:user-list')
+# 
+#
+# @contract(recorder_class=LastModifiedRecorder)
+# def test_api_user_profile(request, django_app, logged_user, userrole):
+#     return reverse('api:user-my-profile')
 
 
 @contract(recorder_class=LastModifiedRecorder)

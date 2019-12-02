@@ -63,12 +63,12 @@ def test_api_my_donor_list_fail(request, django_app, logged_user, donor):
     return reverse('api:donor-my-donors')
 
 
-@contract(recorder_class=LastModifiedRecorder)
-def test_api_my_admin_donors_list_donor(request, django_app, logged_user):
-    userrole = UserRoleFactory(user=logged_user)
-    with user_grant_role_permission(userrole.user, userrole.donor,
-                                    permissions=['report_metadata.view_donor', 'roles.add_userrole']):
-        return reverse('api:donor-my-admin-donors')
+# @contract(recorder_class=LastModifiedRecorder)
+# def test_api_my_admin_donors_list_donor(request, django_app, logged_user):
+#     userrole = UserRoleFactory(user=logged_user)
+#     with user_grant_role_permission(userrole.user, userrole.donor,
+#                                     permissions=['report_metadata.view_donor', 'roles.add_userrole']):
+#         return reverse('api:donor-my-admin-donors')
 
 
 @contract(recorder_class=ExpectedErrorRecorder)
