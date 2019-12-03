@@ -1,0 +1,181 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '0'
+      Cookie:
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODgwMDYxMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NjY0NjIzMjIwMjYzLDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw3YmZiMWQ5Zi01MGNkLTAwMDAtNDU5MC05OWIxNjg1NzVmOWQsN2JmYjFkOWYtNTBjZC0wMDAwLTQ1OTAtOTliMTY4NTc1ZjlkLCwwLDAsMCwsLCxRVmR2ejYvdHovOFByM0c2M3ZXN0ZUVmRJbnhFek93cDdDSjV4OUxDMUp4QitaQ2g3VHdMUHI4RzgyVGNUOTNSZVoxQmRFVzY3Z0U4WU0ydGJZTUUwVE1EaU15WUpLZ2Q0Z3J2UDZHek9lWkFScFRLNG1CeTdvbk05UDJDVFBHdUlybkRlRmhJMmwxbEZseHQ4Ymg4SFVuVndFTHdPb0NaK2pQVzN3Z1hsdHZvSFNlV0E3bTdUOFN4SjNWY2E5NVBkUmZ3ckEyOFdaOWY4UW5ZTjIyWm92KzZ2cDQ5MXlGdFdhQk1QWUdGSkVNT1ZFd2NBa3llcDNndDQrNHErOGYrSVd5bDhFSzZGU2hjaWJhY25KcGgzazkzOE9OZWlUQmR6V0JYbXVuUTNZT0prRGErak10OHFsQW5zR2JFT0hVaWJHNHhyUUtjQ1hsb1B1QThvbnpkYmc9PTwvU1A+;
+        rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=
+      User-Agent:
+      - python-requests/2.22.0
+      accept:
+      - application/json;odata=verbose
+      content-type:
+      - application/json;odata=verbose
+    method: POST
+    uri: https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/contextinfo
+  response:
+    body:
+      string: '{"d":{"GetContextWebInformation":{"__metadata":{"type":"SP.ContextWebInformation"},"FormDigestTimeoutSeconds":1800,"FormDigestValue":"0x7A0C16A59F30686A0D603EAA249D503838CECA8B7270A9905DADA4BF09EF11FFD853CFA4C0139B1625CE1D2BD010214152C8BFC13CD8E1A0C1BC1B63ACCC4E81,03
+        Dec 2019 20:55:58 -0000","LibraryVersion":"16.0.19520.12017","SiteFullUrl":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP","SupportedSchemaVersions":{"__metadata":{"type":"Collection(Edm.String)"},"results":["14.0.0.0","15.0.0.0"]},"WebFullUrl":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP"}}}'
+    headers:
+      Cache-Control:
+      - private, max-age=0
+      Content-Type:
+      - application/json;odata=verbose;charset=utf-8
+      DATASERVICEVERSION:
+      - '3.0'
+      Date:
+      - Tue, 03 Dec 2019 20:55:58 GMT
+      Expires:
+      - Mon, 18 Nov 2019 20:55:58 GMT
+      Last-Modified:
+      - Tue, 03 Dec 2019 20:55:58 GMT
+      MS-CV:
+      - nx37k1wAAABFjzj8kt1nCQ.0
+      MicrosoftSharePointTeamServices:
+      - 16.0.0.19520
+      P3P:
+      - CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo
+        CNT COM INT NAV ONL PHY PRE PUR UNI"
+      SPClientServiceRequestDuration:
+      - '11'
+      SPRequestGuid:
+      - 93fb1d9f-005c-0000-458f-38fc92dd6709
+      Set-Cookie:
+      - rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=;
+        domain=sharepoint.com; path=/; secure; HttpOnly
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODgwMDYxMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NjY0NjIzMjIwMjYzLDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw3YmZiMWQ5Zi01MGNkLTAwMDAtNDU5MC05OWIxNjg1NzVmOWQsN2JmYjFkOWYtNTBjZC0wMDAwLTQ1OTAtOTliMTY4NTc1ZjlkLCwwLDAsMCwsLCxRVmR2ejYvdHovOFByM0c2M3ZXN0ZUVmRJbnhFek93cDdDSjV4OUxDMUp4QitaQ2g3VHdMUHI4RzgyVGNUOTNSZVoxQmRFVzY3Z0U4WU0ydGJZTUUwVE1EaU15WUpLZ2Q0Z3J2UDZHek9lWkFScFRLNG1CeTdvbk05UDJDVFBHdUlybkRlRmhJMmwxbEZseHQ4Ymg4SFVuVndFTHdPb0NaK2pQVzN3Z1hsdHZvSFNlV0E3bTdUOFN4SjNWY2E5NVBkUmZ3ckEyOFdaOWY4UW5ZTjIyWm92KzZ2cDQ5MXlGdFdhQk1QWUdGSkVNT1ZFd2NBa3llcDNndDQrNHErOGYrSVd5bDhFSzZGU2hjaWJhY25KcGgzazkzOE9OZWlUQmR6V0JYbXVuUTNZT0prRGErak10OHFsQW5zR2JFT0hVaWJHNHhyUUtjQ1hsb1B1QThvbnpkYmc9PTwvU1A+;
+        path=/; secure; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Content-Type-Options:
+      - nosniff
+      X-FRAME-OPTIONS:
+      - SAMEORIGIN
+      X-MS-InvokeApp:
+      - 1; RequireReadOnly
+      X-MSEdge-Ref:
+      - 'Ref A: 1D3D03B5B32145F6B6C03031ACE79AA5 Ref B: BN3EDGE0516 Ref C: 2019-12-03T20:55:58Z'
+      X-Powered-By:
+      - ASP.NET
+      X-SP-SERVERSTATE:
+      - ReadOnly=0
+      X-SharePointHealthScore:
+      - '3'
+      content-length:
+      - '577'
+      request-id:
+      - 93fb1d9f-005c-0000-458f-38fc92dd6709
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"query": {"ViewXml": "<View><Query><Where><Eq><FieldRef Name=\"DonorCode\"
+      /><Value Type=\"Text\">G02701</Value></Eq></Where></Query></View>", "__metadata":
+      {"type": "SP.CamlQuery"}}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '184'
+      Cookie:
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODgwMDYxMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NjY0NjIzMjIwMjYzLDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw3YmZiMWQ5Zi01MGNkLTAwMDAtNDU5MC05OWIxNjg1NzVmOWQsN2JmYjFkOWYtNTBjZC0wMDAwLTQ1OTAtOTliMTY4NTc1ZjlkLCwwLDAsMCwsLCxRVmR2ejYvdHovOFByM0c2M3ZXN0ZUVmRJbnhFek93cDdDSjV4OUxDMUp4QitaQ2g3VHdMUHI4RzgyVGNUOTNSZVoxQmRFVzY3Z0U4WU0ydGJZTUUwVE1EaU15WUpLZ2Q0Z3J2UDZHek9lWkFScFRLNG1CeTdvbk05UDJDVFBHdUlybkRlRmhJMmwxbEZseHQ4Ymg4SFVuVndFTHdPb0NaK2pQVzN3Z1hsdHZvSFNlV0E3bTdUOFN4SjNWY2E5NVBkUmZ3ckEyOFdaOWY4UW5ZTjIyWm92KzZ2cDQ5MXlGdFdhQk1QWUdGSkVNT1ZFd2NBa3llcDNndDQrNHErOGYrSVd5bDhFSzZGU2hjaWJhY25KcGgzazkzOE9OZWlUQmR6V0JYbXVuUTNZT0prRGErak10OHFsQW5zR2JFT0hVaWJHNHhyUUtjQ1hsb1B1QThvbnpkYmc9PTwvU1A+;
+        rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=
+      User-Agent:
+      - python-requests/2.22.0
+      X-RequestDigest:
+      - 0x7A0C16A59F30686A0D603EAA249D503838CECA8B7270A9905DADA4BF09EF11FFD853CFA4C0139B1625CE1D2BD010214152C8BFC13CD8E1A0C1BC1B63ACCC4E81,03
+        Dec 2019 20:55:58 -0000
+      accept:
+      - application/json;odata=verbose
+      content-type:
+      - application/json;odata=verbose
+    method: POST
+    uri: https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019%20Certified%20Reports')/GetItems()
+  response:
+    body:
+      string: '{"d":{"results":[{"__metadata":{"id":"8a94933c-ccfa-40ea-bf91-2c942865707e","uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)","etag":"\"2\"","type":"SP.Data.2019_x0020_Certified_x0020_ReportsItem"},"FirstUniqueAncestorSecurableObject":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/FirstUniqueAncestorSecurableObject"}},"RoleAssignments":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/RoleAssignments"}},"AttachmentFiles":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/AttachmentFiles"}},"ContentType":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/ContentType"}},"GetDlpPolicyTip":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/GetDlpPolicyTip"}},"FieldValuesAsHtml":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/FieldValuesAsHtml"}},"FieldValuesAsText":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/FieldValuesAsText"}},"FieldValuesForEdit":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/FieldValuesForEdit"}},"File":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/File"}},"Folder":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/Folder"}},"LikedByInformation":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/LikedByInformation"}},"ParentList":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/ParentList"}},"Properties":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/Properties"}},"Versions":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/Lists(guid''75303d68-6a00-4ce1-9453-94dc28aa6b35'')/Items(3)/Versions"}},"FileSystemObjectType":0,"Id":3,"ServerRedirectedEmbedUri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_layouts/15/WopiFrame.aspx?sourcedoc={ec14d186-8372-4e9e-9721-a59b630711ad}&action=interactivepreview","ServerRedirectedEmbedUrl":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_layouts/15/WopiFrame.aspx?sourcedoc={ec14d186-8372-4e9e-9721-a59b630711ad}&action=interactivepreview","ContentTypeId":"0x010100BD0F1B23762B434897E97809DE94ABDD00866516ECEF8C5A4B95B105F4971598AA0026266A664C5D0749B9F2C0B452AE7A2B","ComplianceAssetId":null,"Title":"DFAMDash
+        Certified Statement of Account.rdl","OData__dlc_DocId":"RPRFA3H2TPK5-441505184-3","OData__dlc_DocIdUrl":{"__metadata":{"type":"SP.FieldUrlValue"},"Description":"RPRFA3H2TPK5-441505184-3","Url":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_layouts/15/DocIdRedir.aspx?ID=RPRFA3H2TPK5-441505184-3"},"DocumentType":{"__metadata":{"type":"SP.Taxonomy.TaxonomyFieldValue"},"Label":"Donor
+        reports","TermGuid":"8a295864-13e9-49e6-bf2c-b141ea31441a","WssId":3},"Topic":{"__metadata":{"type":"Collection(SP.Taxonomy.TaxonomyFieldValue)"},"results":[{"Label":"n/a","TermGuid":"5fa4f369-8a17-4c36-ad7f-f4892b75679a","WssId":17}]},"WrittenById":null,"WrittenByStringId":null,"ContentLanguage":"English","CategoryDescription":null,"OfficeDivision":{"__metadata":{"type":"SP.Taxonomy.TaxonomyFieldValue"},"Label":"Div.
+        of Finance \uff06 Admin Mgmt-456J","TermGuid":"5aaf3341-1695-4e9f-8424-49121c99845d","WssId":5},"ContentStatus":null,"Theme":null,"Recertified":null,"DonorDocument":null,"ReportMethod":null,"ReportGroup":"Grant","GrantFinancialClosureDate":"2016-12-31T00:00:00","GrantExpiryDate":"2015-12-31T00:00:00","ReportType":"Final","ExternalReference":"AGREEMENT
+        61358","ReportEndDate":"2018-12-31T00:00:00","GrantIssueYear":"2011","GrantNumber":"SC110743","Donor":"Australia","DonorReportCategory":"Donor
+        Financial Certified","ReportStatus":"New","RecipientOffice":"ESAR Regional
+        Office, WCAR Regional Office, Afghanistan, Analysis,Planning & Monitoring,
+        Central African Republic, Chad, Iraq, Palestine, State of, Philippines, Programme
+        Division, South Sudan","ReportGeneratedBy":null,"RecipientOfficeCode":null,"GeographicScope":{"__metadata":{"type":"Collection(SP.Taxonomy.TaxonomyFieldValue)"},"results":[]},"DonorCode":"G02701","TaxKeyword":{"__metadata":{"type":"Collection(SP.Taxonomy.TaxonomyFieldValue)"},"results":[]},"ID":3,"Created":"2019-10-24T18:02:22","AuthorId":6,"Modified":"2019-11-26T15:06:30","EditorId":22,"OData__CopySource":null,"CheckoutUserId":null,"OData__UIVersionString":"2.0","GUID":"71cfb13e-28b4-497d-af2f-1cea6c0a5dee"}]}}'
+    headers:
+      Cache-Control:
+      - private, max-age=0
+      Content-Type:
+      - application/json;odata=verbose;charset=utf-8
+      DATASERVICEVERSION:
+      - '3.0'
+      Date:
+      - Tue, 03 Dec 2019 20:55:59 GMT
+      Expires:
+      - Mon, 18 Nov 2019 20:55:59 GMT
+      Last-Modified:
+      - Tue, 03 Dec 2019 20:55:59 GMT
+      MS-CV:
+      - nx37k3YAAABHW6exz2Z+UQ.0
+      MicrosoftSharePointTeamServices:
+      - 16.0.0.19520
+      P3P:
+      - CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo
+        CNT COM INT NAV ONL PHY PRE PUR UNI"
+      SPClientServiceRequestDuration:
+      - '1000'
+      SPRequestGuid:
+      - 93fb1d9f-0076-0000-475b-a7b1cf667e51
+      Set-Cookie:
+      - rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=;
+        domain=sharepoint.com; path=/; secure; HttpOnly
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODgwMDYxMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NjY0NjIzMjIwMjYzLDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw3YmZiMWQ5Zi01MGNkLTAwMDAtNDU5MC05OWIxNjg1NzVmOWQsN2JmYjFkOWYtNTBjZC0wMDAwLTQ1OTAtOTliMTY4NTc1ZjlkLCwwLDAsMCwsLCxRVmR2ejYvdHovOFByM0c2M3ZXN0ZUVmRJbnhFek93cDdDSjV4OUxDMUp4QitaQ2g3VHdMUHI4RzgyVGNUOTNSZVoxQmRFVzY3Z0U4WU0ydGJZTUUwVE1EaU15WUpLZ2Q0Z3J2UDZHek9lWkFScFRLNG1CeTdvbk05UDJDVFBHdUlybkRlRmhJMmwxbEZseHQ4Ymg4SFVuVndFTHdPb0NaK2pQVzN3Z1hsdHZvSFNlV0E3bTdUOFN4SjNWY2E5NVBkUmZ3ckEyOFdaOWY4UW5ZTjIyWm92KzZ2cDQ5MXlGdFdhQk1QWUdGSkVNT1ZFd2NBa3llcDNndDQrNHErOGYrSVd5bDhFSzZGU2hjaWJhY25KcGgzazkzOE9OZWlUQmR6V0JYbXVuUTNZT0prRGErak10OHFsQW5zR2JFT0hVaWJHNHhyUUtjQ1hsb1B1QThvbnpkYmc9PTwvU1A+;
+        path=/; secure; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Content-Type-Options:
+      - nosniff
+      X-FRAME-OPTIONS:
+      - SAMEORIGIN
+      X-MS-InvokeApp:
+      - 1; RequireReadOnly
+      X-MSEdge-Ref:
+      - 'Ref A: 70C318BF753D4A90B84CAEE2A6BABBC5 Ref B: BN3EDGE0721 Ref C: 2019-12-03T20:55:59Z'
+      X-Powered-By:
+      - ASP.NET
+      X-RequestDigest:
+      - 0xD3573E24C433FD5F7180E401DCBF287591710406C5E2A49270B3F5BB3EDED2F28F8DDD8245734623AD29CAA0FD7402E1874ACBB1BCC24F1FF4B0C127AAE9B1C9,03
+        Dec 2019 20:55:59 -0000
+      X-SP-SERVERSTATE:
+      - ReadOnly=0
+      X-SharePointHealthScore:
+      - '5'
+      content-length:
+      - '5402'
+      request-id:
+      - 93fb1d9f-0076-0000-475b-a7b1cf667e51
+    status:
+      code: 200
+      message: OK
+version: 1

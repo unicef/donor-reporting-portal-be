@@ -7,10 +7,11 @@ from donor_reporting_portal.api.views.static import MetadataStaticAPIView
 from .views.metadata import DonorViewSet, ExternalGrantViewSet, GrantViewSet, ThemeViewSet
 from .views.sharepoint import (
     FileSharePointViewSet,
+    ItemSharePointCamlViewSet,
     ItemSharePointViewSet,
     SharePointLibraryViewSet,
     SharePointSiteViewSet,
-    ItemSharePointCamlViewSet)
+)
 from .views.userrole import BusinessAreaViewSet, GroupViewSet, UserRoleViewSet, UserViewSet
 
 app_name = 'donors'

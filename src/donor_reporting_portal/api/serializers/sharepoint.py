@@ -5,6 +5,7 @@ from rest_framework.reverse import reverse
 
 from donor_reporting_portal.libraries.sharepoint.serializers import (
     SharePointPropertyField,
+    SharePointPropertyManyField,
     UpperSharePointPropertyField,
 )
 
@@ -25,7 +26,7 @@ class SharePointItemSerializer(serializers.Serializer):
     grant_issue_year = SharePointPropertyField()
     grant_expiry_date = SharePointPropertyField()
     external_reference = SharePointPropertyField()
-    recipient_office = SharePointPropertyField()
+    recipient_office = SharePointPropertyManyField()
     report_type = SharePointPropertyField()
     report_end_date = SharePointPropertyField()
     theme = SharePointPropertyField()

@@ -1,9 +1,7 @@
 import os
 from io import StringIO
 from unittest import mock
-from unittest.mock import MagicMock
 
-from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.db import OperationalError
 

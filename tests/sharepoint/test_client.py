@@ -2,14 +2,14 @@ from pathlib import Path
 
 from drf_api_checker.pytest import frozenfixture
 from pytest import fixture
+from tests.factories import SharePointLibraryFactory, SharePointSiteFactory
 from tests.vcrpy import VCR
 
 from donor_reporting_portal.libraries.sharepoint.client import SharePointClient
 
 
 @frozenfixture()
-def site(request, db, SharePointSiteFactory=None):
-    from tests.factories import SharePointSiteFactory
+def site(request, db):
     return SharePointSiteFactory(
         name='GLB-DRP',
         url='https://asantiagounicef.sharepoint.com/',
@@ -19,7 +19,6 @@ def site(request, db, SharePointSiteFactory=None):
 
 @frozenfixture()
 def library(site, request, db):
-    from tests.factories import SharePointLibraryFactory
     return SharePointLibraryFactory(
         site=site,
         name='2019 Certified Reports'
