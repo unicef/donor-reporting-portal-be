@@ -64,7 +64,7 @@ class SharePointClient:
 
         return files
 
-    def read_items(self, filters=dict):
+    def read_items(self, filters=dict()):
         querystring = QueryStringBuilder(filters).get_querystring()
         list_object = self.context.web.lists.get_by_title(self.folder)
         items = list_object.get_items().filter(querystring)
@@ -80,7 +80,7 @@ class SharePointClient:
         logger.info(f'File name: {cur_file.properties["Name"]}')
         return cur_file
 
-    def read_caml_items(self, filters=dict, scope=None):
+    def read_caml_items(self, filters=dict(), scope=None):
         """Read a folder example"""
         list_obj = self.context.web.lists.get_by_title(self.folder)
         qry = CamlQueryBuilder(filters, scope).get_query()

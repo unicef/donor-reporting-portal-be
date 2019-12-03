@@ -1,0 +1,166 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODY3MjUzMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NTM2NTM4MDcwNzM1LDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw0NGVmMWQ5Zi0wMGJlLTAwMDAtNDc2Mi0yZWUzOWQyMWE2ZWMsNDRlZjFkOWYtMDBiZS0wMDAwLTQ3NjItMmVlMzlkMjFhNmVjLCwwLDAsMCwsLCxvVkUwS3FrdURkbEFtYml5N3NaU2JCcEp6VzFaNCs2RXIySTBlZDcyZ0EzVUVKeDc0VVZPQkk4WmEveGNEaXp1cDZkL2JPR0VRS0t3Wkx1ZnpzWVRDbGNTVDFDZkhyV2o4SzgrZHJORDZhUUgxWm03QkpUWmNMai9WYXFmWkVQdVJDR0U5WWYySDlJaFJTcEdCZnJXNFNiTHBsV0dTSlV0QUpucTl0bnh1VURscUNBSmdXK1V2RlYyZ2ZWdDRodHlXTnJjSFJ4UDArYWZwQ2xCZ2lKdGhCbm1IeWJReDd5UXIzMjIzSFRKM3FnOGRySkwraGwrR05mTGdsOVFOUzhRQlZHdEVYRC9WQk9ScXFmUkoyZmNlNE04bVIvejl0ZEFjWWJ4WTFGRjZZbm15Z0JkV2M4NzR6WkpYNlNaSTM3WVo3dFZJNjZoU1FrcUE3am84M2s4NHc9PTwvU1A+;
+        rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=
+      User-Agent:
+      - python-requests/2.22.0
+      accept:
+      - application/json;odata=verbose
+      content-type:
+      - application/json;odata=verbose
+    method: GET
+    uri: https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019%20Certified%20Reports')/RootFolder
+  response:
+    body:
+      string: '{"d":{"__metadata":{"id":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019
+        Certified Reports'')","uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')","type":"SP.Folder"},"Files":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')/Files"}},"ListItemAllFields":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')/ListItemAllFields"}},"ParentFolder":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')/ParentFolder"}},"Properties":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')/Properties"}},"StorageMetrics":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')/StorageMetrics"}},"Folders":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFolderByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports'')/Folders"}},"Exists":true,"IsWOPIEnabled":false,"ItemCount":15,"Name":"2019
+        Certified Reports","ProgID":null,"ServerRelativeUrl":"/sites/GLB-DRP/2019
+        Certified Reports","TimeCreated":"2019-10-31T19:24:54Z","TimeLastModified":"2019-11-26T16:35:57Z","UniqueId":"bb00e85f-1559-4ac8-9cf1-5e6d19718775","WelcomePage":""}}'
+    headers:
+      Cache-Control:
+      - private, max-age=0
+      Content-Type:
+      - application/json;odata=verbose;charset=utf-8
+      DATASERVICEVERSION:
+      - '3.0'
+      Date:
+      - Tue, 03 Dec 2019 17:20:53 GMT
+      Expires:
+      - Mon, 18 Nov 2019 17:20:54 GMT
+      Last-Modified:
+      - Tue, 03 Dec 2019 17:20:54 GMT
+      MS-CV:
+      - nx3vRO3gAABHYiVcqi/x3Q.0
+      MicrosoftSharePointTeamServices:
+      - 16.0.0.19520
+      P3P:
+      - CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo
+        CNT COM INT NAV ONL PHY PRE PUR UNI"
+      SPClientServiceRequestDuration:
+      - '22'
+      SPRequestGuid:
+      - 44ef1d9f-e0ed-0000-4762-255caa2ff1dd
+      Set-Cookie:
+      - rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=;
+        domain=sharepoint.com; path=/; secure; HttpOnly
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODY3MjUzMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NTM2NTM4MDcwNzM1LDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw0NGVmMWQ5Zi0wMGJlLTAwMDAtNDc2Mi0yZWUzOWQyMWE2ZWMsNDRlZjFkOWYtMDBiZS0wMDAwLTQ3NjItMmVlMzlkMjFhNmVjLCwwLDAsMCwsLCxvVkUwS3FrdURkbEFtYml5N3NaU2JCcEp6VzFaNCs2RXIySTBlZDcyZ0EzVUVKeDc0VVZPQkk4WmEveGNEaXp1cDZkL2JPR0VRS0t3Wkx1ZnpzWVRDbGNTVDFDZkhyV2o4SzgrZHJORDZhUUgxWm03QkpUWmNMai9WYXFmWkVQdVJDR0U5WWYySDlJaFJTcEdCZnJXNFNiTHBsV0dTSlV0QUpucTl0bnh1VURscUNBSmdXK1V2RlYyZ2ZWdDRodHlXTnJjSFJ4UDArYWZwQ2xCZ2lKdGhCbm1IeWJReDd5UXIzMjIzSFRKM3FnOGRySkwraGwrR05mTGdsOVFOUzhRQlZHdEVYRC9WQk9ScXFmUkoyZmNlNE04bVIvejl0ZEFjWWJ4WTFGRjZZbm15Z0JkV2M4NzR6WkpYNlNaSTM3WVo3dFZJNjZoU1FrcUE3am84M2s4NHc9PTwvU1A+;
+        path=/; secure; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Content-Type-Options:
+      - nosniff
+      X-FRAME-OPTIONS:
+      - SAMEORIGIN
+      X-MS-InvokeApp:
+      - 1; RequireReadOnly
+      X-MSEdge-Ref:
+      - 'Ref A: 8F3CC6634BAF4D0E9D132F46C6446226 Ref B: BN3EDGE0609 Ref C: 2019-12-03T17:20:54Z'
+      X-Powered-By:
+      - ASP.NET
+      X-SP-SERVERSTATE:
+      - ReadOnly=0
+      X-SharePointHealthScore:
+      - '7'
+      content-length:
+      - '1843'
+      request-id:
+      - 44ef1d9f-e0ed-0000-4762-255caa2ff1dd
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODY3MjUzMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NTM2NTM4MDcwNzM1LDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw0NGVmMWQ5Zi0wMGJlLTAwMDAtNDc2Mi0yZWUzOWQyMWE2ZWMsNDRlZjFkOWYtMDBiZS0wMDAwLTQ3NjItMmVlMzlkMjFhNmVjLCwwLDAsMCwsLCxvVkUwS3FrdURkbEFtYml5N3NaU2JCcEp6VzFaNCs2RXIySTBlZDcyZ0EzVUVKeDc0VVZPQkk4WmEveGNEaXp1cDZkL2JPR0VRS0t3Wkx1ZnpzWVRDbGNTVDFDZkhyV2o4SzgrZHJORDZhUUgxWm03QkpUWmNMai9WYXFmWkVQdVJDR0U5WWYySDlJaFJTcEdCZnJXNFNiTHBsV0dTSlV0QUpucTl0bnh1VURscUNBSmdXK1V2RlYyZ2ZWdDRodHlXTnJjSFJ4UDArYWZwQ2xCZ2lKdGhCbm1IeWJReDd5UXIzMjIzSFRKM3FnOGRySkwraGwrR05mTGdsOVFOUzhRQlZHdEVYRC9WQk9ScXFmUkoyZmNlNE04bVIvejl0ZEFjWWJ4WTFGRjZZbm15Z0JkV2M4NzR6WkpYNlNaSTM3WVo3dFZJNjZoU1FrcUE3am84M2s4NHc9PTwvU1A+;
+        rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=
+      User-Agent:
+      - python-requests/2.22.0
+      accept:
+      - application/json;odata=verbose
+      content-type:
+      - application/json;odata=verbose
+    method: GET
+    uri: https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019%20Certified%20Reports')/RootFolder/Files/GetByUrl('%2Fsites%2FGLB-DRP%2F2019%20Certified%20Reports%2FCertifiedDonorStatement_SC110743_31122018.pdf')
+  response:
+    body:
+      string: '{"d":{"__metadata":{"id":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019
+        Certified Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')","uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')","type":"SP.File"},"Author":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/Author"}},"CheckedOutByUser":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/CheckedOutByUser"}},"EffectiveInformationRightsManagementSettings":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/EffectiveInformationRightsManagementSettings"}},"InformationRightsManagementSettings":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/InformationRightsManagementSettings"}},"ListItemAllFields":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/ListItemAllFields"}},"LockedByUser":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/LockedByUser"}},"ModifiedBy":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/ModifiedBy"}},"Properties":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/Properties"}},"VersionEvents":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/VersionEvents"}},"Versions":{"__deferred":{"uri":"https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/GetFileByServerRelativePath(decodedurl=''/sites/GLB-DRP/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018.pdf'')/Versions"}},"CheckInComment":"","CheckOutType":2,"ContentTag":"{EC14D186-8372-4E9E-9721-A59B630711AD},4,2","CustomizedPageStatus":0,"ETag":"\"{EC14D186-8372-4E9E-9721-A59B630711AD},4\"","Exists":true,"IrmEnabled":false,"Length":"10227","Level":1,"LinkingUri":null,"LinkingUrl":"","MajorVersion":2,"MinorVersion":0,"Name":"CertifiedDonorStatement_SC110743_31122018.pdf","ServerRelativeUrl":"/sites/GLB-DRP/2019
+        Certified Reports/CertifiedDonorStatement_SC110743_31122018.pdf","TimeCreated":"2019-10-24T22:02:22Z","TimeLastModified":"2019-11-26T20:06:31Z","Title":"DFAMDash
+        Certified Statement of Account.rdl","UIVersion":1024,"UIVersionLabel":"2.0","UniqueId":"ec14d186-8372-4e9e-9721-a59b630711ad"}}'
+    headers:
+      Cache-Control:
+      - private, max-age=0
+      Content-Type:
+      - application/json;odata=verbose;charset=utf-8
+      DATASERVICEVERSION:
+      - '3.0'
+      Date:
+      - Tue, 03 Dec 2019 17:20:54 GMT
+      Expires:
+      - Mon, 18 Nov 2019 17:20:54 GMT
+      Last-Modified:
+      - Tue, 03 Dec 2019 17:20:54 GMT
+      MS-CV:
+      - nx3vRPQQAABHYikt7w8D1g.0
+      MicrosoftSharePointTeamServices:
+      - 16.0.0.19520
+      P3P:
+      - CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo
+        CNT COM INT NAV ONL PHY PRE PUR UNI"
+      SPClientServiceRequestDuration:
+      - '34'
+      SPRequestGuid:
+      - 44ef1d9f-10f4-0000-4762-292def0f03d6
+      Set-Cookie:
+      - rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=;
+        domain=sharepoint.com; path=/; secure; HttpOnly
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODY3MjUzMDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NTM2NTM4MDcwNzM1LDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw0NGVmMWQ5Zi0wMGJlLTAwMDAtNDc2Mi0yZWUzOWQyMWE2ZWMsNDRlZjFkOWYtMDBiZS0wMDAwLTQ3NjItMmVlMzlkMjFhNmVjLCwwLDAsMCwsLCxvVkUwS3FrdURkbEFtYml5N3NaU2JCcEp6VzFaNCs2RXIySTBlZDcyZ0EzVUVKeDc0VVZPQkk4WmEveGNEaXp1cDZkL2JPR0VRS0t3Wkx1ZnpzWVRDbGNTVDFDZkhyV2o4SzgrZHJORDZhUUgxWm03QkpUWmNMai9WYXFmWkVQdVJDR0U5WWYySDlJaFJTcEdCZnJXNFNiTHBsV0dTSlV0QUpucTl0bnh1VURscUNBSmdXK1V2RlYyZ2ZWdDRodHlXTnJjSFJ4UDArYWZwQ2xCZ2lKdGhCbm1IeWJReDd5UXIzMjIzSFRKM3FnOGRySkwraGwrR05mTGdsOVFOUzhRQlZHdEVYRC9WQk9ScXFmUkoyZmNlNE04bVIvejl0ZEFjWWJ4WTFGRjZZbm15Z0JkV2M4NzR6WkpYNlNaSTM3WVo3dFZJNjZoU1FrcUE3am84M2s4NHc9PTwvU1A+;
+        path=/; secure; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Content-Type-Options:
+      - nosniff
+      X-FRAME-OPTIONS:
+      - SAMEORIGIN
+      X-MS-InvokeApp:
+      - 1; RequireReadOnly
+      X-MSEdge-Ref:
+      - 'Ref A: 3C478BA6EADE4434BB9A2B8BA21919CE Ref B: BN3EDGE1010 Ref C: 2019-12-03T17:20:54Z'
+      X-Powered-By:
+      - ASP.NET
+      X-SP-SERVERSTATE:
+      - ReadOnly=0
+      X-SharePointHealthScore:
+      - '4'
+      content-length:
+      - '3672'
+      request-id:
+      - 44ef1d9f-10f4-0000-4762-292def0f03d6
+    status:
+      code: 200
+      message: OK
+version: 1
