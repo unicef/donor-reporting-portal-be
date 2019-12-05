@@ -15,6 +15,7 @@ class SharePointItemSerializer(serializers.Serializer):
     guid = UpperSharePointPropertyField()
     created = SharePointPropertyField()
     modified = SharePointPropertyField()
+    report_generated_by = SharePointPropertyField()
     title = SharePointPropertyField()
     year = SharePointPropertyField()
     donor = SharePointPropertyField()
