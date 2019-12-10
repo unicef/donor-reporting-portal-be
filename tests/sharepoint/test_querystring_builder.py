@@ -1,6 +1,5 @@
 import pytest
-
-from donor_reporting_portal.libraries.sharepoint.querystring_builder import QueryStringBuilder
+from office365.sharepoint.helpers.querystring_builder import QueryStringBuilder
 
 
 @pytest.mark.parametrize("filters,expected", [

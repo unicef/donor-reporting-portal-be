@@ -1,6 +1,5 @@
 import pytest
-
-from donor_reporting_portal.libraries.sharepoint.camlquery_builder import CamlQueryBuilder
+from office365.sharepoint.helpers.camlquery_builder import CamlQueryBuilder
 
 
 @pytest.mark.parametrize("filters,expected", [

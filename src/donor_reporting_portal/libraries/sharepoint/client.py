@@ -7,9 +7,8 @@ from office365.runtime.auth.authentication_context import AuthenticationContext
 from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.file import File
 from office365.sharepoint.file_creation_information import FileCreationInformation
-
-from donor_reporting_portal.libraries.sharepoint.camlquery_builder import CamlQueryBuilder
-from donor_reporting_portal.libraries.sharepoint.querystring_builder import QueryStringBuilder
+from office365.sharepoint.helpers.camlquery_builder import CamlQueryBuilder
+from office365.sharepoint.helpers.querystring_builder import QueryStringBuilder
 
 logger = logging.getLogger(__name__)
 
