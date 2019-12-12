@@ -1,7 +1,7 @@
-from mock import MagicMock
-from tests.perms import user_grant_permissions, user_grant_role_permission
+# from mock import MagicMock
+# from tests.perms import user_grant_permissions, user_grant_role_permission
 
-from donor_reporting_portal.api.permissions import DonorPermission
+# from donor_reporting_portal.api.permissions import DonorPermission
 
 # def test_donor_permission_ko(request, logged_user, donor):
 #     request.user = logged_user
