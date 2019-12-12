@@ -48,6 +48,7 @@ def logged_user(client, user):
     client.force_authenticate(user)
     return user
 
+
 @pytest.fixture()
 def business_area():
     return BusinessAreaFactory()
@@ -81,5 +82,4 @@ def grant():
 
 @pytest.fixture()
 def group():
-
     return GroupFactory()

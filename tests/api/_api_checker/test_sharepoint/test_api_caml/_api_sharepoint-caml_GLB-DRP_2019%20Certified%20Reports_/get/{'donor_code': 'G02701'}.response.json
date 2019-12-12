@@ -7,7 +7,7 @@
         ],
         "vary": [
             "Vary",
-            "Accept, Origin, Cookie"
+            "Accept, Origin"
         ],
         "allow": [
             "Allow",
@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "1090"
+            "1117"
         ]
     },
     "data": [
@@ -28,6 +28,7 @@
             "guid": "71cfb13e-28b4-497d-af2f-1cea6c0a5dee",
             "created": "2019-10-24T18:02:22",
             "modified": "2019-11-26T15:06:30",
+            "report_generated_by": null,
             "title": "DFAMDash Certified Statement of Account.rdl",
             "donor": "Australia",
             "donor_code": "G02701",

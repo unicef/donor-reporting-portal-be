@@ -3,7 +3,8 @@ from pathlib import Path
 from django.urls import reverse
 
 import pytest
-from drf_api_checker.pytest import contract, frozenfixture
+from drf_api_checker.pytest import api_checker_datadir, contract, frozenfixture  # noqa
+from drf_api_checker.recorder import Recorder
 from tests.api_checker import LastModifiedRecorder
 from tests.factories import DonorFactory, SharePointLibraryFactory, SharePointSiteFactory
 from tests.perms import user_grant_role_permission
@@ -37,23 +38,22 @@ def library(site, request, db):
     )
 
 
-@pytest.mark.xfail
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/list.yml'))
-@contract()
-def test_api(logged_user, library, donor):
+def test_api(api_checker_datadir, logged_user, library, donor):
+    url = reverse('api:sharepoint-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
+    data = {'donor_code': donor.code}
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
-        url = reverse('api:sharepoint-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
-        data = {'donor_code': donor.code}
-        return url, data
+        recorder = Recorder(api_checker_datadir, as_user=logged_user)
+        recorder.assertGET(url, data=data)
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml-list.yml'))
-@contract()
-def test_api_caml(logged_user, library, donor):
+def test_api_caml(api_checker_datadir, logged_user, library, donor):
+    url = reverse('api:sharepoint-caml-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
+    data = {'donor_code': donor.code}
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
-        url = reverse('api:sharepoint-caml-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
-        data = {'donor_code': donor.code}
-        return url, data
+        recorder = Recorder(api_checker_datadir, as_user=logged_user)
+        recorder.assertGET(url, data=data)
 
 
 @pytest.mark.django_db
