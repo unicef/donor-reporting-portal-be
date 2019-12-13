@@ -73,7 +73,7 @@ class SharePointClient:
 
     def read_file(self, filename):
         folder = self.get_folder(self.folder)
-        cur_file = folder.files.get_by_url(f'/{self.relative_url}/{self.folder}/{filename}.pdf')
+        cur_file = folder.files.get_by_url(f'/{self.relative_url}/{self.folder}/{filename}')
         self.context.load(cur_file)
         self.context.execute_query()
         logger.info(f'File name: {cur_file.properties["Name"]}')

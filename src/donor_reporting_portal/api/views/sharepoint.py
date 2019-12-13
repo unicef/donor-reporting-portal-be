@@ -1,10 +1,10 @@
 from django.core.cache import caches
-from django.http import Http404, HttpResponse, HttpResponseBadRequest
+from django.http import Http404, HttpResponse
 
 from office365.runtime.client_request_exception import ClientRequestException
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.exceptions import ErrorDetail
+from rest_framework.exceptions import ErrorDetail, PermissionDenied
 
 from donor_reporting_portal.api.filters import SharePointLibraryFilter
 from donor_reporting_portal.api.permissions import DonorPermission
@@ -43,7 +43,7 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
                 client = SharePointClient(**dl_info)
                 cache.set(key, client)
             except SharePointClientException:
-                raise HttpResponseBadRequest
+                raise PermissionDenied
 
         return client
 
@@ -114,7 +114,12 @@ class FileSharePointViewSet(AbstractSharePointViewSet):
     def get_object(self):
         filename = self.kwargs.get('filename', None)
         try:
-            doc_file = self.client.read_file(filename)
+            filename, *extension = filename.split('__ext__')
+            if extension and len(extension)==1:
+                extension = extension[0]
+            else:
+                extension = 'pdf'
+            doc_file = self.client.read_file(f'{filename}.{extension}')
         except ClientRequestException:
             raise Http404
         return doc_file
