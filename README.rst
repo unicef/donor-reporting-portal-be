@@ -35,8 +35,22 @@ Troubleshoot
 
 Get Started
 --------------------
-from unicef_security.tasks import sync_business_area
-from donor_reporting_portal.apps.report_metadata.tasks import *
+* populate your .env file from template .env_template
+* python manage.py init-setup --all
 
-sync_business_area()
-grant_sync()
+
+Development Release
+--------------------
+init version
+* update requirements (sys - python)
+* `make build-base`
+
+develop features
+* develop features
+* `make build release`
+
+finish version
+* `git flow release start`
+* update CHANGES
+* update version (__init__.py)
+* update makefile version

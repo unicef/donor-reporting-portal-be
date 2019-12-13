@@ -115,7 +115,7 @@ class FileSharePointViewSet(AbstractSharePointViewSet):
         filename = self.kwargs.get('filename', None)
         try:
             filename, *extension = filename.split('__ext__')
-            if extension and len(extension)==1:
+            if extension and len(extension) == 1:
                 extension = extension[0]
             else:
                 extension = 'pdf'
