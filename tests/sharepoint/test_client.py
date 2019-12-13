@@ -36,6 +36,7 @@ def sh_client(library, request, db):
     return SharePointClient(**dl_info)
 
 
+# to regenerate cassettes remove the mock_client fixture (since is mocking the login)
 @fixture(scope='session', autouse=True)
 def mock_client():
     patcher = mock.patch('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext')
@@ -71,8 +72,8 @@ def test_files(sh_client, mock_client):
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/file.yml'))
 def test_file(sh_client, mock_client):
-    my_file = sh_client.read_file('CertifiedDonorStatement_SC110743_31122018')
-    assert my_file.properties['Name'] == 'CertifiedDonorStatement_SC110743_31122018.pdf'
+    my_file = sh_client.read_file('CertifiedDonorStatement_SC1499010147_31122019.pdf')
+    assert my_file.properties['Name'] == 'CertifiedDonorStatement_SC1499010147_31122019.pdf'
 
 
 # @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/download.yml'))
