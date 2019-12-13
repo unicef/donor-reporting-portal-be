@@ -8,11 +8,12 @@ python:
 env:
   - DJANGO=2.2
 
-services:
-  - postgresql
-
 addons:
-  postgresql: "10.10"
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
 
 
 install:
