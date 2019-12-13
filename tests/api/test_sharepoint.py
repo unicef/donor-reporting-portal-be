@@ -3,49 +3,57 @@ from pathlib import Path
 from django.urls import reverse
 
 import pytest
-from drf_api_checker.pytest import contract, frozenfixture
-from mock import mock
+from drf_api_checker.pytest import api_checker_datadir, contract, frozenfixture  # noqa
+from drf_api_checker.recorder import Recorder
 from tests.api_checker import LastModifiedRecorder
+from tests.factories import DonorFactory, SharePointLibraryFactory, SharePointSiteFactory
+from tests.perms import user_grant_role_permission
 from tests.vcrpy import VCR
 
-mocked_a_class = mock.Mock()
-mocked_a_instance = mocked_a_class.return_value
-mocked_a_instance.acquire_token_for_user.return_value = True
 
-
-def macioce():
-    return True
+@frozenfixture()
+def donor(request, db):
+    return DonorFactory(
+        name='Australia',
+        code='G02701'
+    )
 
 
 @frozenfixture()
 def site(request, db):
-    from tests.factories import SharePointSiteFactory
-    return SharePointSiteFactory()
+    return SharePointSiteFactory(
+        name='GLB-DRP',
+        url='https://asantiagounicef.sharepoint.com/',
+        site_type='sites',
+        username=None,
+        password=None
+    )
 
 
 @frozenfixture()
-def library(request, db):
-    from tests.factories import SharePointLibraryFactory
-    return SharePointLibraryFactory()
+def library(site, request, db):
+    return SharePointLibraryFactory(
+        site=site,
+        name='2019 Certified Reports'
+    )
 
 
-@contract()
-@VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/test_sharepoint.yml'))
-# @mock.patch.object('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext', 'acquire_token_for_user', macioce)
-@mock.patch.object('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext', 'acquire_token_for_user', macioce)
-def test_sharepoint_list(request, django_app):
-    # with mock.patch('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext') as auth_context:
-    # mocked_funct = ''
-    # with mock.patch.object(mocked_funct, 'acquire_token_for_user') as mmmm:
-    #     mmmm.return_value = True
-    #     auth_context.acquire_token_for_user.return_value = True
-    return reverse('api:sharepoint-list', kwargs={'site_name': 'TST-SCS-DRP'})
+@VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/list.yml'))
+def test_api(api_checker_datadir, logged_user, library, donor):
+    url = reverse('api:sharepoint-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
+    data = {'donor_code': donor.code}
+    with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
+        recorder = Recorder(api_checker_datadir, as_user=logged_user)
+        recorder.assertGET(url, data=data)
 
 
-# @contract()
-# @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/macioce.yml'))
-# def test_sharepoint_download(request, django_app, logged_user, theme):
-#     return reverse('api:sharepoint-download', kwargs={'team_name': 'TST-SCS-DRP', 'filename': 'Macioce'})
+@VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml-list.yml'))
+def test_api_caml(api_checker_datadir, logged_user, library, donor):
+    url = reverse('api:sharepoint-caml-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
+    data = {'donor_code': donor.code}
+    with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
+        recorder = Recorder(api_checker_datadir, as_user=logged_user)
+        recorder.assertGET(url, data=data)
 
 
 @pytest.mark.django_db

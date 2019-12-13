@@ -1,3 +1,19 @@
+Release 0.5
+----------------
+* added external reference as dependency
+* improved donor permission
+* us government flag
+* added cache
+* added caml-query support
+
+
+Release 0.4
+----------------
+* azure integration
+* added report year
+* sharepoint api: fixed donor, added donor code
+
+
 Release 0.3
 ----------------
 * python 3.8
@@ -5,6 +21,7 @@ Release 0.3
 * Sharepoint API items API
 * Sharepoint API file API
 * SharepointPropertyField
+
 
 Release 0.2
 ----------------

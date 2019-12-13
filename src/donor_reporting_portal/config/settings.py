@@ -63,9 +63,7 @@ MIDDLEWARE = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    # 'social_core.backends.azuread_b2c.AzureADB2COAuth2',
-    'unicef_security.graph.AzureADTenantOAuth2Ext',
-    # 'etools.applications.core.auth.CustomAzureADBBCOAuth2',
+    'donor_reporting_portal.apps.core.backends.UnicefAzureADBBCOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'donor_reporting_portal.apps.core.backends.DonorRoleBackend',
 )
@@ -116,7 +114,8 @@ USE_TZ = True
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': env('REDIS_URL', default='redis://localhost:6379/0')
     }
 }
 
@@ -277,7 +276,6 @@ BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
 
 
 SHAREPOINT_TENANT = {
-    # 'url': 'https://unitst.sharepoint.com/',
     'url': 'https://asantiagounicef.sharepoint.caaaaaom/',
     'user_credentials': {
         'username': env.str('SHAREPOINT_USERNAME', 'invalid_username'),
@@ -297,3 +295,36 @@ POST_OFFICE = {
 }
 
 DEFAULT_FROM_EMAIL = 'donor_reporting_portal@unicef.org'
+
+# AZURE GRAPH API
+# AZURE_TOKEN_URL = 'https://login.microsoftonline.com/unicef.org/oauth2/token'
+# AZURE_GRAPH_API_BASE_URL = 'https://graph.microsoft.com'
+# AZURE_GRAPH_API_VERSION = 'beta'
+# AZURE_GRAPH_API_PAGE_SIZE = 250
+
+
+KEY = os.getenv('AZURE_B2C_CLIENT_ID', None)
+SECRET = os.getenv('AZURE_B2C_CLIENT_SECRET', None)
+TENANT_ID = os.getenv('AZURE_B2C_TENANT', 'unicefpartners.onmicrosoft.com')
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_SANITIZE_REDIRECTS = False
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+POLICY = os.getenv('AZURE_B2C_POLICY_NAME', "B2C_1_signup_signin")
+SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'donor_reporting_portal.apps.core.auth.get_username',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
+USER_FIELDS = ['username', 'email', 'first_name', 'last_name']

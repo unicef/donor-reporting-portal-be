@@ -7,6 +7,7 @@ from donor_reporting_portal.api.views.static import MetadataStaticAPIView
 from .views.metadata import DonorViewSet, ExternalGrantViewSet, GrantViewSet, ThemeViewSet
 from .views.sharepoint import (
     FileSharePointViewSet,
+    ItemSharePointCamlViewSet,
     ItemSharePointViewSet,
     SharePointLibraryViewSet,
     SharePointSiteViewSet,
@@ -30,6 +31,8 @@ router.register(r'sharepoint/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)/fi
                 basename='sharepoint-files')
 router.register(r'sharepoint/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)', ItemSharePointViewSet,
                 basename='sharepoint')
+router.register(r'sharepoint-caml/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)', ItemSharePointCamlViewSet,
+                basename='sharepoint-caml')
 
 urlpatterns = [
     path('metadata/static/', view=MetadataStaticAPIView.as_view(http_method_names=['get']),

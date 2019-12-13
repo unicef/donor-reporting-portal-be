@@ -1,9 +1,7 @@
 import os
 from io import StringIO
 from unittest import mock
-from unittest.mock import MagicMock
 
-from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.db import OperationalError
 
@@ -24,16 +22,6 @@ def invalidate_cache():
     os.environ['INVALIDATE_CACHE'] = "1"
     yield
     del os.environ['INVALIDATE_CACHE']
-
-
-@pytest.mark.django_db
-def test_init_setup_all(db, settings, autocreate_users, invalidate_cache, tmpdir, monkeypatch):
-    settings.DEBUG = True
-    settings.STATIC_ROOT = tmpdir
-    monkeypatch.setattr('donor_reporting_portal.apps.init.management.commands.init-setup.call_command', MagicMock())
-    call_command("init-setup", all=True, stdout=StringIO())
-    ModelUser = get_user_model()
-    assert ModelUser.objects.exists()
 
 
 @pytest.mark.django_db

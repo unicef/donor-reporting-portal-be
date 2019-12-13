@@ -2,53 +2,54 @@
     "userrole": {
         "master": {
             "model": "roles.userrole",
-            "pk": 151,
+            "pk": 59,
             "fields": {
-                "created": "2019-10-16T12:09:54.168Z",
-                "modified": "2019-10-16T12:09:54.168Z",
-                "user": 738,
-                "group": 212,
-                "donor": 213
+                "created": "2019-12-02T22:40:58.778Z",
+                "modified": "2019-12-02T22:40:58.778Z",
+                "user": 254,
+                "group": 86,
+                "donor": 468
             }
         },
         "deps": [
             {
                 "model": "unicef_security.user",
-                "pk": 738,
+                "pk": 254,
                 "fields": {
                     "password": "password",
                     "last_login": null,
                     "is_superuser": false,
-                    "username": "user003",
-                    "first_name": "Kenneth",
-                    "last_name": "Baxter",
-                    "email": "m003@mailinator.com",
+                    "username": "user020",
+                    "first_name": "Dalton",
+                    "last_name": "Waters",
+                    "email": "m020@mailinator.com",
                     "is_staff": false,
                     "is_active": true,
-                    "date_joined": "2019-10-16T12:09:54.161Z",
+                    "date_joined": "2019-12-02T22:40:58.753Z",
                     "azure_id": null,
                     "job_title": null,
-                    "display_name": "Kenneth Baxter:",
+                    "display_name": "Dalton Waters:",
                     "groups": [],
                     "user_permissions": []
                 }
             },
             {
                 "model": "auth.group",
-                "pk": 212,
+                "pk": 86,
                 "fields": {
-                    "name": "name000",
+                    "name": "name007",
                     "permissions": []
                 }
             },
             {
                 "model": "report_metadata.donor",
-                "pk": 213,
+                "pk": 468,
                 "fields": {
-                    "created": "2019-10-16T12:09:54.167Z",
-                    "modified": "2019-10-16T12:09:54.167Z",
+                    "created": "2019-12-02T22:40:58.777Z",
+                    "modified": "2019-12-02T22:40:58.777Z",
                     "name": "",
-                    "code": "code000"
+                    "code": "code011",
+                    "us_gov": false
                 }
             }
         ]

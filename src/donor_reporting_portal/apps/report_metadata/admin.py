@@ -32,7 +32,8 @@ class ExternalGrantAdmin(GrantSyncMixin, admin.ModelAdmin):
 @admin.register(Donor)
 class DonorAdmin(GrantSyncMixin, admin.ModelAdmin):
     search_fields = ('name',)
-    list_display = ('name', 'code')
+    list_display = ('name', 'code', 'us_gov')
+    list_filter = ('us_gov',)
 
 
 @admin.register(Grant)

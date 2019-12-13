@@ -16,14 +16,17 @@ class SharePointItemSerializer(serializers.Serializer):
     guid = UpperSharePointPropertyField()
     created = SharePointPropertyField()
     modified = SharePointPropertyField()
+    report_generated_by = SharePointPropertyField()
     title = SharePointPropertyField()
     year = SharePointPropertyField()
-    donor0 = SharePointPropertyManyField()
+    donor = SharePointPropertyField()
+    donor_code = SharePointPropertyField()
     regenerated = SharePointPropertyField()
     grant_number = SharePointPropertyField()
     grant_issue_year = SharePointPropertyField()
     grant_expiry_date = SharePointPropertyField()
-    recipient_office = SharePointPropertyField()
+    external_reference = SharePointPropertyField()
+    recipient_office = SharePointPropertyManyField()
     report_type = SharePointPropertyField()
     report_end_date = SharePointPropertyField()
     theme = SharePointPropertyField()
@@ -37,12 +40,11 @@ class SharePointItemSerializer(serializers.Serializer):
     description = SharePointPropertyField()
     resource_url = serializers.ReadOnlyField()
     download_url = serializers.SerializerMethodField()
-    # file = SharePointPropertyField()
-    # attachment_files = SharePointPropertyField()
 
     def get_download_url(self, obj):
-        filename = obj.properties.get('Title', '')
-        filename = filename.split('.')[0] if filename else ' '
+        title = obj.properties.get('Title', '')
+        k = title.rfind(".")
+        filename = title[:k] + "__ext__" + title[k + 1:]
         relative_url = reverse('api:sharepoint-files-download', kwargs={
             'site_name': self.context['site_name'],
             'folder_name': self.context['folder_name'],

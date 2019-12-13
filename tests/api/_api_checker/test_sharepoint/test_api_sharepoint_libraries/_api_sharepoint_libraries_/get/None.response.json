@@ -1,0 +1,35 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin"
+        ],
+        "allow": [
+            "Allow",
+            "GET, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "SAMEORIGIN"
+        ],
+        "content-length": [
+            "Content-Length",
+            "252"
+        ]
+    },
+    "data": [
+        {
+            "name": "2019 Certified Reports",
+            "site_name": "GLB-DRP",
+            "active": true,
+            "library_url": "https://asantiagounicef.sharepoint.com/sites/GLB-DRP/2019%20Certified%20Reports",
+            "api_url": "http://localhost:8082/api/sharepoint/GLB-DRP/2019%20Certified%20Reports/"
+        }
+    ],
+    "content_type": null
+}

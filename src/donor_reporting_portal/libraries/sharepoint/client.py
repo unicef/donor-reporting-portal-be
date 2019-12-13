@@ -4,17 +4,16 @@ import os
 from django.conf import settings
 
 from office365.runtime.auth.authentication_context import AuthenticationContext
-from office365.sharepoint.caml_query import CamlQuery
 from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.file import File
 from office365.sharepoint.file_creation_information import FileCreationInformation
-
-from donor_reporting_portal.libraries.sharepoint.querystring_builder import QueryStringBuilder
+from office365.sharepoint.helpers.camlquery_builder import CamlQueryBuilder
+from office365.sharepoint.helpers.querystring_builder import QueryStringBuilder
 
 logger = logging.getLogger(__name__)
 
 
-class SharePointClientException(Exception):
+class SharePointClientException(BaseException):
     """SharePoint Exception when initializing the client"""
 
 
@@ -22,7 +21,6 @@ class SharePointClient:
     """Client to access SharePoint Document Library"""
 
     def __init__(self, *args, **kwargs) -> None:
-
         self.site_path = kwargs.get('url', settings.SHAREPOINT_TENANT['url'])
         self.relative_url = kwargs.get('relative_url', settings.SHAREPOINT_TENANT['url'])
         username = kwargs.get('username', settings.SHAREPOINT_TENANT['user_credentials']['username'])
@@ -35,9 +33,6 @@ class SharePointClient:
         else:
             logger.exception(ctx_auth.get_last_error())
             raise SharePointClientException(ctx_auth.get_last_error())
-
-    def get_querystring(self, filters):
-        return QueryStringBuilder(filters).get_querystring()
 
     def get_folder(self, list_title):
         list_obj = self.context.web.lists.get_by_title(list_title)
@@ -58,7 +53,7 @@ class SharePointClient:
         return folders
 
     def read_files(self, filters=dict()):
-        querystring = self.get_querystring(filters)
+        querystring = QueryStringBuilder(filters).get_querystring()
         folder = self.get_folder(self.folder)
         files = folder.files.filter(querystring)
         self.context.load(files)
@@ -69,7 +64,7 @@ class SharePointClient:
         return files
 
     def read_items(self, filters=dict()):
-        querystring = self.get_querystring(filters)
+        querystring = QueryStringBuilder(filters).get_querystring()
         list_object = self.context.web.lists.get_by_title(self.folder)
         items = list_object.get_items().filter(querystring)
         self.context.load(items)
@@ -78,21 +73,19 @@ class SharePointClient:
 
     def read_file(self, filename):
         folder = self.get_folder(self.folder)
-        cur_file = folder.files.get_by_url(f'/{self.relative_url}/{self.folder}/{filename}.pdf')
+        cur_file = folder.files.get_by_url(f'/{self.relative_url}/{self.folder}/{filename}')
         self.context.load(cur_file)
         self.context.execute_query()
         logger.info(f'File name: {cur_file.properties["Name"]}')
         return cur_file
 
-    def read_folder_and_files_alt(self, list_title='Documents'):
+    def read_caml_items(self, filters=dict(), scope=None):
         """Read a folder example"""
-        list_obj = self.context.web.lists.get_by_title(list_title)
-        qry = CamlQuery.create_all_items_query()
+        list_obj = self.context.web.lists.get_by_title(self.folder)
+        qry = CamlQueryBuilder(filters, scope).get_query()
         items = list_obj.get_items(qry)
-        self.context.load(items)
         self.context.execute_query()
-        for cur_item in items:
-            logger.info('File name: {cur_item.properties["Title"]}')
+        return items
 
     def upload_file_alt(self, target_folder, name, content):
         context = target_folder.context

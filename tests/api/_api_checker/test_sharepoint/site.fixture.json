@@ -2,13 +2,15 @@
     "site": {
         "master": {
             "model": "sharepoint.sharepointsite",
-            "pk": 1,
+            "pk": 9,
             "fields": {
-                "created": "2019-11-04T18:01:06.783Z",
-                "modified": "2019-11-04T18:01:06.783Z",
-                "name": "name000",
-                "url": "",
-                "wrapper_name": ""
+                "created": "2019-12-10T22:26:35.026Z",
+                "modified": "2019-12-10T22:26:35.026Z",
+                "name": "GLB-DRP",
+                "url": "https://asantiagounicef.sharepoint.com/",
+                "site_type": "sites",
+                "username": null,
+                "password": null
             }
         },
         "deps": []

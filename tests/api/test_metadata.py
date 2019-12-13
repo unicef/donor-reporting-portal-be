@@ -2,37 +2,32 @@ from django.urls import reverse
 
 from drf_api_checker.pytest import contract, frozenfixture
 from tests.api_checker import ExpectedErrorRecorder, LastModifiedRecorder
-from tests.factories import UserRoleFactory
+from tests.factories import DonorFactory, ExternalGrantFactory, GrantFactory, ThemeFactory, UserRoleFactory
 from tests.perms import user_grant_permissions, user_grant_role_permission
 
 
 @frozenfixture()
 def userrole(request, db, logged_user):
-    from tests.factories import UserRoleFactory
     return UserRoleFactory(user=logged_user)
 
 
 @frozenfixture()
 def theme(request, db):
-    from tests.factories import ThemeFactory
     return ThemeFactory()
 
 
 @frozenfixture()
 def donor(request, db):
-    from tests.factories import DonorFactory
     return DonorFactory()
 
 
 @frozenfixture()
 def external_grant(request, db):
-    from tests.factories import ExternalGrantFactory
     return ExternalGrantFactory()
 
 
 @frozenfixture()
 def grant(request, db,):
-    from tests.factories import GrantFactory
     return GrantFactory()
 
 
@@ -63,12 +58,12 @@ def test_api_my_donor_list_fail(request, django_app, logged_user, donor):
     return reverse('api:donor-my-donors')
 
 
-@contract(recorder_class=LastModifiedRecorder)
-def test_api_my_admin_donors_list_donor(request, django_app, logged_user):
-    userrole = UserRoleFactory(user=logged_user)
-    with user_grant_role_permission(userrole.user, userrole.donor,
-                                    permissions=['report_metadata.view_donor', 'roles.add_userrole']):
-        return reverse('api:donor-my-admin-donors')
+# @contract(recorder_class=LastModifiedRecorder)
+# def test_api_my_admin_donors_list_donor(request, django_app, logged_user):
+#     userrole = UserRoleFactory(user=logged_user)
+#     with user_grant_role_permission(userrole.user, userrole.donor,
+#                                     permissions=['report_metadata.view_donor', 'roles.add_userrole']):
+#         return reverse('api:donor-my-admin-donors')
 
 
 @contract(recorder_class=ExpectedErrorRecorder)

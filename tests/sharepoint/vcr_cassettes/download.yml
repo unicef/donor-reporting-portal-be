@@ -1,0 +1,77 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Cookie:
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODY3MjU1MDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NTM2NTUyNDMzODEwLDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw0NWVmMWQ5Zi1lMDE1LTAwMDAtNDc2Mi0yYjJkYjIyZThiYTUsNDVlZjFkOWYtZTAxNS0wMDAwLTQ3NjItMmIyZGIyMmU4YmE1LCwwLDAsMCwsLCxOTFU2NGFEdlpBenY0VEIwdUYwN3lCa000VFBRK3U1OXdKZTJvV1hqcythQjM2RUNBNTNqM2NoUG1ZMlFVN29aL0J1bkZDeU9tU0JkcXVBa0djcTVKblkvbHJmV3FMTkc0eUkvRW5NMWFxbWJNczBneWNvWTdEaG1VYk9sS1h5a2M1YWF0WllkNWgrMFR2REMweE85b0pTNENsRzhmZkFJMWE2dnNMT1BKK0xnOFFyNjJNUW5nL0FOcmMyR2FnWkwvMW1pd3d0a1FqekhCdHcxRjNHR0hVS0dZUEhMVWZjVU1hOFV0bnhCZ0R6TlFXU0pMb0RLdVZRSGZnZDFQWmVRYWFvUHhJVEtOMlBselFLN3BSemY0NTVOSGNzTGoyVVJDbUNUTzNaZlR0dzVyLzRzSkZvNUViS2RCYXVYQlR4NytNcUZlTXpxbytFN2praDBteDlzSVE9PTwvU1A+;
+        rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/web/getfilebyserverrelativeurl('/2019%20Certified%20Reports/CertifiedDonorStatement_SC110743_31122018')/%5C$value
+  response:
+    body:
+      string: <?xml version="1.0" encoding="utf-8"?><m:error xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"><m:code>-2147024809,
+        System.ArgumentException</m:code><m:message xml:lang="en-US">Server relative
+        urls must start with SPWeb.ServerRelativeUrl</m:message></m:error>
+    headers:
+      Cache-Control:
+      - private, max-age=0
+      Content-Type:
+      - application/xml;charset=utf-8
+      DATASERVICEVERSION:
+      - '3.0'
+      Date:
+      - Tue, 03 Dec 2019 17:20:56 GMT
+      Expires:
+      - Mon, 18 Nov 2019 17:20:56 GMT
+      Last-Modified:
+      - Tue, 03 Dec 2019 17:20:56 GMT
+      MS-CV:
+      - nx3vRYEAAABFjzB6AmlkuA.0
+      MicrosoftSharePointTeamServices:
+      - 16.0.0.19520
+      P3P:
+      - CP="ALL IND DSP COR ADM CONo CUR CUSo IVAo IVDo PSA PSD TAI TELo OUR SAMo
+        CNT COM INT NAV ONL PHY PRE PUR UNI"
+      SPClientServiceRequestDuration:
+      - '16'
+      SPRequestGuid:
+      - 45ef1d9f-0081-0000-458f-307a026964b8
+      Set-Cookie:
+      - rtFa=cTQ3inpPYGlGkFIQ6chHH/t0G9eChJnFMfPLKKZm6ZkmNkQ5M0ZDRDAtNUQ0NS00MkJGLUEwRkUtNUM0OTU4QUQyNTI1FkZGgvEcX9ilmtfczGyMWWc2cVi1q2DPGLKPEiZ6MTpAygixe8N+V4ry53qtxdjx2p3JTI58RVz0m9q91Y73eZNEaAKee13Oagpn0P/H+pelB9l8+8ASImo+2UYPkbXXxmyB8kKAG8RR2PnGPYedLsehB/4mx86p1UzdTk1shirHuzc7qIC/czhj1alv8piT0RqUKilRW4adpOpL0tLFZWvRvpgkfx66aW0ck7vV4slQ5yXh14wvW0ND8XQziI/HSZ2eGSIsfh26ezvcwMl1tFJXque+bu8dUo/9knokZjx8Aw43UlFICxdZLIryVY9cm31lDCkVpu2Y0WEAYCTTg0UAAAA=;
+        domain=sharepoint.com; path=/; secure; HttpOnly
+      - FedAuth=77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48U1A+VjYsMGguZnxtZW1iZXJzaGlwfDEwMDMyMDAwODE3ZDg1YTVAbGl2ZS5jb20sMCMuZnxtZW1iZXJzaGlwfGljdGQtc2NzLWRycEBhc2FudGlhZ291bmljZWYub25taWNyb3NvZnQuY29tLDEzMjE5ODY3MjU1MDAwMDAwMCwxMzIxNjkxMzM0NDAwMDAwMDAsMTMyMTk5NTM2NTUyNDMzODEwLDAuMC4wLjAsMiw2ZDkzZmNkMC01ZDQ1LTQyYmYtYTBmZS01YzQ5NThhZDI1MjUsLCw0NWVmMWQ5Zi1lMDE1LTAwMDAtNDc2Mi0yYjJkYjIyZThiYTUsNDVlZjFkOWYtZTAxNS0wMDAwLTQ3NjItMmIyZGIyMmU4YmE1LCwwLDAsMCwsLCxOTFU2NGFEdlpBenY0VEIwdUYwN3lCa000VFBRK3U1OXdKZTJvV1hqcythQjM2RUNBNTNqM2NoUG1ZMlFVN29aL0J1bkZDeU9tU0JkcXVBa0djcTVKblkvbHJmV3FMTkc0eUkvRW5NMWFxbWJNczBneWNvWTdEaG1VYk9sS1h5a2M1YWF0WllkNWgrMFR2REMweE85b0pTNENsRzhmZkFJMWE2dnNMT1BKK0xnOFFyNjJNUW5nL0FOcmMyR2FnWkwvMW1pd3d0a1FqekhCdHcxRjNHR0hVS0dZUEhMVWZjVU1hOFV0bnhCZ0R6TlFXU0pMb0RLdVZRSGZnZDFQWmVRYWFvUHhJVEtOMlBselFLN3BSemY0NTVOSGNzTGoyVVJDbUNUTzNaZlR0dzVyLzRzSkZvNUViS2RCYXVYQlR4NytNcUZlTXpxbytFN2praDBteDlzSVE9PTwvU1A+;
+        path=/; secure; HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000
+      Transfer-Encoding:
+      - chunked
+      X-AspNet-Version:
+      - 4.0.30319
+      X-Content-Type-Options:
+      - nosniff
+      X-FRAME-OPTIONS:
+      - SAMEORIGIN
+      X-MS-InvokeApp:
+      - 1; RequireReadOnly
+      X-MSEdge-Ref:
+      - 'Ref A: DD3C565B419342D180E6F6F4C2339856 Ref B: BN3EDGE0920 Ref C: 2019-12-03T17:20:56Z'
+      X-Powered-By:
+      - ASP.NET
+      X-SP-SERVERSTATE:
+      - ReadOnly=0
+      X-SharePointHealthScore:
+      - '4'
+      request-id:
+      - 45ef1d9f-0081-0000-458f-307a026964b8
+    status:
+      code: 400
+      message: Bad Request
+version: 1

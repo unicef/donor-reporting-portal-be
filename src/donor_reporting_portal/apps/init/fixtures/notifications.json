@@ -1,0 +1,32 @@
+[
+{
+    "model": "post_office.emailtemplate",
+    "pk": 1,
+    "fields": {
+        "name": "Access to UNICEF Donor Reporting Portal",
+        "description": "Access to UNICEF Donor Reporting Portal",
+        "created": "2019-11-05T12:40:02.713Z",
+        "last_updated": "2019-11-05T12:40:02.713Z",
+        "subject": "Access to UNICEF Donor Reporting Portal",
+        "content": "\nDear user,\n\nYou have been granted access to UNICEF Donor Reporting Portal.\n\nPlease registry here and feel free to login in the system, username is your e-mail address provided at the time of account registration.\n\nThank you.\n",
+        "html_content": "\nDear user,\n\nYou have been granted access to UNICEF Donor Reporting Portal.\n\nPlease registry here and feel free to login in the system, username is your e-mail address provided at the time of account registration.\n\nThank you.\n",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 2,
+    "fields": {
+        "name": "access_grant_email",
+        "description": "Access to UNICEF Donor Reporting Portal",
+        "created": "2019-11-05T12:44:45.111Z",
+        "last_updated": "2019-11-20T19:22:23.939Z",
+        "subject": "Access to UNICEF Donor Reporting Portal",
+        "content": "Dear {{ instance.first_name }},\r\n\r\nYou have been granted access to UNICEF Donor Reporting Portal.\r\n\r\nPlease registry at {{home_link}} and feel free to login in the system, username is your e-mail address provided at the time of account registration.\r\n\r\nThank you.\r\n",
+        "html_content": "Dear {{ instance.first_name }},<br/><br/>\n    \n    You have been granted access to UNICEF Donor Reporting Portal.<br/><br/>\n    \n    Please registry <a href=\"{{ home_link }}\">here</a><br/><br/>\n    and feel free to login in the system, username is your e-mail address provided at the time of account registration.<br/><br/>\n    \n    Thank you.\n    ",
+        "language": "",
+        "default_template": null
+    }
+}
+]

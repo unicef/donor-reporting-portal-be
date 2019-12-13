@@ -21,7 +21,7 @@ class SharePointPropertyManyField(serializers.ReadOnlyField):
         if getattr(instance, 'properties') and camel_case in instance.properties:
             values = instance.properties[camel_case]
             if values:
-                values = values.replace(' ', '').split(',')
+                values = values.replace(', ', ',').split(',')
             return values
         return super().get_attribute(instance)
 

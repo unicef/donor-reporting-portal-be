@@ -1,8 +1,7 @@
 import logging
 from datetime import datetime
 
-from django.conf import settings
-
+from unicef_security import config
 from unicef_security.models import BusinessArea
 from unicef_vision.synchronizers import VisionDataSynchronizer
 
@@ -36,8 +35,8 @@ class GrantSynchronizer(VisionDataSynchronizer):
     def _get_kwargs(self):
         kwargs = super()._get_kwargs()
         kwargs.update({
-            'url': 'https://unibiapitest.azure-api.net/biapi/v1/',
-            'headers': (('Ocp-Apim-Subscription-Key', settings.INSIGHT_SUB_KEY), )
+            'url': config.INSIGHT_URL,
+            'headers': (('Ocp-Apim-Subscription-Key', config.INSIGHT_SUB_KEY), )
         })
         return kwargs
 
@@ -65,14 +64,14 @@ class GrantSynchronizer(VisionDataSynchronizer):
         logger.info(f'parsing {record["GRANT_REF"]}')
 
         donor, _ = Donor.objects.update_or_create(code=record['DONOR_CODE'], defaults={
-            'name': record['DONOR_NAME']
+            'name': record['DONOR_NAME'],
+            'us_gov': bool(record['USGOV_FLAG'])
         })
         grant_defaults = {
             'year': record['ISSUE_YEAR'],
             'expiry_date': get_date(record['EXPIRY_DATE']),
             'financial_close_date': get_date(record.get('FINANCIALLY_CLOSE_DATE', None)),
             'description': record['DESCRIPTION'],
-            # 'internal_ref': get_date(record['INTERNAL_REF']),
             'donor': donor,
             'category': get_type(record),
         }

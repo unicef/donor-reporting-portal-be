@@ -1,0 +1,30 @@
+{
+    "library": {
+        "master": {
+            "model": "sharepoint.sharepointlibrary",
+            "pk": 19,
+            "fields": {
+                "created": "2019-12-10T22:26:35.032Z",
+                "modified": "2019-12-10T22:26:35.032Z",
+                "name": "2019 Certified Reports",
+                "site": 9,
+                "active": true
+            }
+        },
+        "deps": [
+            {
+                "model": "sharepoint.sharepointsite",
+                "pk": 9,
+                "fields": {
+                    "created": "2019-12-10T22:26:35.026Z",
+                    "modified": "2019-12-10T22:26:35.026Z",
+                    "name": "GLB-DRP",
+                    "url": "https://asantiagounicef.sharepoint.com/",
+                    "site_type": "sites",
+                    "username": null,
+                    "password": null
+                }
+            }
+        ]
+    }
+}

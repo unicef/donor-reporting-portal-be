@@ -28,7 +28,6 @@ elif [[ "$*" == "beat" ]];then
 
 elif [[ "$*" == "w2" ]];then
     django-admin db-isready --wait --timeout 60
-    exec gosu donor_reporting_portal circusd /etc/circus.conf --log-output=-
 
 elif [[ "$*" == "donor_reporting_portal" ]];then
     rm -f /var/donor_reporting_portal/run/*
