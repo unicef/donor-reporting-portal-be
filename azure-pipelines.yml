@@ -9,12 +9,12 @@ trigger:
 resources:
   containers:
   - container: my_container
-    image: ubuntu:16.04
+    image: ubuntu:latest
   - container: pg10
     image: postgres:10
     
 pool:
-  vmImage: 'ubuntu-16.04'
+  vmImage: 'ubuntu-latest'
 strategy:
   matrix:
     Python38:
