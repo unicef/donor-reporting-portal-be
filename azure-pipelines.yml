@@ -23,6 +23,8 @@ strategy:
       PYTHON_VERSION: '3.8'
   maxParallel: 3
 
+container: my_container
+
 steps:
 - task: UsePythonVersion@0
   inputs:
@@ -44,10 +46,6 @@ steps:
       project_location = path.dirname(path.abspath(manage_py))
       print('Found Django project in', project_location)
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
-
-- script: |
-    apt install -y postgresql-client
-    psql --host=postgres --username=postgres --command="CREATE DATABASE donor_reporting_portal;"
 
 - script: |
     python -m pip install --upgrade pip setuptools wheel pipenv
