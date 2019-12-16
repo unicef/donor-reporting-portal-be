@@ -5,28 +5,21 @@
 
 trigger:
 - master
+- develop
 
 resources:
   containers:
   - container: my_container
     image: ubuntu:latest
-  - container: pg10
-    image: postgres:10
     
 pool:
   vmImage: 'ubuntu-latest'
+
 strategy:
   matrix:
     Python38:
       PYTHON_VERSION: '3.8'
-    postgres10:
-      postgresService: pg10
   maxParallel: 3
-
-container: my_container
-
-services:
-  postgres: $[ variables['postgresService'] ]
 
 steps:
 - task: UsePythonVersion@0
