@@ -8,7 +8,7 @@ BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9]\)\.\(.*\)/\1.\2/g" )
 BUILD_OPTIONS?=
 CMD?=donor_reporting_portal
 CONTAINER_NAME?=donor_reporting_portal-${TARGET}
-DOCKER_IMAGE_NAME?==unicef/donor-reporting-portal-backend
+DOCKER_IMAGE_NAME?=unicef/donor-reporting-portal-backend
 DOCKER_IMAGE?=${DOCKER_IMAGE_NAME}:${TARGET}
 DOCKERFILE?=Dockerfile
 RUN_OPTIONS?=
