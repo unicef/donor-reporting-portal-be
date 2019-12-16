@@ -57,10 +57,6 @@ steps:
   displayName: 'Install prerequisites'
 
 - script: |
-    psql -c "CREATE DATABASE donor_reporting_portal;" -U postgres
-  displayName: 'Create DB'
-
-- script: |
     pushd '$(projectRoot)'
     tox
   displayName: 'Run tests'
