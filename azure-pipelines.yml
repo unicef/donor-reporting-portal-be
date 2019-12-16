@@ -34,26 +34,26 @@ steps:
     versionSpec: '3.5'
     architecture: 'x64'
 
-- task: PythonScript@0
-  displayName: 'Export project path'
-  inputs:
-    scriptSource: 'inline'
-    script: |
-      """Search all subdirectories for `manage.py`."""
-      from glob import iglob
-      from os import path
-      # Python >= 3.5
-      manage_py = next(iglob(path.join('**', 'manage.py'), recursive=True), None)
-      if not manage_py:
-          raise SystemExit('Could not find a Django project')
-      project_location = path.dirname(path.abspath(manage_py))
-      print('Found Django project in', project_location)
-      print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
+# - task: PythonScript@0
+#   displayName: 'Export project path'
+#   inputs:
+#     scriptSource: 'inline'
+#     script: |
+#       """Search all subdirectories for `manage.py`."""
+#       from glob import iglob
+#       from os import path
+#       # Python >= 3.5
+#       manage_py = next(iglob(path.join('**', 'manage.py'), recursive=True), None)
+#       if not manage_py:
+#           raise SystemExit('Could not find a Django project')
+#       project_location = path.dirname(path.abspath(manage_py))
+#       print('Found Django project in', project_location)
+#       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
 - script: |
-    python -m pip install --upgrade pip setuptools wheel pipenv
-    python -m pipenv lock -r > requirements.txt
-    python -m pipenv lock --dev -r > dev_requirements.txt
+    python3 -m pip install --upgrade pip setuptools wheel pipenv
+    python3 -m pipenv lock -r > requirements.txt
+    python3 -m pipenv lock --dev -r > dev_requirements.txt
     pip install -r requirements.txt
     pip install -r dev_requirements.txt
     pip install unittest-xml-reporting
