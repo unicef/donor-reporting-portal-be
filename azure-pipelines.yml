@@ -20,7 +20,7 @@ pool:
 strategy:
   matrix:
     Python38:
-      PYTHON_VERSION: '3.8'
+      PYTHON_VERSION: '3.7'
   maxParallel: 3
 
 container: my_container
