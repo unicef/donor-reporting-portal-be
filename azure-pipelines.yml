@@ -23,6 +23,8 @@ strategy:
       postgresService: pg10
   maxParallel: 3
 
+container: my_container
+
 services:
   postgres: $[ variables['postgresService'] ]
 
