@@ -11,6 +11,8 @@ resources:
   containers:
   - container: my_container
     image: ubuntu:latest
+  - container: pg10
+    image: postgres:10
     
 pool:
   vmImage: 'ubuntu-latest'
