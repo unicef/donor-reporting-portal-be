@@ -20,7 +20,7 @@ pool:
 strategy:
   matrix:
     Python38:
-      PYTHON_VERSION: '3.8'
+      PYTHON_VERSION: '3.6'
   maxParallel: 3
 
 container: my_container
@@ -33,6 +33,22 @@ steps:
   inputs:
     versionSpec: '$(PYTHON_VERSION)'
     architecture: 'x64'
+
+- task: PythonScript@0
+  displayName: 'Export project path'
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      """Search all subdirectories for `manage.py`."""
+      from glob import iglob
+      from os import path
+      # Python >= 3.5
+      manage_py = next(iglob(path.join('**', 'manage.py'), recursive=True), None)
+      if not manage_py:
+          raise SystemExit('Could not find a Django project')
+      project_location = path.dirname(path.abspath(manage_py))
+      print('Found Django project in', project_location)
+      print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
 - script: |
     python -m pip install --upgrade pip setuptools wheel pipenv
