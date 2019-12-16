@@ -10,7 +10,7 @@ trigger:
 resources:
   containers:
   - container: my_container
-    image: ubuntu:latest
+    image: ubuntu:16.04
   - container: pg10
     image: postgres:10
     
@@ -20,7 +20,7 @@ pool:
 strategy:
   matrix:
     Python38:
-      PYTHON_VERSION: '3.7'
+      PYTHON_VERSION: '3.8'
   maxParallel: 3
 
 container: my_container
