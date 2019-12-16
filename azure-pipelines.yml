@@ -73,7 +73,7 @@ imageName: 'unicef/donor-reporting-portal-backend:$(Build.BuildId)'
 #   condition: succeededOrFailed()
 
 - script: |
-    docker build -f Dockerfile -t $(imageName) .
+    docker build -f docker/Dockerfile -t $(imageName) .
     docker login -u $(dockerId) -p $pswd
     docker push $(imageName)
   env:
