@@ -17,7 +17,8 @@ resources:
 pool:
   vmImage: 'ubuntu-16.04'
 
-imageName: 'unicef/donor-reporting-portal-backend:$(Build.BuildId)'
+variables:
+  imageName: 'unicef/donor-reporting-portal-backend:$(Build.BuildId)'
 
 # strategy:
 #   matrix:
