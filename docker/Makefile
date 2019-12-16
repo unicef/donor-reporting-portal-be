@@ -92,7 +92,7 @@ local:
 	$(MAKE) .run
 
 release:
-	@echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
+	docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:dev
 	docker push ${DOCKER_IMAGE_NAME}:${TARGET}
 	docker push ${DOCKER_IMAGE_NAME}:dev
