@@ -20,7 +20,7 @@ pool:
 strategy:
   matrix:
     Python37:
-      PYTHON_VERSION: '3.7'
+      PYTHON_VERSION: '3.5'
   maxParallel: 3
 
 container: my_container
@@ -31,7 +31,7 @@ services:
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '$(PYTHON_VERSION)'
+    versionSpec: '3.5'
     architecture: 'x64'
 
 - task: PythonScript@0
