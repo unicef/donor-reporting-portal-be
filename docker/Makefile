@@ -48,7 +48,7 @@ build-test:
 	TARGET=dev $(MAKE) .build test
 
 build:
-	$(MAKE) .build test
+	$(MAKE) .build
 
 .run:
 	cd .. && docker run \
