@@ -6,13 +6,25 @@
 trigger:
 - master
 
+resources:
+  containers:
+  - container: my_container
+    image: ubuntu:16.04
+  - container: pg10
+    image: postgres:10
+    
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-16.04'
 strategy:
   matrix:
     Python38:
       PYTHON_VERSION: '3.8'
+    postgres10:
+      postgresService: pg10
   maxParallel: 3
+
+services:
+  postgres: $[ variables['postgresService'] ]
 
 steps:
 - task: UsePythonVersion@0
@@ -35,6 +47,10 @@ steps:
       project_location = path.dirname(path.abspath(manage_py))
       print('Found Django project in', project_location)
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
+
+- script: |
+    apt install -y postgresql-client
+    psql --host=postgres --username=postgres --command="CREATE DATABASE donor_reporting_portal;"
 
 - script: |
     python -m pip install --upgrade pip setuptools wheel pipenv
