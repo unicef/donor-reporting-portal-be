@@ -25,6 +25,9 @@ strategy:
 
 container: my_container
 
+services:
+  postgres: pg10
+
 steps:
 - task: UsePythonVersion@0
   inputs:
