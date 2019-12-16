@@ -6,73 +6,15 @@
 trigger:
 - master
 - develop
-
-resources:
-  containers:
-  - container: my_container
-    image: ubuntu:16.04
-  - container: pg10
-    image: postgres:10
     
 pool:
   vmImage: 'ubuntu-16.04'
 
 variables:
   imageName: 'unicef/donor-reporting-portal-backend:$(Build.BuildId)'
+    # define two more variables dockerId and dockerPassword in the build pipeline in UI
 
-# strategy:
-#   matrix:
-#     Python37:
-#       PYTHON_VERSION: '3.5'
-#   maxParallel: 3
-
-# container: my_container
-
-# services:
-#   postgres: pg10
-
-# steps:
-# - task: UsePythonVersion@0
-#   inputs:
-#     versionSpec: '3.5'
-#     architecture: 'x64'
-
-# - task: PythonScript@0
-#   displayName: 'Export project path'
-#   inputs:
-#     scriptSource: 'inline'
-#     script: |
-#       """Search all subdirectories for `manage.py`."""
-#       from glob import iglob
-#       from os import path
-#       # Python >= 3.5
-#       manage_py = next(iglob(path.join('**', 'manage.py'), recursive=True), None)
-#       if not manage_py:
-#           raise SystemExit('Could not find a Django project')
-#       project_location = path.dirname(path.abspath(manage_py))
-#       print('Found Django project in', project_location)
-#       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
-
-# - script: |
-#     python3 -m pip install --upgrade pip setuptools wheel pipenv
-#     python3 -m pipenv lock -r > requirements.txt
-#     python3 -m pipenv lock --dev -r > dev_requirements.txt
-#     pip install -r requirements.txt
-#     pip install -r dev_requirements.txt
-#     pip install unittest-xml-reporting
-#   displayName: 'Install prerequisites'
-
-# - script: |
-#     pushd '$(projectRoot)'
-#     tox
-#   displayName: 'Run tests'
-
-# - task: PublishTestResults@2
-#   inputs:
-#     testResultsFiles: "**/TEST-*.xml"
-#     testRunTitle: 'Python $(PYTHON_VERSION)'
-#   condition: succeededOrFailed()
-
+steps:
 - script: |
     docker build -f docker/Dockerfile -t $(imageName) .
     docker login -u $(dockerId) -p $pswd
