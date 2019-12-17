@@ -2,6 +2,8 @@ FROM unicef/donor-reporting-portal-backend:0.6-base
 
 COPY . /code
 WORKDIR /code
+RUN pip3 install . \
+    && rm -fr /code
 
 ENV PYTHONUNBUFFERED=1
 ENV DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings
@@ -11,10 +13,10 @@ ENV MEDIA_ROOT=/tmp/media
 
 EXPOSE 8000
 
-ADD docker/*.sh /usr/local/bin/
 
-ENTRYPOINT ["/code/docker/entrypoint.sh"]
-#ENTRYPOINT /code/docker/entrypoint.sh
+ADD docker/*.sh /usr/local/bin/
+ENTRYPOINT ["entrypoint.sh"]
+RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
 
 WORKDIR /var/donor_reporting_portal
 
