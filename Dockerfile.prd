@@ -1,11 +1,9 @@
 FROM unicef/donor-reporting-portal-backend:0.6-base
 
-RUN mkdir -p /code
 COPY . /code
 WORKDIR /code
 
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONPATH="/code"
 ENV DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings
 ENV SECRET_KEY="not-so-secret-key-just-for-collectstatic"
 ENV STATIC_ROOT=/tmp/static
@@ -15,7 +13,9 @@ EXPOSE 8000
 
 ADD docker/*.sh /usr/local/bin/
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["/code/docker/entrypoint.sh"]
+#ENTRYPOINT /code/docker/entrypoint.sh
+
 WORKDIR /var/donor_reporting_portal
 
 CMD ["donor_reporting_portal"]
