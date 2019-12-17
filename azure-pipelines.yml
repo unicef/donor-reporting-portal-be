@@ -13,7 +13,10 @@ variables:
 steps:
 - script: |
     cd docker
-    make build release
+    make build
+    docker tag unicef/donor-reporting-portal-backend:${TARGET} ${DOCKER_IMAGE_NAME}:dev
+    docker push unicef/donor-reporting-portal-backend:${TARGET}
+    docker push unicef/donor-reporting-portal-backend:dev
   env:
     pswd: $(dockerPassword)
   displayName: 'Build and push Docker image'
