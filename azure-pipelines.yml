@@ -14,7 +14,7 @@ steps:
 - script: |
     cd docker
     make build
-    docker tag unicef/donor-reporting-portal-backend:${TARGET} ${DOCKER_IMAGE_NAME}:dev
+    docker tag unicef/donor-reporting-portal-backend:${TARGET} unicef/donor-reporting-portal-backend:dev
     docker push unicef/donor-reporting-portal-backend:${TARGET}
     docker push unicef/donor-reporting-portal-backend:dev
   env:
