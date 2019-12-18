@@ -1,6 +1,5 @@
+from office365.sharepoint.helpers.utils import to_camel
 from rest_framework import serializers
-
-from donor_reporting_portal.libraries.sharepoint.utils import to_camel
 
 
 class SharePointPropertyField(serializers.ReadOnlyField):

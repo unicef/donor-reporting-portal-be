@@ -63,7 +63,7 @@ MIDDLEWARE = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'donor_reporting_portal.apps.core.backends.UnicefAzureADBBCOAuth2',
+    'unicef_security.backends.UnicefAzureADBBCOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'donor_reporting_portal.apps.core.backends.DonorRoleBackend',
 )
@@ -150,39 +150,6 @@ TEMPLATES = [
     },
 ]
 
-
-# EMAIL_BACKEND = 'post_office.EmailBackend'
-# EMAIL_POST_OFFICE_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-# EMAIL_HOST = env('EMAIL_HOST')
-# EMAIL_PORT = env.int('EMAIL_PORT')
-# EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS')
-# EMAIL_SUBJECT_PREFIX = "[ETOOLS-DRP]"
-# POST_OFFICE = {
-#     'DEFAULT_PRIORITY': 'now',
-#     'BACKENDS': {
-#         'default': 'djcelery_email.backends.CeleryEmailBackend'
-#     }
-# }
-# celery-mail
-# CELERY_EMAIL_CHUNK_SIZE = 10
-
-# django-secure
-# CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', default=True)
-# SECURE_BROWSER_XSS_FILTER = True
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-# SECURE_FRAME_DENY = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_SECONDS = 1
-# SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=True)
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SESSION_COOKIE_HTTPONLY = env.bool('SESSION_COOKIE_HTTPONLY', default=True)
-# SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', default=True)
-# X_FRAME_OPTIONS = env('X_FRAME_OPTIONS')
-# USE_X_FORWARDED_HOST = env('USE_X_FORWARDED_HOST')
-# SESSION_SAVE_EVERY_REQUEST = True
-
 AUTH_USER_MODEL = 'unicef_security.User'
 
 HOST = env('HOST', default='http://localhost:8000')
@@ -204,18 +171,9 @@ CELERY_RESULT_EXPIRES = 600
 CELERY_WORKER_PREFETCH_MULTIPLIER = 1
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_RENDERER_CLASSES': (
-    #     'rest_framework.renderers.JSONRenderer',
-    #     'rest_framework.renderers.BrowsableAPIRenderer',
-    # ),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
-    # 'PAGE_SIZE': 100,
-    # 'DEFAULT_PAGINATION_CLASS': 'unicef_rest_framework.pagination.APIPagination',
-    # 'DEFAULT_VERSIONING_CLASS': 'unicef_rest_framework.versioning.URFVersioning',
-    # 'SEARCH_PARAM': 'search',
-    # 'ORDERING_PARAM': 'ordering',
 }
 
 # django-cors-headers: https://github.com/ottoyiu/django-cors-headers
@@ -295,13 +253,6 @@ POST_OFFICE = {
 }
 
 DEFAULT_FROM_EMAIL = 'donor_reporting_portal@unicef.org'
-
-# AZURE GRAPH API
-# AZURE_TOKEN_URL = 'https://login.microsoftonline.com/unicef.org/oauth2/token'
-# AZURE_GRAPH_API_BASE_URL = 'https://graph.microsoft.com'
-# AZURE_GRAPH_API_VERSION = 'beta'
-# AZURE_GRAPH_API_PAGE_SIZE = 250
-
 
 KEY = os.getenv('AZURE_B2C_CLIENT_ID', None)
 SECRET = os.getenv('AZURE_B2C_CLIENT_SECRET', None)
