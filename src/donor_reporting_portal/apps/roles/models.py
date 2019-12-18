@@ -52,7 +52,7 @@ class UserRole(TimeStampedModel):
 
 @receiver(post_save, sender=get_user_model())
 def assign_to_unicef_group(instance, created, **kwargs):
-    if created:
+    if created and instance.email:
         context = {'instance': instance, 'home_link': settings.HOST}
         send_notification_with_template(
             [instance.email, ],

@@ -86,10 +86,3 @@ class Command(BaseCommand):
                 self.stdout.write(f"Created superuser `{admin}` with password `{pwd}`")
             else:  # pragma: no cover
                 self.stdout.write(f"Superuser `{admin}` already exists`.")
-
-            self.stdout.write(f"Create anonymous")
-            ModelUser.objects.get_or_create(username='anonymous', defaults={
-                "is_superuser": False,
-                "is_staff": False,
-                "password": make_password(uuid.uuid4())
-            })
