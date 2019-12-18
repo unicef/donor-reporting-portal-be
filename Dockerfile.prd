@@ -11,13 +11,41 @@ ENV SECRET_KEY="not-so-secret-key-just-for-collectstatic"
 ENV STATIC_ROOT=/tmp/static
 ENV MEDIA_ROOT=/tmp/media
 
+ENV UWSGI_PROTOCOL=http \
+    UWSGI_WORKERS=4 \
+    UWSGI_AUTO_PROCNAME=true \
+    UWSGI_BUFFER_SIZE=32768 \
+    UWSGI_DIE_ON_TERM=true \
+    UWSGI_DISABLE_LOGGING=false \
+    UWSGI_DISABLE_WRITE_EXCEPTION=true \
+    UWSGI_FREEBIND=true \
+    UWSGI_HARAKIRI=180 \
+    UWSGI_HTTP_TIMEOUT=180 \
+    UWSGI_IGNORE_SIGPIPE=true \
+    UWSGI_IGNORE_WRITE_ERRORS=true \
+    UWSGI_LIMIT_POST=20971520 \
+    UWSGI_LOG_X_FORWARDED_FOR=false \
+    UWSGI_MEMORY_REPORT=true \
+    UWSGI_NEED_APP=true \
+    UWSGI_POST_BUFFERING=65536 \
+    UWSGI_PROCNAME_PREFIX_SPACED="[DonorReportingPortal]" \
+    UWSGI_RELOAD_ON_RSS=600 \
+    UWSGI_THREADS=4 \
+    UWSGI_THUNDER_LOCK=true \
+    UWSGI_VACUUM=true \
+    UWSGI_MODULE="donor_reporting_portal.config.wsgi:application" \
+    UWSGI_HTTP_SOCKET=0.0.0.0:8000 \
+    UWSGI_MASTER=true \
+    UWSGI_ENABLE_THREADS=true \
+    UWSGI_LAZY_APPS=true \
+    UWSGI_SINGLE_INTERPRETER=true
+
 EXPOSE 8000
 
-
 ADD docker/*.sh /usr/local/bin/
+
 ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
-
 WORKDIR /var/donor_reporting_portal
 
 CMD ["donor_reporting_portal"]
