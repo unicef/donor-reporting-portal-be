@@ -60,6 +60,7 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'donor_reporting_portal.libraries.unicef_security.middleware.UnicefSocialAuthExceptionMiddleware'
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -262,6 +263,7 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 POLICY = os.getenv('AZURE_B2C_POLICY_NAME', "B2C_1_signup_signin")
+SOCIAL_PASSWORD_RESET_POLICY = os.getenv('AZURE_B2C_PASS_RESET_POLICY', "B2C_1_PASSWORD_RESET")
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
 
 SOCIAL_AUTH_PIPELINE = (
