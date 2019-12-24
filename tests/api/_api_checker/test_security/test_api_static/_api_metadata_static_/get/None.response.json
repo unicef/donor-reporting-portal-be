@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "3488"
+            "3645"
         ]
     },
     "data": {
@@ -103,12 +103,34 @@
             {
                 "code": 2019,
                 "label": 2019
+            },
+            {
+                "code": 2020,
+                "label": 2020
             }
         ],
         "report_years": [
             {
                 "code": 2019,
                 "label": 2019
+            },
+            {
+                "code": 2020,
+                "label": 2020
+            }
+        ],
+        "grant_issue_years": [
+            {
+                "code": 2018,
+                "label": 2018
+            },
+            {
+                "code": 2019,
+                "label": 2019
+            },
+            {
+                "code": 2020,
+                "label": 2020
             }
         ],
         "report_type": [
