@@ -19,7 +19,7 @@ class ICamlQueryBuilder(CamlQueryBuilder):
                     query = '<{}><FieldRef Name="{}" /><Value Type="{}">{}</Value></{}>'.format(
                         operator, filter_name, column_type, value, operator)
                 elif operator == 'Contains':
-                    column_type = 'Text'  #'Note'
+                    column_type = 'Text'  # 'Note'
                     query = '<{}><FieldRef Name="{}" /><Value Type="{}">{}</Value></{}>'.format(
                             operator, filter_name, column_type, filter_value, operator)
                 else:
