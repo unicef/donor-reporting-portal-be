@@ -156,4 +156,4 @@ class SharePointLibraryViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMod
     queryset = SharePointLibrary.objects.all()
     serializer_class = SharePointLibrarySerializer
     search_fields = ('name', )
-    filter_class = SharePointLibraryFilter
+    filterset_class = SharePointLibraryFilter
