@@ -18,3 +18,6 @@ celerybeat-schedule
 coverage.xml
 
 .idea/
+.env
+.envrc
+.venv/
