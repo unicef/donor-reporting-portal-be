@@ -32,6 +32,7 @@ class SharePointLibrary(TimeStampedModel):
     name = models.CharField(verbose_name=_("Name"), max_length=64)
     site = models.ForeignKey(SharePointSite, related_name='libraries', on_delete=models.deletion.CASCADE)
     active = models.BooleanField(verbose_name=_("Active"), default=True)
+    require_donor_permission = models.BooleanField(verbose_name=_("Require Donor Permission"), default=True)
 
     class Meta:
         ordering = ['name']

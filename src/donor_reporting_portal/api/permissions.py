@@ -27,3 +27,10 @@ class DonorPermission(permissions.BasePermission):
         if donor and user.has_perm('roles.can_view_all_donors') or user.has_perm('report_metadata.view_donor', donor):
             return True
         return False
+
+
+class PublicLibraryPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if not view.get_library().require_donor_permission:
+            return True
+        return False

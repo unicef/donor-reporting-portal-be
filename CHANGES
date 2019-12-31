@@ -1,5 +1,9 @@
 Release 0.6 (in development)
 ----------------
+* handle not by donor libraries
+* allowed download of different file extentions (other than pdf)
+* tweaked init-setup
+* tweaked static-metadata
 
 
 Release 0.5

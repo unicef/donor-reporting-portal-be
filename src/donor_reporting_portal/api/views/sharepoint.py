@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ErrorDetail, PermissionDenied
 
 from donor_reporting_portal.api.filters import SharePointLibraryFilter
-from donor_reporting_portal.api.permissions import DonorPermission
+from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
 from donor_reporting_portal.api.serializers.metadata import SharePointLibrarySerializer, SharePointSiteSerializer
 from donor_reporting_portal.api.serializers.sharepoint import SharePointFileSerializer, SharePointItemSerializer
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
@@ -20,16 +20,17 @@ cache = caches['default']
 
 
 class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
-    permission_classes = (DonorPermission, )
+    permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
-    lookup_field = 'filename'
+    def get_library(self):
+        return SharePointLibrary.objects.get(name=self.folder_name, site__name=self.site_name)
 
     @property
     def client(self):
         key = self.get_cache_key(**{'client': 'client'})
         client = cache.get(key)
         if client is None:
-            dl = SharePointLibrary.objects.get(name=self.folder_name, site__name=self.site_name)
+            dl = self.get_library()
             dl_info = {
                 'url': dl.site.site_url(),
                 'relative_url': dl.site.relative_url(),
@@ -108,7 +109,6 @@ class ItemSharePointCamlViewSet(ItemSharePointViewSet):
 
 class FileSharePointViewSet(AbstractSharePointViewSet):
     serializer_class = SharePointFileSerializer
-
     lookup_field = 'filename'
 
     def get_object(self):
