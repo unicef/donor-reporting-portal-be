@@ -33,7 +33,8 @@
         "modified": "2019-11-04T17:48:45.096Z",
         "name": "2019 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -44,7 +45,8 @@
         "modified": "2019-11-05T17:06:37.459Z",
         "name": "2020 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -55,7 +57,8 @@
         "modified": "2019-11-05T17:06:48.320Z",
         "name": "2021 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -66,7 +69,8 @@
         "modified": "2019-11-05T17:06:55.146Z",
         "name": "2022 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -74,10 +78,11 @@
     "pk": 5,
     "fields": {
         "created": "2019-11-05T17:07:20.281Z",
-        "modified": "2019-11-05T17:07:20.281Z",
+        "modified": "2019-12-31T14:22:45.647Z",
         "name": "Thematic Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": false
     }
 },
 {
@@ -88,7 +93,8 @@
         "modified": "2019-12-23T22:28:06.638Z",
         "name": "2019 US Gov Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -99,7 +105,8 @@
         "modified": "2019-11-05T19:49:59.494Z",
         "name": "Documents",
         "site": 2,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -110,7 +117,8 @@
         "modified": "2019-11-05T17:27:32.647Z",
         "name": "Temporary InSight Test 3000 Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -121,7 +129,8 @@
         "modified": "2019-12-23T22:28:35.380Z",
         "name": "2020 US Gov Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -132,7 +141,8 @@
         "modified": "2019-12-23T22:28:43.476Z",
         "name": "2021 US Gov Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -143,7 +153,8 @@
         "modified": "2019-12-23T22:28:51.971Z",
         "name": "2022 US Gov Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 }
 ]

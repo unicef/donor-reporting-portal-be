@@ -61,11 +61,6 @@ class Command(BaseCommand):
             self.stdout.write(f"Run migrations")
             call_command('migrate', verbosity=verbosity - 1)
 
-        if options['metadata'] or _all:
-            call_command('loaddata', 'groups.json')
-            call_command('loaddata', 'libraries.json')
-            grant_sync()
-
         if options['users'] or _all:
             call_command('update_notifications', verbosity=verbosity - 1)
             if settings.DEBUG:
@@ -85,3 +80,8 @@ class Command(BaseCommand):
                 self.stdout.write(f"Created superuser `{admin}` with password `{pwd}`")
             else:  # pragma: no cover
                 self.stdout.write(f"Superuser `{admin}` already exists`.")
+
+        if options['metadata'] or _all:
+            call_command('loaddata', 'groups.json')
+            call_command('loaddata', 'libraries.json')
+            grant_sync()

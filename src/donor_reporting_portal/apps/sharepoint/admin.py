@@ -12,4 +12,4 @@ class SharepointSiteAdmin(admin.ModelAdmin):
 @admin.register(SharePointLibrary)
 class DocumentLibraryAdmin(admin.ModelAdmin):
     search_fields = ('name', 'site')
-    list_display = ('name', 'site', 'active')
+    list_display = ('name', 'site', 'active', 'require_donor_permission')

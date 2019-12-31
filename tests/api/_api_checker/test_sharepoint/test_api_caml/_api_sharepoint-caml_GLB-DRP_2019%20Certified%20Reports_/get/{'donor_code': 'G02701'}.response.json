@@ -60,7 +60,7 @@
             "report_group": "Grant",
             "report_status": "New",
             "resource_url": "https://asantiagounicef.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(3)",
-            "download_url": "http://localhost:8082/api/sharepoint/GLB-DRP/2019%20Certified%20Reports/files/DFAMDash%20Certified%20Statement%20of%20Account__ext__rdl/download/"
+            "download_url": "http://localhost:8000/api/sharepoint/GLB-DRP/2019%20Certified%20Reports/files/DFAMDash%20Certified%20Statement%20of%20Account__ext__rdl/download/"
         }
     ],
     "content_type": null
