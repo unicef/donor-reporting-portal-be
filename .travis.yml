@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 language: python
 sudo: false
 
@@ -9,11 +9,11 @@ env:
   - DJANGO=2.2
 
 addons:
-  postgresql: "10"
+  postgresql: "12"
   apt:
     packages:
-    - postgresql-10
-    - postgresql-client-10
+    - postgresql-12
+    - postgresql-client-12
 
 services:
   - redis-server
@@ -22,6 +22,7 @@ install:
   - pip install tox codecov
 
 script:
+  - sudo apt-get install -y postgresql-plpython3-12 python3 python3-redis
   - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}" -- py.test tests -v
 
 before_script:
