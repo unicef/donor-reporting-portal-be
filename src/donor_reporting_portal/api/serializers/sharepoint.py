@@ -36,6 +36,7 @@ class SharePointItemSerializer(serializers.Serializer):
     report_group = SharePointPropertyField()
     report_period = SharePointPropertyField()
     report_status = SharePointPropertyField()
+    retracted = SharePointPropertyField()
     url = SharePointPropertyField()
     description = SharePointPropertyField()
     resource_url = serializers.ReadOnlyField()
