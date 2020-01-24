@@ -7,8 +7,8 @@ from model_utils.models import TimeStampedModel
 
 
 class SharePointSite(TimeStampedModel):
-    name = models.CharField(verbose_name=_("Name"), max_length=32, unique=True)
-    url = models.URLField()
+    url = models.URLField(unique=True)
+    name = models.CharField(verbose_name=_("Name"), max_length=32)
     site_type = models.CharField(verbose_name=_("Site Type"), max_length=16, default='sites')
     username = models.CharField(verbose_name=_("Username"), max_length=64, null=True, blank=True)
     password = models.CharField(verbose_name=_("Password"), max_length=64, null=True, blank=True)
