@@ -4,6 +4,7 @@ Release 0.6 (in development)
 * allowed download of different file extentions (other than pdf)
 * tweaked init-setup
 * tweaked static-metadata
+* added retracted field
 
 
 Release 0.5
