@@ -33,4 +33,6 @@ class PublicLibraryPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if not view.get_library().require_donor_permission:
             return True
+        elif request.user.has_perm('report_metadata.view_theme'):
+            return True
         return False
