@@ -1,15 +1,35 @@
 [
 {
+    "model": "sharepoint.sharepointtenant",
+    "pk": 1,
+    "fields": {
+        "created": "2020-01-29T18:41:56.575Z",
+        "modified": "2020-01-29T18:41:56.575Z",
+        "url": "https://unitst.sharepoint.com/",
+        "username": null,
+        "password": null
+    }
+},
+{
+    "model": "sharepoint.sharepointtenant",
+    "pk": 2,
+    "fields": {
+        "created": "2020-01-29T18:42:17.899Z",
+        "modified": "2020-01-29T18:42:17.899Z",
+        "url": "https://asantiagounicef.sharepoint.com/",
+        "username": null,
+        "password": null
+    }
+},
+{
     "model": "sharepoint.sharepointsite",
     "pk": 1,
     "fields": {
         "created": "2019-11-04T17:47:58.162Z",
-        "modified": "2020-01-24T16:46:33.946Z",
-        "url": "https://asantiagounicef.sharepoint.com/",
-        "name": "GLB-DRP-x",
-        "site_type": "sites",
-        "username": null,
-        "password": null
+        "modified": "2020-01-29T18:47:03.510Z",
+        "tenant": 2,
+        "name": "GLB-DRP",
+        "site_type": "sites"
     }
 },
 {
@@ -17,12 +37,10 @@
     "pk": 2,
     "fields": {
         "created": "2019-11-05T17:12:30.958Z",
-        "modified": "2020-01-24T19:45:06.118Z",
-        "url": "https://unitst.sharepoint.com/",
+        "modified": "2020-01-29T18:42:03.489Z",
+        "tenant": 1,
         "name": "GLB-DRP",
-        "site_type": "sites",
-        "username": null,
-        "password": null
+        "site_type": "sites"
     }
 },
 {

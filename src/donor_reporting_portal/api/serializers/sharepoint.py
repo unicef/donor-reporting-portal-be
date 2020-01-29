@@ -48,8 +48,9 @@ class SharePointItemSerializer(serializers.Serializer):
             k = filename.rfind(".")
             filename = filename[:k] + "__ext__" + filename[k + 1:]
         relative_url = reverse('api:sharepoint-files-download', kwargs={
-            'site_name': self.context['site_name'],
-            'folder_name': self.context['folder_name'],
+            'tenant': self.context['tenant'],
+            'site': self.context['site'],
+            'folder': self.context['folder'],
             'filename': filename
         })
         return f'{settings.HOST}{relative_url}'
@@ -69,7 +70,8 @@ class SharePointFileSerializer(serializers.Serializer):
 
     def get_download_url(self, obj):
         relative_url = reverse('api:sharepoint-files-download', kwargs={
-            'site_name': self.context['site_name'],
-            'folder_name': self.context['folder_name'],
+            'tenant': self.context['tenant'],
+            'site': self.context['site'],
+            'folder': self.context['folder'],
             'filename': obj.properties['Name'].split('.')[0]})
         return f'{settings.HOST}{relative_url}'

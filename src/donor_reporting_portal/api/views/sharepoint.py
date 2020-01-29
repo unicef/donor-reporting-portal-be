@@ -23,7 +23,8 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
     permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
     def get_library(self):
-        return SharePointLibrary.objects.get(name=self.folder_name, site__name=self.site_name)
+        return SharePointLibrary.objects.get(
+            site__tenant__url__contains=self.tenant, name=self.folder, site__name=self.site)
 
     @property
     def client(self):
@@ -34,12 +35,12 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
             dl_info = {
                 'url': dl.site.site_url(),
                 'relative_url': dl.site.relative_url(),
-                'folder_name': dl.name
+                'folder': dl.name
             }
-            if dl.site.username:
-                dl_info['username']: dl.site.username
-            if dl.site.username:
-                dl_info['password']: dl.site.password
+            if dl.site.tenant.username:
+                dl_info['username']: dl.site.tenant.username
+            if dl.site.tenant.username:
+                dl_info['password']: dl.site.tenant.password
             try:
                 client = SharePointClient(**dl_info)
                 cache.set(key, client)
@@ -51,8 +52,9 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
     def get_serializer_context(self):
         ctx = super().get_serializer_context()
         ctx.update({
-            'site_name': self.site_name,
-            'folder_name': self.folder_name
+            'tenant': self.tenant,
+            'site': self.site,
+            'folder': self.folder
         })
         return ctx
 
@@ -63,15 +65,19 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
         return response
 
     @property
-    def site_name(self):
-        return self.kwargs.get('site_name')
+    def tenant(self):
+        return self.kwargs.get('tenant')
 
     @property
-    def folder_name(self):
-        return self.kwargs.get('folder_name')
+    def site(self):
+        return self.kwargs.get('site')
+
+    @property
+    def folder(self):
+        return self.kwargs.get('folder')
 
     def get_cache_key(self, **kwargs):
-        key = get_cache_key([self.site_name, self.folder_name], **kwargs)
+        key = get_cache_key([self.tenant, self.site, self.folder], **kwargs)
         return key
 
 

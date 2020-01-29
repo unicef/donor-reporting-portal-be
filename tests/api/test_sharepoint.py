@@ -6,7 +6,7 @@ import pytest
 from drf_api_checker.pytest import api_checker_datadir, contract, frozenfixture  # noqa
 from drf_api_checker.recorder import Recorder
 from tests.api_checker import LastModifiedRecorder
-from tests.factories import DonorFactory, SharePointLibraryFactory, SharePointSiteFactory
+from tests.factories import DonorFactory, SharePointLibraryFactory, SharePointSiteFactory, SharePointTenantFactory
 from tests.perms import user_grant_role_permission
 from tests.vcrpy import VCR
 
@@ -20,13 +20,20 @@ def donor(request, db):
 
 
 @frozenfixture()
-def site(request, db):
-    return SharePointSiteFactory(
-        name='GLB-DRP',
-        url='https://asantiagounicef.sharepoint.com/',
-        site_type='sites',
+def tenant(request, db):
+    return SharePointTenantFactory(
+        url='https://unitst.sharepoint.com/',
         username=None,
         password=None
+    )
+
+
+@frozenfixture()
+def site(tenant, request, db):
+    return SharePointSiteFactory(
+        tenant=tenant,
+        name='GLB-DRP',
+        site_type='sites',
     )
 
 
@@ -40,7 +47,7 @@ def library(site, request, db):
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/list.yml'))
 def test_api(api_checker_datadir, logged_user, library, donor):
-    url = reverse('api:sharepoint-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
+    url = reverse('api:sharepoint-list', kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
     data = {'donor_code': donor.code}
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
         recorder = Recorder(api_checker_datadir, as_user=logged_user)
@@ -49,7 +56,7 @@ def test_api(api_checker_datadir, logged_user, library, donor):
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml-list.yml'))
 def test_api_caml(api_checker_datadir, logged_user, library, donor):
-    url = reverse('api:sharepoint-caml-list', kwargs={'site_name': library.site.name, 'folder_name': library.name})
+    url = reverse('api:sharepoint-caml-list', kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
     data = {'donor_code': donor.code}
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
         recorder = Recorder(api_checker_datadir, as_user=logged_user)
