@@ -5,6 +5,9 @@ Release 0.6 (in development)
 * tweaked init-setup
 * tweaked static-metadata
 * added retracted field
+* added tenant model
+* changed azure default policy
+* added framework_agreement
 
 
 Release 0.5
