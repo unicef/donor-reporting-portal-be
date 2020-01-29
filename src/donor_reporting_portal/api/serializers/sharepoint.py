@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 
 from rest_framework import serializers
@@ -42,6 +44,7 @@ class SharePointItemSerializer(serializers.Serializer):
     resource_url = serializers.ReadOnlyField()
     download_url = serializers.SerializerMethodField()
     framework_agreement = serializers.ReadOnlyField()
+    is_new = serializers.SerializerMethodField()
 
     def get_download_url(self, obj):
         filename = obj.properties.get('Title', '')
@@ -55,6 +58,11 @@ class SharePointItemSerializer(serializers.Serializer):
             'filename': filename
         })
         return f'{settings.HOST}{relative_url}'
+
+    def get_is_new(self, obj):
+        modified = datetime.strptime(obj.properties['Modified'], '%Y-%m-%dT%H:%M:%Sz')
+        day_difference = (modified - datetime.now()).days
+        return True if day_difference <= 7 else False
 
 
 class SharePointFileSerializer(serializers.Serializer):
