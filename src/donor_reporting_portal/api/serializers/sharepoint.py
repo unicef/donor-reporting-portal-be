@@ -41,6 +41,7 @@ class SharePointItemSerializer(serializers.Serializer):
     description = SharePointPropertyField()
     resource_url = serializers.ReadOnlyField()
     download_url = serializers.SerializerMethodField()
+    framework_agreement = serializers.ReadOnlyField()
 
     def get_download_url(self, obj):
         filename = obj.properties.get('Title', '')
