@@ -26,8 +26,7 @@ class SharePointClient:
         self.relative_url = kwargs.get('relative_url', settings.SHAREPOINT_TENANT['url'])
         username = kwargs.get('username', settings.SHAREPOINT_TENANT['user_credentials']['username'])
         password = kwargs.get('password', settings.SHAREPOINT_TENANT['user_credentials']['password'])
-        self.folder = kwargs.get('folder_name', 'Documents')
-
+        self.folder = kwargs.get('folder', 'Documents')
         ctx_auth = AuthenticationContext(url=self.site_path)
         if ctx_auth.acquire_token_for_user(username=username, password=password):
             self.context = ClientContext(self.site_path, ctx_auth)

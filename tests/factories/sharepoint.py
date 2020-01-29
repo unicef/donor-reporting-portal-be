@@ -1,6 +1,13 @@
 import factory
 
-from donor_reporting_portal.apps.sharepoint.models import SharePointLibrary, SharePointSite
+from donor_reporting_portal.apps.sharepoint.models import SharePointLibrary, SharePointSite, SharePointTenant
+
+
+class SharePointTenantFactory(factory.DjangoModelFactory):
+
+    class Meta:
+        model = SharePointTenant
+        django_get_or_create = ('url',)
 
 
 class SharePointSiteFactory(factory.DjangoModelFactory):

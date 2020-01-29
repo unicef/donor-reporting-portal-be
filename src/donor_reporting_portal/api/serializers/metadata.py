@@ -42,7 +42,8 @@ class SharePointLibrarySerializer(serializers.ModelSerializer):
     api_url = serializers.SerializerMethodField()
 
     def get_api_url(self, obj):
-        reverse_url = reverse('api:sharepoint-list', kwargs={'site_name': obj.site.name, 'folder_name': obj.name})
+        reverse_url = reverse('api:sharepoint-list',
+                              kwargs={'tenant': obj.site.tenant.name, 'site': obj.site.name, 'folder': obj.name})
         return settings.HOST + reverse_url
 
     class Meta:

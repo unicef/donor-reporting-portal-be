@@ -27,7 +27,6 @@ class UnicefSocialAuthExceptionMiddleware(SocialAuthExceptionMiddleware):
             if 'AADB2C90118' in error_description:
                 auth_class = UnicefAzureADBBCOAuth2()
                 redirect_home = auth_class.get_redirect_uri()
-                breakpoint()
                 redirect_url = 'https://login.microsoftonline.com/' + \
                                settings.TENANT_ID + \
                                "/oauth2/v2.0/authorize?p=" + \
