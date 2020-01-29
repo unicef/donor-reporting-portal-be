@@ -84,6 +84,6 @@ class GrantSynchronizer(VisionDataSynchronizer):
                 code=record['EXTERNAL_REF'], defaults={'donor': donor})
 
         if record.get('RECIPIENT_OFFICE_CODE', None):
-            grant.business_areas.set(BusinessArea.objects.filter(code__in=record['RECIPIENT_OFFICE_CODE'].split(', ')))
+            grant.business_areas.set(BusinessArea.objects.filter(code__in=record['RECIPIENT_OFFICE_CODE'].split('; ')))
 
         return 1
