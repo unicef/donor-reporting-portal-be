@@ -1,26 +1,15 @@
-ARG BASE_IMAGE
+ARG BASE_IMAGE=0.6
 
 FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
 
-ARG BUILD_DATE
-ARG PIPENV_ARGS
-ARG VERSION
-ARG DEVELOP
+#ARG BUILD_DATE
+#ARG VERSION
 
-ENV DEVELOP=${DEVELOP}
-ENV GITHUB_TOKEN=${GITHUB_TOKEN}
-ENV DONOR_REPORTING_PORTAL_VERSION=${VERSION}
+#ENV GITHUB_TOKEN=${GITHUB_TOKEN}
+#ENV DONOR_REPORTING_PORTAL_VERSION=${VERSION}
 
 RUN mkdir -p /code
 COPY . /code
-WORKDIR /code
-RUN set -o pipefail && \
-    if [ "${DEVELOP}" = "1" ]; then \
-    echo "${VERSION}-develop"; \
-    else \
-    echo "Download package: https://github.com/unicef/donor-reporting-portal/archive/${DONOR_REPORTING_PORTAL_VERSION}.tar.gz" \
-    && curl -L -u "https://github.com/unicef/donor-reporting-portal/archive/${DONOR_REPORTING_PORTAL_VERSION}.tar.gz" | tar -xzf - --strip-components=1; \
-    fi
 WORKDIR /code
 
 RUN set -ex \
@@ -34,14 +23,13 @@ LABEL org.label.name="Donor Reporting Portal" \
       org.label.maintainer="ddinicola@unicef.org" \
       org.label.description="" \
       org.label.url="https://donor-reporting-portal.unicef.io/" \
-      org.label.vcs-url="https://github.com/unicef/donor-reporting-portal" \
-      org.label.version=$VERSION
+      org.label.vcs-url="https://github.com/unicef/donor-reporting-portal-be"
+#      org.label.version=$VERSION
 
 
-ENV VERSION ${VERSION}
+#ENV VERSION ${VERSION}
 
 ENV PIPENV_PYPI_MIRROR=${PIPENV_PYPI_MIRROR}, \
-    PIPENV_ARGS=${PIPENV_ARGS}, \
     HOME=/root/ \
     PYTHONUNBUFFERED=1 \
     ALLOWED_HOSTS="*" \
@@ -54,7 +42,6 @@ ENV PIPENV_PYPI_MIRROR=${PIPENV_PYPI_MIRROR}, \
     CSRF_COOKIE_SECURE=True \
     DATABASE_URL="postgres://postgres:@192.168.66.66:5432/donor_reporting_portal" \
     DEBUG=0 \
-    DEVELOPMENT_MODE=0 \
     DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
     MEDIA_ROOT=/tmp/media \
     SECRET_KEY="secret" \
@@ -103,10 +90,11 @@ EXPOSE 8000
 
 ADD docker/*.sh /usr/local/bin/
 
-RUN addgroup --gid 1024 donor_reporting_portal \
-    && adduser --disabled-password --ingroup donor_reporting_portal -S donor_reporting_portal
+#RUN addgroup --gid 1024 donor_reporting_portal \
+#    && adduser --disabled-password --ingroup donor_reporting_portal -S donor_reporting_portal
 
 ENTRYPOINT ["entrypoint.sh"]
+RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
 WORKDIR /var/donor_reporting_portal
 
 CMD ["donor_reporting_portal"]
