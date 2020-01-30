@@ -1,0 +1,71 @@
+trigger:
+- feature/azure-pipelines
+
+pool:
+  vmImage: 'Ubuntu-18.04'
+
+variables:
+#  imageName: 'unicef/donor-reporting-portal-backend'
+    imageName: 'scs-drp-be'
+    dockerHub: 'uniwebsscsdrpdev'
+    DATABASE_URL: 'psql://postgres:pass@postgres:5432/donor_reporting_portal'
+    HOST: 'http://localhost:8082'
+    SECRET_KEY: 'top-secret'
+    INSIGHT_URL: 'https://uniapis.unicef.org/biapi/v1/'
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: pass
+    POSTGRES_DB: donor_reporting_portal
+
+container:
+  image: postgres:12-alpine
+  options: --hostname container-test --ip 192.168.0.1
+  ports:
+    - 8080:80
+    - 5432
+
+strategy:
+    matrix:
+      Python38:
+        python.version: '3.8'
+
+steps:
+- task: UsePythonVersion@0
+
+- script: |
+    env
+    apt install -y postgresql-client
+    psql --host=postgres --username=postgres --command="SELECT 1;"
+    python --version
+    python -m pip install --upgrade pip
+    pip install tox pipenv
+  displayName: 'Install dependencies'
+
+- script: |
+    tox --version
+    tox
+  displayName: 'Run tests'
+
+#- task: PublishTestResults@2
+#    inputs:
+#      testResultsFiles: 'tests/report.xml'
+#      testRunTitle: '$(Agent.OS) - $(Build.DefinitionName) - Python $(python.version)'
+#    condition: succeededOrFailed()
+
+#- task: Docker@2
+#  displayName: Build an image
+#  inputs:
+#    repository: $(imageName)
+#    command: build
+#    Dockerfile: docker/Dockerfile
+#    buildContext: .
+
+#- task: Docker@2
+#  displayName: Push image
+#  inputs:
+#    containerRegistry: |
+#      $(dockerHub)
+#    repository: $(imageName)
+#    command: push
+#    tags: |
+#     $(Build.BuildId)
+#     latest
