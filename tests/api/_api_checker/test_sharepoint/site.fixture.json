@@ -2,11 +2,11 @@
     "site": {
         "master": {
             "model": "sharepoint.sharepointsite",
-            "pk": 16,
+            "pk": 2,
             "fields": {
-                "created": "2020-01-28T20:26:18.092Z",
-                "modified": "2020-01-28T20:26:18.092Z",
-                "tenant": 16,
+                "created": "2020-01-30T19:40:45.567Z",
+                "modified": "2020-01-30T19:40:45.567Z",
+                "tenant": 2,
                 "name": "GLB-DRP",
                 "site_type": "sites"
             }
@@ -14,10 +14,10 @@
         "deps": [
             {
                 "model": "sharepoint.sharepointtenant",
-                "pk": 16,
+                "pk": 2,
                 "fields": {
-                    "created": "2020-01-28T20:26:18.083Z",
-                    "modified": "2020-01-28T20:26:18.083Z",
+                    "created": "2020-01-30T19:40:45.561Z",
+                    "modified": "2020-01-30T19:40:45.561Z",
                     "url": "https://unitst.sharepoint.com/",
                     "username": null,
                     "password": null
