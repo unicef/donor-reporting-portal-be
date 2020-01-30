@@ -4,7 +4,7 @@ mkdir -p /var/donor_reporting_portal/log
 mkdir -p /var/donor_reporting_portal/conf
 mkdir -p /var/donor_reporting_portal/run
 
-chown donor_reporting_portal:donor_reporting_portal -R /var/donor_reporting_portal/
+# chown donor_reporting_portal:donor_reporting_portal -R /var/donor_reporting_portal/
 
 
 if [[ "$*" == "worker" ]];then
@@ -37,10 +37,12 @@ elif [[ "$*" == "donor_reporting_portal" ]];then
 
     django-admin db-isready --wait --timeout 60
     django-admin check --deploy
+    django-admin migrate --noinput
 #    django-admin init-setup --all --verbosity 2
     django-admin db-isready --wait --timeout 300
     echo "uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}"
-    exec gosu donor_reporting_portal uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
+#    exec gosu donor_reporting_portal uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
+    uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
 else
     exec "$@"
 fi

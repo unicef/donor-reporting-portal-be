@@ -80,7 +80,7 @@ RUN cd /code \
 
 # need to removes some code not py3.8 compliant
 RUN rm -fr /usr/local/lib/python3.8/site-packages/psycopg2/tests/* \
-           /usr/local/lib/python3.8/site-packages/tornado/test/* \
+           /usr/local/lib/python3.8/site-packages/tornado/test/*
 
 # before compile site-packages
 RUN find /usr/local/lib/python3.8/ -name *.pyc | xargs rm -f \
