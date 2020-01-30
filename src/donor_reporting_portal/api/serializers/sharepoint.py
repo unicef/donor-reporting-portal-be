@@ -60,7 +60,7 @@ class SharePointItemSerializer(serializers.Serializer):
         return f'{settings.HOST}{relative_url}'
 
     def get_is_new(self, obj):
-        modified = datetime.strptime(obj.properties['Modified'], '%Y-%m-%dT%H:%M:%Sz')
+        modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
         day_difference = (modified - datetime.now()).days
         return True if day_difference <= 7 else False
 
