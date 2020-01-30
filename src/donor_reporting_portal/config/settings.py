@@ -52,6 +52,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
+    'donor_reporting_portal.apps.core.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
