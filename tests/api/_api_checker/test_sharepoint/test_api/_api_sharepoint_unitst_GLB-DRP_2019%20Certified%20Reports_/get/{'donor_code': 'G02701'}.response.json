@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "2047"
+            "2101"
         ]
     },
     "data": [
@@ -48,6 +48,7 @@
             "report_group": "Grant",
             "report_status": "New",
             "retracted": null,
+            "framework_agreement": null,
             "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(198)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/files/CertifiedDonorStatement_CSACC_SC170311_31122019__ext__pdf/download/",
             "is_new": true
@@ -77,6 +78,7 @@
             "report_group": "Grant",
             "report_status": "New",
             "retracted": null,
+            "framework_agreement": null,
             "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(351)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/files/CertifiedDonorStatement_CSACC_SC170311_29012019__ext__pdf/download/",
             "is_new": true
