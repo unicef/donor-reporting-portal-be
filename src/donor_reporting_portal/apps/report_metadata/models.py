@@ -12,6 +12,7 @@ class Theme(TimeStampedModel):
     class Meta:
         ordering = ['name']
 
+
 class Donor(TimeStampedModel):
     """Represents UNICEF Donors"""
 
