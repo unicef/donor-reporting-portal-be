@@ -41,9 +41,9 @@ class SharePointItemSerializer(serializers.Serializer):
     retracted = SharePointPropertyField()
     url = SharePointPropertyField()
     description = SharePointPropertyField()
+    framework_agreement = SharePointPropertyField()
     resource_url = serializers.ReadOnlyField()
     download_url = serializers.SerializerMethodField()
-    framework_agreement = serializers.ReadOnlyField()
     is_new = serializers.SerializerMethodField()
 
     def get_download_url(self, obj):
