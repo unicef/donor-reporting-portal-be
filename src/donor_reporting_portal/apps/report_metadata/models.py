@@ -9,6 +9,8 @@ class Theme(TimeStampedModel):
     """Represents Thematic"""
     name = models.CharField(verbose_name=_("Name"), max_length=64)
 
+    class Meta:
+        ordering = ['name']
 
 class Donor(TimeStampedModel):
     """Represents UNICEF Donors"""
