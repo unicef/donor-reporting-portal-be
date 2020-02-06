@@ -33,7 +33,7 @@ class SharePointSite(TimeStampedModel):
         (TEAM, TEAM),
     )
 
-    tenant = models.ForeignKey(SharePointTenant, related_name='sites', on_delete=models.deletion.CASCADE, null=True)
+    tenant = models.ForeignKey(SharePointTenant, related_name='sites', on_delete=models.deletion.CASCADE)
     name = models.CharField(verbose_name=_("Name"), max_length=32)
     site_type = models.CharField(verbose_name=_("Site Type"), max_length=16, choices=SITE_TYPES, default=SITE)
 
