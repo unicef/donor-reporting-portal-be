@@ -62,7 +62,7 @@ class SharePointItemSerializer(serializers.Serializer):
     def get_is_new(self, obj):
         modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
         day_difference = (modified - datetime.now()).days
-        return True if day_difference <= 7 else False
+        return True if day_difference <= 3 else False
 
 
 class SharePointFileSerializer(serializers.Serializer):
