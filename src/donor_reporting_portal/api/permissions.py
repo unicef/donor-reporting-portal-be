@@ -33,6 +33,6 @@ class DonorPermission(permissions.BasePermission):
 
 class PublicLibraryPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.user.has_perm('report_metadata.view_theme') and not view.get_library().require_donor_permission:
+        if not view.get_library().require_donor_permission:
             return True
         return False
