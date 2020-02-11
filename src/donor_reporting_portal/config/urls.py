@@ -12,6 +12,7 @@ urlpatterns = [
     path(r'social', include('social_django.urls', namespace='social')),
     path(r'core/', include('donor_reporting_portal.apps.core.urls', namespace='core')),
     path(r'api/', include('donor_reporting_portal.api.urls', namespace='api')),
+    path(r'accounts/', include('django.contrib.auth.urls')),
 ]
 
 
