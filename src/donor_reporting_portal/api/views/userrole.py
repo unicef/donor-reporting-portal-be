@@ -47,7 +47,7 @@ class UserRoleViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
     queryset = UserRole.objects.all()
     serializer_class = UserRoleSerializer
     filterset_class = UserRoleFilter
-    search_fields = ('donor__name', 'user__username', 'group__name')
+    search_fields = ('donor__name', 'user__username', 'group__name', 'user__first_name', 'user__last_name')
 
 
 class BusinessAreaViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
