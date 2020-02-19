@@ -2,25 +2,35 @@
     "library": {
         "master": {
             "model": "sharepoint.sharepointlibrary",
-            "pk": 19,
+            "pk": 2,
             "fields": {
-                "created": "2019-12-10T22:26:35.032Z",
-                "modified": "2019-12-10T22:26:35.032Z",
+                "created": "2020-01-30T19:40:45.581Z",
+                "modified": "2020-01-30T19:40:45.581Z",
                 "name": "2019 Certified Reports",
-                "site": 9,
-                "active": true
+                "site": 2,
+                "active": true,
+                "require_donor_permission": true
             }
         },
         "deps": [
             {
                 "model": "sharepoint.sharepointsite",
-                "pk": 9,
+                "pk": 2,
                 "fields": {
-                    "created": "2019-12-10T22:26:35.026Z",
-                    "modified": "2019-12-10T22:26:35.026Z",
+                    "created": "2020-01-30T19:40:45.567Z",
+                    "modified": "2020-01-30T19:40:45.567Z",
+                    "tenant": 2,
                     "name": "GLB-DRP",
-                    "url": "https://asantiagounicef.sharepoint.com/",
-                    "site_type": "sites",
+                    "site_type": "sites"
+                }
+            },
+            {
+                "model": "sharepoint.sharepointtenant",
+                "pk": 2,
+                "fields": {
+                    "created": "2020-01-30T19:40:45.561Z",
+                    "modified": "2020-01-30T19:40:45.561Z",
+                    "url": "https://unitst.sharepoint.com/",
                     "username": null,
                     "password": null
                 }

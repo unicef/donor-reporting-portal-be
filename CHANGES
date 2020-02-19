@@ -1,3 +1,15 @@
+Release 0.6
+----------------
+* handle not by donor libraries
+* allowed download of different file extentions (other than pdf)
+* tweaked init-setup
+* tweaked static-metadata
+* added retracted field
+* added tenant model
+* changed azure default policy
+* added framework_agreement
+
+
 Release 0.5
 ----------------
 * added external reference as dependency

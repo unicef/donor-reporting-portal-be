@@ -3,18 +3,27 @@ from unittest import mock
 
 from drf_api_checker.pytest import frozenfixture
 from pytest import fixture
-from tests.factories import SharePointLibraryFactory, SharePointSiteFactory
+from tests.factories import SharePointLibraryFactory, SharePointSiteFactory, SharePointTenantFactory
 from tests.vcrpy import VCR
 
 from donor_reporting_portal.libraries.sharepoint.client import SharePointClient
 
 
 @frozenfixture()
-def site(request, db):
+def tenant(request, db):
+    return SharePointTenantFactory(
+        url='https://unitst.sharepoint.com/',
+        username=None,
+        password=None
+    )
+
+
+@frozenfixture()
+def site(tenant, request, db):
     return SharePointSiteFactory(
+        tenant=tenant,
         name='GLB-DRP',
-        url='https://asantiagounicef.sharepoint.com/',
-        site_type='sites'
+        site_type='sites',
     )
 
 
@@ -31,11 +40,13 @@ def sh_client(library, request, db):
     dl_info = {
         'url': library.site.site_url(),
         'relative_url': library.site.relative_url(),
-        'folder_name': library.name
+        'folder': library.name
     }
     return SharePointClient(**dl_info)
 
 
+# to regenerate cassettes
+# comment the mock_client fixture (since is mocking the login)
 @fixture(scope='session', autouse=True)
 def mock_client():
     patcher = mock.patch('donor_reporting_portal.libraries.sharepoint.client.AuthenticationContext')
@@ -54,25 +65,25 @@ def test_folders(library, sh_client, mock_client):
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/items.yml'))
 def test_items(sh_client, mock_client):
     items = sh_client.read_items()
-    assert len(items) == 15
+    assert len(items) == 220
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml_items.yml'))
 def test_caml_items(sh_client, mock_client):
     items = sh_client.read_caml_items()
-    assert len(items) == 15
+    assert len(items) == 220
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/files.yml'))
 def test_files(sh_client, mock_client):
     items = sh_client.read_files()
-    assert len(items) == 15
+    assert len(items) == 220
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/file.yml'))
 def test_file(sh_client, mock_client):
-    my_file = sh_client.read_file('CertifiedDonorStatement_SC110743_31122018')
-    assert my_file.properties['Name'] == 'CertifiedDonorStatement_SC110743_31122018.pdf'
+    my_file = sh_client.read_file('CertifiedDonorStatement_CSACC_KC120003_31122019.pdf')
+    assert my_file.properties['Name'] == 'CertifiedDonorStatement_CSACC_KC120003_31122019.pdf'
 
 
 # @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/download.yml'))

@@ -7,8 +7,9 @@ from office365.runtime.auth.authentication_context import AuthenticationContext
 from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.file import File
 from office365.sharepoint.file_creation_information import FileCreationInformation
-from office365.sharepoint.helpers.camlquery_builder import CamlQueryBuilder
 from office365.sharepoint.helpers.querystring_builder import QueryStringBuilder
+
+from donor_reporting_portal.libraries.sharepoint.qb import ICamlQueryBuilder
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +26,7 @@ class SharePointClient:
         self.relative_url = kwargs.get('relative_url', settings.SHAREPOINT_TENANT['url'])
         username = kwargs.get('username', settings.SHAREPOINT_TENANT['user_credentials']['username'])
         password = kwargs.get('password', settings.SHAREPOINT_TENANT['user_credentials']['password'])
-        self.folder = kwargs.get('folder_name', 'Documents')
-
+        self.folder = kwargs.get('folder', 'Documents')
         ctx_auth = AuthenticationContext(url=self.site_path)
         if ctx_auth.acquire_token_for_user(username=username, password=password):
             self.context = ClientContext(self.site_path, ctx_auth)
@@ -82,7 +82,7 @@ class SharePointClient:
     def read_caml_items(self, filters=dict(), scope=None):
         """Read a folder example"""
         list_obj = self.context.web.lists.get_by_title(self.folder)
-        qry = CamlQueryBuilder(filters, scope).get_query()
+        qry = ICamlQueryBuilder(filters, scope).get_query()
         items = list_obj.get_items(qry)
         self.context.execute_query()
         return items

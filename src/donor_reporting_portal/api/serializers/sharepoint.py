@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 
 from rest_framework import serializers
@@ -36,21 +38,31 @@ class SharePointItemSerializer(serializers.Serializer):
     report_group = SharePointPropertyField()
     report_period = SharePointPropertyField()
     report_status = SharePointPropertyField()
+    retracted = SharePointPropertyField()
     url = SharePointPropertyField()
     description = SharePointPropertyField()
+    framework_agreement = SharePointPropertyField()
     resource_url = serializers.ReadOnlyField()
     download_url = serializers.SerializerMethodField()
+    is_new = serializers.SerializerMethodField()
 
     def get_download_url(self, obj):
-        title = obj.properties.get('Title', '')
-        k = title.rfind(".")
-        filename = title[:k] + "__ext__" + title[k + 1:]
+        filename = obj.properties.get('Title', '')
+        if filename:
+            k = filename.rfind(".")
+            filename = filename[:k] + "__ext__" + filename[k + 1:]
         relative_url = reverse('api:sharepoint-files-download', kwargs={
-            'site_name': self.context['site_name'],
-            'folder_name': self.context['folder_name'],
+            'tenant': self.context['tenant'],
+            'site': self.context['site'],
+            'folder': self.context['folder'],
             'filename': filename
         })
         return f'{settings.HOST}{relative_url}'
+
+    def get_is_new(self, obj):
+        modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
+        day_difference = (modified - datetime.now()).days
+        return True if day_difference <= 3 else False
 
 
 class SharePointFileSerializer(serializers.Serializer):
@@ -67,7 +79,8 @@ class SharePointFileSerializer(serializers.Serializer):
 
     def get_download_url(self, obj):
         relative_url = reverse('api:sharepoint-files-download', kwargs={
-            'site_name': self.context['site_name'],
-            'folder_name': self.context['folder_name'],
+            'tenant': self.context['tenant'],
+            'site': self.context['site'],
+            'folder': self.context['folder'],
             'filename': obj.properties['Name'].split('.')[0]})
         return f'{settings.HOST}{relative_url}'

@@ -1,15 +1,35 @@
 [
 {
+    "model": "sharepoint.sharepointtenant",
+    "pk": 1,
+    "fields": {
+        "created": "2020-01-29T18:41:56.575Z",
+        "modified": "2020-01-29T18:41:56.575Z",
+        "url": "https://unitst.sharepoint.com/",
+        "username": null,
+        "password": null
+    }
+},
+{
+    "model": "sharepoint.sharepointtenant",
+    "pk": 2,
+    "fields": {
+        "created": "2020-01-29T18:42:17.899Z",
+        "modified": "2020-01-29T18:42:17.899Z",
+        "url": "https://asantiagounicef.sharepoint.com/",
+        "username": null,
+        "password": null
+    }
+},
+{
     "model": "sharepoint.sharepointsite",
     "pk": 1,
     "fields": {
         "created": "2019-11-04T17:47:58.162Z",
-        "modified": "2019-11-05T10:45:16.393Z",
+        "modified": "2020-01-29T18:47:03.510Z",
+        "tenant": 2,
         "name": "GLB-DRP",
-        "url": "https://asantiagounicef.sharepoint.com/",
-        "site_type": "sites",
-        "username": "",
-        "password": ""
+        "site_type": "sites"
     }
 },
 {
@@ -17,12 +37,10 @@
     "pk": 2,
     "fields": {
         "created": "2019-11-05T17:12:30.958Z",
-        "modified": "2019-11-05T20:00:56.356Z",
-        "name": "TST-SCS-DRP",
-        "url": "https://unitst.sharepoint.com/",
-        "site_type": "teams",
-        "username": "",
-        "password": ""
+        "modified": "2020-01-29T18:42:03.489Z",
+        "tenant": 1,
+        "name": "GLB-DRP",
+        "site_type": "sites"
     }
 },
 {
@@ -30,10 +48,11 @@
     "pk": 1,
     "fields": {
         "created": "2019-11-04T17:48:45.096Z",
-        "modified": "2019-11-04T17:48:45.096Z",
+        "modified": "2020-01-23T20:23:14.236Z",
         "name": "2019 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -41,21 +60,23 @@
     "pk": 2,
     "fields": {
         "created": "2019-11-05T17:06:30.288Z",
-        "modified": "2019-11-05T17:06:37.459Z",
+        "modified": "2020-01-24T16:31:58.286Z",
         "name": "2020 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
     "model": "sharepoint.sharepointlibrary",
     "pk": 3,
     "fields": {
-        "created": "2019-11-05T17:06:44.000Z",
-        "modified": "2019-11-05T17:06:48.320Z",
+        "created": "2019-11-05T17:06:44Z",
+        "modified": "2020-01-24T16:32:36.011Z",
         "name": "2021 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -63,10 +84,11 @@
     "pk": 4,
     "fields": {
         "created": "2019-11-05T17:06:52.426Z",
-        "modified": "2019-11-05T17:06:55.146Z",
+        "modified": "2020-01-24T16:35:04.514Z",
         "name": "2022 Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -74,10 +96,11 @@
     "pk": 5,
     "fields": {
         "created": "2019-11-05T17:07:20.281Z",
-        "modified": "2019-11-05T17:07:20.281Z",
+        "modified": "2020-01-24T16:32:48.867Z",
         "name": "Thematic Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": false
     }
 },
 {
@@ -85,10 +108,11 @@
     "pk": 6,
     "fields": {
         "created": "2019-11-05T17:07:29.183Z",
-        "modified": "2019-11-05T17:07:29.183Z",
-        "name": "US Government Reports",
+        "modified": "2020-01-24T16:34:54.338Z",
+        "name": "2019 US Gov Certified Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -99,7 +123,8 @@
         "modified": "2019-11-05T19:49:59.494Z",
         "name": "Documents",
         "site": 2,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
     }
 },
 {
@@ -110,7 +135,152 @@
         "modified": "2019-11-05T17:27:32.647Z",
         "name": "Temporary InSight Test 3000 Reports",
         "site": 1,
-        "active": true
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 9,
+    "fields": {
+        "created": "2019-12-23T22:28:17.009Z",
+        "modified": "2020-01-24T16:34:56.805Z",
+        "name": "2020 US Gov Certified Reports",
+        "site": 1,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 10,
+    "fields": {
+        "created": "2019-12-23T22:28:43.476Z",
+        "modified": "2020-01-24T16:35:01.132Z",
+        "name": "2021 US Gov Certified Reports",
+        "site": 1,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 11,
+    "fields": {
+        "created": "2019-12-23T22:28:51.971Z",
+        "modified": "2020-01-24T16:35:07.431Z",
+        "name": "2022 US Gov Certified Reports",
+        "site": 1,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 12,
+    "fields": {
+        "created": "2019-11-05T17:06:30.288Z",
+        "modified": "2020-01-24T16:31:58.286Z",
+        "name": "2019 Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 13,
+    "fields": {
+        "created": "2019-11-05T17:06:30.288Z",
+        "modified": "2020-01-24T16:31:58.286Z",
+        "name": "2020 Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 14,
+    "fields": {
+        "created": "2019-11-05T17:06:44Z",
+        "modified": "2020-01-24T16:32:36.011Z",
+        "name": "2021 Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 15,
+    "fields": {
+        "created": "2019-11-05T17:06:52.426Z",
+        "modified": "2020-01-24T16:35:04.514Z",
+        "name": "2022 Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 16,
+    "fields": {
+        "created": "2019-12-23T22:28:17.009Z",
+        "modified": "2020-01-24T16:34:56.805Z",
+        "name": "2019 US Gov Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 17,
+    "fields": {
+        "created": "2019-12-23T22:28:17.009Z",
+        "modified": "2020-01-24T16:34:56.805Z",
+        "name": "2020 US Gov Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 18,
+    "fields": {
+        "created": "2019-12-23T22:28:43.476Z",
+        "modified": "2020-01-24T16:35:01.132Z",
+        "name": "2021 US Gov Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 19,
+    "fields": {
+        "created": "2019-12-23T22:28:51.971Z",
+        "modified": "2020-01-24T16:35:07.431Z",
+        "name": "2022 US Gov Certified Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": true
+    }
+},
+{
+    "model": "sharepoint.sharepointlibrary",
+    "pk": 20,
+    "fields": {
+        "created": "2019-11-05T17:07:20.281Z",
+        "modified": "2020-01-24T16:32:48.867Z",
+        "name": "Thematic Reports",
+        "site": 2,
+        "active": true,
+        "require_donor_permission": false
     }
 }
 ]

@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ErrorDetail, PermissionDenied
 
 from donor_reporting_portal.api.filters import SharePointLibraryFilter
-from donor_reporting_portal.api.permissions import DonorPermission
+from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
 from donor_reporting_portal.api.serializers.metadata import SharePointLibrarySerializer, SharePointSiteSerializer
 from donor_reporting_portal.api.serializers.sharepoint import SharePointFileSerializer, SharePointItemSerializer
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
@@ -20,25 +20,27 @@ cache = caches['default']
 
 
 class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
-    permission_classes = (DonorPermission, )
+    permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
-    lookup_field = 'filename'
+    def get_library(self):
+        return SharePointLibrary.objects.get(
+            site__tenant__url__contains=self.tenant, name=self.folder, site__name=self.site)
 
     @property
     def client(self):
         key = self.get_cache_key(**{'client': 'client'})
         client = cache.get(key)
         if client is None:
-            dl = SharePointLibrary.objects.get(name=self.folder_name, site__name=self.site_name)
+            dl = self.get_library()
             dl_info = {
                 'url': dl.site.site_url(),
                 'relative_url': dl.site.relative_url(),
-                'folder_name': dl.name
+                'folder': dl.name
             }
-            if dl.site.username:
-                dl_info['username']: dl.site.username
-            if dl.site.username:
-                dl_info['password']: dl.site.password
+            if dl.site.tenant.username:
+                dl_info['username']: dl.site.tenant.username
+            if dl.site.tenant.username:
+                dl_info['password']: dl.site.tenant.password
             try:
                 client = SharePointClient(**dl_info)
                 cache.set(key, client)
@@ -50,8 +52,9 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
     def get_serializer_context(self):
         ctx = super().get_serializer_context()
         ctx.update({
-            'site_name': self.site_name,
-            'folder_name': self.folder_name
+            'tenant': self.tenant,
+            'site': self.site,
+            'folder': self.folder
         })
         return ctx
 
@@ -62,15 +65,19 @@ class AbstractSharePointViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMo
         return response
 
     @property
-    def site_name(self):
-        return self.kwargs.get('site_name')
+    def tenant(self):
+        return self.kwargs.get('tenant')
 
     @property
-    def folder_name(self):
-        return self.kwargs.get('folder_name')
+    def site(self):
+        return self.kwargs.get('site')
+
+    @property
+    def folder(self):
+        return self.kwargs.get('folder')
 
     def get_cache_key(self, **kwargs):
-        key = get_cache_key([self.site_name, self.folder_name], **kwargs)
+        key = get_cache_key([self.tenant, self.site, self.folder], **kwargs)
         return key
 
 
@@ -108,14 +115,13 @@ class ItemSharePointCamlViewSet(ItemSharePointViewSet):
 
 class FileSharePointViewSet(AbstractSharePointViewSet):
     serializer_class = SharePointFileSerializer
-
     lookup_field = 'filename'
 
     def get_object(self):
         filename = self.kwargs.get('filename', None)
         try:
             filename, *extension = filename.split('__ext__')
-            if extension and len(extension)==1:
+            if extension and len(extension) == 1:
                 extension = extension[0]
             else:
                 extension = 'pdf'
@@ -156,4 +162,4 @@ class SharePointLibraryViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyMod
     queryset = SharePointLibrary.objects.all()
     serializer_class = SharePointLibrarySerializer
     search_fields = ('name', )
-    filter_class = SharePointLibraryFilter
+    filterset_class = SharePointLibraryFilter

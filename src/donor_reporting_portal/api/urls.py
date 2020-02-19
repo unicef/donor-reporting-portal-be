@@ -27,12 +27,12 @@ router.register(r'metadata/external_grant/(?P<donor_id>\d+)', ExternalGrantViewS
 router.register(r'metadata/grants/(?P<donor_id>\d+)', GrantViewSet, basename='grant')
 router.register(r'sharepoint/sites', SharePointSiteViewSet, basename='sharepoint-site')
 router.register(r'sharepoint/libraries', SharePointLibraryViewSet, basename='sharepoint-library')
-router.register(r'sharepoint/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)/files', FileSharePointViewSet,
-                basename='sharepoint-files')
-router.register(r'sharepoint/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)', ItemSharePointViewSet,
-                basename='sharepoint')
-router.register(r'sharepoint-caml/(?P<site_name>[\w\-]+)/(?P<folder_name>[\w|\W]+)', ItemSharePointCamlViewSet,
-                basename='sharepoint-caml')
+router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/files',
+                FileSharePointViewSet, basename='sharepoint-files')
+router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)',
+                ItemSharePointViewSet, basename='sharepoint')
+router.register(r'sharepoint-caml/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)',
+                ItemSharePointCamlViewSet, basename='sharepoint-caml')
 
 urlpatterns = [
     path('metadata/static/', view=MetadataStaticAPIView.as_view(http_method_names=['get']),

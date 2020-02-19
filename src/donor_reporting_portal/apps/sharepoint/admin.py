@@ -1,15 +1,21 @@
 from django.contrib import admin
 
-from .models import SharePointLibrary, SharePointSite
+from .models import SharePointLibrary, SharePointSite, SharePointTenant
+
+
+@admin.register(SharePointTenant)
+class SharepointTenantAdmin(admin.ModelAdmin):
+    search_fields = ('url', )
+    list_display = ('url', )
 
 
 @admin.register(SharePointSite)
 class SharepointSiteAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'url')
-    list_display = ('name', 'site_type', 'url')
+    search_fields = ('name', )
+    list_display = ('name', 'site_type', 'tenant')
 
 
 @admin.register(SharePointLibrary)
 class DocumentLibraryAdmin(admin.ModelAdmin):
     search_fields = ('name', 'site')
-    list_display = ('name', 'site', 'active')
+    list_display = ('name', 'site', 'active', 'require_donor_permission')

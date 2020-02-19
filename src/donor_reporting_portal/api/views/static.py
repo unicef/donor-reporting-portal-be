@@ -18,8 +18,9 @@ class MetadataStaticAPIView(APIView):
     def get(self, request):
         """Return All Static values used for drop-down in the frontend"""
 
-        years = {year: year for year in range(2000, datetime.today().year + 1)}
-        report_years = {year: year for year in range(2019, datetime.today().year + 1)}
+        years = {year: year for year in range(2000, datetime.today().year + 2)}
+        report_years = {year: year for year in range(2019, datetime.today().year + 2)}
+        grant_issue_years = {year: year for year in range(2018, datetime.today().year + 2)}
         report_type = {
             'final': 'Final',
             'interim': 'Interim'
@@ -77,6 +78,7 @@ class MetadataStaticAPIView(APIView):
             {
                 'years': dict_to_json(years),
                 'report_years': dict_to_json(report_years),
+                'grant_issue_years': dict_to_json(grant_issue_years),
                 'report_type': dict_to_json(report_type),
                 'donor_document': dict_to_json(donor_document),
                 'donor_reporting_category': dict_to_json(donor_reporting_category),

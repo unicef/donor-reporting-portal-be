@@ -22,7 +22,7 @@ RUN apk add --no-cache --virtual .build-deps \
 RUN apk add --no-cache --virtual .build-deps-edge \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        proj-dev \
+        # proj-dev \
         protobuf-c-dev
 
 RUN apk add --no-cache --virtual .postgis-rundeps \
@@ -43,7 +43,7 @@ RUN apk add --no-cache --virtual .postgis-rundeps-edge \
         libxslt \
         libzmq \
         jpeg \
-        proj \
+        # proj \
         protobuf-c \
         zlib
 
@@ -80,7 +80,7 @@ RUN cd /code \
 
 # need to removes some code not py3.8 compliant
 RUN rm -fr /usr/local/lib/python3.8/site-packages/psycopg2/tests/* \
-           /usr/local/lib/python3.8/site-packages/tornado/test/* \
+           /usr/local/lib/python3.8/site-packages/tornado/test/*
 
 # before compile site-packages
 RUN find /usr/local/lib/python3.8/ -name *.pyc | xargs rm -f \

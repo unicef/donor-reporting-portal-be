@@ -1,5 +1,4 @@
 import os
-import uuid
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -62,11 +61,6 @@ class Command(BaseCommand):
             self.stdout.write(f"Run migrations")
             call_command('migrate', verbosity=verbosity - 1)
 
-        if options['metadata'] or _all:
-            call_command('loaddata', 'groups.json')
-            call_command('loaddata', 'libraries.json')
-            grant_sync()
-
         if options['users'] or _all:
             call_command('update_notifications', verbosity=verbosity - 1)
             if settings.DEBUG:
@@ -87,9 +81,7 @@ class Command(BaseCommand):
             else:  # pragma: no cover
                 self.stdout.write(f"Superuser `{admin}` already exists`.")
 
-            self.stdout.write(f"Create anonymous")
-            ModelUser.objects.get_or_create(username='anonymous', defaults={
-                "is_superuser": False,
-                "is_staff": False,
-                "password": make_password(uuid.uuid4())
-            })
+        if options['metadata'] or _all:
+            call_command('loaddata', 'groups.json')
+            call_command('loaddata', 'libraries.json')
+            grant_sync()

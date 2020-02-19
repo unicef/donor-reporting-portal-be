@@ -8,3 +8,4 @@ class UserRoleAdmin(admin.ModelAdmin):
     search_fields = ('donor', )
     list_display = ('user', 'group', 'donor')
     list_filter = ('group', 'donor')
+    raw_id_fields = ('user', 'group', 'donor')

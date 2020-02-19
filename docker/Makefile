@@ -1,9 +1,8 @@
 # envs to set before use this script
 DATABASE_URL?=
-DEVELOP?=1
 DOCKER_PASS?=
 DOCKER_USER?=
-TARGET?=0.5.0a6
+TARGET?=0.6.0
 BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9]\)\.\(.*\)/\1.\2/g" )
 # below vars are used internally
 BUILD_OPTIONS?=
@@ -15,7 +14,6 @@ DOCKER_IMAGE_NAME?=${ORGANIZATION}/${IMAGE_NAME}
 DOCKER_IMAGE?=${DOCKER_IMAGE_NAME}:${TARGET}
 DOCKERFILE?=Dockerfile
 RUN_OPTIONS?=
-PIPENV_ARGS?=
 PORTS=
 ABSOLUTE_BASE_URL?="http://192.168.66.66:8000"
 
@@ -36,13 +34,11 @@ build-base:
 
 
 .build:
-	cd .. && ./manage.py makemigrations --check --dry-run
+#	cd .. && ./manage.py makemigrations --check --dry-run
 	cd .. && docker build \
 			${BUILD_OPTIONS} \
 			--build-arg BASE_IMAGE=${BASE} \
-			--build-arg DEVELOP=${DEVELOP} \
 			--build-arg VERSION=${TARGET} \
-			--build-arg PIPENV_ARGS=${PIPENV_ARGS} \
 			-t ${DOCKER_IMAGE} \
 			-f docker/Dockerfile .
 	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:dev
@@ -101,32 +97,32 @@ release:
 	docker push ${DOCKER_IMAGE_NAME}:${TARGET}
 	docker push ${DOCKER_IMAGE_NAME}:dev
 
-deploy:
-	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
+# deploy:
+#	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
 # 	lazo rancher upgrade donor_reporting_portal:celery ${DOCKER_IMAGE_NAME}:${TARGET}
 # 	lazo rancher upgrade donor_reporting_portal:beat ${DOCKER_IMAGE_NAME}:${TARGET}
-	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal-admin ${DOCKER_IMAGE_NAME}:${TARGET}
+#	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal-admin ${DOCKER_IMAGE_NAME}:${TARGET}
 # 	lazo rancher upgrade donor_reporting_portal:celery-w2 ${DOCKER_IMAGE_NAME}:${TARGET}
-	curl -X POST -H 'Content-type: application/json' \
-		--data '{"text":"Donor Reporting Portal ${TARGET} released in dev"}' \
-		https://hooks.slack.com/services/${SLACK_BOT_TOKEN}
-
-staging:
-	echo "="
-
-production:
-	lazo rancher \
-		-b https://elgaucho.unicef.io/v3 \
-		--auth ${RANCHER_GAUCHO_AUTH}
-		upgrade \
-		-c rke-cluster-etdw \
-		-p donor_reporting_portal-prod \
-		--check-image \
-		donor_reporting_portal-prod:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
-
-	curl -X POST -H 'Content-type: application/json' \
-		--data '{"text":"Donor Reporting Portal ${TARGET} released in production"}' \
-		https://hooks.slack.com/services/${SLACK_BOT_TOKEN}
+#	curl -X POST -H 'Content-type: application/json' \
+#		--data '{"text":"Donor Reporting Portal ${TARGET} released in dev"}' \
+#		https://hooks.slack.com/services/${SLACK_BOT_TOKEN}
+#
+# staging:
+#	echo "="
+#
+# production:
+#	lazo rancher \
+#		-b https://elgaucho.unicef.io/v3 \
+#		--auth ${RANCHER_GAUCHO_AUTH}
+#		upgrade \
+#		-c rke-cluster-etdw \
+#		-p donor_reporting_portal-prod \
+#		--check-image \
+#		donor_reporting_portal-prod:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
+#
+#	curl -X POST -H 'Content-type: application/json' \
+#		--data '{"text":"Donor Reporting Portal ${TARGET} released in production"}' \
+#		https://hooks.slack.com/services/${SLACK_BOT_TOKEN}
 
 bump:
 	cd .. && bumpversion --commit --tag --config-file=.bumpversion.cfg num
