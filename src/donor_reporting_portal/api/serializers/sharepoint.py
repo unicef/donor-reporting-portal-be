@@ -3,6 +3,16 @@ from datetime import datetime
 from rest_framework import serializers
 from unicef_sharepoint.serializers import SharePointItemSerializer, SharePointPropertyField, SharePointPropertyManyField
 
+from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
+
+
+class SharePointGroupSerializer(serializers.ModelSerializer):
+    libraries = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+
+    class Meta:
+        model = SharePointGroup
+        fields = '__all__'
+
 
 class DRPSharePointItemSerializer(SharePointItemSerializer):
 

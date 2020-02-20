@@ -4,7 +4,14 @@ from django.urls import reverse
 
 from drf_api_checker.pytest import api_checker_datadir, contract, frozenfixture  # noqa
 from drf_api_checker.recorder import Recorder
-from tests.factories import DonorFactory, SharePointLibraryFactory, SharePointSiteFactory, SharePointTenantFactory
+from tests.api_checker import LastModifiedRecorder
+from tests.factories import (
+    DonorFactory,
+    SharePointGroupFactory,
+    SharePointLibraryFactory,
+    SharePointSiteFactory,
+    SharePointTenantFactory,
+)
 from tests.perms import user_grant_role_permission
 from tests.vcrpy import VCR
 
@@ -43,6 +50,14 @@ def library(site, request, db):
     )
 
 
+@frozenfixture()
+def group(library, request, db):
+    return SharePointGroupFactory.create(
+        name='Donors Reports',
+        libraries=(library,)
+    )
+
+
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/list.yml'))
 def test_api(api_checker_datadir, logged_user, library, donor):
     url = reverse('api:sharepoint-list',
@@ -61,3 +76,8 @@ def test_api_caml(api_checker_datadir, logged_user, library, donor):
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
         recorder = Recorder(api_checker_datadir, as_user=logged_user)
         recorder.assertGET(url, data=data)
+
+
+@contract(recorder_class=LastModifiedRecorder)
+def test_api_theme_list(group, request, django_app, logged_user, theme):
+    return reverse('api:sharepoint-group-list')
