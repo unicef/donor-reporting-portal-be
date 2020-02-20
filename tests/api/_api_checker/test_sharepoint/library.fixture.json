@@ -1,35 +1,35 @@
 {
     "library": {
         "master": {
-            "model": "sharepoint.sharepointlibrary",
-            "pk": 2,
+            "model": "unicef_sharepoint.sharepointlibrary",
+            "pk": 7,
             "fields": {
-                "created": "2020-01-30T19:40:45.581Z",
-                "modified": "2020-01-30T19:40:45.581Z",
+                "created": "2020-02-07T23:40:08.927Z",
+                "modified": "2020-02-07T23:40:08.927Z",
                 "name": "2019 Certified Reports",
-                "site": 2,
+                "site": 7,
                 "active": true,
-                "require_donor_permission": true
+                "public": true
             }
         },
         "deps": [
             {
-                "model": "sharepoint.sharepointsite",
-                "pk": 2,
+                "model": "unicef_sharepoint.sharepointsite",
+                "pk": 7,
                 "fields": {
-                    "created": "2020-01-30T19:40:45.567Z",
-                    "modified": "2020-01-30T19:40:45.567Z",
-                    "tenant": 2,
+                    "created": "2020-02-07T23:40:08.919Z",
+                    "modified": "2020-02-07T23:40:08.919Z",
+                    "tenant": 7,
                     "name": "GLB-DRP",
                     "site_type": "sites"
                 }
             },
             {
-                "model": "sharepoint.sharepointtenant",
-                "pk": 2,
+                "model": "unicef_sharepoint.sharepointtenant",
+                "pk": 7,
                 "fields": {
-                    "created": "2020-01-30T19:40:45.561Z",
-                    "modified": "2020-01-30T19:40:45.561Z",
+                    "created": "2020-02-07T23:40:08.913Z",
+                    "modified": "2020-02-07T23:40:08.913Z",
                     "url": "https://unitst.sharepoint.com/",
                     "username": null,
                     "password": null

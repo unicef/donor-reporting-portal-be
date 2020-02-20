@@ -61,6 +61,7 @@ unicef-notification = "*"
 unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "*"
+unicef-sharepoint = "*"
 
 [requires]
 python_version = "3.8"

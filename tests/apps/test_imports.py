@@ -1,4 +1,4 @@
-from donor_reporting_portal.apps.init.checks import check_imports
+from donor_reporting_portal.apps.core.checks import check_imports
 
 
 def test_imports():

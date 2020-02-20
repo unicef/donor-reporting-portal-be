@@ -10,8 +10,8 @@ urlpatterns = [
     path(r'api-token-auth/', rest_framework_jwt.views.obtain_jwt_token),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'social', include('social_django.urls', namespace='social')),
-    path(r'core/', include('donor_reporting_portal.apps.core.urls', namespace='core')),
     path(r'api/', include('donor_reporting_portal.api.urls', namespace='api')),
+    path(r'api/', include('unicef_sharepoint.urls', namespace='sharepoint')),
     path(r'accounts/', include('django.contrib.auth.urls')),
 ]
 

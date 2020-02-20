@@ -6,7 +6,6 @@ from unicef_security.models import BusinessArea
 
 from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, Theme
 from donor_reporting_portal.apps.roles.models import UserRole
-from donor_reporting_portal.apps.sharepoint.models import SharePointLibrary
 
 
 class GroupFilter(filters.FilterSet):
@@ -90,14 +89,4 @@ class GrantFilter(filters.FilterSet):
             'business_areas': ['exact', 'in'],
             'expiry_date': ['lte', 'gte', 'gt', 'lt'],
             'financial_close_date': ['lte', 'gte', 'gt', 'lt'],
-        }
-
-
-class SharePointLibraryFilter(filters.FilterSet):
-
-    class Meta:
-        model = SharePointLibrary
-        fields = {
-            'site': ['exact', 'in'],
-            'active': ['exact', ],
         }
