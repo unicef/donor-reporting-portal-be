@@ -12,6 +12,15 @@ from donor_reporting_portal.apps.roles.models import UserRole
 class GroupFactory(factory.DjangoModelFactory):
     name = factory.Sequence(lambda n: "name%03d" % n)
 
+    @factory.post_generation
+    def permissions(self, create, extracted, **kwargs):
+        if not create:
+            return  # Simple build, do nothing.
+
+        if extracted:
+            for permission in extracted:  # A list of groups were passed in, use them
+                self.permissions.add(permission)
+
     class Meta:
         model = Group
         django_get_or_create = ('name',)

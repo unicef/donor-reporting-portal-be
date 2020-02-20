@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django_filters import rest_framework as filters
 from unicef_security.models import BusinessArea
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, Theme
+from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 from donor_reporting_portal.apps.roles.models import UserRole
 
 
@@ -36,6 +36,7 @@ class UserRoleFilter(filters.FilterSet):
             'donor': ['exact', 'in'],
             'group': ['exact', 'in'],
             'user': ['exact', 'in'],
+            'secondary_donor': ['exact', 'in'],
         }
 
 
@@ -89,4 +90,15 @@ class GrantFilter(filters.FilterSet):
             'business_areas': ['exact', 'in'],
             'expiry_date': ['lte', 'gte', 'gt', 'lt'],
             'financial_close_date': ['lte', 'gte', 'gt', 'lt'],
+        }
+
+
+class SecondaryDonorFilter(filters.FilterSet):
+    grants__in = filters.BaseInFilter(field_name="grants")
+
+    class Meta:
+        model = SecondaryDonor
+        fields = {
+            'name': ['exact', 'in'],
+            'code': ['exact', 'in'],
         }

@@ -1,31 +1,34 @@
 from rest_framework import permissions
 
-from donor_reporting_portal.apps.report_metadata.models import Donor
+from donor_reporting_portal.apps.report_metadata.models import Donor, SecondaryDonor
 
 
 class DonorPermission(permissions.BasePermission):
 
-    def get_object(self, view, query_paramas):
-        donor_dict = {
-            'id': 'donor_id',
-            'name': 'donor',
-            'code': 'donor_code',
-        }
-        for field_name, qs_param in donor_dict.items():
+    def get_donors(self, view, query_paramas):
+        donor = secondary_donor = None
+        donor_info = {'id': 'donor_id', 'code': 'donor_code'}
+        secondary_donor_info = {'id': 'secondary_donor_id', 'code': 'secondary_donor_code'}
+
+        for field_name, qs_param in donor_info.items():
             value = view.kwargs.get(qs_param, query_paramas.get(qs_param, None))
-            filter_dict = {
-                field_name: value
-            }
-            donor = Donor.objects.filter(**filter_dict).first()
-            if donor:
-                return donor
-        return None
+            filter_dict = {field_name: value}
+            if not donor:
+                donor = Donor.objects.filter(**filter_dict).first()
+
+        for field_name, qs_param in secondary_donor_info.items():
+            value = view.kwargs.get(qs_param, query_paramas.get(qs_param, None))
+            filter_dict = {field_name: value}
+            if not secondary_donor:
+                secondary_donor = SecondaryDonor.objects.filter(**filter_dict).first()
+        return donor, secondary_donor
 
     def has_permission(self, request, view):
-        donor = self.get_object(view, request.query_params)
+        donor, secondary_donor = self.get_donors(view, request.query_params)
         user = request.user
+        context_object = (donor, secondary_donor) if donor and secondary_donor else donor
         if donor and user.has_perm('roles.can_view_all_donors') or \
-                user.has_perm('report_metadata.view_donor', donor) or \
+                user.has_perm('report_metadata.view_donor', context_object) or \
                 view.kwargs.get('filename'):
             return True
         return False

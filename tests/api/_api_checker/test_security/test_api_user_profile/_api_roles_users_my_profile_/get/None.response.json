@@ -1,0 +1,49 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin"
+        ],
+        "allow": [
+            "Allow",
+            "GET, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "SAMEORIGIN"
+        ],
+        "content-length": [
+            "Content-Length",
+            "267"
+        ]
+    },
+    "data": {
+        "id": 1297,
+        "username": "user003",
+        "first_name": "Steven",
+        "last_name": "Hall",
+        "email": "m003@mailinator.com",
+        "is_superuser": true,
+        "pk": 1297,
+        "donor": {
+            "name": "",
+            "code": "",
+            "us_gov": false
+        },
+        "group": {
+            "name": "",
+            "permissions": []
+        },
+        "secondary_donor": {
+            "name": "",
+            "code": "",
+            "grants": []
+        }
+    },
+    "content_type": null
+}

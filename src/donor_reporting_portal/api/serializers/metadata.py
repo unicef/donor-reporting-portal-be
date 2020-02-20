@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, Theme
+from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 
 
 class ThemeSerializer(serializers.ModelSerializer):
@@ -10,9 +10,18 @@ class ThemeSerializer(serializers.ModelSerializer):
 
 
 class DonorSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Donor
         fields = '__all__'
+
+
+class DonorSecondaryDonorSerializer(DonorSerializer):
+    secondary_donors = serializers.SerializerMethodField()
+
+    def get_secondary_donors(self, obj):
+        qs = SecondaryDonor.objects.filter(grants__donor=obj)
+        return SecondaryDonorSerializer(qs, many=True).data
 
 
 class ExternalGrantSerializer(serializers.ModelSerializer):
@@ -24,4 +33,10 @@ class ExternalGrantSerializer(serializers.ModelSerializer):
 class GrantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grant
+        fields = '__all__'
+
+
+class SecondaryDonorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SecondaryDonor
         fields = '__all__'

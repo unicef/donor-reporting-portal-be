@@ -12,6 +12,8 @@ from .factories import (
     ExternalGrantFactory,
     GrantFactory,
     GroupFactory,
+    SecondaryDonorFactory,
+    SharePointGroupFactory,
     ThemeFactory,
     UserFactory,
     UserRoleFactory,
@@ -39,7 +41,6 @@ def client(user):
 
 @pytest.fixture()
 def user(request, db):
-
     return UserFactory()
 
 
@@ -66,8 +67,12 @@ def theme():
 
 @pytest.fixture()
 def donor():
-
     return DonorFactory()
+
+
+@pytest.fixture()
+def sharepoint_group():
+    return SharePointGroupFactory()
 
 
 @pytest.fixture()
@@ -78,6 +83,11 @@ def external_grant():
 @pytest.fixture()
 def grant():
     return GrantFactory()
+
+
+@pytest.fixture()
+def secondary_donor():
+    return SecondaryDonorFactory()
 
 
 @pytest.fixture()

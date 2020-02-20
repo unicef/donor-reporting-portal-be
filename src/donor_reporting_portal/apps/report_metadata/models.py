@@ -71,3 +71,17 @@ class Grant(TimeStampedModel):
             self.donor.name,
             self.code
         )
+
+
+class SecondaryDonor(TimeStampedModel):
+    """Represents UNICEF Secondary Donors"""
+
+    name = models.CharField(verbose_name=_("Name"), max_length=64)
+    code = models.CharField(verbose_name=_("Code"), max_length=16, unique=True)
+    grants = models.ManyToManyField(Grant)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return f'{self.name} ({self.code})'

@@ -11,7 +11,7 @@
         ],
         "allow": [
             "Allow",
-            "GET, POST, HEAD, OPTIONS"
+            "GET, HEAD, OPTIONS"
         ],
         "x-frame-options": [
             "X-Frame-Options",
@@ -19,22 +19,18 @@
         ],
         "content-length": [
             "Content-Length",
-            "220"
+            "164"
         ]
     },
     "data": [
         {
-            "id": 146,
-            "user": 602,
-            "group": 199,
-            "donor": 236,
-            "secondary_donor": null,
-            "group_name": "name001",
-            "donor_name": "",
-            "user_last_login": null,
-            "user_email": "m013@mailinator.com",
-            "user_first_name": "Brett",
-            "user_last_name": "Vazquez"
+            "id": 1,
+            "libraries": [
+                "2019 Certified Reports"
+            ],
+            "created": "2020-02-20T10:28:29.451000-06:00",
+            "modified": "2020-02-20T10:28:29.456000-06:00",
+            "name": "Donors Reports"
         }
     ],
     "content_type": null
