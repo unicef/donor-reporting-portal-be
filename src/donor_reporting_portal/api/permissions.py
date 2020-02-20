@@ -33,6 +33,6 @@ class DonorPermission(permissions.BasePermission):
 
 class PublicLibraryPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if not view.get_library().require_donor_permission:
+        if view.get_library().public:
             return True
         return False
