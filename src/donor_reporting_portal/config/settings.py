@@ -20,11 +20,11 @@ DATABASES = {'default': env.db()}
 
 INSTALLED_APPS = (
     'donor_reporting_portal.apps.core',
-    'donor_reporting_portal.apps.init',
     'donor_reporting_portal.apps.report_metadata',
     'donor_reporting_portal.apps.roles',
     'donor_reporting_portal.apps.sharepoint',
     'donor_reporting_portal.web',
+    'unicef_sharepoint',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -52,7 +52,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
-    'donor_reporting_portal.apps.core.middleware.HealthCheckMiddleware',
+    'unicef_security.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -61,11 +61,11 @@ MIDDLEWARE = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'donor_reporting_portal.libraries.unicef_security.middleware.UnicefSocialAuthExceptionMiddleware'
+    'unicef_security.middleware.UNICEFSocialAuthExceptionMiddleware'
 )
 
 AUTHENTICATION_BACKENDS = (
-    'unicef_security.backends.UnicefAzureADBBCOAuth2',
+    'unicef_security.backends.UNICEFAzureADB2COAuth2',
     'django.contrib.auth.backends.ModelBackend',
     'donor_reporting_portal.apps.core.backends.DonorRoleBackend',
 )
@@ -244,7 +244,7 @@ BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
 
 
 SHAREPOINT_TENANT = {
-    'url': 'https://asantiagounicef.sharepoint.caaaaaom/',
+    'url': 'https://unicef.sharepoint.com/',
     'user_credentials': {
         'username': env.str('SHAREPOINT_USERNAME', 'invalid_username'),
         'password': env.str('SHAREPOINT_PASSWORD', 'invalid_password'),
@@ -276,12 +276,12 @@ SOCIAL_PASSWORD_RESET_POLICY = os.getenv('AZURE_B2C_PASS_RESET_POLICY', 'B2C_1_P
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
 
 SOCIAL_AUTH_PIPELINE = (
-    'donor_reporting_portal.apps.core.auth.social_details',
+    'unicef_security.pipeline.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.auth_allowed',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
-    'donor_reporting_portal.apps.core.auth.get_username',
+    'unicef_security.pipeline.auth.get_username',
     'social_core.pipeline.social_auth.associate_by_email',
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',

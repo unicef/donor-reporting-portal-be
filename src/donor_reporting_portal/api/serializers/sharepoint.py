@@ -1,25 +1,12 @@
 from datetime import datetime
 
-from django.conf import settings
-
 from rest_framework import serializers
-from rest_framework.reverse import reverse
-
-from donor_reporting_portal.libraries.sharepoint.serializers import (
-    SharePointPropertyField,
-    SharePointPropertyManyField,
-    UpperSharePointPropertyField,
-)
+from unicef_sharepoint.serializers import SharePointItemSerializer, SharePointPropertyField, SharePointPropertyManyField
 
 
-class SharePointItemSerializer(serializers.Serializer):
+class DRPSharePointItemSerializer(SharePointItemSerializer):
 
-    id = UpperSharePointPropertyField()
-    guid = UpperSharePointPropertyField()
-    created = SharePointPropertyField()
-    modified = SharePointPropertyField()
     report_generated_by = SharePointPropertyField()
-    title = SharePointPropertyField()
     year = SharePointPropertyField()
     donor = SharePointPropertyField()
     donor_code = SharePointPropertyField()
@@ -39,48 +26,11 @@ class SharePointItemSerializer(serializers.Serializer):
     report_period = SharePointPropertyField()
     report_status = SharePointPropertyField()
     retracted = SharePointPropertyField()
-    url = SharePointPropertyField()
     description = SharePointPropertyField()
     framework_agreement = SharePointPropertyField()
-    resource_url = serializers.ReadOnlyField()
-    download_url = serializers.SerializerMethodField()
     is_new = serializers.SerializerMethodField()
-
-    def get_download_url(self, obj):
-        filename = obj.properties.get('Title', '')
-        if filename:
-            k = filename.rfind(".")
-            filename = filename[:k] + "__ext__" + filename[k + 1:]
-        relative_url = reverse('api:sharepoint-files-download', kwargs={
-            'tenant': self.context['tenant'],
-            'site': self.context['site'],
-            'folder': self.context['folder'],
-            'filename': filename
-        })
-        return f'{settings.HOST}{relative_url}'
 
     def get_is_new(self, obj):
         modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
         day_difference = (modified - datetime.now()).days
         return True if day_difference <= 3 else False
-
-
-class SharePointFileSerializer(serializers.Serializer):
-    name = SharePointPropertyField()
-    type_name = serializers.ReadOnlyField()
-    url = serializers.ReadOnlyField()
-    linking_uri = SharePointPropertyField()
-    server_relative_url = SharePointPropertyField()
-    unique_id = SharePointPropertyField()
-    title = SharePointPropertyField()
-    time_created = SharePointPropertyField()
-    time_last_modified = SharePointPropertyField()
-    download_url = serializers.SerializerMethodField()
-
-    def get_download_url(self, obj):
-        relative_url = reverse('api:sharepoint-files-download', kwargs={
-            'tenant': self.context['tenant'],
-            'site': self.context['site'],
-            'folder': self.context['folder'],
-            'filename': obj.properties['Name'].split('.')[0]})
-        return f'{settings.HOST}{relative_url}'

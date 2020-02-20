@@ -1,6 +1,5 @@
 import factory
-
-from donor_reporting_portal.apps.sharepoint.models import SharePointLibrary, SharePointSite, SharePointTenant
+from unicef_sharepoint.models import SharePointLibrary, SharePointSite, SharePointTenant
 
 
 class SharePointTenantFactory(factory.DjangoModelFactory):
