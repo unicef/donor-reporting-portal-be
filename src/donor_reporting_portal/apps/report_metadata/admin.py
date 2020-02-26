@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from admin_extra_urls.extras import ExtraUrlMixin, link
 
-from .models import Donor, ExternalGrant, Grant, Theme
+from .models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 from .tasks import grant_sync
 
 
@@ -46,7 +46,7 @@ class GrantAdmin(GrantSyncMixin, admin.ModelAdmin):
     )
 
 
-# @admin.register(SecondaryDonor)
+@admin.register(SecondaryDonor)
 class SecondaryDonorAdmin(GrantSyncMixin, admin.ModelAdmin):
     search_fields = ('name', 'code')
     list_display = ('name', 'code', )

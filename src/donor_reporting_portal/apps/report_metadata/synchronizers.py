@@ -5,7 +5,7 @@ from unicef_security import config
 from unicef_security.models import BusinessArea
 from unicef_vision.synchronizers import VisionDataSynchronizer
 
-from .models import Donor, ExternalGrant, Grant, Theme  # SecondaryDonor
+from .models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 
 logger = logging.getLogger(__name__)
 
@@ -86,12 +86,12 @@ class GrantSynchronizer(VisionDataSynchronizer):
         if record.get('RECIPIENT_OFFICE_CODE', None):
             grant.business_areas.set(BusinessArea.objects.filter(code__in=record['RECIPIENT_OFFICE_CODE'].split('; ')))
 
-        # if record.get('RECIPIENT_OFFICE_CODE', None):
-        #     secondary_donors_codes = record['RECIPIENT_OFFICE_CODE'].split(';')
-        #     secondary_donors_names = record['RECIPIENT_OFFICE'].split(';')
-        #     assert len(secondary_donors_codes) == len(secondary_donors_names)
-        #     for code, name in zip(secondary_donors_codes, secondary_donors_names):
-        #         secondary_donor, _, = SecondaryDonor.objects.get_or_create(code=code, defaults={'name': name})
-        #         secondary_donor.grants.add(grant)
+        if record.get('SECONDARY_DONOR_CODE', None):
+            secondary_donors_codes = record['SECONDARY_DONOR_CODE'].split(';')
+            secondary_donors_names = record['SECONDARY_DONOR'].split(';')
+            assert len(secondary_donors_codes) == len(secondary_donors_names)
+            for code, name in zip(secondary_donors_codes, secondary_donors_names):
+                secondary_donor, _, = SecondaryDonor.objects.get_or_create(code=code, defaults={'name': name})
+                secondary_donor.grants.add(grant)
 
         return 1
