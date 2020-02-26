@@ -26,7 +26,9 @@ class DonorRoleBackend(ModelBackend):
             donor_obj = context_obj[0]
             secondary_donor_obj = context_obj[-1]
             donor_perm = UserRole.objects.get_permissions_by_donor(user_obj, donor_obj)
-            donor_secondary_donor_perm = UserRole.objects.get_permissions_by_donor_secondary_donor(user_obj, donor_obj, secondary_donor_obj)
+            donor_secondary_donor_perm = UserRole.objects.get_permissions_by_donor_secondary_donor(user_obj,
+                                                                                                   donor_obj,
+                                                                                                   secondary_donor_obj)
             perms = donor_perm | donor_secondary_donor_perm
         else:
             return set()
