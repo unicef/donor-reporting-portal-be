@@ -2,9 +2,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
 from rest_framework import serializers
+from rest_framework.relations import PrimaryKeyRelatedField
 from unicef_security.models import BusinessArea
 
 from donor_reporting_portal.api.serializers.metadata import DonorSerializer, SecondaryDonorSerializer
+from donor_reporting_portal.apps.report_metadata.models import SecondaryDonor
 from donor_reporting_portal.apps.roles.models import UserRole
 
 
@@ -24,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRoleSerializer(serializers.ModelSerializer):
+    secondary_donor = PrimaryKeyRelatedField(queryset=SecondaryDonor.objects.all(), required=False)
     user_last_login = serializers.ReadOnlyField(source='user.last_login')
     user_email = serializers.ReadOnlyField(source='user.email')
     user_first_name = serializers.ReadOnlyField(source='user.first_name')
