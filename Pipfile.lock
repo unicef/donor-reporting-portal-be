@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cd48206993224758bcfdc006c3d61297aaa79c5f3a7bac01897a81cf2286d087"
+            "sha256": "457a63604f9c31519a09577905739c513d4f6d0c4794cc60db7f3ff3a39d11d5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -424,8 +424,11 @@
             "version": "==3.1.0"
         },
         "office365-rest-python-client": {
-            "git": "git://github.com/vgrem/Office365-REST-Python-Client.git",
-            "ref": "73a1c00a6dcc174d9cbb86eca71c5b2b20d8ed27"
+            "hashes": [
+                "sha256:81942dfa9b59ec5b1d48994f418d18f2762674f0c02a11589583d392e0e21e4b"
+            ],
+            "index": "pypi",
+            "version": "==2.1.5"
         },
         "psycopg2-binary": {
             "hashes": [
@@ -602,11 +605,11 @@
         },
         "unicef-sharepoint": {
             "hashes": [
-                "sha256:0c4a01c2198f99086030cf40251868f8d400c2d63673d771ccb195b277bd45a6",
-                "sha256:41664783c00b5b62280eef7edc7c17b3f750ed65dbc27b48d92fdf1ef916fdfa"
+                "sha256:788c273af23673617b4cabca0ea38ae9786a2f9c6399f342943e977ab3e5f6ae",
+                "sha256:85829b4d1f74b7c909b4d131c2299969499c067d59e7b8ec172970690370ccec"
             ],
             "index": "pypi",
-            "version": "==0.1.0"
+            "version": "==0.2"
         },
         "unicef-vision": {
             "hashes": [
