@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "1f73bcc1dbc89b8e4a3c9183867eadcc2604dbbeac2c4a231e3c0a3eef81a694"
+            "sha256": "cd48206993224758bcfdc006c3d61297aaa79c5f3a7bac01897a81cf2286d087"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -424,11 +424,8 @@
             "version": "==3.1.0"
         },
         "office365-rest-python-client": {
-            "hashes": [
-                "sha256:81942dfa9b59ec5b1d48994f418d18f2762674f0c02a11589583d392e0e21e4b"
-            ],
-            "index": "pypi",
-            "version": "==2.1.5"
+            "git": "git://github.com/vgrem/Office365-REST-Python-Client.git",
+            "ref": "73a1c00a6dcc174d9cbb86eca71c5b2b20d8ed27"
         },
         "psycopg2-binary": {
             "hashes": [

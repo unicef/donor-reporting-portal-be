@@ -50,7 +50,7 @@ djangorestframework-recursive = "*"
 djangorestframework-xml = "*"
 django-rest-framework-social-oauth2 = "*"
 gunicorn = "*"
-office365-rest-python-client = "*"
+office365-rest-python-client = {git = "git://github.com/vgrem/Office365-REST-Python-Client.git",ref = "73a1c00a6dcc174d9cbb86eca71c5b2b20d8ed27"}
 psycopg2-binary = "*"
 sentry-sdk = "*"
 requests = "*"
