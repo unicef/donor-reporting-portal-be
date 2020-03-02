@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "457a63604f9c31519a09577905739c513d4f6d0c4794cc60db7f3ff3a39d11d5"
+            "sha256": "4be187d182041a416e11329f8d4bdfe697f98e9132b536687805ef9dc87ec1fa"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -605,11 +605,11 @@
         },
         "unicef-sharepoint": {
             "hashes": [
-                "sha256:788c273af23673617b4cabca0ea38ae9786a2f9c6399f342943e977ab3e5f6ae",
-                "sha256:85829b4d1f74b7c909b4d131c2299969499c067d59e7b8ec172970690370ccec"
+                "sha256:207869c9f83e7be10f941d111c797afa591dba3fd487cca8890da9527d7649d9",
+                "sha256:e8a9931a2c4bb774f258ba5dbefd4a657b65ecb1df719d2c88c2c2942b49453d"
             ],
             "index": "pypi",
-            "version": "==0.2"
+            "version": "==0.2.1"
         },
         "unicef-vision": {
             "hashes": [
