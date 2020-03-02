@@ -26,7 +26,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserRoleSerializer(serializers.ModelSerializer):
-    secondary_donor = PrimaryKeyRelatedField(queryset=SecondaryDonor.objects.all(), required=False)
     user_last_login = serializers.ReadOnlyField(source='user.last_login')
     user_email = serializers.ReadOnlyField(source='user.email')
     user_first_name = serializers.ReadOnlyField(source='user.first_name')

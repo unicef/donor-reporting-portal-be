@@ -39,7 +39,7 @@ class UserRole(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='roles', on_delete=models.deletion.CASCADE)
     group = models.ForeignKey(Group, related_name='roles', on_delete=models.deletion.CASCADE)
     donor = models.ForeignKey(Donor, related_name='roles', on_delete=models.deletion.CASCADE)
-    secondary_donor = models.ForeignKey(SecondaryDonor, null=True, blank=True, related_name='roles',
+    secondary_donor = models.ForeignKey(SecondaryDonor, null=True, blank=True, default=None, related_name='roles',
                                         on_delete=models.deletion.CASCADE)
 
     objects = UserRoleManager()
