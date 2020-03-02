@@ -2,11 +2,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
 from rest_framework import serializers
-from rest_framework.relations import PrimaryKeyRelatedField
 from unicef_security.models import BusinessArea
 
 from donor_reporting_portal.api.serializers.metadata import DonorSerializer, SecondaryDonorSerializer
-from donor_reporting_portal.apps.report_metadata.models import SecondaryDonor
 from donor_reporting_portal.apps.roles.models import UserRole
 
 
@@ -36,7 +34,8 @@ class UserRoleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserRole
-        fields = ('id', 'user', 'group', 'donor', 'secondary_donor', 'group_name', 'donor_name', 'secondary_donor_name',
+        fields = ('id', 'user', 'group', 'donor', 'secondary_donor',
+                  'group_name', 'donor_name', 'secondary_donor_name',
                   'user_last_login', 'user_email', 'user_first_name', 'user_last_name')
 
 
