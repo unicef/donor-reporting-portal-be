@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=0.9
+ARG BASE_IMAGE=0.10
 
 FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
 
