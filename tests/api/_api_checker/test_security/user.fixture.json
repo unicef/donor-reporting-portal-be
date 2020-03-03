@@ -1,0 +1,26 @@
+{
+    "user": {
+        "master": {
+            "model": "unicef_security.user",
+            "pk": 1912,
+            "fields": {
+                "password": "password",
+                "last_login": null,
+                "is_superuser": false,
+                "username": "user009",
+                "first_name": "Timothy",
+                "last_name": "Thompson",
+                "email": "m009@mailinator.com",
+                "is_staff": false,
+                "is_active": true,
+                "date_joined": "2020-03-03T17:30:34.782Z",
+                "azure_id": null,
+                "job_title": null,
+                "display_name": "Timothy Thompson:",
+                "groups": [],
+                "user_permissions": []
+            }
+        },
+        "deps": []
+    }
+}

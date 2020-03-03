@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from django.db.models import signals
 
 import factory
 import unicef_security
@@ -26,6 +27,7 @@ class GroupFactory(factory.DjangoModelFactory):
         django_get_or_create = ('name',)
 
 
+@factory.django.mute_signals(signals.post_save)
 class UserFactory(factory.DjangoModelFactory):
     class Meta:
         model = unicef_security.models.User

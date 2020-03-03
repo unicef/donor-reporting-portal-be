@@ -15,11 +15,15 @@
         ],
         "x-frame-options": [
             "X-Frame-Options",
-            "SAMEORIGIN"
+            "DENY"
         ],
         "content-length": [
             "Content-Length",
             "58"
+        ],
+        "x-content-type-options": [
+            "X-Content-Type-Options",
+            "nosniff"
         ]
     },
     "data": {

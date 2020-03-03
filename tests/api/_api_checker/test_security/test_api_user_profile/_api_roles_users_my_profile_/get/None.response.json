@@ -15,21 +15,25 @@
         ],
         "x-frame-options": [
             "X-Frame-Options",
-            "SAMEORIGIN"
+            "DENY"
         ],
         "content-length": [
             "Content-Length",
-            "267"
+            "277"
+        ],
+        "x-content-type-options": [
+            "X-Content-Type-Options",
+            "nosniff"
         ]
     },
     "data": {
-        "id": 1297,
-        "username": "user003",
-        "first_name": "Steven",
-        "last_name": "Hall",
-        "email": "m003@mailinator.com",
+        "id": 2265,
+        "username": "user999",
+        "first_name": "David",
+        "last_name": "Lamb",
+        "email": "m000@mailinator.com",
         "is_superuser": true,
-        "pk": 1297,
+        "pk": 2265,
         "donor": {
             "name": "",
             "code": "",
@@ -43,7 +47,8 @@
             "name": "",
             "code": "",
             "grants": []
-        }
+        },
+        "roles": []
     },
     "content_type": null
 }

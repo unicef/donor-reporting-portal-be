@@ -11,7 +11,7 @@
         ],
         "allow": [
             "Allow",
-            "GET, HEAD, OPTIONS"
+            "GET, POST, HEAD, OPTIONS"
         ],
         "x-frame-options": [
             "X-Frame-Options",
@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "120"
+            "254"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -28,10 +28,20 @@
     },
     "data": [
         {
-            "id": 169,
-            "created": "2020-03-03T13:12:49.220000-06:00",
-            "modified": "2020-03-03T13:12:49.220000-06:00",
-            "name": "name000"
+            "id": 1912,
+            "username": "user009",
+            "first_name": "Timothy",
+            "last_name": "Thompson",
+            "email": "m009@mailinator.com",
+            "is_superuser": false
+        },
+        {
+            "id": 2265,
+            "username": "user999",
+            "first_name": "David",
+            "last_name": "Lamb",
+            "email": "m000@mailinator.com",
+            "is_superuser": true
         }
     ],
     "content_type": null
