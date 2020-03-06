@@ -15,7 +15,7 @@ interactions:
       User-Agent:
       - python-requests/2.22.0
     method: GET
-    uri: https://unibiapitest.azure-api.net/biapi/v1/dsgrants
+    uri: https://uniapis.unicef.org/biapi/v1/dsgrants
   response:
     body:
       string: "{\"ROWSET\":{\"ROW\":[{\"GRANT_REF\":\"ABV\",\"DESCRIPTION\":\"\
