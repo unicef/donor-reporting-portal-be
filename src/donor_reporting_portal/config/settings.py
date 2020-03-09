@@ -268,6 +268,7 @@ DEFAULT_FROM_EMAIL = 'donor_reporting_portal@unicef.org'
 KEY = os.getenv('AZURE_B2C_CLIENT_ID', None)
 SECRET = os.getenv('AZURE_B2C_CLIENT_SECRET', None)
 TENANT_ID = os.getenv('AZURE_B2C_TENANT', 'unicefpartners.onmicrosoft.com')
+AZURE_LOGIN_URL = os.getenv('AZURE_LOGIN_URL', 'unicefpartners.b2clogin.com')
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
