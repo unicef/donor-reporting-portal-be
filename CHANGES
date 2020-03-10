@@ -1,5 +1,10 @@
-Release 0.7 (in development)
+Release 0.8
 ----------------
+* added support for django 3.0
+* added logout
+* setup secondary donors
+* setup sharepoint library group
+* fixed public library permission
 
 
 Release 0.6
