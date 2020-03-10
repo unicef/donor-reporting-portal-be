@@ -1,12 +1,11 @@
 dist: xenial
 language: python
-sudo: false
 
 python:
   - 3.8
 
 env:
-  - DJANGO=2.2
+  - DJANGO=3.0
 
 addons:
   postgresql: "10"
@@ -16,7 +15,7 @@ addons:
     - postgresql-client-10
 
 services:
-  - redis-server
+  - redis
 
 install:
   - pip install tox codecov
@@ -26,9 +25,6 @@ script:
 
 before_script:
   - psql -c "CREATE DATABASE donor_reporting_portal;" -U postgres
-
-before_success:
-  - coverage erase
 
 after_success:
   - coverage combine

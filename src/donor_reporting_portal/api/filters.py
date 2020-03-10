@@ -4,9 +4,8 @@ from django.contrib.auth.models import Group
 from django_filters import rest_framework as filters
 from unicef_security.models import BusinessArea
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, Theme
+from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 from donor_reporting_portal.apps.roles.models import UserRole
-from donor_reporting_portal.apps.sharepoint.models import SharePointLibrary
 
 
 class GroupFilter(filters.FilterSet):
@@ -37,6 +36,7 @@ class UserRoleFilter(filters.FilterSet):
             'donor': ['exact', 'in'],
             'group': ['exact', 'in'],
             'user': ['exact', 'in'],
+            'secondary_donor': ['exact', 'in'],
         }
 
 
@@ -93,11 +93,12 @@ class GrantFilter(filters.FilterSet):
         }
 
 
-class SharePointLibraryFilter(filters.FilterSet):
+class SecondaryDonorFilter(filters.FilterSet):
+    grants__in = filters.BaseInFilter(field_name="grants")
 
     class Meta:
-        model = SharePointLibrary
+        model = SecondaryDonor
         fields = {
-            'site': ['exact', 'in'],
-            'active': ['exact', ],
+            'name': ['exact', 'in'],
+            'code': ['exact', 'in'],
         }

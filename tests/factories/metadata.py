@@ -1,6 +1,6 @@
 import factory
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, Theme
+from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 
 
 class ThemeFactory(factory.DjangoModelFactory):
@@ -34,4 +34,12 @@ class GrantFactory(factory.DjangoModelFactory):
 
     class Meta:
         model = Grant
+        django_get_or_create = ('code',)
+
+
+class SecondaryDonorFactory(factory.DjangoModelFactory):
+    code = factory.Sequence(lambda n: "code%03d" % n)
+
+    class Meta:
+        model = SecondaryDonor
         django_get_or_create = ('code',)

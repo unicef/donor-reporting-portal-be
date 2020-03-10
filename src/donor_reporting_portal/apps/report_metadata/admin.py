@@ -31,16 +31,23 @@ class ExternalGrantAdmin(GrantSyncMixin, admin.ModelAdmin):
 
 @admin.register(Donor)
 class DonorAdmin(GrantSyncMixin, admin.ModelAdmin):
-    search_fields = ('name',)
+    search_fields = ('name', 'code')
     list_display = ('name', 'code', 'us_gov')
     list_filter = ('us_gov',)
 
 
 @admin.register(Grant)
 class GrantAdmin(GrantSyncMixin, admin.ModelAdmin):
-    search_fields = ('name',)
+    search_fields = ('code',)
     list_display = ('code', 'donor', 'category', 'year')
     list_filter = ('category', 'donor', 'year')
     filter_horizontal = (
         'business_areas',
     )
+
+
+# @admin.register(SecondaryDonor)
+class SecondaryDonorAdmin(GrantSyncMixin, admin.ModelAdmin):
+    search_fields = ('name', 'code')
+    list_display = ('name', 'code', )
+    raw_id_fields = ('grants', )

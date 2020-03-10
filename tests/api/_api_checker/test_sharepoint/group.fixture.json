@@ -1,0 +1,52 @@
+{
+    "group": {
+        "master": {
+            "model": "sharepoint.sharepointgroup",
+            "pk": 1,
+            "fields": {
+                "created": "2020-02-20T16:28:29.451Z",
+                "modified": "2020-02-20T16:28:29.456Z",
+                "name": "Donors Reports",
+                "libraries": [
+                    7
+                ]
+            }
+        },
+        "deps": [
+            {
+                "model": "unicef_sharepoint.sharepointlibrary",
+                "pk": 7,
+                "fields": {
+                    "created": "2020-02-07T23:40:08.927Z",
+                    "modified": "2020-02-07T23:40:08.927Z",
+                    "name": "2019 Certified Reports",
+                    "site": 7,
+                    "active": true,
+                    "public": true
+                }
+            },
+            {
+                "model": "unicef_sharepoint.sharepointsite",
+                "pk": 7,
+                "fields": {
+                    "created": "2020-02-07T23:40:08.919Z",
+                    "modified": "2020-02-07T23:40:08.919Z",
+                    "tenant": 7,
+                    "name": "GLB-DRP",
+                    "site_type": "sites"
+                }
+            },
+            {
+                "model": "unicef_sharepoint.sharepointtenant",
+                "pk": 7,
+                "fields": {
+                    "created": "2020-02-07T23:40:08.913Z",
+                    "modified": "2020-02-07T23:40:08.913Z",
+                    "url": "https://unitst.sharepoint.com/",
+                    "username": null,
+                    "password": null
+                }
+            }
+        ]
+    }
+}

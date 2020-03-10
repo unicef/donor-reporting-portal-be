@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from model_utils.models import TimeStampedModel
 from unicef_notification.utils import send_notification_with_template
 
-from donor_reporting_portal.apps.report_metadata.models import Donor
+from donor_reporting_portal.apps.report_metadata.models import Donor, SecondaryDonor
 
 
 class UserRoleManager(models.Manager):
@@ -24,7 +24,12 @@ class UserRoleManager(models.Manager):
         return self
 
     def get_permissions_by_donor(self, user, donor):
-        return self.filter(user=user, donor=donor).values_list(
+        return self.filter(user=user, donor=donor, secondary_donor=None).values_list(
+            'group__permissions__content_type__app_label',
+            'group__permissions__codename')
+
+    def get_permissions_by_donor_secondary_donor(self, user, donor, secondary_donor):
+        return self.filter(user=user, donor=donor, secondary_donor=secondary_donor).values_list(
             'group__permissions__content_type__app_label',
             'group__permissions__codename')
 
@@ -34,20 +39,24 @@ class UserRole(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='roles', on_delete=models.deletion.CASCADE)
     group = models.ForeignKey(Group, related_name='roles', on_delete=models.deletion.CASCADE)
     donor = models.ForeignKey(Donor, related_name='roles', on_delete=models.deletion.CASCADE)
-    # grant = models.ForeignKey(Grant, null=True, blank=True, related_name='grants', on_delete=models.deletion.CASCADE)
+    secondary_donor = models.ForeignKey(SecondaryDonor, null=True, blank=True, default=None, related_name='roles',
+                                        on_delete=models.deletion.CASCADE)
 
     objects = UserRoleManager()
 
     class Meta:
         verbose_name = _('User Role')
         verbose_name_plural = _('User Roles')
-        unique_together = (('user', 'group', 'donor'),)
+        unique_together = (('user', 'group', 'donor', 'secondary_donor'),)
         permissions = (
             ('can_view_all_donors', 'Can views all Donors'),
         )
 
     def __str__(self):
-        return f'{self.user} - {self.group} | {self.donor}'
+        str = f'{self.user} - {self.group} | {self.donor}'
+        if self.secondary_donor:
+            str = f'{str} | {self.secondary_donor}'
+        return str
 
 
 @receiver(post_save, sender=get_user_model())

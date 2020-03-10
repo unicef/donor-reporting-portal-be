@@ -19,16 +19,18 @@
         ],
         "content-length": [
             "Content-Length",
-            "250"
+            "164"
         ]
     },
     "data": [
         {
-            "name": "2019 Certified Reports",
-            "site_name": "GLB-DRP",
-            "active": true,
-            "library_url": "https://unitst.sharepoint.com/sites/GLB-DRP/2019%20Certified%20Reports",
-            "api_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/"
+            "id": 1,
+            "libraries": [
+                "2019 Certified Reports"
+            ],
+            "created": "2020-02-20T10:28:29.451000-06:00",
+            "modified": "2020-02-20T10:28:29.456000-06:00",
+            "name": "Donors Reports"
         }
     ],
     "content_type": null
