@@ -21,9 +21,9 @@ router.register(r'metadata/external_grant/(?P<donor_id>\d+)', ExternalGrantViewS
 router.register(r'metadata/grants/(?P<donor_id>\d+)', GrantViewSet, basename='grant')
 router.register(r'metadata/secondary-donors', SecondaryDonorViewSet, basename='secondary-donor')
 router.register(r'sharepoint/groups', SharePointGroupViewSet, basename='sharepoint-group')
-router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)',
+router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/rest',
                 DRPItemSharePointViewSet, basename='sharepoint')
-router.register(r'sharepoint-caml/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)',
+router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/caml',
                 DRPItemSharePointCamlViewSet, basename='sharepoint-caml')
 
 urlpatterns = [
