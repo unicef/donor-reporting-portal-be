@@ -535,11 +535,11 @@
         },
         "sentry-sdk": {
             "hashes": [
-                "sha256:480eee754e60bcae983787a9a13bc8f155a111aef199afaa4f289d6a76aa622a",
-                "sha256:a920387dc3ee252a66679d0afecd34479fb6fc52c2bc20763793ed69e5b0dcc0"
+                "sha256:23808d571d2461a4ce3784ec12bbee5bdb8c026c143fe79d36cef8a6d653e71f",
+                "sha256:bb90a4e19c7233a580715fc986cc44be2c48fc10b31e71580a2037e1c94b6950"
             ],
             "index": "pypi",
-            "version": "==0.14.2"
+            "version": "==0.14.3"
         },
         "six": {
             "hashes": [
@@ -599,11 +599,11 @@
         },
         "unicef-security": {
             "hashes": [
-                "sha256:8832a44158cfd2453cd32a1a8b76e0d64d7dd7adbe41b79daae866be258a8729",
-                "sha256:9ccb3539b998b51bb1936134e0ae671dc1f92609b7fd57b547faf8f7a03691bb"
+                "sha256:70590d69f37f239d7223f2712cbd2df794c5b835e8587a10d88dc6bcee5b588b",
+                "sha256:cb1403ae0d0ebb397cf231fe9bcbd06e5a4e4de6e2556b3795fb3d7701260ac9"
             ],
             "index": "pypi",
-            "version": "==0.4"
+            "version": "==0.4.1"
         },
         "unicef-sharepoint": {
             "hashes": [
