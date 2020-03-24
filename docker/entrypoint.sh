@@ -8,8 +8,6 @@ mkdir -p /var/donor_reporting_portal/run
 
 
 if [[ "$*" == "worker" ]];then
-    django-admin db-isready --wait --sleep 5 --timeout 60
-    django-admin db-isready --wait --sleep 5 --timeout 300 --connection donor_reporting_portal
     celery worker \
             -A donor_reporting_portal.config \
             --events \
