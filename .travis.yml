@@ -5,7 +5,14 @@ python:
   - 3.8
 
 env:
-  - DJANGO=3.0
+  global:
+    - DATABASE_URL=psql://postgres:pass@127.0.0.1:5432/donor_reporting_portal
+    - HOST=http://localhost:8082
+    - SECRET_KEY=top-secret
+    - INSIGHT_URL=https://uniapis.unicef.org/biapi/v1/
+    - VISION_URL=https://uniapis.unicef.org/biapi/v1/
+  jobs:
+    - DJANGO=3.0
 
 addons:
   postgresql: "10"
