@@ -8,10 +8,8 @@ mkdir -p /var/donor_reporting_portal/run
 
 
 if [[ "$*" == "worker" ]];then
-    django-admin db-isready --wait --sleep 5 --timeout 60
-    django-admin db-isready --wait --sleep 5 --timeout 300 --connection donor_reporting_portal
     celery worker \
-            -A donor_reporting_portal \
+            -A donor_reporting_portal.config \
             --events \
             --max-tasks-per-child=1 \
             --loglevel=${CELERY_LOGLEVEL} \
@@ -21,7 +19,7 @@ if [[ "$*" == "worker" ]];then
 
 
 elif [[ "$*" == "beat" ]];then
-    celery beat -A donor_reporting_portal \
+    celery beat -A donor_reporting_portal.config \
             $CELERY_EXTRA \
             --loglevel=${CELERY_LOGLEVEL} \
             --pidfile run/celerybeat.pid
