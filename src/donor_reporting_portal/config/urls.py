@@ -2,16 +2,9 @@ from django.conf import settings
 from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
-from django.views.generic import RedirectView
 
 import rest_framework_jwt.views
-
-
-class UNICEFLogoutView(RedirectView):
-    def get_redirect_url(self, *args, **kwargs):
-        return f'https://{settings.AZURE_LOGIN_URL}/{settings.TENANT_ID}/{settings.POLICY}/oauth2/v2.0/' \
-               f'logout?post_logout_redirect_uri={settings.HOST}{settings.LOGOUT_URL}'
-
+from unicef_security.views import UNICEFLogoutView
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
