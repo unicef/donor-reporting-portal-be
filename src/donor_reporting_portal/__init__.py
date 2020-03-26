@@ -1,2 +1,2 @@
 NAME = 'donor-reporting-portal'
-VERSION = __version__ = '0.8'
+VERSION = __version__ = '0.9'

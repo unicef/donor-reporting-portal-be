@@ -1,3 +1,11 @@
+Release 0.9
+----------------
+fixed urls
+fixed download
+fixed logout
+setup celery
+
+
 Release 0.8
 ----------------
 * added support for django 3.0
