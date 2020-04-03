@@ -62,12 +62,13 @@ class UserRole(TimeStampedModel):
 @receiver(post_save, sender=get_user_model())
 def assign_to_unicef_group(instance, created, **kwargs):
     if created and instance.email:
-        context = {'instance': instance, 'home_link': settings.HOST}
-        send_notification_with_template(
-            [instance.email, ],
-            "access_grant_email",
-            context,
-        )
         if instance.username.endswith('@unicef.org'):
             unicef_group, _ = Group.objects.get_or_create(name='UNICEF User')
             instance.groups.add(unicef_group)
+        else:
+            context = {'instance': instance, 'home_link': settings.HOST}
+            send_notification_with_template(
+                [instance.email, ],
+                "access_grant_email",
+                context,
+            )
