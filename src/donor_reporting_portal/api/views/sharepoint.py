@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from unicef_sharepoint.views import ItemSharePointCamlViewSet, ItemSharePointViewSet
+from unicef_sharepoint.views import FileSharePointViewSet, ItemSharePointCamlViewSet, ItemSharePointViewSet
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
 from donor_reporting_portal.api.serializers.sharepoint import DRPSharePointItemSerializer, SharePointGroupSerializer
@@ -21,3 +21,7 @@ class DRPItemSharePointViewSet(DonorReportingViewSet, ItemSharePointViewSet):
 
 class DRPItemSharePointCamlViewSet(DonorReportingViewSet, ItemSharePointCamlViewSet):
     serializer_class = DRPSharePointItemSerializer
+
+
+class DRPFileSharePointViewSet(DonorReportingViewSet, FileSharePointViewSet):
+    pass
