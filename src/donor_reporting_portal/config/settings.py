@@ -16,7 +16,7 @@ environ.Env.read_env()
 
 DEBUG = env.bool('DEBUG')
 
-DATABASES = {'default': env.db()}
+DATABASES = {'default': env.db(default='psql://postgres:pass@db:5432/postgres')}
 
 INSTALLED_APPS = (
     'donor_reporting_portal.apps.core',

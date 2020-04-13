@@ -90,7 +90,7 @@ ADD docker/*.sh /usr/local/bin/
 #RUN addgroup --gid 1024 donor_reporting_portal \
 #    && adduser --disabled-password --ingroup donor_reporting_portal -S donor_reporting_portal
 
-RUN DATABASE_URL='psql://postgres:pass@db:5432/postgres' django-admin collectstatic --noinput
+RUN django-admin collectstatic --noinput
 
 ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
