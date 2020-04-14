@@ -1,13 +1,14 @@
 Release 0.10
 ----------------
+* patched permissions for file API
 
 
 Release 0.9
 ----------------
-fixed urls
-fixed download
-fixed logout
-setup celery
+* fixed urls
+* fixed download
+* fixed logout
+* setup celery
 
 
 Release 0.8
