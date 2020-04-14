@@ -29,7 +29,7 @@ class DonorPermission(permissions.BasePermission):
         context_object = (donor, secondary_donor) if donor and secondary_donor else donor
         if donor and user.has_perm('roles.can_view_all_donors') or \
                 user.has_perm('report_metadata.view_donor', context_object) or \
-                view.kwargs.get('filename'):
+                user.is_authenticated and view.kwargs.get('filename'):
             return True
         return False
 
