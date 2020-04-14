@@ -1,7 +1,12 @@
 from datetime import datetime
 
 from rest_framework import serializers
-from unicef_sharepoint.serializers import SharePointItemSerializer, SharePointPropertyField, SharePointPropertyManyField
+from unicef_sharepoint.serializers import (
+    SharePointItemSerializer,
+    SharePointPropertyField,
+    SharePointPropertyManyField,
+    SimpleSharePointItemSerializer,
+)
 
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
@@ -14,8 +19,7 @@ class SharePointGroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DRPSharePointItemSerializer(SharePointItemSerializer):
-
+class DRPSerializerMixin(serializers.Serializer):
     report_generated_by = SharePointPropertyField()
     year = SharePointPropertyField()
     donor = SharePointPropertyField()
@@ -44,3 +48,11 @@ class DRPSharePointItemSerializer(SharePointItemSerializer):
         modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
         day_difference = (datetime.now() - modified).days
         return True if day_difference <= 3 else False
+
+
+class DRPSharePointItemSerializer(SharePointItemSerializer, DRPSerializerMixin):
+    pass
+
+
+class DRPSimpleSharePointItemSerializer(SimpleSharePointItemSerializer, DRPSerializerMixin):
+    pass

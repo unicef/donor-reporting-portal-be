@@ -243,14 +243,6 @@ INSIGHT_SUB_KEY = env.str('INSIGHT_SUB_KEY', 'invalid_vision_password')
 BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
 
 
-SHAREPOINT_TENANT = {
-    'url': 'https://unicef.sharepoint.com/',
-    'user_credentials': {
-        'username': env.str('SHAREPOINT_USERNAME', 'invalid_username'),
-        'password': env.str('SHAREPOINT_PASSWORD', 'invalid_password'),
-    },
-}
-
 SHELL_PLUS_PRE_IMPORTS = (
     ('donor_reporting_portal.config', 'celery'),
 )
