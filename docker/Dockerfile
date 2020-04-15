@@ -24,10 +24,7 @@ LABEL org.label.name="Donor Reporting Portal" \
       org.label.description="" \
       org.label.url="https://donor-reporting-portal.unicef.io/" \
       org.label.vcs-url="https://github.com/unicef/donor-reporting-portal-be"
-#      org.label.version=$VERSION
 
-
-#ENV VERSION ${VERSION}
 
 ENV PIPENV_PYPI_MIRROR=${PIPENV_PYPI_MIRROR}, \
     HOME=/root/ \
@@ -92,6 +89,8 @@ ADD docker/*.sh /usr/local/bin/
 
 #RUN addgroup --gid 1024 donor_reporting_portal \
 #    && adduser --disabled-password --ingroup donor_reporting_portal -S donor_reporting_portal
+
+RUN DATABASE_URL='psql://postgres:pass@db:5432/postgres' django-admin collectstatic --noinput
 
 ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
