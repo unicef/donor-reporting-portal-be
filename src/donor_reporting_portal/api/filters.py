@@ -22,7 +22,7 @@ class UserFilter(filters.FilterSet):
     class Meta:
         model = get_user_model()
         fields = {
-            'username': ['exact', 'icontains'],
+            'username': ['exact', ''],
             'last_name': ['exact', 'icontains'],
             'first_name': ['exact', 'icontains'],
         }
