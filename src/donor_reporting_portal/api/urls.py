@@ -10,6 +10,7 @@ from .views.sharepoint import (
     DRPItemSharePointCamlViewSet,
     DRPItemSharePointViewSet,
     DRPSharePointCamlViewSet,
+    DRPSharePointFileViewSet,
     DRPSharePointRestViewSet,
     SharePointGroupViewSet,
 )
@@ -36,6 +37,7 @@ router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\
                 DRPItemSharePointCamlViewSet, basename='sharepoint-caml')
 router.register(r'sharepoint/(?P<folder>[\w\W]+)/rest', DRPSharePointRestViewSet, basename='simple-sharepoint-rest')
 router.register(r'sharepoint/(?P<folder>[\w\W]+)/caml', DRPSharePointCamlViewSet, basename='simple-sharepoint-caml')
+router.register(r'sharepoint/(?P<folder>[\w\W]+)/files', DRPSharePointFileViewSet, basename='simple-sharepoint-files')
 
 urlpatterns = [
     path('metadata/static/', view=MetadataStaticAPIView.as_view(http_method_names=['get']),
