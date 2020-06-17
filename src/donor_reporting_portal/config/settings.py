@@ -1,5 +1,4 @@
 import datetime
-import os
 from pathlib import Path
 
 import environ
@@ -16,7 +15,7 @@ environ.Env.read_env()
 
 DEBUG = env.bool('DEBUG')
 
-DATABASES = {'default': env.db()}
+DATABASES = {'default': env.db(default='psql://postgres:pass@db:5432/postgres')}
 
 INSTALLED_APPS = (
     'donor_reporting_portal.apps.core',
@@ -264,18 +263,25 @@ POST_OFFICE = {
 }
 
 DEFAULT_FROM_EMAIL = 'donor_reporting_portal@unicef.org'
+EMAIL_BACKEND = 'unicef_notification.backends.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST', default='')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
+EMAIL_PORT = env('EMAIL_PORT', default=25)
+EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=False)
+EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=False)
 
-KEY = os.getenv('AZURE_B2C_CLIENT_ID', None)
-SECRET = os.getenv('AZURE_B2C_CLIENT_SECRET', None)
-TENANT_NAME = os.getenv('TENANT_NAME', 'unicefpartners')
+KEY = env('AZURE_B2C_CLIENT_ID', default=None)
+SECRET = env('AZURE_B2C_CLIENT_SECRET', default=None)
+TENANT_NAME = env('TENANT_NAME', default='unicefpartners')
 TENANT_ID = f'{TENANT_NAME}.onmicrosoft.com'
 TENANT_B2C_URL = f'{TENANT_NAME}.b2clogin.com'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
-POLICY = os.getenv('AZURE_B2C_POLICY_NAME', "B2C_1A_UNICEF_SOCIAL_signup_signin")
-SOCIAL_PASSWORD_RESET_POLICY = os.getenv('AZURE_B2C_PASS_RESET_POLICY', 'B2C_1_PasswordResetPolicy')
+POLICY = env('AZURE_B2C_POLICY_NAME', default='B2C_1A_UNICEF_SOCIAL_signup_signin')
+SOCIAL_PASSWORD_RESET_POLICY = env('AZURE_B2C_PASS_RESET_POLICY', default='B2C_1_PasswordResetPolicy')
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
 
 SOCIAL_AUTH_PIPELINE = (

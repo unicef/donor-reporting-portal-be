@@ -54,11 +54,11 @@ class Command(BaseCommand):
         _all = options['all']
         ModelUser = get_user_model()
         if options['collectstatic'] or _all:
-            self.stdout.write(f"Run collectstatic")
+            self.stdout.write("Run collectstatic")
             call_command('collectstatic', verbosity=verbosity - 1, interactive=False)
 
         if migrate or _all:
-            self.stdout.write(f"Run migrations")
+            self.stdout.write("Run migrations")
             call_command('migrate', verbosity=verbosity - 1)
 
         if options['users'] or _all:
