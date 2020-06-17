@@ -50,6 +50,12 @@ class UserRoleViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
     search_fields = ('donor__name', 'secondary_donor__name', 'group__name',
                      'user__username', 'user__first_name', 'user__last_name')
 
+    def perform_destroy(self, instance):
+        user = instance.user
+        super().perform_destroy(instance)
+        if not user.roles.count():
+            user.delete()
+
 
 class BusinessAreaViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
     queryset = BusinessArea.objects.all()
