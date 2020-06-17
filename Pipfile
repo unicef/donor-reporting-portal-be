@@ -42,7 +42,6 @@ django-environ = "*"
 django-extensions = "*"
 django-filter = "*"
 django-redis-cache = "*"
-django-storages = {extras = ["azure"],version = "*"}
 djangorestframework = "*"
 djangorestframework-csv = "*"
 djangorestframework-jwt = "*"
@@ -62,6 +61,8 @@ unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "*"
 unicef-sharepoint = "*"
+
+django-picklefield = "<3.0"
 
 [requires]
 python_version = "3.8"
