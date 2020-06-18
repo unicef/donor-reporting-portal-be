@@ -1,4 +1,5 @@
 import datetime
+import os
 from pathlib import Path
 
 import environ
@@ -33,7 +34,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django_extensions',
-    'storages',
     'unicef_security',
     'django_filters',
     'rest_framework',
@@ -71,9 +71,9 @@ AUTHENTICATION_BACKENDS = (
 
 
 # path
-
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 MEDIA_ROOT = env('MEDIA_ROOT', default='/tmp/etools/media/')
-STATIC_ROOT = env('STATIC_ROOT', default='/tmp/etools/static/')
+STATIC_ROOT = env('STATIC_ROOT', default=os.path.join(BASE_DIR, 'static'))
 MEDIA_URL = '/dm-media/'
 STATIC_URL = env('STATIC_URL', default='/static/')
 STATICFILES_DIRS = []
