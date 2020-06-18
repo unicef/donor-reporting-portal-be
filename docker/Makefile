@@ -2,7 +2,7 @@
 DATABASE_URL?=
 DOCKER_PASS?=
 DOCKER_USER?=
-TARGET?=0.11.0
+TARGET?=1.0.0
 BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9][0-9]\)\.\(.*\)/\1.\2/g" )
 # below vars are used internally
 BUILD_OPTIONS?=
@@ -22,6 +22,15 @@ help:
 	@echo "build                build production image (based on tag ${TARGET})"
 	@echo "release              release tag ${TARGET} on docker hub"
 	@echo "run                  run ${DOCKER_IMAGE} locally"
+
+
+info:
+	@echo 'docker images'
+	@docker images | grep donor-reporting-portal
+	@echo '------------------'
+	@echo 'docker containers'
+	@docker ps -a | grep donor-reporting-portal
+
 
 build-base:
 	cd .. && docker build \
