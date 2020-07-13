@@ -7,13 +7,14 @@ from drf_api_checker.pytest import default_fixture_name
 from drf_api_checker.recorder import BASE_DATADIR, Recorder
 from rest_framework.response import Response
 from rest_framework.test import APIClient
+
 from tests.factories import UserFactory
 
 
 def frozenfixture(fixture_name=default_fixture_name, is_fixture=True):
     def deco(func):
-        from drf_api_checker.utils import load_fixtures, dump_fixtures
         from drf_api_checker.fs import mktree
+        from drf_api_checker.utils import dump_fixtures, load_fixtures
 
         @wraps(func)
         def _inner(*args, **kwargs):

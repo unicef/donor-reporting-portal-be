@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from drf_api_checker.pytest import api_checker_datadir, contract, frozenfixture  # noqa
 from drf_api_checker.recorder import Recorder
+
 from tests.api_checker import LastModifiedRecorder
 from tests.factories import (
     DonorFactory,
@@ -59,7 +60,7 @@ def group(library, request, db):
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/list.yml'))
-def test_api(api_checker_datadir, logged_user, library, donor):
+def test_api(api_checker_datadir, logged_user, library, donor):  # noqa
     url = reverse('api:sharepoint-list',
                   kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
     data = {'donor_code': donor.code}
@@ -69,7 +70,7 @@ def test_api(api_checker_datadir, logged_user, library, donor):
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml-list.yml'))
-def test_api_caml(api_checker_datadir, logged_user, library, donor):
+def test_api_caml(api_checker_datadir, logged_user, library, donor):  # noqa
     url = reverse('api:sharepoint-caml-list',
                   kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
     data = {'donor_code': donor.code}

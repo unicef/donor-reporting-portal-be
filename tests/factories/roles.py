@@ -4,10 +4,10 @@ from django.db.models import signals
 import factory
 import unicef_security
 from factory import SubFactory
-from tests.factories import DonorFactory
 from unicef_security.models import BusinessArea, Region
 
 from donor_reporting_portal.apps.roles.models import UserRole
+from tests.factories import DonorFactory
 
 
 class GroupFactory(factory.DjangoModelFactory):

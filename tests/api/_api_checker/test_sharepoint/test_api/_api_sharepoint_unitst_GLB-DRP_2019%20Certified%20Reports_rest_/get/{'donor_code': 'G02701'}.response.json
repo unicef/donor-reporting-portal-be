@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "2231"
+            "2219"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -33,7 +33,7 @@
             "created": "2020-01-27T20:54:11Z",
             "modified": "2020-01-27T20:54:13Z",
             "title": "CertifiedDonorStatement_CSACC_SC170311_31122019.pdf",
-            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(198)",
+            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/getItemById(198)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/files/CertifiedDonorStatement_CSACC_SC170311_31122019.pdf/download/",
             "file_leaf_ref": "CertifiedDonorStatement_CSACC_SC170311_31122019.pdf",
             "report_generated_by": "aavacaflores",
@@ -64,7 +64,7 @@
             "created": "2020-01-29T20:28:49Z",
             "modified": "2020-01-29T20:28:50Z",
             "title": "CertifiedDonorStatement_CSACC_SC170311_29012019.pdf",
-            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(351)",
+            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/getItemById(351)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/files/CertifiedDonorStatement_CSACC_SC170311_29012019.pdf/download/",
             "file_leaf_ref": "CertifiedDonorStatement_CSACC_SC170311_29012019.pdf",
             "report_generated_by": "aavacaflores",

@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "2083"
+            "2071"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -33,7 +33,7 @@
             "created": "2020-01-27T09:54:11",
             "modified": "2020-01-27T09:54:13",
             "title": "CertifiedDonorStatement_CSACC_SC170311_31122019.pdf",
-            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(198)",
+            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/getItemById(198)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/files/CertifiedDonorStatement_CSACC_SC170311_31122019.pdf/download/",
             "report_generated_by": "aavacaflores",
             "donor": "Australia",
@@ -63,7 +63,7 @@
             "created": "2020-01-29T09:28:49",
             "modified": "2020-01-29T09:28:50",
             "title": "CertifiedDonorStatement_CSACC_SC170311_29012019.pdf",
-            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/items/getItemById(351)",
+            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2019 Certified Reports')/getItemById(351)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2019%20Certified%20Reports/files/CertifiedDonorStatement_CSACC_SC170311_29012019.pdf/download/",
             "report_generated_by": "aavacaflores",
             "donor": "Australia",

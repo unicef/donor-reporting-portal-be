@@ -2,9 +2,8 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 
-from tests.factories import GroupFactory, UserRoleFactory
-
 from donor_reporting_portal.apps.roles.models import UserRole
+from tests.factories import GroupFactory, UserRoleFactory
 
 
 def test_admin_userrole(django_app, admin_user, userrole, donor, group, secondary_donor):
