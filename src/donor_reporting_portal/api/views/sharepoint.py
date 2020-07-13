@@ -1,8 +1,18 @@
 from rest_framework import viewsets
-from unicef_sharepoint.views import FileSharePointViewSet, ItemSharePointCamlViewSet, ItemSharePointViewSet
+from unicef_sharepoint.views import (
+    FileSharePointViewSet,
+    ItemSharePointCamlViewSet,
+    ItemSharePointViewSet,
+    SharePointCamlViewSet,
+    SharePointRestViewSet,
+)
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
-from donor_reporting_portal.api.serializers.sharepoint import DRPSharePointItemSerializer, SharePointGroupSerializer
+from donor_reporting_portal.api.serializers.sharepoint import (
+    DRPSharePointItemSerializer,
+    DRPSimpleSharePointItemSerializer,
+    SharePointGroupSerializer,
+)
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -13,6 +23,14 @@ class SharePointGroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class DonorReportingViewSet:
     permission_classes = ((DonorPermission | PublicLibraryPermission),)
+
+
+class DRPSharePointRestViewSet(DonorReportingViewSet, SharePointRestViewSet):
+    serializer_class = DRPSimpleSharePointItemSerializer
+
+
+class DRPSharePointCamlViewSet(DonorReportingViewSet, SharePointCamlViewSet):
+    serializer_class = DRPSimpleSharePointItemSerializer
 
 
 class DRPItemSharePointViewSet(DonorReportingViewSet, ItemSharePointViewSet):
