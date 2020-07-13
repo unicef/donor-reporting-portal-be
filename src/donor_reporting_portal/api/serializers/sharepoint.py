@@ -49,10 +49,14 @@ class DRPSerializerMixin(serializers.Serializer):
         day_difference = (datetime.now() - modified).days
         return True if day_difference <= 3 else False
 
+    def get_download_url(self, obj):
+        base_url = super().get_download_url(obj)
+        return '{}?donor_code={}'.format(base_url, obj.properties['DonorCode'])
 
-class DRPSharePointItemSerializer(SharePointItemSerializer, DRPSerializerMixin):
+
+class DRPSharePointItemSerializer(DRPSerializerMixin, SharePointItemSerializer):
     pass
 
 
-class DRPSimpleSharePointItemSerializer(SimpleSharePointItemSerializer, DRPSerializerMixin):
+class DRPSimpleSharePointItemSerializer(DRPSerializerMixin, SimpleSharePointItemSerializer):
     pass

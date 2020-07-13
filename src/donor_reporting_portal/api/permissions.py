@@ -28,14 +28,13 @@ class DonorPermission(permissions.BasePermission):
         user = request.user
         context_object = (donor, secondary_donor) if donor and secondary_donor else donor
         if donor and user.has_perm('roles.can_view_all_donors') or \
-                user.has_perm('report_metadata.view_donor', context_object) or \
-                user.is_authenticated and view.kwargs.get('filename'):
+                user.has_perm('report_metadata.view_donor', context_object):
             return True
         return False
 
 
 class PublicLibraryPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if view.get_library().public:
+        if request.user.is_authenticated and view.is_public():
             return True
         return False

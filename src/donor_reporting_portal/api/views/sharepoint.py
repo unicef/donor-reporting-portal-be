@@ -4,6 +4,7 @@ from unicef_sharepoint.views import (
     ItemSharePointCamlViewSet,
     ItemSharePointViewSet,
     SharePointCamlViewSet,
+    SharePointFileViewSet,
     SharePointRestViewSet,
 )
 
@@ -42,4 +43,8 @@ class DRPItemSharePointCamlViewSet(DonorReportingViewSet, ItemSharePointCamlView
 
 
 class DRPFileSharePointViewSet(DonorReportingViewSet, FileSharePointViewSet):
+    pass
+
+
+class DRPSharePointFileViewSet(DonorReportingViewSet, SharePointFileViewSet):
     pass
