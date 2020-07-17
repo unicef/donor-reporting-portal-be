@@ -233,10 +233,8 @@ if DEBUG:  # pragma: no cover
     }
 
 
-VISION_URL = env.str('VISION_URL', 'http://invalid_vision_url')
-VISION_USER = env.str('VISION_USER', 'invalid_vision_user')
-VISION_PASSWORD = env.str('VISION_PASSWORD', 'invalid_vision_password')
-VISION_LOGGER_MODEL = 'vision.VisionLog'
+INSIGHT_URL = env.str('INSIGHT_URL', 'http://invalid_vision_url')
+INSIGHT_LOGGER_MODEL = 'vision.VisionLog'
 
 INSIGHT_SUB_KEY = env.str('INSIGHT_SUB_KEY', 'invalid_vision_password')
 
