@@ -55,13 +55,13 @@ def library(site, request, db):
 def group(library, request, db):
     return SharePointGroupFactory.create(
         name='Donors Reports',
-        libraries=(library,)
+        libs=(library,)
     )
 
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/list.yml'))
 def test_api(api_checker_datadir, logged_user, library, donor):  # noqa
-    url = reverse('api:sharepoint-list',
+    url = reverse('api:sharepoint-url-list',
                   kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
     data = {'donor_code': donor.code}
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
@@ -71,7 +71,7 @@ def test_api(api_checker_datadir, logged_user, library, donor):  # noqa
 
 @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml-list.yml'))
 def test_api_caml(api_checker_datadir, logged_user, library, donor):  # noqa
-    url = reverse('api:sharepoint-caml-list',
+    url = reverse('api:sharepoint-url-caml-list',
                   kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
     data = {'donor_code': donor.code}
     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):

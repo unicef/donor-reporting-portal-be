@@ -6,13 +6,15 @@ from donor_reporting_portal.api.views.static import MetadataStaticAPIView
 
 from .views.metadata import DonorViewSet, ExternalGrantViewSet, GrantViewSet, SecondaryDonorViewSet, ThemeViewSet
 from .views.sharepoint import (
-    DRPFileSharePointViewSet,
-    DRPItemSharePointCamlViewSet,
-    DRPItemSharePointViewSet,
-    DRPSharePointCamlViewSet,
-    DRPSharePointFileViewSet,
-    DRPSharePointRestViewSet,
+    DRPSharePointSettingsCamlViewSet,
+    DRPSharePointSettingsFileViewSet,
+    DRPSharePointSettingsRestViewSet,
+    DRPSharePointSettingsSearchViewSet,
+    DRPSharePointUrlCamlViewSet,
+    DRPSharePointUrlFileViewSet,
+    DRPSharePointUrlRestViewSet,
     SharePointGroupViewSet,
+    SharePointUrlSearchViewSet,
 )
 from .views.userrole import BusinessAreaViewSet, GroupViewSet, UserRoleViewSet, UserViewSet
 
@@ -29,15 +31,24 @@ router.register(r'metadata/external_grant/(?P<donor_id>\d+)', ExternalGrantViewS
 router.register(r'metadata/grants/(?P<donor_id>\d+)', GrantViewSet, basename='grant')
 router.register(r'metadata/secondary-donors', SecondaryDonorViewSet, basename='secondary-donor')
 router.register(r'sharepoint/groups', SharePointGroupViewSet, basename='sharepoint-group')
+
 router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w\W]+)/files',
-                DRPFileSharePointViewSet, basename='sharepoint-files')
+                DRPSharePointUrlFileViewSet, basename='sharepoint-url-files')
 router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/rest',
-                DRPItemSharePointViewSet, basename='sharepoint')
+                DRPSharePointUrlRestViewSet, basename='sharepoint-url')
 router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/caml',
-                DRPItemSharePointCamlViewSet, basename='sharepoint-caml')
-router.register(r'sharepoint/(?P<folder>[\w\W]+)/rest', DRPSharePointRestViewSet, basename='simple-sharepoint-rest')
-router.register(r'sharepoint/(?P<folder>[\w\W]+)/caml', DRPSharePointCamlViewSet, basename='simple-sharepoint-caml')
-router.register(r'sharepoint/(?P<folder>[\w\W]+)/files', DRPSharePointFileViewSet, basename='simple-sharepoint-files')
+                DRPSharePointUrlCamlViewSet, basename='sharepoint-url-caml')
+router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/search',
+                SharePointUrlSearchViewSet, basename='sharepoint-url-search')
+
+router.register(r'sharepoint/(?P<folder>[\w\W]+)/rest',
+                DRPSharePointSettingsRestViewSet, basename='sharepoint-settings-rest')
+router.register(r'sharepoint/(?P<folder>[\w\W]+)/caml',
+                DRPSharePointSettingsCamlViewSet, basename='sharepoint-settings-caml')
+router.register(r'sharepoint/(?P<folder>[\w\W]+)/files',
+                DRPSharePointSettingsFileViewSet, basename='sharepoint-settings-files')
+router.register(r'sharepoint/search',
+                DRPSharePointSettingsSearchViewSet, basename='sharepoint-settings-search')
 
 urlpatterns = [
     path('metadata/static/', view=MetadataStaticAPIView.as_view(http_method_names=['get']),

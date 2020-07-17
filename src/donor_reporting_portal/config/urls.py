@@ -13,7 +13,7 @@ urlpatterns = [
     path(r'social/unicef-logout/', UNICEFLogoutView.as_view()),
     path(r'social', include('social_django.urls', namespace='social')),
     path(r'api/', include('donor_reporting_portal.api.urls', namespace='api')),
-    path(r'api/', include('unicef_sharepoint.urls', namespace='sharepoint')),
+    path(r'api/', include('sharepoint_rest_api.urls', namespace='sharepoint')),
     path(r'accounts/', include('django.contrib.auth.urls')),
 ]
 

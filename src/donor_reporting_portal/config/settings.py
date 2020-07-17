@@ -24,7 +24,7 @@ INSTALLED_APPS = (
     'donor_reporting_portal.apps.roles',
     'donor_reporting_portal.apps.sharepoint',
     'donor_reporting_portal.web',
-    'unicef_sharepoint',
+    'sharepoint_rest_api',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

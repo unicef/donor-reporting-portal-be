@@ -54,6 +54,7 @@ office365-rest-client =  "*"
 psycopg2-binary = "*"
 sentry-sdk = "*"
 requests = "*"
+sharepoint-rest-api = "*"
 social-auth-app-django = "*"
 social-auth-core = {extras = ["azuread"],version = "*"}
 unicef-djangolib = "*"
@@ -61,8 +62,7 @@ unicef-notification = "*"
 unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "*"
-unicef-sharepoint = "*"
-django-picklefield = "<3.0"
+django-picklefield = "*"
 
 [requires]
 python_version = "3.8"
