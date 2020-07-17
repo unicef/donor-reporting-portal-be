@@ -1,7 +1,6 @@
 import logging
 from datetime import datetime
 
-from unicef_security import config
 from unicef_security.models import BusinessArea
 from unicef_vision.synchronizers import VisionDataSynchronizer
 
@@ -31,14 +30,6 @@ class GrantSynchronizer(VisionDataSynchronizer):
         'DONOR_NAME',
         'GRANT_REF',
     )
-
-    def _get_kwargs(self):
-        kwargs = super()._get_kwargs()
-        kwargs.update({
-            'url': config.INSIGHT_URL,
-            'headers': (('Ocp-Apim-Subscription-Key', config.INSIGHT_SUB_KEY), )
-        })
-        return kwargs
 
     def _convert_records(self, records):
         return records['ROWSET']['ROW']
