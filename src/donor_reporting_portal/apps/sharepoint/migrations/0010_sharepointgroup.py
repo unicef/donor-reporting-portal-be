@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('unicef_sharepoint', '0001_initial'),
         ('sharepoint', '0009_auto_20200220_0939'),
     ]
 
@@ -22,7 +21,6 @@ class Migration(migrations.Migration):
                 ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
                 ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
                 ('name', models.CharField(max_length=64, verbose_name='Name')),
-                ('libraries', models.ManyToManyField(related_name='groups', to='unicef_sharepoint.SharePointLibrary')),
             ],
             options={
                 'verbose_name': 'SharePoint Group',

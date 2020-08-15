@@ -1,18 +1,22 @@
 from datetime import datetime
 
+from django.conf import settings
+
 from rest_framework import serializers
-from unicef_sharepoint.serializers import (
-    SharePointItemSerializer,
+from rest_framework.reverse import reverse
+from sharepoint_rest_api.serializers.fields import (
+    RawSearchSharePointField,
+    SearchSharePointField,
     SharePointPropertyField,
     SharePointPropertyManyField,
-    SimpleSharePointItemSerializer,
 )
+from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
 class SharePointGroupSerializer(serializers.ModelSerializer):
-    libraries = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+    libs = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
 
     class Meta:
         model = SharePointGroup
@@ -54,9 +58,35 @@ class DRPSerializerMixin(serializers.Serializer):
         return '{}?donor_code={}'.format(base_url, obj.properties['DonorCode'])
 
 
-class DRPSharePointItemSerializer(DRPSerializerMixin, SharePointItemSerializer):
+class DRPSharePointUrlSerializer(DRPSerializerMixin, SharePointUrlSerializer):
     pass
 
 
-class DRPSimpleSharePointItemSerializer(DRPSerializerMixin, SimpleSharePointItemSerializer):
+class DRPSharePointSettingsSerializer(DRPSerializerMixin, SharePointSettingsSerializer):
     pass
+
+
+class DRPSharePointSearchSerializer(serializers.Serializer):
+    title = SearchSharePointField()
+    author = SearchSharePointField()
+    path = SearchSharePointField()
+    last_modified_time = SearchSharePointField()
+
+    DRPDonor = RawSearchSharePointField()
+    DRPGrantNumber = RawSearchSharePointField()
+    DRPDonorDocument = RawSearchSharePointField()
+
+    DRPReportEndDate = RawSearchSharePointField()
+    DRPTheme = RawSearchSharePointField()
+    DRPDonorReportCategory = RawSearchSharePointField()
+
+    download_url = serializers.SerializerMethodField()
+
+    def get_download_url(self, obj):
+        filename = [item['Value'] for item in obj if item['Key'] == 'Title'][0]
+        folder = self.context['folder']  # TODO
+        relative_url = reverse('sharepoint_rest_api:sharepoint-settings-files-download', kwargs={
+            'folder': folder,
+            'filename': filename
+        })
+        return f'{settings.HOST}{relative_url}'

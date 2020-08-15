@@ -1,17 +1,22 @@
 from rest_framework import viewsets
-from unicef_sharepoint.views import (
-    FileSharePointViewSet,
-    ItemSharePointCamlViewSet,
-    ItemSharePointViewSet,
-    SharePointCamlViewSet,
-    SharePointFileViewSet,
-    SharePointRestViewSet,
+from sharepoint_rest_api.views.settings_based import (
+    SharePointSettingsCamlViewSet,
+    SharePointSettingsFileViewSet,
+    SharePointSettingsRestViewSet,
+    SharePointSettingsSearchViewSet,
+)
+from sharepoint_rest_api.views.url_based import (
+    SharePointUrlCamlViewSet,
+    SharePointUrlFileViewSet,
+    SharePointUrlRestViewSet,
+    SharePointUrlSearchViewSet,
 )
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
 from donor_reporting_portal.api.serializers.sharepoint import (
-    DRPSharePointItemSerializer,
-    DRPSimpleSharePointItemSerializer,
+    DRPSharePointSearchSerializer,
+    DRPSharePointSettingsSerializer,
+    DRPSharePointUrlSerializer,
     SharePointGroupSerializer,
 )
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
@@ -26,25 +31,50 @@ class DonorReportingViewSet:
     permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
 
-class DRPSharePointRestViewSet(DonorReportingViewSet, SharePointRestViewSet):
-    serializer_class = DRPSimpleSharePointItemSerializer
+class DRPSharePointSettingsRestViewSet(DonorReportingViewSet, SharePointSettingsRestViewSet):
+    serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPSharePointCamlViewSet(DonorReportingViewSet, SharePointCamlViewSet):
-    serializer_class = DRPSimpleSharePointItemSerializer
+class DRPSharePointSettingsCamlViewSet(DonorReportingViewSet, SharePointSettingsCamlViewSet):
+    serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPItemSharePointViewSet(DonorReportingViewSet, ItemSharePointViewSet):
-    serializer_class = DRPSharePointItemSerializer
+class DRPSharePointUrlRestViewSet(DonorReportingViewSet, SharePointUrlRestViewSet):
+    serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPItemSharePointCamlViewSet(DonorReportingViewSet, ItemSharePointCamlViewSet):
-    serializer_class = DRPSharePointItemSerializer
+class DRPSharePointUrlCamlViewSet(DonorReportingViewSet, SharePointUrlCamlViewSet):
+    serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPFileSharePointViewSet(DonorReportingViewSet, FileSharePointViewSet):
+class DRPSharePointUrlFileViewSet(DonorReportingViewSet, SharePointUrlFileViewSet):
     pass
 
 
-class DRPSharePointFileViewSet(DonorReportingViewSet, SharePointFileViewSet):
+class DRPSharePointSettingsFileViewSet(DonorReportingViewSet, SharePointSettingsFileViewSet):
+    pass
+
+
+class DRPSharepointSearchMixin:
+    serializer_class = DRPSharePointSearchSerializer
+    select_fields = (
+        'Title',
+        'Path',
+        'FileExtension',
+        'DRPDonor',
+        'DRPGrantNumber',
+        'DRPDonorDocument',
+        'ECMDocumentType',
+        'Author',
+        'DRPReportEndDate',
+        'DRPTheme',
+        'DRPDonorReportCategory'
+    )
+
+
+class DRPSharePointSettingsSearchViewSet(DRPSharepointSearchMixin, SharePointSettingsSearchViewSet):
+    pass
+
+
+class DRPSharePointUrlSearchViewSet(DRPSharepointSearchMixin, SharePointUrlSearchViewSet):
     pass

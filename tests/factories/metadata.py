@@ -3,7 +3,7 @@ import factory
 from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 
 
-class ThemeFactory(factory.DjangoModelFactory):
+class ThemeFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: "name%03d" % n)
 
     class Meta:
@@ -11,7 +11,7 @@ class ThemeFactory(factory.DjangoModelFactory):
         django_get_or_create = ('name',)
 
 
-class DonorFactory(factory.DjangoModelFactory):
+class DonorFactory(factory.django.DjangoModelFactory):
     code = factory.Sequence(lambda n: "code%03d" % n)
 
     class Meta:
@@ -19,7 +19,7 @@ class DonorFactory(factory.DjangoModelFactory):
         django_get_or_create = ('code',)
 
 
-class ExternalGrantFactory(factory.DjangoModelFactory):
+class ExternalGrantFactory(factory.django.DjangoModelFactory):
     code = factory.Sequence(lambda n: "code%03d" % n)
     donor = factory.SubFactory(DonorFactory)
 
@@ -28,7 +28,7 @@ class ExternalGrantFactory(factory.DjangoModelFactory):
         django_get_or_create = ('code',)
 
 
-class GrantFactory(factory.DjangoModelFactory):
+class GrantFactory(factory.django.DjangoModelFactory):
     code = factory.Sequence(lambda n: "code%03d" % n)
     donor = factory.SubFactory(DonorFactory)
 
@@ -37,7 +37,7 @@ class GrantFactory(factory.DjangoModelFactory):
         django_get_or_create = ('code',)
 
 
-class SecondaryDonorFactory(factory.DjangoModelFactory):
+class SecondaryDonorFactory(factory.django.DjangoModelFactory):
     code = factory.Sequence(lambda n: "code%03d" % n)
 
     class Meta:
