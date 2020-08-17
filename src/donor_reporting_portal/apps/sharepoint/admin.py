@@ -7,4 +7,4 @@ from .models import SharePointGroup
 class SharePointGroupAdmin(admin.ModelAdmin):
     search_fields = ('name', )
     list_display = ('name', )
-    filter_horizontal = ('libraries', )
+    filter_horizontal = ('libs', )

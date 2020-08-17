@@ -26,6 +26,7 @@ tox = "*"
 vcrpy = "*"
 webtest = "*"
 django-webtest = "*"
+sync = "*"
 
 [packages]
 admin-extra-urls = "*"
@@ -49,10 +50,11 @@ djangorestframework-recursive = "*"
 djangorestframework-xml = "*"
 django-rest-framework-social-oauth2 = "*"
 gunicorn = "*"
-office365-rest-python-client =  "*"
+office365-rest-client =  "*"
 psycopg2-binary = "*"
 sentry-sdk = "*"
 requests = "*"
+sharepoint-rest-api = "*"
 social-auth-app-django = "*"
 social-auth-core = {extras = ["azuread"],version = "*"}
 unicef-djangolib = "*"
@@ -60,9 +62,7 @@ unicef-notification = "*"
 unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "*"
-unicef-sharepoint = "*"
-
-django-picklefield = "<3.0"
+django-picklefield = "*"
 
 [requires]
 python_version = "3.8"

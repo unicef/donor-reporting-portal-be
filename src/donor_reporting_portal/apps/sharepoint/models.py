@@ -2,12 +2,12 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from model_utils.models import TimeStampedModel
-from unicef_sharepoint.models import SharePointLibrary
+from sharepoint_rest_api.models import SharePointLibrary
 
 
 class SharePointGroup(TimeStampedModel):
     name = models.CharField(verbose_name=_("Name"), max_length=64)
-    libraries = models.ManyToManyField(SharePointLibrary, related_name='groups')
+    libs = models.ManyToManyField(SharePointLibrary, related_name='groups')
 
     class Meta:
         ordering = ['name']

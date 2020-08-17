@@ -4,13 +4,13 @@ from django.db.models import signals
 import factory
 import unicef_security
 from factory import SubFactory
-from tests.factories import DonorFactory
 from unicef_security.models import BusinessArea, Region
 
 from donor_reporting_portal.apps.roles.models import UserRole
+from tests.factories import DonorFactory
 
 
-class GroupFactory(factory.DjangoModelFactory):
+class GroupFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: "name%03d" % n)
 
     @factory.post_generation
@@ -28,7 +28,7 @@ class GroupFactory(factory.DjangoModelFactory):
 
 
 @factory.django.mute_signals(signals.post_save)
-class UserFactory(factory.DjangoModelFactory):
+class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = unicef_security.models.User
         django_get_or_create = ('username',)
@@ -67,7 +67,7 @@ class AnonUserFactory(UserFactory):
     username = 'anonymous'
 
 
-class RegionFactory(factory.DjangoModelFactory):
+class RegionFactory(factory.django.DjangoModelFactory):
     code = factory.Sequence(lambda n: "code%03d" % n)
     name = factory.Sequence(lambda n: "name%03d" % n)
 
@@ -76,7 +76,7 @@ class RegionFactory(factory.DjangoModelFactory):
         django_get_or_create = ('name',)
 
 
-class BusinessAreaFactory(factory.DjangoModelFactory):
+class BusinessAreaFactory(factory.django.DjangoModelFactory):
     code = factory.Sequence(lambda n: "code%03d" % n)
     region = SubFactory(RegionFactory)
 
@@ -85,7 +85,7 @@ class BusinessAreaFactory(factory.DjangoModelFactory):
         django_get_or_create = ('code',)
 
 
-class UserRoleFactory(factory.DjangoModelFactory):
+class UserRoleFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     group = factory.SubFactory(GroupFactory)
     donor = factory.SubFactory(DonorFactory)

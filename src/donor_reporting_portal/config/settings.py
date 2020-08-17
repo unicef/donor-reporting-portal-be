@@ -24,7 +24,7 @@ INSTALLED_APPS = (
     'donor_reporting_portal.apps.roles',
     'donor_reporting_portal.apps.sharepoint',
     'donor_reporting_portal.web',
-    'unicef_sharepoint',
+    'sharepoint_rest_api',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -233,23 +233,13 @@ if DEBUG:  # pragma: no cover
     }
 
 
-VISION_URL = env.str('VISION_URL', 'http://invalid_vision_url')
-VISION_USER = env.str('VISION_USER', 'invalid_vision_user')
-VISION_PASSWORD = env.str('VISION_PASSWORD', 'invalid_vision_password')
-VISION_LOGGER_MODEL = 'vision.VisionLog'
+INSIGHT_URL = env.str('INSIGHT_URL', 'http://invalid_vision_url')
+INSIGHT_LOGGER_MODEL = 'vision.VisionLog'
 
 INSIGHT_SUB_KEY = env.str('INSIGHT_SUB_KEY', 'invalid_vision_password')
 
 BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
 
-
-SHAREPOINT_TENANT = {
-    'url': 'https://unicef.sharepoint.com/',
-    'user_credentials': {
-        'username': env.str('SHAREPOINT_USERNAME', 'invalid_username'),
-        'password': env.str('SHAREPOINT_PASSWORD', 'invalid_password'),
-    },
-}
 
 SHELL_PLUS_PRE_IMPORTS = (
     ('donor_reporting_portal.config', 'celery'),

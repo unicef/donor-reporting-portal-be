@@ -25,7 +25,7 @@ class ThemeAdmin(admin.ModelAdmin):
 
 @admin.register(ExternalGrant)
 class ExternalGrantAdmin(GrantSyncMixin, admin.ModelAdmin):
-    search_fields = ('code', 'donor')
+    search_fields = ('code', 'donor__code')
     list_display = ('code', 'donor')
 
 
