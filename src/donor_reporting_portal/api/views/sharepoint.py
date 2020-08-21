@@ -1,3 +1,5 @@
+from urllib.parse import urlencode
+
 from rest_framework import viewsets
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.settings_based import (
@@ -64,7 +66,7 @@ class DRPSharepointSearchMixin:
         def to_drp(source):
             return self.prefix + to_camel(source)
         selected = super().get_selected(selected)
-        return [to_drp(x) for x in selected]
+        return [to_drp(x) for x in selected] + ["Title", "Author", "Path"]
 
     def get_filters(self, kwargs):
         # we can enforce filters here
@@ -80,6 +82,21 @@ class DRPSharepointSearchMixin:
                 new_kwargs[key] = value
 
         return new_kwargs
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        next_offset = int(self.request.query_params.get('page', 1)) + 1
+        prev_offset = int(self.request.query_params.get('page', 1)) - 1
+        next_dict = request.query_params.copy()
+        next_dict['page'] = str(next_offset)
+        prev_dict = request.query_params.copy()
+        prev_dict['page'] = str(prev_offset)
+        response.data = {
+            "items": response.data,
+            "next:": request.build_absolute_uri('?') + '?' + urlencode(next_dict),
+            "previous": request.build_absolute_uri('?') + '?' + urlencode(prev_dict)
+        }
+        return response
 
 
 class DRPSharePointSettingsSearchViewSet(DonorReportingViewSet, DRPSharepointSearchMixin,

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6b67d75db31c72c816df4cad0195e0653c0015f0e7ce826d9f38997336b3f75a"
+            "sha256": "e709c844a4b0b224754b9957b40663879e33a785f5127d29765cc6724f4ee5db"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -510,11 +510,11 @@
         },
         "sharepoint-rest-api": {
             "hashes": [
-                "sha256:640455ce198851fe83e7545d47061f22f7e9b54a7d27f645fce1f68875da6252",
-                "sha256:72001ffd910a84aa23ff215a1719390c3f3030ebabbbb0476b5c151f3dc7f53e"
+                "sha256:3fc95132e7acccf337c2c5a831d4c449c4519b9f706c576f08ec680e58549ac0",
+                "sha256:e4abe5e9f6fccf6ee0e987f21488e1737c2f343d64ff3028071e074c8202b13b"
             ],
             "index": "pypi",
-            "version": "==0.4.1"
+            "version": "==0.5"
         },
         "six": {
             "hashes": [
