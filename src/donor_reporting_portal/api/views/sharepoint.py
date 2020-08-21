@@ -60,6 +60,12 @@ class DRPSharepointSearchMixin:
     prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
 
+    def get_selected(self, selected):
+        def to_drp(source):
+            return self.prefix + to_camel(source)
+        selected = super().get_selected(selected)
+        return [to_drp(x) for x in selected]
+
     def get_filters(self, kwargs):
         # we can enforce filters here
         new_kwargs = {
