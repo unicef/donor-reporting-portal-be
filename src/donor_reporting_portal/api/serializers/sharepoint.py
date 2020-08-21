@@ -51,7 +51,7 @@ class DRPSerializerMixin(serializers.Serializer):
     def get_is_new(self, obj):
         modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
         day_difference = (datetime.now() - modified).days
-        return True if day_difference <= 3 else False
+        return day_difference <= 3
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
@@ -112,5 +112,5 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
                 'filename': directories[-1]
             })
             return f'{settings.HOST}{relative_url}'
-        except BaseException as e:
-            return str(e)
+        except BaseException:
+            return None

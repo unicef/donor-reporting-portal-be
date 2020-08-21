@@ -510,11 +510,11 @@
         },
         "sharepoint-rest-api": {
             "hashes": [
-                "sha256:70f2ef71f526fd422aeafc7325e4009a588f4cae45e9dfa703f0a80de8741271",
-                "sha256:8a0978054019c6c2eb629f80094da7d0fb42e05ed8ffdc32233ed26948efa1b7"
+                "sha256:640455ce198851fe83e7545d47061f22f7e9b54a7d27f645fce1f68875da6252",
+                "sha256:72001ffd910a84aa23ff215a1719390c3f3030ebabbbb0476b5c151f3dc7f53e"
             ],
             "index": "pypi",
-            "version": "==0.4"
+            "version": "==0.4.1"
         },
         "six": {
             "hashes": [
