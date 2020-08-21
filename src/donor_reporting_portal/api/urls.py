@@ -13,8 +13,8 @@ from .views.sharepoint import (
     DRPSharePointUrlCamlViewSet,
     DRPSharePointUrlFileViewSet,
     DRPSharePointUrlRestViewSet,
+    DRPSharePointUrlSearchViewSet,
     SharePointGroupViewSet,
-    SharePointUrlSearchViewSet,
 )
 from .views.userrole import BusinessAreaViewSet, GroupViewSet, UserRoleViewSet, UserViewSet
 
@@ -39,7 +39,7 @@ router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\
 router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/caml',
                 DRPSharePointUrlCamlViewSet, basename='sharepoint-url-caml')
 router.register(r'sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/search',
-                SharePointUrlSearchViewSet, basename='sharepoint-url-search')
+                DRPSharePointUrlSearchViewSet, basename='sharepoint-url-search')
 
 router.register(r'sharepoint/(?P<folder>[\w\W]+)/rest',
                 DRPSharePointSettingsRestViewSet, basename='sharepoint-settings-rest')
