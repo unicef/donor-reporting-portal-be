@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.settings_based import (
     SharePointSettingsCamlViewSet,
     SharePointSettingsFileViewSet,
@@ -56,25 +57,29 @@ class DRPSharePointSettingsFileViewSet(DonorReportingViewSet, SharePointSettings
 
 
 class DRPSharepointSearchMixin:
+    prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
-    select_fields = (
-        'Title',
-        'Path',
-        'FileExtension',
-        'DRPDonor',
-        'DRPGrantNumber',
-        'DRPDonorDocument',
-        'ECMDocumentType',
-        'Author',
-        'DRPReportEndDate',
-        'DRPTheme',
-        'DRPDonorReportCategory'
-    )
+
+    def get_filters(self, kwargs):
+        # we can enforce filters here
+        new_kwargs = {
+            'IsDocument': '1',
+            'DRPReportStatus': 'Certified by Comptroller,Pending Approval by Comptroller'
+        }
+        for key, value in kwargs.items():
+            new_key = self.prefix + to_camel(key)
+            if key in self.serializer_class._declared_fields.keys():
+                new_kwargs[new_key] = value
+            else:
+                new_kwargs[key] = value
+
+        return new_kwargs
 
 
-class DRPSharePointSettingsSearchViewSet(DRPSharepointSearchMixin, SharePointSettingsSearchViewSet):
+class DRPSharePointSettingsSearchViewSet(DonorReportingViewSet, DRPSharepointSearchMixin,
+                                         SharePointSettingsSearchViewSet):
     pass
 
 
-class DRPSharePointUrlSearchViewSet(DRPSharepointSearchMixin, SharePointUrlSearchViewSet):
+class DRPSharePointUrlSearchViewSet(DonorReportingViewSet, DRPSharepointSearchMixin, SharePointUrlSearchViewSet):
     pass
