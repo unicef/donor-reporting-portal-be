@@ -289,3 +289,8 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 USER_FIELDS = ['username', 'email', 'first_name', 'last_name']
+
+DRP_SOURCE_IDS = {
+    'internal': env('DRP_SOURCE_ID_INTERNAL', default=None),
+    'external': env('DRP_SOURCE_ID_EXTERNAL', default=None)
+}

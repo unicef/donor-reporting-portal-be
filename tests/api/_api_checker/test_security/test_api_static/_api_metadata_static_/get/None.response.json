@@ -15,11 +15,19 @@
         ],
         "x-frame-options": [
             "X-Frame-Options",
-            "SAMEORIGIN"
+            "DENY"
         ],
         "content-length": [
             "Content-Length",
-            "3726"
+            "3814"
+        ],
+        "x-content-type-options": [
+            "X-Content-Type-Options",
+            "nosniff"
+        ],
+        "referrer-policy": [
+            "Referrer-Policy",
+            "same-origin"
         ]
     },
     "data": {
@@ -146,6 +154,10 @@
             }
         ],
         "report_type": [
+            {
+                "code": "quarterly",
+                "label": "Quarterly"
+            },
             {
                 "code": "final",
                 "label": "Final"
@@ -336,7 +348,11 @@
                 "code": "certified_cp",
                 "label": "Certified by Comptroller"
             }
-        ]
+        ],
+        "source_id ": {
+            "internal": null,
+            "external": null
+        }
     },
     "content_type": null
 }
