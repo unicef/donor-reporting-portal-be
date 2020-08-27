@@ -11,7 +11,7 @@ from sharepoint_rest_api.serializers.fields import (
 )
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
-from donor_reporting_portal.api.serializers.fields import DRPSearchSharePointField
+from donor_reporting_portal.api.serializers.fields import DRPSearchSharePointField, DRPSearchMultiSharePointField
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -80,7 +80,7 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
     grant_issue_year = DRPSearchSharePointField()
     grant_expiry_date = DRPSearchSharePointField()
     external_reference = DRPSearchSharePointField()
-    recipient_office = DRPSearchSharePointField()
+    recipient_office = DRPSearchMultiSharePointField()
     report_type = DRPSearchSharePointField()
     report_end_date = DRPSearchSharePointField()
     theme = DRPSearchSharePointField()
