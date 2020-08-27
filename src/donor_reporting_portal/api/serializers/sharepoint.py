@@ -78,7 +78,7 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
     donor_code = DRPSearchSharePointField()
     grant_number = DRPSearchSharePointField()
     grant_issue_year = DRPSearchSharePointField()
-    grant_expire_date = DRPSearchSharePointField()
+    grant_expiry_date = DRPSearchSharePointField()
     external_reference = DRPSearchSharePointField()
     recipient_office = DRPSearchSharePointField()
     report_type = DRPSearchSharePointField()
