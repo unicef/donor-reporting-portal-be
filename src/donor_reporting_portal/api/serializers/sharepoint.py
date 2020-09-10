@@ -100,8 +100,8 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
         items = [item['Value'] for item in obj if item['Key'] == field_name]
         modified = items[0] if items else None
         if modified:
-            day_difference = (datetime.now() - datetime.strptime(modified[:17], '%m/%d/%Y %H:%M:%S')).days
-            return True if day_difference <= 3 else False
+            day_difference = (datetime.now() - datetime.strptime(modified, '%m/%d/%Y %H:%M:%S %p')).days
+            return day_difference <= 3
 
     def get_download_url(self, obj):
         try:

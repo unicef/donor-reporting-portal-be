@@ -1,7 +1,6 @@
-from urllib.parse import urlencode
-
 from rest_framework import viewsets
 from sharepoint_rest_api.utils import to_camel
+from sharepoint_rest_api.views.base import SharePointSearchViewSet
 from sharepoint_rest_api.views.settings_based import (
     SharePointSettingsCamlViewSet,
     SharePointSettingsFileViewSet,
@@ -58,7 +57,7 @@ class DRPSharePointSettingsFileViewSet(DonorReportingViewSet, SharePointSettings
     pass
 
 
-class DRPSharepointSearchMixin:
+class DRPSharepointSearchViewSet(DonorReportingViewSet, SharePointSearchViewSet):
     prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
 
@@ -71,8 +70,7 @@ class DRPSharepointSearchMixin:
     def get_filters(self, kwargs):
         # we can enforce filters here
         new_kwargs = {
-            'IsDocument': '1',
-            'DRPReportStatus': 'Certified by Comptroller,Pending Approval by Comptroller'
+            # 'IsDocument': '1',
         }
         for key, value in kwargs.items():
             new_key = self.prefix + to_camel(key)
@@ -83,26 +81,10 @@ class DRPSharepointSearchMixin:
 
         return new_kwargs
 
-    def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
-        next_offset = int(self.request.query_params.get('page', 1)) + 1
-        prev_offset = int(self.request.query_params.get('page', 1)) - 1
-        next_dict = request.query_params.copy()
-        next_dict['page'] = str(next_offset)
-        prev_dict = request.query_params.copy()
-        prev_dict['page'] = str(prev_offset)
-        response.data = {
-            "items": response.data,
-            "next:": request.build_absolute_uri('?') + '?' + urlencode(next_dict),
-            "previous": request.build_absolute_uri('?') + '?' + urlencode(prev_dict)
-        }
-        return response
 
-
-class DRPSharePointSettingsSearchViewSet(DonorReportingViewSet, DRPSharepointSearchMixin,
-                                         SharePointSettingsSearchViewSet):
+class DRPSharePointSettingsSearchViewSet(DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
     pass
 
 
-class DRPSharePointUrlSearchViewSet(DonorReportingViewSet, DRPSharepointSearchMixin, SharePointUrlSearchViewSet):
+class DRPSharePointUrlSearchViewSet(DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
     pass
