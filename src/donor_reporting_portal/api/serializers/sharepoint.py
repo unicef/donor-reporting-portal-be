@@ -11,7 +11,7 @@ from sharepoint_rest_api.serializers.fields import (
 )
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
-from donor_reporting_portal.api.serializers.fields import DRPSearchSharePointField, DRPSearchMultiSharePointField
+from donor_reporting_portal.api.serializers.fields import DRPSearchMultiSharePointField, DRPSearchSharePointField
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
