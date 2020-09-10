@@ -19,6 +19,7 @@ class Donor(TimeStampedModel):
     name = models.CharField(verbose_name=_("Name"), max_length=64)
     code = models.CharField(verbose_name=_("Code"), max_length=16, unique=True)
     us_gov = models.BooleanField(verbose_name=_("Us Gov Flag"), default=False)
+    active = models.BooleanField(verbose_name=_("Active"), default=True)
 
     class Meta:
         ordering = ['name']
