@@ -5,13 +5,13 @@ from django.conf import settings
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from sharepoint_rest_api.serializers.fields import (
-    RawSearchSharePointField,
-    SearchSharePointField,
+    CapitalizeSearchSharePointField,
     SharePointPropertyField,
     SharePointPropertyManyField,
 )
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
+from donor_reporting_portal.api.serializers.fields import DRPSearchMultiSharePointField, DRPSearchSharePointField
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -51,7 +51,7 @@ class DRPSerializerMixin(serializers.Serializer):
     def get_is_new(self, obj):
         modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
         day_difference = (datetime.now() - modified).days
-        return True if day_difference <= 3 else False
+        return day_difference <= 3
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
@@ -67,26 +67,50 @@ class DRPSharePointSettingsSerializer(DRPSerializerMixin, SharePointSettingsSeri
 
 
 class DRPSharePointSearchSerializer(serializers.Serializer):
-    title = SearchSharePointField()
-    author = SearchSharePointField()
-    path = SearchSharePointField()
-    last_modified_time = SearchSharePointField()
+    title = CapitalizeSearchSharePointField()
+    author = CapitalizeSearchSharePointField()
+    path = CapitalizeSearchSharePointField()
 
-    DRPDonor = RawSearchSharePointField()
-    DRPGrantNumber = RawSearchSharePointField()
-    DRPDonorDocument = RawSearchSharePointField()
+    created = DRPSearchSharePointField()
+    modified = DRPSearchSharePointField()
+    report_generated_by = DRPSearchSharePointField()
+    donor = DRPSearchSharePointField()
+    donor_code = DRPSearchSharePointField()
+    grant_number = DRPSearchSharePointField()
+    grant_issue_year = DRPSearchSharePointField()
+    grant_expiry_date = DRPSearchSharePointField()
+    external_reference = DRPSearchSharePointField()
+    recipient_office = DRPSearchMultiSharePointField()
+    report_type = DRPSearchSharePointField()
+    report_end_date = DRPSearchSharePointField()
+    theme = DRPSearchSharePointField()
+    donor_document = DRPSearchSharePointField()
+    donor_report_category = DRPSearchSharePointField()
+    report_method = DRPSearchSharePointField()
+    report_group = DRPSearchSharePointField()
+    report_status = DRPSearchSharePointField()
+    retracted = DRPSearchSharePointField()
+    framework_agreement = DRPSearchSharePointField()
 
-    DRPReportEndDate = RawSearchSharePointField()
-    DRPTheme = RawSearchSharePointField()
-    DRPDonorReportCategory = RawSearchSharePointField()
-
+    is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()
 
+    def get_is_new(self, obj):
+        field_name = 'DRPModified'
+        items = [item['Value'] for item in obj if item['Key'] == field_name]
+        modified = items[0] if items else None
+        if modified:
+            day_difference = (datetime.now() - datetime.strptime(modified, '%m/%d/%Y %H:%M:%S %p')).days
+            return day_difference <= 3
+
     def get_download_url(self, obj):
-        filename = [item['Value'] for item in obj if item['Key'] == 'Title'][0]
-        folder = self.context['folder']  # TODO
-        relative_url = reverse('sharepoint_rest_api:sharepoint-settings-files-download', kwargs={
-            'folder': folder,
-            'filename': filename
-        })
-        return f'{settings.HOST}{relative_url}'
+        try:
+            path = [item['Value'] for item in obj if item['Key'] == 'Path'][0]
+            directories = path.split('/')
+            relative_url = reverse('sharepoint_rest_api:sharepoint-settings-files-download', kwargs={
+                'folder': directories[-2],
+                'filename': directories[-1]
+            })
+            return f'{settings.HOST}{relative_url}'
+        except BaseException:
+            return None

@@ -43,7 +43,7 @@ def test_api_donor_list(request, django_app, logged_user, donor):
 
 
 @contract(recorder_class=LastModifiedRecorder)
-def test_api_mydonor_list_unicef_user(request, django_app, logged_user, donor):
+def test_api_my_donor_list_unicef_user(request, django_app, logged_user, donor):
     with user_grant_permissions(logged_user, permissions=['roles.can_view_all_donors']):
         return reverse('api:donor-my-donors')
 

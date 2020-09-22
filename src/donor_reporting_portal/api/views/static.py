@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from django.conf import settings
+
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -22,6 +24,7 @@ class MetadataStaticAPIView(APIView):
         report_years = {year: year for year in range(2019, datetime.today().year + 2)}
         grant_issue_years = {year: year for year in range(2018, datetime.today().year + 2)}
         report_type = {
+            'quarterly': 'Quarterly',
             'final': 'Final',
             'interim': 'Interim'
         }
@@ -84,7 +87,8 @@ class MetadataStaticAPIView(APIView):
                 'donor_reporting_category': dict_to_json(donor_reporting_category),
                 'reporting_group': dict_to_json(reporting_group),
                 'recertified': dict_to_json(recertified),
-                'rp_status ': dict_to_json(rp_status),
+                'rp_status': dict_to_json(rp_status),
+                'source_id': settings.DRP_SOURCE_IDS
             },
             status=status.HTTP_200_OK
         )

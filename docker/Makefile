@@ -2,8 +2,8 @@
 DATABASE_URL?=
 DOCKER_PASS?=
 DOCKER_USER?=
-TARGET?=1.1.0
-BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9][0-9]\)\.\(.*\)/\1.\2/g" )
+TARGET?=1.3.0
+BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9]\)\.\(.*\)/\1.\2/g" )
 # below vars are used internally
 BUILD_OPTIONS?=
 CMD?=donor_reporting_portal
