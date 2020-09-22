@@ -87,8 +87,8 @@ class MetadataStaticAPIView(APIView):
                 'donor_reporting_category': dict_to_json(donor_reporting_category),
                 'reporting_group': dict_to_json(reporting_group),
                 'recertified': dict_to_json(recertified),
-                'rp_status ': dict_to_json(rp_status),
-                'source_id ': settings.DRP_SOURCE_IDS
+                'rp_status': dict_to_json(rp_status),
+                'source_id': settings.DRP_SOURCE_IDS
             },
             status=status.HTTP_200_OK
         )
