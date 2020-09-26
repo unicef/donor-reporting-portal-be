@@ -15,6 +15,7 @@ from sharepoint_rest_api.views.url_based import (
 )
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
+from donor_reporting_portal.api.serializers.fields import DRPSearchSharePointField
 from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointSearchSerializer,
     DRPSharePointSettingsSerializer,
@@ -72,9 +73,17 @@ class DRPSharepointSearchViewSet(DonorReportingViewSet, SharePointSearchViewSet)
         new_kwargs = {
             # 'IsDocument': '1',
         }
+        drp_fields = [key for key, value in self.serializer_class._declared_fields.items()
+                      if isinstance(value, DRPSearchSharePointField)]
+
         for key, value in kwargs.items():
-            new_key = self.prefix + to_camel(key)
-            if key in self.serializer_class._declared_fields.keys():
+            key_splits = key.split('__')
+            filter_name = key_splits[0]
+            filter_type = key_splits[-1] if len(key_splits) > 1 else None
+            if filter_name in drp_fields:
+                new_key = self.prefix + to_camel(filter_name)
+                if filter_type:
+                    new_key = f'{new_key}__{filter_type}'
                 new_kwargs[new_key] = value
             else:
                 new_kwargs[key] = value
