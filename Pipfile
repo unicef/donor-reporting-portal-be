@@ -30,7 +30,7 @@ sync = "*"
 
 [packages]
 admin-extra-urls = "*"
-celery = "*"
+celery = "<5.0"
 dj-database-url = "*"
 dj-static = "*"
 Django = "*"
