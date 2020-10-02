@@ -1,0 +1,52 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin"
+        ],
+        "allow": [
+            "Allow",
+            "GET, POST, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "DENY"
+        ],
+        "content-length": [
+            "Content-Length",
+            "254"
+        ],
+        "x-content-type-options": [
+            "X-Content-Type-Options",
+            "nosniff"
+        ],
+        "referrer-policy": [
+            "Referrer-Policy",
+            "same-origin"
+        ]
+    },
+    "data": [
+        {
+            "id": 1912,
+            "username": "user009",
+            "first_name": "Timothy",
+            "last_name": "Thompson",
+            "email": "m009@mailinator.com",
+            "is_superuser": false
+        },
+        {
+            "id": 2265,
+            "username": "user999",
+            "first_name": "David",
+            "last_name": "Lamb",
+            "email": "m000@mailinator.com",
+            "is_superuser": true
+        }
+    ],
+    "content_type": null
+}
