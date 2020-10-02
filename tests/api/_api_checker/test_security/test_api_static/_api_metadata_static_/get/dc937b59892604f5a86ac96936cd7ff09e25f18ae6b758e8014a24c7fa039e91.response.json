@@ -1,0 +1,582 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin"
+        ],
+        "allow": [
+            "Allow",
+            "GET"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "DENY"
+        ],
+        "content-length": [
+            "Content-Length",
+            "8222"
+        ],
+        "x-content-type-options": [
+            "X-Content-Type-Options",
+            "nosniff"
+        ],
+        "referrer-policy": [
+            "Referrer-Policy",
+            "same-origin"
+        ]
+    },
+    "data": {
+        "years": [
+            {
+                "code": "2000",
+                "label": "2000"
+            },
+            {
+                "code": "2001",
+                "label": "2001"
+            },
+            {
+                "code": "2002",
+                "label": "2002"
+            },
+            {
+                "code": "2003",
+                "label": "2003"
+            },
+            {
+                "code": "2004",
+                "label": "2004"
+            },
+            {
+                "code": "2005",
+                "label": "2005"
+            },
+            {
+                "code": "2006",
+                "label": "2006"
+            },
+            {
+                "code": "2007",
+                "label": "2007"
+            },
+            {
+                "code": "2008",
+                "label": "2008"
+            },
+            {
+                "code": "2009",
+                "label": "2009"
+            },
+            {
+                "code": "2010",
+                "label": "2010"
+            },
+            {
+                "code": "2011",
+                "label": "2011"
+            },
+            {
+                "code": "2012",
+                "label": "2012"
+            },
+            {
+                "code": "2013",
+                "label": "2013"
+            },
+            {
+                "code": "2014",
+                "label": "2014"
+            },
+            {
+                "code": "2015",
+                "label": "2015"
+            },
+            {
+                "code": "2016",
+                "label": "2016"
+            },
+            {
+                "code": "2017",
+                "label": "2017"
+            },
+            {
+                "code": "2018",
+                "label": "2018"
+            },
+            {
+                "code": "2019",
+                "label": "2019"
+            },
+            {
+                "code": "2020",
+                "label": "2020"
+            },
+            {
+                "code": "2021",
+                "label": "2021"
+            }
+        ],
+        "report_years": [
+            {
+                "code": "2019",
+                "label": "2019"
+            },
+            {
+                "code": "2020",
+                "label": "2020"
+            },
+            {
+                "code": "2021",
+                "label": "2021"
+            }
+        ],
+        "grant_issue_years": [
+            {
+                "code": "2018",
+                "label": "2018"
+            },
+            {
+                "code": "2019",
+                "label": "2019"
+            },
+            {
+                "code": "2020",
+                "label": "2020"
+            },
+            {
+                "code": "2021",
+                "label": "2021"
+            }
+        ],
+        "report_type": [
+            {
+                "code": "quarterly",
+                "label": "Quarterly"
+            },
+            {
+                "code": "final",
+                "label": "Final"
+            },
+            {
+                "code": "interim",
+                "label": "Interim"
+            }
+        ],
+        "donor_document": [
+            {
+                "code": "certified_statement_of_account",
+                "label": "Certified Statement of Account"
+            },
+            {
+                "code": "certified_statement_of_account_eu",
+                "label": "Certified Statement of Account EU"
+            },
+            {
+                "code": "certified_statement_of_account_jpo",
+                "label": "Certified Statement of Account JPO"
+            },
+            {
+                "code": "donor_statement_cerf",
+                "label": "Donor Statement CERF"
+            },
+            {
+                "code": "donor_statement_innovation",
+                "label": "Donor Statement Innovation"
+            },
+            {
+                "code": "donor_statement_joint_programme",
+                "label": "Donor Statement Joint Programme"
+            },
+            {
+                "code": "donor_statement_joint_programme_puno",
+                "label": "Donor Statement Joint Programme PUNO"
+            },
+            {
+                "code": "donor_statement_jpo_summary",
+                "label": "Donor Statement JPO Summary"
+            },
+            {
+                "code": "donor_statement_trust_fund",
+                "label": "Donor Statement Trust Fund"
+            },
+            {
+                "code": "donor_statement_un",
+                "label": "Donor Statement UN"
+            },
+            {
+                "code": "donor_statement_unicef_hosted_funds",
+                "label": "Donor Statement UNICEF Hosted Funds"
+            },
+            {
+                "code": "jpo_expenditure_summary",
+                "label": "JPO Expenditure Summary"
+            },
+            {
+                "code": "mdtf_report",
+                "label": "MDTF Report"
+            },
+            {
+                "code": "statement_of_account_thematic_funds",
+                "label": "Statement of Account Thematic Funds"
+            },
+            {
+                "code": "certified_financial_statement_-_ec",
+                "label": "Certified Financial Statement - EC"
+            },
+            {
+                "code": "certified_financial_statement_-_us_government",
+                "label": "Certified Financial Statement - US Government"
+            },
+            {
+                "code": "uncertified_financial_statements",
+                "label": "Uncertified Financial Statements"
+            },
+            {
+                "code": "progress_reports",
+                "label": "Progress Reports"
+            },
+            {
+                "code": "final_reports",
+                "label": "Final Reports"
+            },
+            {
+                "code": "inception_reports",
+                "label": "Inception Reports"
+            },
+            {
+                "code": "thematic_reports",
+                "label": "Thematic Reports"
+            },
+            {
+                "code": "consolidated_emergency_reports",
+                "label": "Consolidated Emergency Reports"
+            },
+            {
+                "code": "agreements",
+                "label": "Agreements"
+            },
+            {
+                "code": "agreement_amendments",
+                "label": "Agreement Amendments"
+            },
+            {
+                "code": "note_for_the_records",
+                "label": "Note for the Records"
+            },
+            {
+                "code": "correspondence",
+                "label": "Correspondence"
+            },
+            {
+                "code": "receipts",
+                "label": "Receipts"
+            }
+        ],
+        "donor_reporting_category": [
+            {
+                "code": "donor_financial_certified",
+                "label": "Donor Financial Certified"
+            },
+            {
+                "code": "donor_financial_uncertified",
+                "label": "Donor Financial Uncertified"
+            },
+            {
+                "code": "donor_narrative",
+                "label": "Donor Narrative"
+            },
+            {
+                "code": "special_donor_narrative",
+                "label": "Special Donor Narrative"
+            },
+            {
+                "code": "special_grant_master",
+                "label": "Special Grant Master"
+            },
+            {
+                "code": "input_report",
+                "label": "Input Report"
+            }
+        ],
+        "reporting_group": [
+            {
+                "code": "certified_financial_report_-_final",
+                "label": "Certified Financial Report - Final"
+            },
+            {
+                "code": "certified_financial_report_-_interim",
+                "label": "Certified Financial Report - Interim"
+            },
+            {
+                "code": "certified_financial_statement_-_ec",
+                "label": "Certified Financial Statement - EC"
+            },
+            {
+                "code": "certified_financial_statement_-_us_government",
+                "label": "Certified Financial Statement - US Government"
+            },
+            {
+                "code": "certified_statement_of_account",
+                "label": "Certified Statement of Account"
+            },
+            {
+                "code": "certified_statement_of_account_eu",
+                "label": "Certified Statement of Account EU"
+            },
+            {
+                "code": "certified_statement_of_account_jpo",
+                "label": "Certified Statement of Account JPO"
+            },
+            {
+                "code": "donor_statement_cerf",
+                "label": "Donor Statement CERF"
+            },
+            {
+                "code": "donor_statement_innovation",
+                "label": "Donor Statement Innovation"
+            },
+            {
+                "code": "donor_statement_joint_programme",
+                "label": "Donor Statement Joint Programme"
+            },
+            {
+                "code": "donor_statement_joint_programme_puno",
+                "label": "Donor Statement Joint Programme PUNO"
+            },
+            {
+                "code": "donor_statement_jpo_summary",
+                "label": "Donor Statement JPO Summary"
+            },
+            {
+                "code": "donor_statement_trust_fund",
+                "label": "Donor Statement Trust Fund"
+            },
+            {
+                "code": "donor_statement_un",
+                "label": "Donor Statement UN"
+            },
+            {
+                "code": "donor_statement_unicef_hosted_funds",
+                "label": "Donor Statement UNICEF Hosted Funds"
+            },
+            {
+                "code": "ffr_form_(sf-425)",
+                "label": "FFR Form (SF-425)"
+            },
+            {
+                "code": "jpo_expenditure_summary",
+                "label": "JPO Expenditure Summary"
+            },
+            {
+                "code": "statement_of_account_thematic_funds",
+                "label": "Statement of Account Thematic Funds"
+            },
+            {
+                "code": "donor_statement_by_activity",
+                "label": "Donor Statement by Activity"
+            },
+            {
+                "code": "funds_request_report",
+                "label": "Funds Request Report"
+            },
+            {
+                "code": "interim_statement_by_nature_of_expense",
+                "label": "Interim Statement by Nature of expense"
+            },
+            {
+                "code": "non-standard_statement",
+                "label": "Non-Standard Statement"
+            },
+            {
+                "code": "emergency__consolidated_-_interim",
+                "label": "Emergency  Consolidated - Interim"
+            },
+            {
+                "code": "emergency_-_final",
+                "label": "Emergency - Final"
+            },
+            {
+                "code": "emergency_-_interim",
+                "label": "Emergency - Interim"
+            },
+            {
+                "code": "emergency_-_two_pager",
+                "label": "Emergency - Two Pager"
+            },
+            {
+                "code": "emergency_consolidated_-_final",
+                "label": "Emergency Consolidated - Final"
+            },
+            {
+                "code": "human_interest_/_photos",
+                "label": "Human Interest / Photos"
+            },
+            {
+                "code": "narrative__consolidated_-_interim",
+                "label": "Narrative  Consolidated - Interim"
+            },
+            {
+                "code": "narrative_-_final",
+                "label": "Narrative - Final"
+            },
+            {
+                "code": "narrative_-_interim",
+                "label": "Narrative - Interim"
+            },
+            {
+                "code": "narrative_consolidated_-_final",
+                "label": "Narrative Consolidated - Final"
+            },
+            {
+                "code": "thematic_-_final",
+                "label": "Thematic - Final"
+            },
+            {
+                "code": "thematic_-_interim",
+                "label": "Thematic - Interim"
+            },
+            {
+                "code": "thematic_consolidated_-_final",
+                "label": "Thematic Consolidated - Final"
+            },
+            {
+                "code": "thematic_consolidated_-_interim",
+                "label": "Thematic Consolidated - Interim"
+            },
+            {
+                "code": "thematic_emergency_global_-_final",
+                "label": "Thematic Emergency Global - Final"
+            },
+            {
+                "code": "thematic_emergency_global_-_interim",
+                "label": "Thematic Emergency Global - Interim"
+            },
+            {
+                "code": "thematic_global_-_final",
+                "label": "Thematic Global - Final"
+            },
+            {
+                "code": "thematic_global_-_interim",
+                "label": "Thematic Global - Interim"
+            },
+            {
+                "code": "short_summary_update",
+                "label": "Short Summary Update"
+            },
+            {
+                "code": "human_interest_stories_or_photos",
+                "label": "Human Interest Stories or Photos"
+            },
+            {
+                "code": "agreement_amendments",
+                "label": "Agreement Amendments"
+            },
+            {
+                "code": "agreements",
+                "label": "Agreements"
+            },
+            {
+                "code": "correspondence",
+                "label": "Correspondence"
+            },
+            {
+                "code": "extensions",
+                "label": "Extensions"
+            },
+            {
+                "code": "framework_agreement_checklist",
+                "label": "Framework Agreement Checklist"
+            },
+            {
+                "code": "framework_agreements",
+                "label": "Framework Agreements"
+            },
+            {
+                "code": "jpos",
+                "label": "JPOs"
+            },
+            {
+                "code": "note_for_the_records",
+                "label": "Note for the Records"
+            },
+            {
+                "code": "official_receipts",
+                "label": "Official Receipts"
+            },
+            {
+                "code": "others",
+                "label": "Others"
+            },
+            {
+                "code": "payment_request",
+                "label": "Payment Request"
+            },
+            {
+                "code": "proposals",
+                "label": "Proposals"
+            },
+            {
+                "code": "input_report_-_final",
+                "label": "Input Report - Final"
+            },
+            {
+                "code": "input_report_-_interim",
+                "label": "Input Report - Interim"
+            }
+        ],
+        "recertified": [
+            {
+                "code": "yes",
+                "label": "yes"
+            },
+            {
+                "code": "no",
+                "label": "no"
+            }
+        ],
+        "rp_status": [
+            {
+                "code": "new",
+                "label": "New"
+            },
+            {
+                "code": "pending_review_by_reporting_manager",
+                "label": "Pending Review by Reporting Manager"
+            },
+            {
+                "code": "rejected_by_reporting_manager",
+                "label": "Rejected by Reporting Manager"
+            },
+            {
+                "code": "approved_by_reporting_manager",
+                "label": "Approved by Reporting Manager"
+            },
+            {
+                "code": "pending_approval_by_comptroller",
+                "label": "Pending Approval by Comptroller"
+            },
+            {
+                "code": "rejected_by_comptroller",
+                "label": "Rejected by Comptroller"
+            },
+            {
+                "code": "certified_by_comptroller",
+                "label": "Certified by Comptroller"
+            }
+        ],
+        "source_id": {
+            "internal": null,
+            "external": null,
+            "pool_internal": null,
+            "pool_external": null,
+            "thematic_internal": null,
+            "thematic_external": null
+        }
+    },
+    "content_type": null
+}

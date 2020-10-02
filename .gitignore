@@ -21,3 +21,4 @@ coverage.xml
 .envrc
 .venv/
 **/static
+.DS_Store
