@@ -1,4 +1,4 @@
-FROM python:3.8.2-alpine3.10
+FROM python:3.9.0-alpine3.12
 
 ARG PIPENV_ARGS
 
@@ -78,15 +78,15 @@ RUN cd /code \
     && pipenv install --verbose --system --deploy --ignore-pipfile $PIPENV_ARGS \
     && sha1sum Pipfile.lock > /CHECKSUM
 
-# need to removes some code not py3.8 compliant
-RUN rm -fr /usr/local/lib/python3.8/site-packages/psycopg2/tests/* \
-           /usr/local/lib/python3.8/site-packages/tornado/test/* \
-           /usr/local/lib/python3.8/site-packages/pipenv/patched/yaml2/*
+# need to removes some code not py3.9 compliant
+RUN rm -fr /usr/local/lib/python3.9/site-packages/psycopg2/tests/* \
+           /usr/local/lib/python3.9/site-packages/tornado/test/* \
+           /usr/local/lib/python3.9/site-packages/pipenv/patched/yaml2/*
 
 # before compile site-packages
-RUN find /usr/local/lib/python3.8/ -name *.pyc | xargs rm -f \
-    && python -O -m compileall -fqb /usr/local/lib/python3.8 \
-    && find /usr/local/lib/python3.8/ -name *.py | xargs rm -f
+RUN find /usr/local/lib/python3.9/ -name *.pyc | xargs rm -f \
+    && python -O -m compileall -fqb /usr/local/lib/python3.9 \
+    && find /usr/local/lib/python3.9/ -name *.py | xargs rm -f
 
 RUN apk del .fetch-deps .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
     && rm -rf /var/cache/apk/* \
