@@ -1,0 +1,22 @@
+# Python Django
+# Test a Django project on multiple versions of Python.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+    
+pool:
+  vmImage: 'ubuntu-16.04'
+
+variables:
+  imageName: '$(Build.BuildId)'
+    # define two more variables dockerId and dockerPassword in the build pipeline in UI
+
+steps:
+- script: |
+    cd docker
+    make build
+    docker tag unicef/donor-reporting-portal-backend:${TARGET} unicef/donor-reporting-portal-backend:dev
+    docker push unicef/donor-reporting-portal-backend:${TARGET}
+    docker push unicef/donor-reporting-portal-backend:dev
+  env:
+    pswd: $(dockerPassword)
+  displayName: 'Build and push Docker image'

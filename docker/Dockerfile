@@ -1,6 +1,6 @@
 ARG BASE_IMAGE=1.3
 
-FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
+FROM unicef/donor-reporting-portal-backend:0.6-base
 
 #ARG BUILD_DATE
 #ARG VERSION

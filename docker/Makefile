@@ -8,9 +8,7 @@ BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9]\)\.\(.*\)/\1.\2/g" )
 BUILD_OPTIONS?=
 CMD?=donor_reporting_portal
 CONTAINER_NAME?=donor_reporting_portal-${TARGET}
-ORGANIZATION=unicef
-IMAGE_NAME=donor-reporting-portal-backend
-DOCKER_IMAGE_NAME?=${ORGANIZATION}/${IMAGE_NAME}
+DOCKER_IMAGE_NAME?=unicef/donor-reporting-portal-backend
 DOCKER_IMAGE?=${DOCKER_IMAGE_NAME}:${TARGET}
 DOCKERFILE?=Dockerfile
 RUN_OPTIONS?=
@@ -57,7 +55,7 @@ build-test:
 	TARGET=dev $(MAKE) .build test
 
 build:
-	$(MAKE) .build test
+	$(MAKE) .build
 
 .run:
 	cd .. && docker run \
@@ -100,10 +98,8 @@ local:
 	$(MAKE) .run
 
 release:
-	@echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
-	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:dev
+	echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
 	docker push ${DOCKER_IMAGE_NAME}:${TARGET}
-	docker push ${DOCKER_IMAGE_NAME}:dev
 
 # deploy:
 #	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
