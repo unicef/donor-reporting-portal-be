@@ -58,7 +58,7 @@ class MetadataStaticAPIView(APIView):
         donor_reporting_category = [
             'Donor Financial Certified',
             'Donor Financial Uncertified',
-            'Donor Narrative',
+            'Donor Narrative Special',
             'Special Donor Narrative',
             'Special Grant Master',
             'Input Report'
