@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "8238"
+            "6180"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -169,6 +169,14 @@
         ],
         "donor_document": [
             {
+                "code": "certified_financial_statement_-_ec",
+                "label": "Certified Financial Statement - EC"
+            },
+            {
+                "code": "certified_financial_statement_-_us_government",
+                "label": "Certified Financial Statement - US Government"
+            },
+            {
                 "code": "certified_statement_of_account",
                 "label": "Certified Statement of Account"
             },
@@ -184,126 +192,6 @@
                 "code": "donor_statement_cerf",
                 "label": "Donor Statement CERF"
             },
-            {
-                "code": "donor_statement_innovation",
-                "label": "Donor Statement Innovation"
-            },
-            {
-                "code": "donor_statement_joint_programme",
-                "label": "Donor Statement Joint Programme"
-            },
-            {
-                "code": "donor_statement_joint_programme_puno",
-                "label": "Donor Statement Joint Programme PUNO"
-            },
-            {
-                "code": "donor_statement_jpo_summary",
-                "label": "Donor Statement JPO Summary"
-            },
-            {
-                "code": "donor_statement_trust_fund",
-                "label": "Donor Statement Trust Fund"
-            },
-            {
-                "code": "donor_statement_un",
-                "label": "Donor Statement UN"
-            },
-            {
-                "code": "donor_statement_unicef_hosted_funds",
-                "label": "Donor Statement UNICEF Hosted Funds"
-            },
-            {
-                "code": "jpo_expenditure_summary",
-                "label": "JPO Expenditure Summary"
-            },
-            {
-                "code": "mdtf_report",
-                "label": "MDTF Report"
-            },
-            {
-                "code": "statement_of_account_thematic_funds",
-                "label": "Statement of Account Thematic Funds"
-            },
-            {
-                "code": "certified_financial_statement_-_ec",
-                "label": "Certified Financial Statement - EC"
-            },
-            {
-                "code": "certified_financial_statement_-_us_government",
-                "label": "Certified Financial Statement - US Government"
-            },
-            {
-                "code": "uncertified_financial_statements",
-                "label": "Uncertified Financial Statements"
-            },
-            {
-                "code": "progress_reports",
-                "label": "Progress Reports"
-            },
-            {
-                "code": "final_reports",
-                "label": "Final Reports"
-            },
-            {
-                "code": "inception_reports",
-                "label": "Inception Reports"
-            },
-            {
-                "code": "thematic_reports",
-                "label": "Thematic Reports"
-            },
-            {
-                "code": "consolidated_emergency_reports",
-                "label": "Consolidated Emergency Reports"
-            },
-            {
-                "code": "agreements",
-                "label": "Agreements"
-            },
-            {
-                "code": "agreement_amendments",
-                "label": "Agreement Amendments"
-            },
-            {
-                "code": "note_for_the_records",
-                "label": "Note for the Records"
-            },
-            {
-                "code": "correspondence",
-                "label": "Correspondence"
-            },
-            {
-                "code": "receipts",
-                "label": "Receipts"
-            }
-        ],
-        "donor_reporting_category": [
-            {
-                "code": "donor_financial_certified",
-                "label": "Donor Financial Certified"
-            },
-            {
-                "code": "donor_financial_uncertified",
-                "label": "Donor Financial Uncertified"
-            },
-            {
-                "code": "donor_narrative_special",
-                "label": "Donor Narrative Special"
-            },
-            {
-                "code": "special_donor_narrative",
-                "label": "Special Donor Narrative"
-            },
-            {
-                "code": "special_grant_master",
-                "label": "Special Grant Master"
-            },
-            {
-                "code": "input_report",
-                "label": "Input Report"
-            }
-        ],
-        "reporting_group": [
             {
                 "code": "certified_financial_report_-_final",
                 "label": "Certified Financial Report - Final"
@@ -311,30 +199,6 @@
             {
                 "code": "certified_financial_report_-_interim",
                 "label": "Certified Financial Report - Interim"
-            },
-            {
-                "code": "certified_financial_statement_-_ec",
-                "label": "Certified Financial Statement - EC"
-            },
-            {
-                "code": "certified_financial_statement_-_us_government",
-                "label": "Certified Financial Statement - US Government"
-            },
-            {
-                "code": "certified_statement_of_account",
-                "label": "Certified Statement of Account"
-            },
-            {
-                "code": "certified_statement_of_account_eu",
-                "label": "Certified Statement of Account EU"
-            },
-            {
-                "code": "certified_statement_of_account_jpo",
-                "label": "Certified Statement of Account JPO"
-            },
-            {
-                "code": "donor_statement_cerf",
-                "label": "Donor Statement CERF"
             },
             {
                 "code": "donor_statement_innovation",
@@ -381,20 +245,36 @@
                 "label": "Donor Statement by Activity"
             },
             {
-                "code": "funds_request_report",
-                "label": "Funds Request Report"
-            },
-            {
                 "code": "interim_statement_by_nature_of_expense",
                 "label": "Interim Statement by Nature of expense"
+            },
+            {
+                "code": "funds_request_report",
+                "label": "Funds Request Report"
             },
             {
                 "code": "non-standard_statement",
                 "label": "Non-Standard Statement"
             },
             {
-                "code": "emergency__consolidated_-_interim",
-                "label": "Emergency  Consolidated - Interim"
+                "code": "emergency_consolidated_-_final",
+                "label": "Emergency Consolidated - Final"
+            },
+            {
+                "code": "emergency\u00a0_consolidated_-_interim",
+                "label": "Emergency\u00a0 Consolidated - Interim"
+            },
+            {
+                "code": "thematic_emergency_global_-_final",
+                "label": "Thematic Emergency Global - Final"
+            },
+            {
+                "code": "thematic_emergency_global_-_interim",
+                "label": "Thematic Emergency Global - Interim"
+            },
+            {
+                "code": "emergency_-_two_pager",
+                "label": "Emergency - Two Pager"
             },
             {
                 "code": "emergency_-_final",
@@ -405,20 +285,8 @@
                 "label": "Emergency - Interim"
             },
             {
-                "code": "emergency_-_two_pager",
-                "label": "Emergency - Two Pager"
-            },
-            {
-                "code": "emergency_consolidated_-_final",
-                "label": "Emergency Consolidated - Final"
-            },
-            {
                 "code": "human_interest_/_photos",
                 "label": "Human Interest / Photos"
-            },
-            {
-                "code": "narrative__consolidated_-_interim",
-                "label": "Narrative  Consolidated - Interim"
             },
             {
                 "code": "narrative_-_final",
@@ -433,12 +301,8 @@
                 "label": "Narrative Consolidated - Final"
             },
             {
-                "code": "thematic_-_final",
-                "label": "Thematic - Final"
-            },
-            {
-                "code": "thematic_-_interim",
-                "label": "Thematic - Interim"
+                "code": "narrative\u00a0_consolidated_-_interim",
+                "label": "Narrative\u00a0 Consolidated - Interim"
             },
             {
                 "code": "thematic_consolidated_-_final",
@@ -449,14 +313,6 @@
                 "label": "Thematic Consolidated - Interim"
             },
             {
-                "code": "thematic_emergency_global_-_final",
-                "label": "Thematic Emergency Global - Final"
-            },
-            {
-                "code": "thematic_emergency_global_-_interim",
-                "label": "Thematic Emergency Global - Interim"
-            },
-            {
                 "code": "thematic_global_-_final",
                 "label": "Thematic Global - Final"
             },
@@ -465,20 +321,24 @@
                 "label": "Thematic Global - Interim"
             },
             {
+                "code": "thematic_-_final",
+                "label": "Thematic - Final"
+            },
+            {
+                "code": "thematic_-_interim",
+                "label": "Thematic - Interim"
+            },
+            {
                 "code": "short_summary_update",
                 "label": "Short Summary Update"
             },
             {
-                "code": "human_interest_stories_or_photos",
-                "label": "Human Interest Stories or Photos"
+                "code": "agreements",
+                "label": "Agreements"
             },
             {
                 "code": "agreement_amendments",
                 "label": "Agreement Amendments"
-            },
-            {
-                "code": "agreements",
-                "label": "Agreements"
             },
             {
                 "code": "correspondence",
@@ -489,12 +349,12 @@
                 "label": "Extensions"
             },
             {
-                "code": "framework_agreement_checklist",
-                "label": "Framework Agreement Checklist"
-            },
-            {
                 "code": "framework_agreements",
                 "label": "Framework Agreements"
+            },
+            {
+                "code": "framework_agreement_checklist",
+                "label": "Framework Agreement Checklist"
             },
             {
                 "code": "jpos",
@@ -513,12 +373,12 @@
                 "label": "Others"
             },
             {
-                "code": "payment_request",
-                "label": "Payment Request"
-            },
-            {
                 "code": "proposals",
                 "label": "Proposals"
+            },
+            {
+                "code": "payment_request",
+                "label": "Payment Request"
             },
             {
                 "code": "input_report_-_final",
@@ -527,6 +387,32 @@
             {
                 "code": "input_report_-_interim",
                 "label": "Input Report - Interim"
+            }
+        ],
+        "donor_reporting_category": [
+            {
+                "code": "donor_narrative",
+                "label": "Donor Narrative"
+            },
+            {
+                "code": "donor_financial_certified",
+                "label": "Donor Financial Certified"
+            },
+            {
+                "code": "grant_master_document",
+                "label": "Grant Master Document"
+            },
+            {
+                "code": "donor_financial_uncertified",
+                "label": "Donor Financial Uncertified"
+            },
+            {
+                "code": "input_report",
+                "label": "Input Report"
+            },
+            {
+                "code": "donor_narrative_special",
+                "label": "Donor Narrative Special"
             }
         ],
         "recertified": [
