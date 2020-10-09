@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "8222"
+            "8238"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -287,8 +287,8 @@
                 "label": "Donor Financial Uncertified"
             },
             {
-                "code": "donor_narrative",
-                "label": "Donor Narrative"
+                "code": "donor_narrative_special",
+                "label": "Donor Narrative Special"
             },
             {
                 "code": "special_donor_narrative",
