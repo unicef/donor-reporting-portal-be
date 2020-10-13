@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from rest_framework import viewsets
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
@@ -30,35 +32,35 @@ class SharePointGroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SharePointGroupSerializer
 
 
-class DonorReportingViewSet:
+class DRPViewSet:
     permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
 
-class DRPSharePointSettingsRestViewSet(DonorReportingViewSet, SharePointSettingsRestViewSet):
+class DRPSharePointSettingsRestViewSet(DRPViewSet, SharePointSettingsRestViewSet):
     serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPSharePointSettingsCamlViewSet(DonorReportingViewSet, SharePointSettingsCamlViewSet):
+class DRPSharePointSettingsCamlViewSet(DRPViewSet, SharePointSettingsCamlViewSet):
     serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPSharePointUrlRestViewSet(DonorReportingViewSet, SharePointUrlRestViewSet):
+class DRPSharePointUrlRestViewSet(DRPViewSet, SharePointUrlRestViewSet):
     serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPSharePointUrlCamlViewSet(DonorReportingViewSet, SharePointUrlCamlViewSet):
+class DRPSharePointUrlCamlViewSet(DRPViewSet, SharePointUrlCamlViewSet):
     serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPSharePointUrlFileViewSet(DonorReportingViewSet, SharePointUrlFileViewSet):
+class DRPSharePointUrlFileViewSet(DRPViewSet, SharePointUrlFileViewSet):
     pass
 
 
-class DRPSharePointSettingsFileViewSet(DonorReportingViewSet, SharePointSettingsFileViewSet):
+class DRPSharePointSettingsFileViewSet(DRPViewSet, SharePointSettingsFileViewSet):
     pass
 
 
-class DRPSharepointSearchViewSet(DonorReportingViewSet, SharePointSearchViewSet):
+class DRPSharepointSearchViewSet(SharePointSearchViewSet):
     prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
 
@@ -91,9 +93,19 @@ class DRPSharepointSearchViewSet(DonorReportingViewSet, SharePointSearchViewSet)
         return new_kwargs
 
 
-class DRPSharePointSettingsSearchViewSet(DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
-    pass
+class PublicMixin:
+    """Mixin to check if the source id used is public or not"""
+    def is_public(self):
+        source_id = self.request.query_params.get('source_id', None)
+        return source_id in [v for k, v in settings.DRP_SOURCE_IDS.items() if k in (
+            'thematic_internal', 'thematic_external')]
 
 
-class DRPSharePointUrlSearchViewSet(DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
-    pass
+class DRPSharePointSettingsSearchViewSet(PublicMixin, DRPViewSet, DRPSharepointSearchViewSet,
+                                         SharePointSettingsSearchViewSet):
+    """DRP Search Viewset for settings based"""
+
+
+class DRPSharePointUrlSearchViewSet(PublicMixin, DRPViewSet, DRPSharepointSearchViewSet,
+                                    SharePointUrlSearchViewSet):
+    """DRP Search Viewset for url based"""
