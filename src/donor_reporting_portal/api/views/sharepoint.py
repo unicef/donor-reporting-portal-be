@@ -64,6 +64,17 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
     prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
 
+    def is_public(self):
+        """check if the source id is public or restricted to UNICEF users"""
+        source_id = self.request.query_params.get('source_id', None)
+        public = source_id in [settings.DRP_SOURCE_IDS['thematic_internal'],
+                               settings.DRP_SOURCE_IDS['thematic_external']]
+        if public:
+            return True
+        unicef_user = self.request.user.username.endswith('@unicef.org')
+        return unicef_user and source_id in [settings.DRP_SOURCE_IDS['internal'],
+                                             settings.DRP_SOURCE_IDS['pool_internal']]
+
     def get_selected(self, selected):
         def to_drp(source):
             return self.prefix + to_camel(source)
@@ -93,19 +104,9 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         return new_kwargs
 
 
-class PublicMixin:
-    """Mixin to check if the source id used is public or not"""
-    def is_public(self):
-        source_id = self.request.query_params.get('source_id', None)
-        return source_id in [v for k, v in settings.DRP_SOURCE_IDS.items() if k in (
-            'thematic_internal', 'thematic_external')]
-
-
-class DRPSharePointSettingsSearchViewSet(PublicMixin, DRPViewSet, DRPSharepointSearchViewSet,
-                                         SharePointSettingsSearchViewSet):
+class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
     """DRP Search Viewset for settings based"""
 
 
-class DRPSharePointUrlSearchViewSet(PublicMixin, DRPViewSet, DRPSharepointSearchViewSet,
-                                    SharePointUrlSearchViewSet):
+class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
     """DRP Search Viewset for url based"""
