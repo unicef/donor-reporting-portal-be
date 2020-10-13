@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from rest_framework import viewsets
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
@@ -30,37 +32,48 @@ class SharePointGroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SharePointGroupSerializer
 
 
-class DonorReportingViewSet:
+class DRPViewSet:
     permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
 
-class DRPSharePointSettingsRestViewSet(DonorReportingViewSet, SharePointSettingsRestViewSet):
+class DRPSharePointSettingsRestViewSet(DRPViewSet, SharePointSettingsRestViewSet):
     serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPSharePointSettingsCamlViewSet(DonorReportingViewSet, SharePointSettingsCamlViewSet):
+class DRPSharePointSettingsCamlViewSet(DRPViewSet, SharePointSettingsCamlViewSet):
     serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPSharePointUrlRestViewSet(DonorReportingViewSet, SharePointUrlRestViewSet):
+class DRPSharePointUrlRestViewSet(DRPViewSet, SharePointUrlRestViewSet):
     serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPSharePointUrlCamlViewSet(DonorReportingViewSet, SharePointUrlCamlViewSet):
+class DRPSharePointUrlCamlViewSet(DRPViewSet, SharePointUrlCamlViewSet):
     serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPSharePointUrlFileViewSet(DonorReportingViewSet, SharePointUrlFileViewSet):
+class DRPSharePointUrlFileViewSet(DRPViewSet, SharePointUrlFileViewSet):
     pass
 
 
-class DRPSharePointSettingsFileViewSet(DonorReportingViewSet, SharePointSettingsFileViewSet):
+class DRPSharePointSettingsFileViewSet(DRPViewSet, SharePointSettingsFileViewSet):
     pass
 
 
-class DRPSharepointSearchViewSet(DonorReportingViewSet, SharePointSearchViewSet):
+class DRPSharepointSearchViewSet(SharePointSearchViewSet):
     prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
+
+    def is_public(self):
+        """check if the source id is public or restricted to UNICEF users"""
+        source_id = self.request.query_params.get('source_id', None)
+        public = source_id in [settings.DRP_SOURCE_IDS['thematic_internal'],
+                               settings.DRP_SOURCE_IDS['thematic_external']]
+        if public:
+            return True
+        unicef_user = self.request.user.username.endswith('@unicef.org')
+        return unicef_user and source_id in [settings.DRP_SOURCE_IDS['internal'],
+                                             settings.DRP_SOURCE_IDS['pool_internal']]
 
     def get_selected(self, selected):
         def to_drp(source):
@@ -91,9 +104,9 @@ class DRPSharepointSearchViewSet(DonorReportingViewSet, SharePointSearchViewSet)
         return new_kwargs
 
 
-class DRPSharePointSettingsSearchViewSet(DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
-    pass
+class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
+    """DRP Search Viewset for settings based"""
 
 
-class DRPSharePointUrlSearchViewSet(DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
-    pass
+class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
+    """DRP Search Viewset for url based"""
