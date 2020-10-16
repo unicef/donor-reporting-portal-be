@@ -104,13 +104,13 @@ class MetadataStaticAPIView(APIView):
         ]
         if not (self.request.user.is_superuser or self.request.user.email.endswith('@unicef.org')):
             donor_reporting_category.remove('Input Report',)
-            donor_document = [item for item in donor_reporting_category if item not in [
+            donor_document = [item for item in donor_document if item not in [
                 'Input Report - Final',
                 'Input Report - Interim',
                 'Correspondence',
                 'Others',
                 'Note for the Record',
-                'Framework Checklist'
+                'Framework Agreement Checklist'
             ]]
 
         return Response(
