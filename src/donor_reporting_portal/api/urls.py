@@ -2,6 +2,7 @@ from django.urls import include, path
 
 from rest_framework import routers
 
+from donor_reporting_portal.api.views.config import ConfigAPIView
 from donor_reporting_portal.api.views.static import MetadataStaticAPIView
 
 from .views.metadata import DonorViewSet, ExternalGrantViewSet, GrantViewSet, SecondaryDonorViewSet, ThemeViewSet
@@ -52,6 +53,8 @@ router.register(r'sharepoint/search',
 
 urlpatterns = [
     path('metadata/static/', view=MetadataStaticAPIView.as_view(http_method_names=['get']),
-         name='dropdown-static-list'),
+         name='metadata-static-list'),
+    path('config/', view=ConfigAPIView.as_view(http_method_names=['get']),
+         name='config-list'),
     path(r'', include(router.urls)),
 ]
