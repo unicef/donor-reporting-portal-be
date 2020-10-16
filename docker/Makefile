@@ -2,7 +2,7 @@
 DATABASE_URL?=
 DOCKER_PASS?=
 DOCKER_USER?=
-TARGET?=1.3.4
+TARGET?=1.3.5
 BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9]\)\.\(.*\)/\1.\2/g" )
 # below vars are used internally
 BUILD_OPTIONS?=
