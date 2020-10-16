@@ -41,9 +41,3 @@ def test_api_userrole_list(request, django_app, logged_user, userrole):
 @contract(LastModifiedRecorder)
 def test_api_business_area_list(request, django_app, business_area):
     return reverse('api:businessarea-list')
-
-
-@pytest.mark.django_db
-@contract(LastModifiedRecorder)
-def test_api_static(request, django_app):
-    return reverse('api:dropdown-static-list')

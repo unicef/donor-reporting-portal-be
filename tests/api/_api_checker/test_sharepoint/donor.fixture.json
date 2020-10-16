@@ -2,13 +2,14 @@
     "donor": {
         "master": {
             "model": "report_metadata.donor",
-            "pk": 242,
+            "pk": 765,
             "fields": {
-                "created": "2020-08-14T15:28:05.577Z",
-                "modified": "2020-08-14T15:28:05.577Z",
+                "created": "2020-10-16T16:34:14.159Z",
+                "modified": "2020-10-16T16:34:14.159Z",
                 "name": "Australia",
                 "code": "G02701",
-                "us_gov": false
+                "us_gov": false,
+                "active": true
             }
         },
         "deps": []
