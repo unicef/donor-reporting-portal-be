@@ -1,7 +1,5 @@
 from datetime import datetime
 
-from django.conf import settings
-
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -104,6 +102,16 @@ class MetadataStaticAPIView(APIView):
             'Rejected by Comptroller',
             'Certified by Comptroller',
         ]
+        if not (self.request.user.is_superuser or self.request.user.email.endswith('@unicef.org')):
+            donor_reporting_category.remove('Input Report',)
+            donor_document = [item for item in donor_reporting_category if item not in [
+                'Input Report - Final',
+                'Input Report - Interim',
+                'Correspondence',
+                'Others',
+                'Note for the Record',
+                'Framework Checklist'
+            ]]
 
         return Response(
             {
@@ -115,7 +123,6 @@ class MetadataStaticAPIView(APIView):
                 'donor_reporting_category': list_to_json(donor_reporting_category),
                 'recertified': list_to_json(recertified),
                 'rp_status': list_to_json(rp_status),
-                'source_id': settings.DRP_SOURCE_IDS
             },
             status=status.HTTP_200_OK
         )
