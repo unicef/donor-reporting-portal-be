@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=1.3
+ARG BASE_IMAGE=1.4
 
 FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
 
@@ -41,6 +41,7 @@ ENV PIPENV_PYPI_MIRROR=${PIPENV_PYPI_MIRROR}, \
     DEBUG=0 \
     DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
     MEDIA_ROOT=/tmp/media \
+    STATIC_ROOT=/var/donor_reporting_portal/static/ \
     SECRET_KEY="secret" \
     SECURE_BROWSER_XSS_FILTER=True \
     SECURE_CONTENT_TYPE_NOSNIFF=True \
@@ -88,8 +89,6 @@ ADD docker/*.sh /usr/local/bin/
 
 #RUN addgroup --gid 1024 donor_reporting_portal \
 #    && adduser --disabled-password --ingroup donor_reporting_portal -S donor_reporting_portal
-
-RUN django-admin collectstatic --noinput
 
 ENTRYPOINT ["entrypoint.sh"]
 RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
