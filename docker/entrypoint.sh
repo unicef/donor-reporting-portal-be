@@ -41,7 +41,7 @@ elif [[ "$*" == "donor_reporting_portal" ]];then
     django-admin db-isready --wait --timeout 300
     echo "newrelic-admin run-program uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}"
 #    exec gosu donor_reporting_portal uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
-    newrelic-admin uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
+    newrelic-admin run-program uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
 else
     exec "$@"
 fi
