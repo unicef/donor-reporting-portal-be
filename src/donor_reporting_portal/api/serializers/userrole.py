@@ -22,6 +22,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_superuser')
 
+    def validate_email(self, value):
+        if value != value.lower():
+            raise serializers.ValidationError("The email should be lowercase")
+        return value
+
 
 class UserRoleSerializer(serializers.ModelSerializer):
     user_last_login = serializers.ReadOnlyField(source='user.last_login')
@@ -54,7 +59,7 @@ class UserProfileSerializer(UserSerializer):
     roles = serializers.SerializerMethodField()
 
     def get_roles(self, obj):
-        qs = UserRole.objects.by_permissions(['report_metadata.view_donor', 'roles.add_userrole']).filter(user=obj)
+        qs = UserRole.objects.by_permissions(['report_metadata.view_donor', ]).filter(user=obj)
         return UserRoleSerializer(qs, many=True).data
 
     def get_instance(self, obj):
