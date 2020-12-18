@@ -1,6 +1,11 @@
 from django.contrib import admin
+from django.contrib.admin import site
+
+from adminactions import actions
 
 from .models import UserRole
+
+actions.add_to_site(site)
 
 
 @admin.register(UserRole)

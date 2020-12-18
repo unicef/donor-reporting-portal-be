@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'corsheaders',
     'social_django',
     'admin_extra_urls',
+    'adminactions',
     'rest_framework_social_oauth2',
     'unicef_vision.vision',
     'post_office',
@@ -282,8 +283,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.get_username',
     'unicef_security.pipeline.get_username',
     'social_core.pipeline.social_auth.associate_by_email',
-    # replace with create_unicef_user in unicef-security when v0.5 is released
-    'donor_reporting_portal.apps.core.pipeline.create_unicef_user',
+    'unicef_security.pipeline.create_unicef_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
