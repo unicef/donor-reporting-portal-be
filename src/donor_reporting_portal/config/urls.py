@@ -15,8 +15,8 @@ urlpatterns = [
     path(r'api/', include('donor_reporting_portal.api.urls', namespace='api')),
     path(r'api/', include('sharepoint_rest_api.urls', namespace='sharepoint')),
     path(r'accounts/', include('django.contrib.auth.urls')),
-    path(r'adminactions/', include('adminactions.urls')),
-    path(r'impersonate/', include('impersonate.urls')),
+    path(r'manage/adminactions/', include('adminactions.urls')),
+    path(r'manage/impersonate/', include('impersonate.urls')),
 ]
 
 if settings.DEBUG:  # pragma: no cover
