@@ -1,7 +1,13 @@
+Release 1.5.1
+----------------
+* added impersonate library
+* fixed permissions on search
+
+
 Release 1.5
 ----------------
-* added version number in the admin
 * skip creation if login as external (access needs to be granted)
+* added version number in the admin
 
 
 Release 1.4.2
