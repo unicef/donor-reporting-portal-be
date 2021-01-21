@@ -12,6 +12,7 @@ from sharepoint_rest_api.serializers.fields import (
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
 from donor_reporting_portal.api.serializers.fields import DRPSearchMultiSharePointField, DRPSearchSharePointField
+from donor_reporting_portal.api.serializers.utils import getvalue
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -96,21 +97,20 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
     download_url = serializers.SerializerMethodField()
 
     def get_is_new(self, obj):
-        field_name = 'DRPModified'
-        items = [item['Value'] for item in obj if item['Key'] == field_name]
-        modified = items[0] if items else None
+        modified = getvalue(obj, 'DRPModified')
         if modified:
             day_difference = (datetime.now() - datetime.strptime(modified, '%m/%d/%Y %H:%M:%S %p')).days
             return day_difference <= 3
 
     def get_download_url(self, obj):
         try:
-            path = [item['Value'] for item in obj if item['Key'] == 'Path'][0]
+            path = getvalue(obj, 'Path')
             directories = path.split('/')
             relative_url = reverse('sharepoint_rest_api:sharepoint-settings-files-download', kwargs={
                 'folder': directories[-2],
                 'filename': directories[-1]
             })
-            return f'{settings.HOST}{relative_url}'
+            donor_code = getvalue(obj, 'DRPDonorCode')
+            return f'{settings.HOST}{relative_url}?donor_code={donor_code}'
         except BaseException:
             return None

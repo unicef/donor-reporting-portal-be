@@ -8,8 +8,8 @@ mkdir -p /var/donor_reporting_portal/run
 
 
 if [[ "$*" == "worker" ]];then
-    celery worker \
-            -A donor_reporting_portal.config \
+    celery -A donor_reporting_portal.config \
+            worker \
             --events \
             --max-tasks-per-child=1 \
             --loglevel=${CELERY_LOGLEVEL} \
@@ -19,7 +19,7 @@ if [[ "$*" == "worker" ]];then
 
 
 elif [[ "$*" == "beat" ]];then
-    celery beat -A donor_reporting_portal.config \
+    celery -A donor_reporting_portal.config beat \
             $CELERY_EXTRA \
             --loglevel=${CELERY_LOGLEVEL} \
             --pidfile run/celerybeat.pid

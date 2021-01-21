@@ -80,6 +80,7 @@ class MetadataStaticAPIView(APIView):
             'Payment Request',
             'Input Report - Final',
             'Input Report - Interim',
+            'Quarterly Monitoring Report',
         ]
         donor_reporting_category = [
             'Donor Narrative',

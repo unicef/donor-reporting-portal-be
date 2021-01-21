@@ -44,10 +44,12 @@ INSTALLED_APPS = (
     'corsheaders',
     'social_django',
     'admin_extra_urls',
+    'adminactions',
     'rest_framework_social_oauth2',
     'unicef_vision.vision',
     'post_office',
     'unicef_notification',
+    'impersonate',
 )
 
 MIDDLEWARE = (
@@ -55,6 +57,7 @@ MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'impersonate.middleware.ImpersonateMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -282,7 +285,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.get_username',
     'unicef_security.pipeline.get_username',
     'social_core.pipeline.social_auth.associate_by_email',
-    'social_core.pipeline.user.create_user',
+    'unicef_security.pipeline.create_unicef_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
@@ -301,3 +304,9 @@ DRP_SOURCE_IDS = {
 
 MATOMO_SITE_TRACKER = env('MATOMO_SITE_TRACKER', default='https://unisitetracker.unicef.io/')
 MATOMO_SITE_ID = env('MATOMO_SITE_ID', default=None)
+
+IMPERSONATE = {
+    'PAGINATE_COUNT': 50,
+    'REQUIRE_SUPERUSER': True,
+    'CUSTOM_USER_QUERYSET': 'donor_reporting_portal.libs.impersonate.queryset'
+}

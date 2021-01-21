@@ -52,12 +52,12 @@ class DRPSharePointUrlCamlViewSet(DRPViewSet, SharePointUrlCamlViewSet):
     serializer_class = DRPSharePointUrlSerializer
 
 
-class DRPSharePointUrlFileViewSet(DRPViewSet, SharePointUrlFileViewSet):
-    pass
+class DRPSharePointUrlFileViewSet(SharePointUrlFileViewSet):
+    permission_classes = (DonorPermission,)
 
 
-class DRPSharePointSettingsFileViewSet(DRPViewSet, SharePointSettingsFileViewSet):
-    pass
+class DRPSharePointSettingsFileViewSet(SharePointSettingsFileViewSet):
+    permission_classes = (DonorPermission, )
 
 
 class DRPSharepointSearchViewSet(SharePointSearchViewSet):
