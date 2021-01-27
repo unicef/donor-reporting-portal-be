@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.conf import settings
 
+from dateutil.parser import parse
 from rest_framework import serializers
 from rest_framework.reverse import reverse
 from sharepoint_rest_api.serializers.fields import (
@@ -50,9 +51,12 @@ class DRPSerializerMixin(serializers.Serializer):
     is_new = serializers.SerializerMethodField()
 
     def get_is_new(self, obj):
-        modified = datetime.strptime(obj.properties['Modified'][:19], '%Y-%m-%dT%H:%M:%S')
-        day_difference = (datetime.now() - modified).days
-        return day_difference <= 3
+        try:
+            modified = parse(obj.properties['Modified'][:19])
+            day_difference = (datetime.now() - modified).days
+            return day_difference <= 3
+        except ValueError:
+            pass
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
@@ -98,9 +102,13 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
 
     def get_is_new(self, obj):
         modified = getvalue(obj, 'DRPModified')
+
         if modified:
-            day_difference = (datetime.now() - datetime.strptime(modified, '%m/%d/%Y %H:%M:%S %p')).days
-            return day_difference <= 3
+            try:
+                day_difference = (datetime.now() - parse(modified)).days
+                return day_difference <= 3
+            except ValueError:
+                return False
 
     def get_download_url(self, obj):
         try:
