@@ -60,7 +60,7 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
-        return '{}?donor_code={}'.format(base_url, obj.properties['DonorCode'])
+        return '{}?donor_code={}'.format(base_url, obj.properties['DonorCode'].replace(';', ','))
 
 
 class DRPSharePointUrlSerializer(DRPSerializerMixin, SharePointUrlSerializer):
@@ -118,7 +118,7 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
                 'folder': directories[-2],
                 'filename': directories[-1]
             })
-            donor_code = getvalue(obj, 'DRPDonorCode')
+            donor_code = getvalue(obj, 'DRPDonorCode').replace(';', ',')
             return f'{settings.HOST}{relative_url}?donor_code={donor_code}'
         except BaseException:
             return None
