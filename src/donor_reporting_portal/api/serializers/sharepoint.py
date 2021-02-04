@@ -16,6 +16,8 @@ from donor_reporting_portal.api.serializers.fields import DRPSearchMultiSharePoi
 from donor_reporting_portal.api.serializers.utils import getvalue
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
+NO_DONOR = 'Various'
+
 
 class SharePointGroupSerializer(serializers.ModelSerializer):
     libs = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
@@ -60,7 +62,10 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
-        return '{}?donor_code={}'.format(base_url, obj.properties['DonorCode'].replace(';', ','))
+        donor_code = obj.properties['DonorCode'].replace(';', ',')
+        if donor_code != NO_DONOR:
+            base_url = f'{base_url}?donor_code={donor_code}'
+        return base_url
 
 
 class DRPSharePointUrlSerializer(DRPSerializerMixin, SharePointUrlSerializer):
@@ -118,7 +123,10 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
                 'folder': directories[-2],
                 'filename': directories[-1]
             })
+            base_url = f'{settings.HOST}{relative_url}'
             donor_code = getvalue(obj, 'DRPDonorCode').replace(';', ',')
-            return f'{settings.HOST}{relative_url}?donor_code={donor_code}'
+            if donor_code != NO_DONOR:
+                base_url = f'{base_url}?donor_code={donor_code}'
+            return base_url
         except BaseException:
             return None
