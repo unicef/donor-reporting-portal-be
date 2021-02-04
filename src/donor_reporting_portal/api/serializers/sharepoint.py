@@ -28,6 +28,7 @@ class SharePointGroupSerializer(serializers.ModelSerializer):
 
 
 class DRPSerializerMixin(serializers.Serializer):
+    
     report_generated_by = SharePointPropertyField()
     year = SharePointPropertyField()
     donor = SharePointPropertyField()
