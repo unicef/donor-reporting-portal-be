@@ -2,6 +2,8 @@ from rest_framework import permissions
 
 from donor_reporting_portal.apps.report_metadata.models import Donor, SecondaryDonor
 
+NO_DONOR = 'Various'
+
 
 class DonorPermission(permissions.BasePermission):
 
@@ -26,6 +28,8 @@ class DonorPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
+        if NO_DONOR in request.query_params.values():  # handles Thematic
+            return True
         donor = self._get_donor(view, request.query_params, user)
         secondary_donor = self._get_secondary_donor(view, request.query_params, user)
         context_object = (donor, secondary_donor) if donor and secondary_donor else donor
