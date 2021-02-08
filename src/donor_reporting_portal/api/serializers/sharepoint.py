@@ -26,6 +26,7 @@ class SharePointGroupSerializer(serializers.ModelSerializer):
 
 
 class DRPSerializerMixin(serializers.Serializer):
+
     report_generated_by = SharePointPropertyField()
     year = SharePointPropertyField()
     donor = SharePointPropertyField()
@@ -52,15 +53,16 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_is_new(self, obj):
         try:
-            modified = parse(obj.properties['Modified'][:19])
+            modified = parse(obj.properties['Modified'][:19], ignoretz=True)
             day_difference = (datetime.now() - modified).days
             return day_difference <= 3
-        except ValueError:
+        except (TypeError, ValueError):
             pass
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
-        return '{}?donor_code={}'.format(base_url, obj.properties['DonorCode'])
+        donor_code = obj.properties['DonorCode'].replace(';', ',')
+        return f'{base_url}?donor_code={donor_code}'
 
 
 class DRPSharePointUrlSerializer(DRPSerializerMixin, SharePointUrlSerializer):
@@ -105,9 +107,9 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
 
         if modified:
             try:
-                day_difference = (datetime.now() - parse(modified)).days
+                day_difference = (datetime.now() - parse(modified, ignoretz=True)).days
                 return day_difference <= 3
-            except ValueError:
+            except (TypeError, ValueError):
                 return False
 
     def get_download_url(self, obj):
@@ -118,7 +120,8 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
                 'folder': directories[-2],
                 'filename': directories[-1]
             })
-            donor_code = getvalue(obj, 'DRPDonorCode')
-            return f'{settings.HOST}{relative_url}?donor_code={donor_code}'
+            base_url = f'{settings.HOST}{relative_url}'
+            donor_code = getvalue(obj, 'DRPDonorCode').replace(';', ',')
+            return f'{base_url}?donor_code={donor_code}'
         except BaseException:
             return None

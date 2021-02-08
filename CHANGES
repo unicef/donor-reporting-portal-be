@@ -1,3 +1,13 @@
+Release 1.5.4
+----------------
+* handle timezone when parsing dates
+
+
+Release 1.5.3
+----------------
+* handle permissions on multiple donors
+
+
 Release 1.5.2
 ----------------
 * handle different time format
