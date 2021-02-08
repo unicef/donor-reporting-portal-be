@@ -109,7 +109,7 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
             try:
                 day_difference = (datetime.now() - parse(modified)).days
                 return day_difference <= 3
-            except ValueError:
+            except (ValueError, TypeError):
                 return False
 
     def get_download_url(self, obj):
