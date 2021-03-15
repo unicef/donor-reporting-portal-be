@@ -1,4 +1,4 @@
-FROM python:3.8.2-alpine3.10
+FROM python:3.9.0-alpine3.12
 
 ARG BUILD_DATE
 ARG PIPENV_ARGS
@@ -78,7 +78,7 @@ RUN pip install pip pipenv --upgrade
 
 RUN set -ex \
     ls -al /code \
-    && find /usr/local/lib/python3.8/ -name *.pyc | xargs rm -f \
+    && find /usr/local/lib/python3.9/ -name *.pyc | xargs rm -f \
     && pipenv install --verbose --system --deploy --ignore-pipfile $PIPENV_ARGS \
     && pip3 install . \
     && rm -fr /code
@@ -132,11 +132,11 @@ RUN rm -rf /var/cache/apk/* \
     && rm -fr /root/.cache/ \
     && rm -fr /usr/include/
 
-RUN find /usr/local/lib/python3.8/ -name *.pyc | xargs rm -f \
+RUN find /usr/local/lib/python3.9/ -name *.pyc | xargs rm -f \
     && python -O -m compileall -fqb /usr/local/lib/python3.6
 
 # removes source files
-RUN find /usr/local/lib/python3.8/ -name *.py | xargs rm -f
+RUN find /usr/local/lib/python3.9/ -name *.py | xargs rm -f
 
 ADD docker/entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ADD docker/wait-for-it.sh /usr/local/bin/wait-for-it.sh
