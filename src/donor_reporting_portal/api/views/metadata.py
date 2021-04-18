@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from donor_reporting_portal.api.filters import (
     DonorFilter,
+    DRPMetadataFilter,
     ExternalGrantFilter,
     GrantFilter,
     SecondaryDonorFilter,
@@ -14,13 +15,21 @@ from donor_reporting_portal.api.permissions import DonorPermission
 from donor_reporting_portal.api.serializers.metadata import (
     DonorSecondaryDonorSerializer,
     DonorSerializer,
+    DRPMetadataSerializer,
     ExternalGrantSerializer,
     GrantSerializer,
     SecondaryDonorSerializer,
     ThemeSerializer,
 )
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
+from donor_reporting_portal.apps.report_metadata.models import (
+    Donor,
+    DRPMetadata,
+    ExternalGrant,
+    Grant,
+    SecondaryDonor,
+    Theme,
+)
 from donor_reporting_portal.apps.roles.models import UserRole
 
 
@@ -95,3 +104,10 @@ class SecondaryDonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelV
     serializer_class = SecondaryDonorSerializer
     filterset_class = SecondaryDonorFilter
     search_fields = ('name', 'code')
+
+
+class DRPMetadataViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = DRPMetadata.objects.all()
+    serializer_class = DRPMetadataSerializer
+    filterset_class = DRPMetadataFilter
+    search_fields = ('description', 'code')

@@ -1,0 +1,16 @@
+{
+    "metadata": {
+        "master": {
+            "model": "report_metadata.drpmetadata",
+            "pk": 1,
+            "fields": {
+                "created": "2021-04-19T19:31:25.478Z",
+                "modified": "2021-04-19T19:31:25.478Z",
+                "category": "",
+                "description": "",
+                "audience": "all"
+            }
+        },
+        "deps": []
+    }
+}

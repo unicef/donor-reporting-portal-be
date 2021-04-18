@@ -84,4 +84,5 @@ class Command(BaseCommand):
         if options['metadata'] or _all:
             call_command('loaddata', 'groups.json')
             call_command('loaddata', 'libraries.json')
+            call_command('loaddata', 'metadata.json')
             grant_sync()

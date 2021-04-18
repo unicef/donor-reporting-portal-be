@@ -103,6 +103,17 @@ class MetadataStaticAPIView(APIView):
             'Rejected by Comptroller',
             'Certified by Comptroller',
         ]
+        awards = {
+            'EMG': 'Emergency',
+            'IKC': 'In-Kind - Cash',
+            'IKG': 'In-Kind - Goods',
+            'IKS': 'In-Kind - Services',
+            'JPO': 'Junior Professional Officer',
+            'NTH': 'Non-Thematic',
+            'PLF': 'Pooled Funding',
+            'POL': 'Polio',
+            'THM': 'Thematic',
+        }
         if not (self.request.user.is_superuser or self.request.user.email.endswith('@unicef.org')):
             donor_reporting_category.remove('Input Report',)
             donor_document = [item for item in donor_document if item not in [
@@ -124,6 +135,7 @@ class MetadataStaticAPIView(APIView):
                 'donor_reporting_category': list_to_json(donor_reporting_category),
                 'recertified': list_to_json(recertified),
                 'rp_status': list_to_json(rp_status),
+                'awards': list_to_json(awards)
             },
             status=status.HTTP_200_OK
         )

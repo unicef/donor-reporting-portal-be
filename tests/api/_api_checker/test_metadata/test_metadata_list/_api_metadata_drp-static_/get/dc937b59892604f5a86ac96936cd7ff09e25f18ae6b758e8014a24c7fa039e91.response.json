@@ -1,0 +1,42 @@
+{
+    "status_code": 200,
+    "headers": {
+        "content-type": [
+            "Content-Type",
+            "application/json"
+        ],
+        "vary": [
+            "Vary",
+            "Accept, Origin, Cookie"
+        ],
+        "allow": [
+            "Allow",
+            "GET, HEAD, OPTIONS"
+        ],
+        "x-frame-options": [
+            "X-Frame-Options",
+            "DENY"
+        ],
+        "content-length": [
+            "Content-Length",
+            "63"
+        ],
+        "x-content-type-options": [
+            "X-Content-Type-Options",
+            "nosniff"
+        ],
+        "referrer-policy": [
+            "Referrer-Policy",
+            "same-origin"
+        ]
+    },
+    "data": [
+        {
+            "category": "",
+            "code": null,
+            "description": "",
+            "audience": "all"
+        }
+    ],
+    "content_type": null
+}
