@@ -2,7 +2,8 @@ from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from admin_extra_urls.extras import ExtraUrlMixin, link
+from admin_extra_urls.decorators import button
+from admin_extra_urls.mixins import ExtraUrlMixin
 
 from .models import Donor, DRPMetadata, ExternalGrant, Grant, Theme
 from .tasks import grant_sync
@@ -10,7 +11,7 @@ from .tasks import grant_sync
 
 class GrantSyncMixin(ExtraUrlMixin):
 
-    @link()
+    @button()
     def _sync_grants(self, request):
         grant_sync.delay()
         messages.add_message(request, messages.INFO, 'Task for Grant sync has been scheduled')
