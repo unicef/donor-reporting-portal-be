@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "6484"
+            "6212"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -469,44 +469,6 @@
             {
                 "code": "certified_by_comptroller",
                 "label": "Certified by Comptroller"
-            }
-        ],
-        "awards": [
-            {
-                "code": "emg",
-                "label": "EMG"
-            },
-            {
-                "code": "ikc",
-                "label": "IKC"
-            },
-            {
-                "code": "ikg",
-                "label": "IKG"
-            },
-            {
-                "code": "iks",
-                "label": "IKS"
-            },
-            {
-                "code": "jpo",
-                "label": "JPO"
-            },
-            {
-                "code": "nth",
-                "label": "NTH"
-            },
-            {
-                "code": "plf",
-                "label": "PLF"
-            },
-            {
-                "code": "pol",
-                "label": "POL"
-            },
-            {
-                "code": "thm",
-                "label": "THM"
             }
         ]
     },
