@@ -2,19 +2,19 @@
     "business_area": {
         "master": {
             "model": "unicef_security.businessarea",
-            "pk": 2,
+            "pk": 1,
             "fields": {
                 "code": "code000",
                 "name": "",
                 "long_name": "",
-                "region": 2,
+                "region": 1,
                 "country": ""
             }
         },
         "deps": [
             {
                 "model": "unicef_security.region",
-                "pk": 2,
+                "pk": 1,
                 "fields": {
                     "code": "code000",
                     "name": "name000"

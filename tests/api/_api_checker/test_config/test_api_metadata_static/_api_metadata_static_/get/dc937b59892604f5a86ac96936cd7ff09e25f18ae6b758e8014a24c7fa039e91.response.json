@@ -1,34 +1,13 @@
 {
     "status_code": 200,
     "headers": {
-        "content-type": [
-            "Content-Type",
-            "application/json"
-        ],
-        "vary": [
-            "Vary",
-            "Accept, Origin, Cookie"
-        ],
-        "allow": [
-            "Allow",
-            "GET"
-        ],
-        "x-frame-options": [
-            "X-Frame-Options",
-            "DENY"
-        ],
-        "content-length": [
-            "Content-Length",
-            "6212"
-        ],
-        "x-content-type-options": [
-            "X-Content-Type-Options",
-            "nosniff"
-        ],
-        "referrer-policy": [
-            "Referrer-Policy",
-            "same-origin"
-        ]
+        "Content-Type": "application/json",
+        "Vary": "Accept, Origin, Cookie",
+        "Allow": "GET",
+        "X-Frame-Options": "DENY",
+        "Content-Length": "6484",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin"
     },
     "data": {
         "years": [
@@ -470,7 +449,45 @@
                 "code": "certified_by_comptroller",
                 "label": "Certified by Comptroller"
             }
+        ],
+        "awards": [
+            {
+                "code": "emg",
+                "label": "EMG"
+            },
+            {
+                "code": "ikc",
+                "label": "IKC"
+            },
+            {
+                "code": "ikg",
+                "label": "IKG"
+            },
+            {
+                "code": "iks",
+                "label": "IKS"
+            },
+            {
+                "code": "jpo",
+                "label": "JPO"
+            },
+            {
+                "code": "nth",
+                "label": "NTH"
+            },
+            {
+                "code": "plf",
+                "label": "PLF"
+            },
+            {
+                "code": "pol",
+                "label": "POL"
+            },
+            {
+                "code": "thm",
+                "label": "THM"
+            }
         ]
     },
-    "content_type": null
+    "content_type": "application/json"
 }

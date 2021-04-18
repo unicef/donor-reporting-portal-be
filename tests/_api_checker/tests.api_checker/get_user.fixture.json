@@ -2,21 +2,21 @@
     "get_user": {
         "master": {
             "model": "unicef_security.user",
-            "pk": 2265,
+            "pk": 135,
             "fields": {
                 "password": "password",
                 "last_login": null,
                 "is_superuser": true,
                 "username": "user999",
-                "first_name": "David",
-                "last_name": "Lamb",
-                "email": "m000@mailinator.com",
+                "first_name": "Jennifer",
+                "last_name": "Garcia",
+                "email": "m001@mailinator.com",
                 "is_staff": false,
                 "is_active": true,
-                "date_joined": "2020-03-03T19:12:07.670Z",
+                "date_joined": "2021-04-21T16:27:28.732Z",
                 "azure_id": null,
                 "job_title": null,
-                "display_name": "David Lamb:",
+                "display_name": "Jennifer Garcia:",
                 "groups": [],
                 "user_permissions": []
             }

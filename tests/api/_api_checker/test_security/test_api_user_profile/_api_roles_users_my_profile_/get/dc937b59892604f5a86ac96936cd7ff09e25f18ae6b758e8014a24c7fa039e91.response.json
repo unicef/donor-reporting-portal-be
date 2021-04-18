@@ -1,43 +1,22 @@
 {
     "status_code": 200,
     "headers": {
-        "content-type": [
-            "Content-Type",
-            "application/json"
-        ],
-        "vary": [
-            "Vary",
-            "Accept, Origin"
-        ],
-        "allow": [
-            "Allow",
-            "GET, HEAD, OPTIONS"
-        ],
-        "x-frame-options": [
-            "X-Frame-Options",
-            "DENY"
-        ],
-        "content-length": [
-            "Content-Length",
-            "292"
-        ],
-        "x-content-type-options": [
-            "X-Content-Type-Options",
-            "nosniff"
-        ],
-        "referrer-policy": [
-            "Referrer-Policy",
-            "same-origin"
-        ]
+        "Content-Type": "application/json",
+        "Vary": "Accept, Origin, Cookie",
+        "Allow": "GET, HEAD, OPTIONS",
+        "X-Frame-Options": "DENY",
+        "Content-Length": "295",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin"
     },
     "data": {
-        "id": 2265,
+        "id": 135,
         "username": "user999",
-        "first_name": "David",
-        "last_name": "Lamb",
-        "email": "m000@mailinator.com",
+        "first_name": "Jennifer",
+        "last_name": "Garcia",
+        "email": "m001@mailinator.com",
         "is_superuser": true,
-        "pk": 2265,
+        "pk": 135,
         "donor": {
             "name": "",
             "code": "",
@@ -55,5 +34,5 @@
         },
         "roles": []
     },
-    "content_type": null
+    "content_type": "application/json"
 }
