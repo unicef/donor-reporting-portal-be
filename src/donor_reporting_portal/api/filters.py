@@ -37,6 +37,7 @@ class UserRoleFilter(filters.FilterSet):
             'group': ['exact', 'in'],
             'user': ['exact', 'in'],
             'secondary_donor': ['exact', 'in'],
+            'notification_period': ['exact', 'in']
         }
 
 
