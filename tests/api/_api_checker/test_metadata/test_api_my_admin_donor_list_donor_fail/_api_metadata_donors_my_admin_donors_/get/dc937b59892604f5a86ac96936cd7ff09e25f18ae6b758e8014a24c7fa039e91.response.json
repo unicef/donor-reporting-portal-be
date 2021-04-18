@@ -1,37 +1,16 @@
 {
     "status_code": 403,
     "headers": {
-        "content-type": [
-            "Content-Type",
-            "application/json"
-        ],
-        "vary": [
-            "Vary",
-            "Accept, Origin, Cookie"
-        ],
-        "allow": [
-            "Allow",
-            "GET, HEAD, OPTIONS"
-        ],
-        "x-frame-options": [
-            "X-Frame-Options",
-            "DENY"
-        ],
-        "content-length": [
-            "Content-Length",
-            "58"
-        ],
-        "x-content-type-options": [
-            "X-Content-Type-Options",
-            "nosniff"
-        ],
-        "referrer-policy": [
-            "Referrer-Policy",
-            "same-origin"
-        ]
+        "Content-Type": "application/json",
+        "Vary": "Accept, Origin, Cookie",
+        "Allow": "GET, HEAD, OPTIONS",
+        "X-Frame-Options": "DENY",
+        "Content-Length": "58",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin"
     },
     "data": {
         "detail": "Authentication credentials were not provided."
     },
-    "content_type": null
+    "content_type": "application/json"
 }

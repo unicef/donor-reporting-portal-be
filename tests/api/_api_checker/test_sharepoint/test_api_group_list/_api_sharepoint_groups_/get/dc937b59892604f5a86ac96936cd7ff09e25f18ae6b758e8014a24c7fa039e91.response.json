@@ -1,45 +1,24 @@
 {
     "status_code": 200,
     "headers": {
-        "content-type": [
-            "Content-Type",
-            "application/json"
-        ],
-        "vary": [
-            "Vary",
-            "Accept, Origin"
-        ],
-        "allow": [
-            "Allow",
-            "GET, HEAD, OPTIONS"
-        ],
-        "x-frame-options": [
-            "X-Frame-Options",
-            "DENY"
-        ],
-        "content-length": [
-            "Content-Length",
-            "160"
-        ],
-        "x-content-type-options": [
-            "X-Content-Type-Options",
-            "nosniff"
-        ],
-        "referrer-policy": [
-            "Referrer-Policy",
-            "same-origin"
-        ]
+        "Content-Type": "application/json",
+        "Vary": "Accept, Origin, Cookie",
+        "Allow": "GET, HEAD, OPTIONS",
+        "X-Frame-Options": "DENY",
+        "Content-Length": "159",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin"
     },
     "data": [
         {
-            "id": 48,
+            "id": 6,
             "libs": [
                 "2019 Certified Reports"
             ],
-            "created": "2020-10-16T11:34:21.486000-05:00",
-            "modified": "2020-10-16T11:34:21.495000-05:00",
+            "created": "2021-04-21T11:28:23.410000-05:00",
+            "modified": "2021-04-21T11:28:23.416000-05:00",
             "name": "Donors Reports"
         }
     ],
-    "content_type": null
+    "content_type": "application/json"
 }

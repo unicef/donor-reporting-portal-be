@@ -1,19 +1,27 @@
 {
     "status_code": 200,
-    "headers": null,
+    "headers": {
+        "Content-Type": "application/json",
+        "Vary": "Accept, Origin, Cookie",
+        "Allow": "GET",
+        "X-Frame-Options": "DENY",
+        "Content-Length": "217",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin"
+    },
     "data": {
         "tracker": {
             "site_tracker": "https://unisitetracker.unicef.io/",
             "site_id": null
         },
         "source_id": {
-            "internal": "86d06749-c3f4-4d1b-b18c-b89dc43c3ada",
-            "external": "707fd5b3-b9ce-41db-abe3-fbf4d07ca0f1",
-            "pool_internal": "6659c2c8-8eb9-4214-91e7-f70a0690ab2a",
-            "pool_external": "9ad6d2c1-8673-45c1-bf1a-f33bf25e3957",
-            "thematic_internal": "00f6ff72-db3d-42ff-b254-81d9a2548cea",
-            "thematic_external": "c4ce4564-4f2f-4b65-8374-095046fa307e"
+            "internal": null,
+            "external": null,
+            "pool_internal": null,
+            "pool_external": null,
+            "thematic_internal": null,
+            "thematic_external": null
         }
     },
-    "content_type": null
+    "content_type": "application/json"
 }
