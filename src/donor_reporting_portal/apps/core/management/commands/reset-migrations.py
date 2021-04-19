@@ -12,7 +12,6 @@ class Command(BaseCommand):
     args = ''
     help = 'Init Setup'
     requires_migrations_checks = False
-    requires_system_checks = False
 
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)

@@ -9,7 +9,6 @@ class Command(BaseCommand):
     args = ''
     help = 'Help text here....'
     requires_migrations_checks = False
-    requires_system_checks = False
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)

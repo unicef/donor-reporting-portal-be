@@ -11,7 +11,7 @@
         ],
         "allow": [
             "Allow",
-            "GET, POST, HEAD, OPTIONS"
+            "GET"
         ],
         "x-frame-options": [
             "X-Frame-Options",
@@ -19,7 +19,7 @@
         ],
         "content-length": [
             "Content-Length",
-            "254"
+            "217"
         ],
         "x-content-type-options": [
             "X-Content-Type-Options",
@@ -30,21 +30,19 @@
             "same-origin"
         ]
     },
-    "data": [
-        {
-            "id": 146,
-            "user": 602,
-            "group": 199,
-            "donor": 236,
-            "secondary_donor": null,
-            "group_name": "name001",
-            "donor_name": "",
-            "notification_period": "every_day",
-            "user_last_login": null,
-            "user_email": "m013@mailinator.com",
-            "user_first_name": "Brett",
-            "user_last_name": "Vazquez"
+    "data": {
+        "tracker": {
+            "site_tracker": "https://unisitetracker.unicef.io/",
+            "site_id": null
+        },
+        "source_id": {
+            "internal": null,
+            "external": null,
+            "pool_internal": null,
+            "pool_external": null,
+            "thematic_internal": null,
+            "thematic_external": null
         }
-    ],
+    },
     "content_type": null
 }
