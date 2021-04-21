@@ -98,6 +98,7 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
     report_status = DRPSearchSharePointField()
     retracted = DRPSearchSharePointField()
     framework_agreement = DRPSearchSharePointField()
+    award_type = DRPSearchSharePointField()
 
     is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()

@@ -4,7 +4,14 @@ from django.contrib.auth.models import Group
 from django_filters import rest_framework as filters
 from unicef_security.models import BusinessArea
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
+from donor_reporting_portal.apps.report_metadata.models import (
+    Donor,
+    DRPMetadata,
+    ExternalGrant,
+    Grant,
+    SecondaryDonor,
+    Theme,
+)
 from donor_reporting_portal.apps.roles.models import UserRole
 
 
@@ -103,4 +110,14 @@ class SecondaryDonorFilter(filters.FilterSet):
         fields = {
             'name': ['exact', 'in'],
             'code': ['exact', 'in'],
+        }
+
+
+class DRPMetadataFilter(filters.FilterSet):
+
+    class Meta:
+        model = DRPMetadata
+        fields = {
+            'category': ['exact', 'in'],
+            'audience': ['exact', 'in'],
         }

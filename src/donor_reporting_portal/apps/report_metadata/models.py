@@ -86,3 +86,36 @@ class SecondaryDonor(TimeStampedModel):
 
     def __str__(self):
         return f'{self.name} ({self.code})'
+
+
+class DRPMetadata(TimeStampedModel):
+    INTERNAL = 'int'
+    EXTERNAL = 'ext'
+    ALL = 'all'
+
+    AUDIENCE = (
+        (INTERNAL, 'int'),
+        (EXTERNAL, 'ext'),
+        (ALL, 'all'),
+    )
+
+    category = models.CharField(verbose_name=_("Category"), max_length=128)
+    code = models.CharField(verbose_name=_("Code"), max_length=128, null=True, blank=True)
+    description = models.CharField(verbose_name=_("Description"), max_length=128)
+    audience = models.CharField(max_length=4, choices=AUDIENCE, verbose_name=_('Audience'), default=ALL)
+
+    class Meta:
+        verbose_name = 'Metadata'
+        verbose_name_plural = 'Metadata'
+
+    def __str__(self):
+        return f'{self.category} | {self.description} | {self.audience}'
+
+    @staticmethod
+    def create_code(description):
+        return description.lower().replace(' ', '_')
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = self.create_code(self.description)
+        super().save(*args, **kwargs)

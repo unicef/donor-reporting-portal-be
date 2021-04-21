@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
+from donor_reporting_portal.apps.report_metadata.models import (
+    Donor,
+    DRPMetadata,
+    ExternalGrant,
+    Grant,
+    SecondaryDonor,
+    Theme,
+)
 
 
 class ThemeSerializer(serializers.ModelSerializer):
@@ -40,3 +47,9 @@ class SecondaryDonorSerializer(serializers.ModelSerializer):
     class Meta:
         model = SecondaryDonor
         fields = '__all__'
+
+
+class DRPMetadataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DRPMetadata
+        fields = ('category', 'code', 'description', 'audience')

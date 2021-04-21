@@ -3,7 +3,14 @@ from django.urls import reverse
 from drf_api_checker.pytest import contract, frozenfixture
 
 from tests.api_checker import ExpectedErrorRecorder, LastModifiedRecorder
-from tests.factories import DonorFactory, ExternalGrantFactory, GrantFactory, ThemeFactory, UserRoleFactory
+from tests.factories import (
+    DonorFactory,
+    DRPMetadataFactory,
+    ExternalGrantFactory,
+    GrantFactory,
+    ThemeFactory,
+    UserRoleFactory,
+)
 from tests.perms import user_grant_permissions, user_grant_role_permission
 
 
@@ -30,6 +37,11 @@ def external_grant(request, db):
 @frozenfixture()
 def grant(request, db,):
     return GrantFactory()
+
+
+@frozenfixture()
+def metadata(request, db,):
+    return DRPMetadataFactory()
 
 
 @contract(recorder_class=LastModifiedRecorder)
@@ -78,3 +90,8 @@ def test_api_external_grant_list(request, django_app, logged_user, external_gran
 
 def test_api_grant_list(request, django_app, logged_user, grant):
     return reverse('api:grant-list', kwargs={'donor_id': grant.donor.pk})
+
+
+@contract(recorder_class=LastModifiedRecorder)
+def test_metadata_list(request, django_app, logged_user, metadata):
+    return reverse('api:drpmetadata-list')
