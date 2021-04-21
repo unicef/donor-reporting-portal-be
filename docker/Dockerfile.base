@@ -5,6 +5,7 @@ ARG PIPENV_ARGS
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST 1
 ENV CPLUS_INCLUDE_PATH /usr/include/libxml2/
 ENV C_INCLUDE_PATH /usr/include/libxml2/
+ENV LD_PRELOAD=/lib/libssl.so.1.1
 
 
 RUN apk add --no-cache --virtual .fetch-deps \
