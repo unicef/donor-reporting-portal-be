@@ -21,7 +21,51 @@ logger = get_task_logger(__name__)
 @app.task
 def notify_donor(donor_code):
 
-    document_type_filter = 'Narrative%20Consolidated%20-%20Interim,Agreements'
+    document_type_filter = [
+        'Certified Financial Statement - EC',
+        'Certified Financial Statement - US Government',
+        'Certified Statement of Account',
+        'Certified Statement of Account EU',
+        'Certified Statement of Account JPO',
+        'Donor Statement CERF',
+        'Certified Financial Report - Final',
+        'Certified Financial Report - Interim',
+        'Donor Statement Innovation',
+        'Donor Statement Joint Programme',
+        'Donor Statement Joint Programme PUNO',
+        'Donor Statement JPO Summary',
+        'Donor Statement Trust Fund',
+        'Donor Statement UN',
+        'Donor Statement UNICEF Hosted Funds',
+        'FFR Form (SF-425)',
+        'JPO Expenditure Summary',
+        'Statement of Account Thematic Funds',
+        'Donor Statement by Activity',
+        'Interim Statement by Nature of expense',
+        'Funds Request Report',
+        'Non-Standard Statement',
+        'Emergency Consolidated - Final',
+        'Emergency  Consolidated - Interim',
+        'Thematic Emergency Global - Final',
+        'Thematic Emergency Global - Interim',
+        'Emergency - Two Pager',
+        'Emergency - Final',
+        'Emergency - Interim',
+        'Human Interest / Photos',
+        'Narrative - Final',
+        'Narrative - Interim',
+        'Narrative Consolidated - Final',
+        'Narrative Consolidated - Interim',
+        'Thematic Consolidated - Final',
+        'Thematic Consolidated - Interim',
+        'Thematic Global - Final',
+        'Thematic Global - Interim',
+        'Thematic - Final',
+        'Thematic - Interim',
+        'Short Summary Update',
+        'Official Receipts',
+        'Quarterly Monitoring Report',
+    ]
 
     donor = Donor.objects.get(code=donor_code)
     logger.info(f'Notifing {donor.name}')
@@ -36,7 +80,7 @@ def notify_donor(donor_code):
     for period, modified_date, _ in notification_periods:
         filters = {
             'DRPDonorCode': donor.code,
-            'DonorDocument': document_type_filter,
+            'DRPDonorDocument': ','.join(document_type_filter),
             'DRPModified__gte': modified_date.strftime('%Y-%m-%d')
         }
         serializer_fields = DRPSharePointSearchSerializer._declared_fields.keys()
