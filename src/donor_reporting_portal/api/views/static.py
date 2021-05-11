@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-def list_to_json(items, key='code', value='label'):
+def list_to_json(items, key='code', value='description'):
     return [{key: x.lower().replace(' ', '_'), value: x} for x in items]
 
 
