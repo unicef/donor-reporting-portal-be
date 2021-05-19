@@ -6,8 +6,6 @@ from django.contrib.auth.hashers import make_password
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
-from donor_reporting_portal.apps.report_metadata.tasks import grant_sync
-
 
 class Command(BaseCommand):
     help = ""
@@ -85,4 +83,3 @@ class Command(BaseCommand):
             call_command('loaddata', 'groups.json')
             call_command('loaddata', 'libraries.json')
             call_command('loaddata', 'metadata.json')
-            grant_sync()
