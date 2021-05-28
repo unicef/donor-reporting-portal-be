@@ -6,7 +6,7 @@ defaults = {
     "subject": "Updated reports available in DRP",
     "content": strip_text("""Dear user,
 
-    Following reports have been updated in DRP:
+    Following reports have been updated in DRP for {{ donor }}:
 
     {% for report in reports %}
         {{ report.title }} {{ report.download_url }}
@@ -15,7 +15,7 @@ defaults = {
     """),
     "html_content": """Dear user,<br/><br/>
 
-    Following reports have been updated in DRP:
+    Following reports have been updated in DRP for {{ donor }}:
     <br/><br/>
     {% for report in reports %}
         <a href="{{ report.download_url }}>{{ report.title }}</a><br/>
