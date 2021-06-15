@@ -255,11 +255,11 @@
         },
         "django-celery-results": {
             "hashes": [
-                "sha256:a2f7d172f7f57dd972538acc6e80a5bf50c673fb4d82fe027189c8659c60dfce",
-                "sha256:d625e324138e5b2ef46ffa9e89fa353c16d619420066ac8b240ef9247b293a84"
+                "sha256:b5abe0c03c91dc8fe657e0c2a34c9604175838af13cb8c7f64654b3ad27febcf",
+                "sha256:f0965bf43f7d09ffe792806a2a36f6874256fb0bd56037528676dfb051be0794"
             ],
             "index": "pypi",
-            "version": "==2.0.1"
+            "version": "==2.1.0"
         },
         "django-constance": {
             "hashes": [
@@ -627,11 +627,11 @@
         },
         "sharepoint-rest-api": {
             "hashes": [
-                "sha256:1dec65e4cca12a95502442bb9d6ffc2382274463b9510e227e5d5c3756a46836",
-                "sha256:a70187bb1027ba4ceea329cf3c18d7e1fa619386506f58aee16118c3e03ada51"
+                "sha256:25527d3b82e9599371885684d4371a9e74fc6784293b81b7e8faaf6731e742a2",
+                "sha256:6f9d90d7618c73c966df1a5dc1a7281b35dd8d2562585940e0cc15b693cca6bb"
             ],
             "index": "pypi",
-            "version": "==0.7.4"
+            "version": "==0.8.0"
         },
         "six": {
             "hashes": [
@@ -952,10 +952,10 @@
         },
         "faker": {
             "hashes": [
-                "sha256:69febb4db797d2c463e5bd56263aa0068c99480ace3beeb6ba0e14bf82d46607",
-                "sha256:8f2800605b55cbf92d30c1a9db2cc11d0bfb200732590f597603a7789a43f5f4"
+                "sha256:0129599c0d35e79471d116460b1c51d8c183980f28e14517228be4601cf87192",
+                "sha256:7be0d9309bde6624e1a6062d0dc37859f95ca883fa047a11db8e5e305b1446a1"
             ],
-            "version": "==8.6.0"
+            "version": "==8.8.0"
         },
         "fancycompleter": {
             "hashes": [
