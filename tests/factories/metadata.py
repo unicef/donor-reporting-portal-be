@@ -1,6 +1,13 @@
 import factory
 
-from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
+from donor_reporting_portal.apps.report_metadata.models import (
+    Donor,
+    DRPMetadata,
+    ExternalGrant,
+    Grant,
+    SecondaryDonor,
+    Theme,
+)
 
 
 class ThemeFactory(factory.django.DjangoModelFactory):
@@ -43,3 +50,8 @@ class SecondaryDonorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = SecondaryDonor
         django_get_or_create = ('code',)
+
+
+class DRPMetadataFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = DRPMetadata

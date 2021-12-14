@@ -2,15 +2,16 @@ from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from admin_extra_urls.extras import ExtraUrlMixin, link
+from admin_extra_urls.decorators import button
+from admin_extra_urls.mixins import ExtraUrlMixin
 
-from .models import Donor, ExternalGrant, Grant, Theme
+from .models import Donor, DRPMetadata, ExternalGrant, Grant, Theme
 from .tasks import grant_sync
 
 
 class GrantSyncMixin(ExtraUrlMixin):
 
-    @link()
+    @button()
     def _sync_grants(self, request):
         grant_sync.delay()
         messages.add_message(request, messages.INFO, 'Task for Grant sync has been scheduled')
@@ -51,3 +52,10 @@ class SecondaryDonorAdmin(GrantSyncMixin, admin.ModelAdmin):
     search_fields = ('name', 'code')
     list_display = ('name', 'code', )
     raw_id_fields = ('grants', )
+
+
+@admin.register(DRPMetadata)
+class DRPMetadata(admin.ModelAdmin):
+    search_fields = ('description', 'code')
+    list_display = ('category', 'description', 'audience')
+    list_filter = ('category', 'audience')

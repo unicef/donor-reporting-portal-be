@@ -1,0 +1,21 @@
+{
+    "status_code": 200,
+    "headers": {
+        "Content-Type": "application/json",
+        "Vary": "Accept, Origin, Cookie",
+        "Allow": "GET, HEAD, OPTIONS",
+        "X-Frame-Options": "DENY",
+        "Content-Length": "61",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin"
+    },
+    "data": [
+        {
+            "category": "",
+            "code": "",
+            "description": "",
+            "audience": "all"
+        }
+    ],
+    "content_type": "application/json"
+}

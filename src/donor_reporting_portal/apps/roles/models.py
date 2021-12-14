@@ -35,13 +35,27 @@ class UserRoleManager(models.Manager):
 
 
 class UserRole(TimeStampedModel):
-    """A security role of a User."""
+
+    DISABLED = 'none'
+    EVERY_DAY = 'every_day'
+    EVERY_MONDAY = 'every_monday'
+    EVERY_MONTH = 'every_month'
+
+    PERIODS = (
+        (DISABLED, 'Disabled'),
+        (EVERY_DAY, 'Every Day'),
+        (EVERY_MONDAY, 'Every Monday'),
+        (EVERY_MONTH, 'Every Month'),
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='roles', on_delete=models.deletion.CASCADE)
     group = models.ForeignKey(Group, related_name='roles', on_delete=models.deletion.CASCADE)
     donor = models.ForeignKey(Donor, related_name='roles', on_delete=models.deletion.CASCADE)
     secondary_donor = models.ForeignKey(SecondaryDonor, null=True, blank=True, default=None, related_name='roles',
                                         on_delete=models.deletion.CASCADE)
-
+    notification_period = models.CharField(max_length=16,
+                                           choices=PERIODS,
+                                           default=EVERY_DAY,
+                                           verbose_name=_('Notification Period'))
     objects = UserRoleManager()
 
     class Meta:

@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'donor_reporting_portal.apps.sharepoint',
     'donor_reporting_portal.web',
     'sharepoint_rest_api',
+    'unicef_security',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -34,7 +35,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django_extensions',
-    'unicef_security',
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',
@@ -109,6 +109,7 @@ LANGUAGES = (
     ('ar', ugettext('Arabic')),
 )
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 SITE_ID = 1
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
@@ -162,6 +163,21 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'INFO'
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}
 
 AUTH_USER_MODEL = 'unicef_security.User'
 

@@ -2,10 +2,10 @@
     "tenant": {
         "master": {
             "model": "sharepoint_rest_api.sharepointtenant",
-            "pk": 3,
+            "pk": 1,
             "fields": {
-                "created": "2020-10-16T16:34:14.122Z",
-                "modified": "2020-10-16T16:34:14.122Z",
+                "created": "2021-04-21T16:28:22.227Z",
+                "modified": "2021-04-21T16:28:22.227Z",
                 "url": "https://unitst.sharepoint.com/",
                 "username": null,
                 "password": null

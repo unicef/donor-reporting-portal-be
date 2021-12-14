@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=1.6
+ARG BASE_IMAGE=1.9
 
 FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
 
@@ -41,7 +41,7 @@ ENV PIPENV_PYPI_MIRROR=${PIPENV_PYPI_MIRROR}, \
     DEBUG=0 \
     DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
     MEDIA_ROOT=/tmp/media \
-    STATIC_ROOT=/var/donor_reporting_portal/static/ \
+    STATIC_ROOT=/var/donor_reporting_portal/static \
     SECRET_KEY="secret" \
     SECURE_BROWSER_XSS_FILTER=True \
     SECURE_CONTENT_TYPE_NOSNIFF=True \
@@ -68,7 +68,7 @@ ENV UWSGI_PROTOCOL=http \
     UWSGI_IGNORE_WRITE_ERRORS=true \
     UWSGI_LIMIT_POST=20971520 \
     UWSGI_LOG_X_FORWARDED_FOR=false \
-#    UWSGI_MEMORY_REPORT=true \
+    UWSGI_MEMORY_REPORT=false \
     UWSGI_NEED_APP=true \
     UWSGI_POST_BUFFERING=65536 \
     UWSGI_PROCNAME_PREFIX_SPACED="[DonorReportingPortal]" \

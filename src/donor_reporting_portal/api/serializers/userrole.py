@@ -40,7 +40,7 @@ class UserRoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserRole
         fields = ('id', 'user', 'group', 'donor', 'secondary_donor',
-                  'group_name', 'donor_name', 'secondary_donor_name',
+                  'group_name', 'donor_name', 'secondary_donor_name', 'notification_period',
                   'user_last_login', 'user_email', 'user_first_name', 'user_last_name')
 
 

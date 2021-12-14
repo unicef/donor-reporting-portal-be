@@ -3,12 +3,12 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 
-import rest_framework_jwt.views
+from rest_framework_simplejwt.views import token_obtain_pair
 from unicef_security.views import UNICEFLogoutView
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
-    path(r'api-token-auth/', rest_framework_jwt.views.obtain_jwt_token),
+    path(r'api-token-auth/', token_obtain_pair),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'social/unicef-logout/', UNICEFLogoutView.as_view()),
     path(r'social', include('social_django.urls', namespace='social')),
