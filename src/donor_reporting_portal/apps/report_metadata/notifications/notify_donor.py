@@ -18,7 +18,7 @@ defaults = {
     Following reports have been updated in DRP for {{ donor }}:
     <br/><br/>
     {% for report in reports %}
-        <a href="{{ report.download_url }}>{{ report.title }}</a><br/>
+        <a href="{{ report.download_url }}">{{ report.title }}</a><br/>
     {% endfor %}
     <br/><br/>
     Regards.
