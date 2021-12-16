@@ -105,7 +105,7 @@ def notify_donor(donor_code):
             users = UserRole.objects.filter(donor=donor, notification_period=period).values(
                 'user__first_name', 'user__email')
             context = {'reports': reports, 'donor': donor.name}
-            recipients = set([user['user__email'] for user in users if user['user__email']])
+            recipients = list(set([str(user['user__email']) for user in users if user['user__email']]))
             send_notification_with_template(recipients, 'notify_donor', context)
 
 
