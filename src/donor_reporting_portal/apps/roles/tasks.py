@@ -89,24 +89,27 @@ def notify_donor(donor_code):
         page = 1
         exit_condition = True
         reports = []
-        while exit_condition:
-            response, total_rows = client.search(
-                filters=filters,
-                select=selected,
-                source_id=settings.DRP_SOURCE_IDS['external'],
-                page=page
-            )
-            exit_condition = page * SHAREPOINT_PAGE_SIZE < total_rows
-            page += 1
-            qs = DRPSharePointSearchSerializer(response, many=True)
-            reports.extend(qs.data)
 
-        if reports:
-            users = UserRole.objects.filter(donor=donor, notification_period=period).values(
-                'user__first_name', 'user__email')
-            context = {'reports': reports, 'donor': donor.name}
-            recipients = list(set([str(user['user__email']) for user in users if user['user__email']]))
-            send_notification_with_template(recipients, 'notify_donor', context)
+        users = UserRole.objects.filter(donor=donor, notification_period=period).values(
+            'user__first_name', 'user__email')
+
+        if users:
+            while exit_condition:
+                response, total_rows = client.search(
+                    filters=filters,
+                    select=selected,
+                    source_id=settings.DRP_SOURCE_IDS['external'],
+                    page=page
+                )
+                exit_condition = page * SHAREPOINT_PAGE_SIZE < total_rows
+                page += 1
+                qs = DRPSharePointSearchSerializer(response, many=True)
+                reports.extend(qs.data)
+
+            if reports:
+                context = {'reports': reports, 'donor': donor.name}
+                recipients = list(set([str(user['user__email']) for user in users if user['user__email']]))
+                send_notification_with_template(recipients, 'notify_donor', context)
 
 
 @app.task
