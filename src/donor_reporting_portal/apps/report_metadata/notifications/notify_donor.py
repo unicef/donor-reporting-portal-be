@@ -6,8 +6,8 @@ defaults = {
     "subject": "Updated reports available in DRP",
     "content": strip_text("""Dear user,
 
-    Following reports have been updated in DRP for {{ donor }}:
-
+    The following reports have been uploaded in the Donor Reporting Portal (drp.unicef.org).
+    
     {% for report in reports %}
         {{ report.title }} {{ report.download_url }}
     {% endfor %}
@@ -15,11 +15,26 @@ defaults = {
     """),
     "html_content": """Dear user,<br/><br/>
 
-    Following reports have been updated in DRP for {{ donor }}:
+    The following reports have been uploaded in the Donor Reporting Portal (drp.unicef.org).
     <br/><br/>
+    <table>
+    <tr>
+        <th>Report</th>
+        <th>Reference No</th>
+        <th>Grant No</th>
+        <th>Report Type</th>
+        <th>Report Date</th>
+    </tr>
     {% for report in reports %}
-        <a href="{{ report.download_url }}">{{ report.title }}</a><br/>
+        <tr>
+            <td><a href="{{ report.download_url }}">{{ report.title }}</a></td>
+            <td>{{ report.external_reference }}</td>
+            <td>{{ report.grant_number }}</td>
+            <td>{{ report.report_type }}</td>
+            <td>{{ report.report_end_date|slice:"0:10" }}</td>
+        </tr>
     {% endfor %}
+    </table>
     <br/><br/>
     Regards.
     """,
