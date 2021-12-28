@@ -6,8 +6,8 @@ defaults = {
     "subject": "Updated reports available in DRP",
     "content": strip_text("""Dear user,
 
-    The following reports have been uploaded in the Donor Reporting Portal (drp.unicef.org).
-    
+    The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).
+
     {% for report in reports %}
         {{ report.title }} {{ report.download_url }}
     {% endfor %}
@@ -15,7 +15,7 @@ defaults = {
     """),
     "html_content": """Dear user,<br/><br/>
 
-    The following reports have been uploaded in the Donor Reporting Portal (drp.unicef.org).
+    The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).
     <br/><br/>
     <table>
     <tr>
