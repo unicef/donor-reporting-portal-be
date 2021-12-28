@@ -12,7 +12,7 @@ env:
     - INSIGHT_URL=https://uniapis.unicef.org/biapi/v1/
     - SHAREPOINT_CONNECTION=user
   jobs:
-    - DJANGO=3.2
+    - DJANGO=4.0
 
 addons:
   postgresql: "10"
