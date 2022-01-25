@@ -9,7 +9,12 @@ defaults = {
     The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).
 
     {% for report in reports %}
-        {{ report.title }} {{ report.download_url }}
+        {{ report.title }} [{{ report.external_reference }}]
+        {{ report.download_url }}
+        Grant: {{ report.grant_number }}
+        Type: {{ report.report_type }}
+        End date: {{ report.report_end_date|slice:"0:10" }}
+        
     {% endfor %}
     Regards.
     """),
