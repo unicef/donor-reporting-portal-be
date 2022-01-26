@@ -5,7 +5,7 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET",
         "X-Frame-Options": "DENY",
-        "Content-Length": "7174",
+        "Content-Length": "7285",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "same-origin"
     },
@@ -102,6 +102,10 @@
             {
                 "code": "2022",
                 "description": "2022"
+            },
+            {
+                "code": "2023",
+                "description": "2023"
             }
         ],
         "report_years": [
@@ -120,6 +124,10 @@
             {
                 "code": "2022",
                 "description": "2022"
+            },
+            {
+                "code": "2023",
+                "description": "2023"
             }
         ],
         "grant_issue_years": [
@@ -142,6 +150,10 @@
             {
                 "code": "2022",
                 "description": "2022"
+            },
+            {
+                "code": "2023",
+                "description": "2023"
             }
         ],
         "report_type": [
