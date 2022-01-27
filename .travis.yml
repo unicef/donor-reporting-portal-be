@@ -11,7 +11,7 @@ env:
     - SECRET_KEY=top-secret
     - INSIGHT_URL=https://uniapis.unicef.org/biapi/v1/
   jobs:
-    - DJANGO=3.1
+    - DJANGO=3.2
 
 addons:
   postgresql: "10"
