@@ -54,7 +54,7 @@ class UserRole(TimeStampedModel):
                                         on_delete=models.deletion.CASCADE)
     notification_period = models.CharField(max_length=16,
                                            choices=PERIODS,
-                                           default=EVERY_DAY,
+                                           default=DISABLED,
                                            verbose_name=_('Notification Period'))
     objects = UserRoleManager()
 
