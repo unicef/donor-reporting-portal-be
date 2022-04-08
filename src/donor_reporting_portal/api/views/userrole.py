@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from unicef_security.models import BusinessArea, User
+from unicef_security.models import User
 
 from donor_reporting_portal.api.filters import BusinessAreaFilter, GroupFilter, UserFilter, UserRoleFilter
 from donor_reporting_portal.api.serializers.userrole import (
@@ -16,6 +16,7 @@ from donor_reporting_portal.api.serializers.userrole import (
 )
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
 from donor_reporting_portal.apps.roles.models import UserRole
+from donor_reporting_portal.libs.bas import get_ba_model
 
 
 class GroupViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
@@ -58,7 +59,7 @@ class UserRoleViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
 
 
 class BusinessAreaViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
-    queryset = BusinessArea.objects.all()
+    queryset = get_ba_model().objects.all()
     serializer_class = BusinessAreaSerializer
     filterset_class = BusinessAreaFilter
     search_fields = ('code', 'name', 'long_name')

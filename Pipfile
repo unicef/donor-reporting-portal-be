@@ -60,6 +60,7 @@ requests = "*"
 sharepoint-rest-api = "*"
 social-auth-app-django = "*"
 social-auth-core = {extras = ["azuread"],version = "*"}
+unicef-business-areas = "*"
 unicef-djangolib = "*"
 unicef-notification = "*"
 unicef-security = "*"

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
 from django_filters import rest_framework as filters
-from unicef_security.models import BusinessArea
+from unicef_business_areas.models import BusinessArea
 
 from donor_reporting_portal.apps.report_metadata.models import (
     Donor,

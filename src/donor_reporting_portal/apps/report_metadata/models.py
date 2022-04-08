@@ -2,8 +2,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from model_utils.models import TimeStampedModel
-from unicef_security.models import BusinessArea
-
+from unicef_business_areas.models import BusinessArea
 
 class Theme(TimeStampedModel):
     """Represents Thematic"""

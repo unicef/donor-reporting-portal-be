@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'donor_reporting_portal.apps.sharepoint',
     'donor_reporting_portal.web',
     'sharepoint_rest_api',
+    'unicef_business_areas',
     'unicef_security',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +44,7 @@ INSTALLED_APPS = (
     'djcelery_email',
     'corsheaders',
     'social_django',
-    'admin_extra_urls',
+    'admin_extra_buttons',
     'adminactions',
     'rest_framework_social_oauth2',
     'unicef_vision.vision',
@@ -53,7 +54,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
-    'unicef_security.middleware.HealthCheckMiddleware',
+    # 'unicef_security.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -244,9 +245,9 @@ if DEBUG:  # pragma: no cover
     INSTALLED_APPS += (  # noqa
         'debug_toolbar',
     )
-    MIDDLEWARE += (  # noqa
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    )
+    # MIDDLEWARE += (  # noqa
+    #     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # )
     DEBUG_TOOLBAR_CONFIG = {
         'SHOW_TEMPLATE_CONTEXT': True,
     }
@@ -257,7 +258,7 @@ INSIGHT_LOGGER_MODEL = 'vision.VisionLog'
 
 INSIGHT_SUB_KEY = env.str('INSIGHT_SUB_KEY', 'invalid_vision_password')
 
-BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
+BUSINESSAREA_MODEL = 'unicef_business_areas.BusinessArea'
 
 
 SHELL_PLUS_PRE_IMPORTS = (
@@ -288,7 +289,7 @@ TENANT_B2C_URL = f'{TENANT_NAME}.b2clogin.com'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
 POLICY = env('AZURE_B2C_POLICY_NAME', default='B2C_1A_UNICEF_SOCIAL_signup_signin')
 SOCIAL_PASSWORD_RESET_POLICY = env('AZURE_B2C_PASS_RESET_POLICY', default='B2C_1_PasswordResetPolicy')
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
@@ -326,3 +327,21 @@ IMPERSONATE = {
     'REQUIRE_SUPERUSER': True,
     'CUSTOM_USER_QUERYSET': 'donor_reporting_portal.libs.impersonate.queryset'
 }
+
+# from django.contrib.contenttypes.models import ContentType
+# from django.db import connection, transaction
+# with transaction.atomic():
+#     with connection.cursor() as cursor:
+#         cursor.execute(
+#             "INSERT INTO django_content_type(app_label, model) VALUES ('unicef_business_areas', 'region')")
+#         cursor.execute(
+#             "INSERT INTO django_content_type(app_label, model) VALUES ('unicef_business_areas', 'businessarea')")
+#         cursor.execute(
+#             "INSERT INTO django_migrations(app, name, applied) VALUES ('unicef_business_areas', '0001_initial', '2021-12-31 00:00:01.495176-06');")
+#         cursor.execute(
+#             "CREATE TABLE unicef_business_areas_region AS (select * from unicef_security_region);"
+#         )
+#         cursor.execute(
+#             "CREATE TABLE unicef_business_areas_businessarea AS (select * from unicef_security_businessarea);"
+#         )
+#         ContentType.objects.filter(app_label='unicef_security', model__in=['business_area', 'region']).delete()
