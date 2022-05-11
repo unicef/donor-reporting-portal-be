@@ -17,11 +17,16 @@ from sharepoint_rest_api.views.url_based import (
 )
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
-from donor_reporting_portal.api.serializers.fields import DRPSearchSharePointField
+from donor_reporting_portal.api.serializers.fields import (
+    CTNSearchMultiSharePointField,
+    CTNSearchSharePointField,
+    DRPSearchSharePointField,
+)
 from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointSearchSerializer,
     DRPSharePointSettingsSerializer,
     DRPSharePointUrlSerializer,
+    GaviSharePointSearchSerializer,
     SharePointGroupSerializer,
 )
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
@@ -64,6 +69,12 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
     prefix = 'DRP'
     serializer_class = DRPSharePointSearchSerializer
 
+    def get_serializer_class(self):
+        query_params = self.request.query_params
+        if query_params.get("serializer") == 'gavi':
+            return GaviSharePointSearchSerializer
+        return super().get_serializer_class()
+
     def is_public(self):
         """check if the source id is public or restricted to UNICEF users"""
         source_id = self.request.query_params.get('source_id', None)
@@ -76,18 +87,25 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
                                              settings.DRP_SOURCE_IDS['pool_internal']]
 
     def get_selected(self, selected):
-        def to_drp(source):
-            return self.prefix + to_camel(source)
-        selected = super().get_selected(selected)
-        return [to_drp(x) for x in selected] + ["Title", "Author", "Path"]
+        def to_drp(source, value):
+            prefix = 'CTN' if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else 'DRP'
+            return prefix + to_camel(source)
+
+        autofields = [to_drp(key, value) for key, value in self.get_serializer_class()._declared_fields.items()]
+        selected = selected.split(',') if selected else autofields
+        return selected + ["Title", "Author", "Path"]
 
     def get_filters(self, kwargs):
         # we can enforce filters here
+        kwargs.pop('serializer', None)
         new_kwargs = {
             # 'IsDocument': '1',
         }
-        drp_fields = [key for key, value in self.serializer_class._declared_fields.items()
+        drp_fields = [key for key, value in self.get_serializer_class()._declared_fields.items()
                       if isinstance(value, DRPSearchSharePointField)]
+
+        ctn_fields = [key for key, value in self.get_serializer_class()._declared_fields.items()
+                      if isinstance(value, CTNSearchSharePointField)]
 
         for key, value in kwargs.items():
             key_splits = key.split('__')
@@ -95,6 +113,11 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
             filter_type = key_splits[-1] if len(key_splits) > 1 else None
             if filter_name in drp_fields:
                 new_key = self.prefix + to_camel(filter_name)
+                if filter_type:
+                    new_key = f'{new_key}__{filter_type}'
+                new_kwargs[new_key] = value
+            elif filter_name in ctn_fields:
+                new_key = 'CTN' + to_camel(filter_name)
                 if filter_type:
                     new_key = f'{new_key}__{filter_type}'
                 new_kwargs[new_key] = value

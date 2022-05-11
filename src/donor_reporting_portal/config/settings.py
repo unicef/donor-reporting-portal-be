@@ -280,16 +280,16 @@ EMAIL_PORT = env('EMAIL_PORT', default=25)
 EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=False)
 EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=False)
 
-KEY = env('AZURE_B2C_CLIENT_ID', default=None)
-SECRET = env('AZURE_B2C_CLIENT_SECRET', default=None)
-TENANT_NAME = env('TENANT_NAME', default='unicefpartners')
-TENANT_ID = f'{TENANT_NAME}.onmicrosoft.com'
-TENANT_B2C_URL = f'{TENANT_NAME}.b2clogin.com'
+SOCIAL_AUTH_KEY = env('AZURE_B2C_CLIENT_ID', default=None)
+SOCIAL_AUTH_SECRET = env('AZURE_B2C_CLIENT_SECRET', default=None)
+SOCIAL_AUTH_TENANT_NAME = env('TENANT_NAME', default='unicefpartners')
+SOCIAL_AUTH_TENANT_ID = f'{SOCIAL_AUTH_TENANT_NAME}.onmicrosoft.com'
+SOCIAL_AUTH_TENANT_B2C_URL = f'{SOCIAL_AUTH_TENANT_NAME}.b2clogin.com'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
-POLICY = env('AZURE_B2C_POLICY_NAME', default='B2C_1A_UNICEF_SOCIAL_signup_signin')
+SOCIAL_AUTH_POLICY = env('AZURE_B2C_POLICY_NAME', default='B2C_1A_UNICEF_SOCIAL_signup_signin')
 SOCIAL_PASSWORD_RESET_POLICY = env('AZURE_B2C_PASS_RESET_POLICY', default='B2C_1_PasswordResetPolicy')
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'
 
@@ -316,6 +316,7 @@ DRP_SOURCE_IDS = {
     'pool_external': env('DRP_SOURCE_ID_POOL_EXTERNAL', default=None),
     'thematic_internal': env('DRP_SOURCE_ID_THEMATIC_INTERNAL', default=None),
     'thematic_external': env('DRP_SOURCE_ID_THEMATIC_EXTERNAL', default=None),
+    'gavi': env('DRP_SOURCE_ID_GAVI', default=None),
 }
 
 MATOMO_SITE_TRACKER = env('MATOMO_SITE_TRACKER', default='https://unisitetracker.unicef.io/')

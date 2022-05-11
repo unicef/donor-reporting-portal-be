@@ -12,7 +12,11 @@ from sharepoint_rest_api.serializers.fields import (
 )
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
-from donor_reporting_portal.api.serializers.fields import DRPSearchMultiSharePointField, DRPSearchSharePointField
+from donor_reporting_portal.api.serializers.fields import (
+    CTNSearchSharePointField,
+    DRPSearchMultiSharePointField,
+    DRPSearchSharePointField,
+)
 from donor_reporting_portal.api.serializers.utils import getvalue
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
@@ -73,7 +77,7 @@ class DRPSharePointSettingsSerializer(DRPSerializerMixin, SharePointSettingsSeri
     pass
 
 
-class DRPSharePointSearchSerializer(serializers.Serializer):
+class DRPSharePointBaseSerializer(serializers.Serializer):
     title = CapitalizeSearchSharePointField()
     author = CapitalizeSearchSharePointField()
     path = CapitalizeSearchSharePointField()
@@ -126,3 +130,23 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
             return f'{base_url}?donor_code={donor_code}'
         except BaseException:
             return None
+
+
+class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    pass
+
+
+class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    number = CTNSearchSharePointField()
+    m_o_u_number = CTNSearchSharePointField()
+    m_o_u_r_eference = CTNSearchSharePointField()
+    sent_to_g_a_v_i_date = CTNSearchSharePointField()
+    funds_due_date = CTNSearchSharePointField()
+    g_a_v_i_w_b_s = CTNSearchSharePointField()
+    country_name = CTNSearchSharePointField()
+    vaccine_type = CTNSearchSharePointField()
+    purchase_order = CTNSearchSharePointField()
+    material_code = CTNSearchSharePointField()
+    approval_year = CTNSearchSharePointField()
+    prepaid_status = CTNSearchSharePointField()
+    allocation_round = CTNSearchSharePointField()

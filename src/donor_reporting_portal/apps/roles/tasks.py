@@ -9,7 +9,10 @@ from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
 from sharepoint_rest_api.utils import to_camel
 from unicef_notification.utils import send_notification_with_template
 
-from donor_reporting_portal.api.serializers.sharepoint import DRPSharePointSearchSerializer
+from donor_reporting_portal.api.serializers.sharepoint import (
+    DRPSharePointSearchSerializer,
+    GaviSharePointSearchSerializer,
+)
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 from donor_reporting_portal.config import settings
@@ -117,3 +120,57 @@ def notify_new_records():
     logger.info('Notify Start')
     for donor_code in Donor.objects.filter(active=True).values_list('code', flat=True):
         notify_donor.delay(donor_code)
+
+
+@app.task
+def notify_gavi_donor(donor_code='I49928'):
+    logger.info('Notifing GAVI')
+    for mou_number in []:
+        notify_gavi_donor_ctn.delay(mou_number, donor_code)
+
+
+@app.task
+def notify_gavi_donor_ctn(mou_number, donor_code='I49928'):
+    logger.info(f'Notifing GAVI {mou_number}')
+    donor = Donor.objects.get(code=donor_code)
+    client = SharePointClient(url=f'{config.SHAREPOINT_TENANT}/{config.SHAREPOINT_SITE_TYPE}/{config.SHAREPOINT_SITE}')
+
+    notification_periods = [x for x in [
+        (UserRole.EVERY_MONTH, today().replace(day=1) - relativedelta(months=1), today().day == 1),
+        (UserRole.EVERY_MONDAY, today() - timedelta(7), today().weekday() == 0),
+        (UserRole.EVERY_DAY, today() - timedelta(1), True),
+    ] if x[2]]
+
+    for period, modified_date, _ in notification_periods:
+        filters = {
+            'DRPDonorCode': donor_code,
+            'DRPModified__gte': modified_date.strftime('%Y-%m-%d'),
+            'MOU': mou_number,
+        }
+        serializer_fields = GaviSharePointSearchSerializer._declared_fields.keys()
+        selected = ['DRP' + to_camel(x) for x in serializer_fields] + ["Title", "Author", "Path"]
+
+        page = 1
+        exit_condition = True
+        reports = []
+
+        users = UserRole.objects.filter(donor=donor, notification_period=period, group__name=mou_number).values(
+            'user__first_name', 'user__email')
+
+        if users:
+            while exit_condition:
+                response, total_rows = client.search(
+                    filters=filters,
+                    select=selected,
+                    source_id=settings.DRP_SOURCE_IDS['external'],
+                    page=page
+                )
+                exit_condition = page * SHAREPOINT_PAGE_SIZE < total_rows
+                page += 1
+                qs = DRPSharePointSearchSerializer(response, many=True)
+                reports.extend(qs.data)
+
+            if reports:
+                context = {'reports': reports, 'donor': donor.name}
+                recipients = list(set([str(user['user__email']) for user in users if user['user__email']]))
+                send_notification_with_template(recipients, 'notify_donor', context)

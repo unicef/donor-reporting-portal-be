@@ -5,7 +5,7 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET",
         "X-Frame-Options": "DENY",
-        "Content-Length": "217",
+        "Content-Length": "229",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "same-origin"
     },
@@ -20,7 +20,8 @@
             "pool_internal": null,
             "pool_external": null,
             "thematic_internal": null,
-            "thematic_external": null
+            "thematic_external": null,
+            "gavi": null
         }
     },
     "content_type": "application/json"
