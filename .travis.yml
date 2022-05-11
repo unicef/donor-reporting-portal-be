@@ -10,8 +10,9 @@ env:
     - HOST=http://localhost:8082
     - SECRET_KEY=top-secret
     - INSIGHT_URL=https://uniapis.unicef.org/biapi/v1/
+    - SHAREPOINT_CONNECTION=user
   jobs:
-    - DJANGO=3.2
+    - DJANGO=4.0
 
 addons:
   postgresql: "10"
@@ -27,7 +28,7 @@ install:
   - pip install tox codecov
 
 script:
-  - tox -e "py${TRAVIS_PYTHON_VERSION//.}-d${DJANGO//.}" -- py.test tests -v
+  - tox -e "d${DJANGO//.}" -- py.test tests -v
 
 before_script:
   - psql -c "CREATE DATABASE donor_reporting_portal;" -U postgres

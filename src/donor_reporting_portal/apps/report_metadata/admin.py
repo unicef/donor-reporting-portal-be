@@ -2,14 +2,14 @@ from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from admin_extra_urls.decorators import button
-from admin_extra_urls.mixins import ExtraUrlMixin
+from admin_extra_buttons.decorators import button
+from admin_extra_buttons.mixins import ExtraButtonsMixin
 
 from .models import Donor, DRPMetadata, ExternalGrant, Grant, Theme
 from .tasks import grant_sync
 
 
-class GrantSyncMixin(ExtraUrlMixin):
+class GrantSyncMixin(ExtraButtonsMixin):
 
     @button()
     def _sync_grants(self, request):

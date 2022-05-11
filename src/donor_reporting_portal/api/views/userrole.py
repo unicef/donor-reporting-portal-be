@@ -4,7 +4,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from unicef_security.models import BusinessArea, User
+from unicef_realm.models import BusinessArea
+from unicef_security.models import User
 
 from donor_reporting_portal.api.filters import BusinessAreaFilter, GroupFilter, UserFilter, UserRoleFilter
 from donor_reporting_portal.api.serializers.userrole import (
@@ -53,7 +54,7 @@ class UserRoleViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         user = instance.user
         super().perform_destroy(instance)
-        if not user.roles.count():
+        if not user.user_roles.count():
             user.delete()
 
 

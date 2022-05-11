@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
 from rest_framework import serializers
-from unicef_security.models import BusinessArea
+from unicef_realm.models import BusinessArea
 
 from donor_reporting_portal.api.serializers.metadata import DonorSerializer, SecondaryDonorSerializer
 from donor_reporting_portal.apps.roles.models import UserRole

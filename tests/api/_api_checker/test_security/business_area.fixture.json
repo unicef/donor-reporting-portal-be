@@ -1,7 +1,7 @@
 {
     "business_area": {
         "master": {
-            "model": "unicef_security.businessarea",
+            "model": "unicef_realm.businessarea",
             "pk": 1,
             "fields": {
                 "code": "code000",
@@ -13,7 +13,7 @@
         },
         "deps": [
             {
-                "model": "unicef_security.region",
+                "model": "unicef_realm.region",
                 "pk": 1,
                 "fields": {
                     "code": "code000",

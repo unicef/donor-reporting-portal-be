@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 
-from unicef_security.models import BusinessArea
+from unicef_realm.models import BusinessArea
 from unicef_vision.synchronizers import VisionDataSynchronizer
 
 from .models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
