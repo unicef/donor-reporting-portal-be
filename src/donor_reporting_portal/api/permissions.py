@@ -13,7 +13,7 @@ class DonorPermission(permissions.BasePermission):
         for field_name, qs_param in mapping_dict.items():
             values = view.kwargs.get(qs_param, query_params.get(qs_param, None))
             values = values.split(',') if values else []
-            filter_dict = {field_name + '__in': values, 'roles__user__pk': user.pk}
+            filter_dict = {field_name + '__in': values, 'user_roles__user__pk': user.pk}
             if not instance:
                 instance = model.objects.filter(**filter_dict).first()
         return instance

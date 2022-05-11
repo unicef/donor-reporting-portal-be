@@ -1,4 +1,4 @@
-FROM python:3.9.5-alpine3.13
+FROM python:3.9.12-alpine3.15
 
 ARG PIPENV_ARGS
 
@@ -83,9 +83,6 @@ RUN pip install pip pipenv --upgrade
 RUN cd /code \
     && pipenv install --verbose --system --deploy --ignore-pipfile $PIPENV_ARGS \
     && sha1sum Pipfile.lock > /CHECKSUM
-
-# need to removes some code not py3.9 compliant
-RUN rm -fr /usr/local/lib/python3.9/site-packages/pipenv/patched/yaml2/*
 
 # before compile site-packages
 RUN find /usr/local/lib/python3.9/ -name *.pyc | xargs rm -f \

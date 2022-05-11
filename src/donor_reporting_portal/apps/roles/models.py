@@ -47,10 +47,10 @@ class UserRole(TimeStampedModel):
         (EVERY_MONDAY, 'Every Monday'),
         (EVERY_MONTH, 'Every Month'),
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='roles', on_delete=models.deletion.CASCADE)
-    group = models.ForeignKey(Group, related_name='roles', on_delete=models.deletion.CASCADE)
-    donor = models.ForeignKey(Donor, related_name='roles', on_delete=models.deletion.CASCADE)
-    secondary_donor = models.ForeignKey(SecondaryDonor, null=True, blank=True, default=None, related_name='roles',
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_roles', on_delete=models.deletion.CASCADE)
+    group = models.ForeignKey(Group, related_name='user_roles', on_delete=models.deletion.CASCADE)
+    donor = models.ForeignKey(Donor, related_name='user_roles', on_delete=models.deletion.CASCADE)
+    secondary_donor = models.ForeignKey(SecondaryDonor, null=True, blank=True, default=None, related_name='user_roles',
                                         on_delete=models.deletion.CASCADE)
     notification_period = models.CharField(max_length=16,
                                            choices=PERIODS,

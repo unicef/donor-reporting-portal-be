@@ -53,7 +53,7 @@ class UserRoleViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         user = instance.user
         super().perform_destroy(instance)
-        if not user.roles.count():
+        if not user.user_roles.count():
             user.delete()
 
 

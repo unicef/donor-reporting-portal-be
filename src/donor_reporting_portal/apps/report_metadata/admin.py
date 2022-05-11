@@ -43,7 +43,7 @@ class GrantAdmin(GrantSyncMixin, admin.ModelAdmin):
     list_display = ('code', 'donor', 'category', 'year')
     list_filter = ('category', 'donor', 'year')
     filter_horizontal = (
-        'business_areas',
+        'businessareas',
     )
 
 

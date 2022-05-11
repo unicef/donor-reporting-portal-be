@@ -87,7 +87,7 @@ class ExternalGrantFilter(filters.FilterSet):
 
 
 class GrantFilter(filters.FilterSet):
-    business_areas__in = filters.BaseInFilter(field_name="business_areas")
+    businessareas__in = filters.BaseInFilter(field_name="businessareas")
 
     class Meta:
         model = Grant
@@ -96,7 +96,7 @@ class GrantFilter(filters.FilterSet):
             'code': ['exact', 'in'],
             'year': ['exact', 'in'],
             'theme': ['exact', 'in'],
-            'business_areas': ['exact', 'in'],
+            'businessareas': ['exact', 'in'],
             'expiry_date': ['lte', 'gte', 'gt', 'lt'],
             'financial_close_date': ['lte', 'gte', 'gt', 'lt'],
         }

@@ -10,6 +10,7 @@ env:
     - HOST=http://localhost:8082
     - SECRET_KEY=top-secret
     - INSIGHT_URL=https://uniapis.unicef.org/biapi/v1/
+    - SHAREPOINT_CONNECTION=user
   jobs:
     - DJANGO=3.2
 

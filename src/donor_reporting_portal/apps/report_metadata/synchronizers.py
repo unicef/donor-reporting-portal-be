@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 
-from unicef_security.models import BusinessArea
+from unicef_realm.models import BusinessArea
 from unicef_vision.synchronizers import VisionDataSynchronizer
 
 from .models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
@@ -75,7 +75,7 @@ class GrantSynchronizer(VisionDataSynchronizer):
                 code=record['EXTERNAL_REF'], defaults={'donor': donor})
 
         if record.get('RECIPIENT_OFFICE_CODE', None):
-            grant.business_areas.set(BusinessArea.objects.filter(code__in=record['RECIPIENT_OFFICE_CODE'].split('; ')))
+            grant.businessareas.set(BusinessArea.objects.filter(code__in=record['RECIPIENT_OFFICE_CODE'].split('; ')))
 
         if record.get('SECONDARY_DONOR_CODE', None):
             secondary_donors_codes = record['SECONDARY_DONOR_CODE'].split(';')
