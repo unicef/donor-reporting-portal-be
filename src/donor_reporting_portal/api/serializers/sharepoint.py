@@ -82,28 +82,6 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
     author = CapitalizeSearchSharePointField()
     path = CapitalizeSearchSharePointField()
 
-    created = DRPSearchSharePointField()
-    modified = DRPSearchSharePointField()
-    report_generated_by = DRPSearchSharePointField()
-    donor = DRPSearchSharePointField()
-    donor_code = DRPSearchSharePointField()
-    grant_number = DRPSearchSharePointField()
-    grant_issue_year = DRPSearchSharePointField()
-    grant_expiry_date = DRPSearchSharePointField()
-    external_reference = DRPSearchSharePointField()
-    recipient_office = DRPSearchMultiSharePointField()
-    report_type = DRPSearchSharePointField()
-    report_end_date = DRPSearchSharePointField()
-    theme = DRPSearchSharePointField()
-    donor_document = DRPSearchSharePointField()
-    donor_report_category = DRPSearchSharePointField()
-    report_method = DRPSearchSharePointField()
-    report_group = DRPSearchSharePointField()
-    report_status = DRPSearchSharePointField()
-    retracted = DRPSearchSharePointField()
-    framework_agreement = DRPSearchSharePointField()
-    award_type = DRPSearchSharePointField()
-
     is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()
 
@@ -133,7 +111,27 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
 
 
 class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
-    pass
+    created = DRPSearchSharePointField()
+    modified = DRPSearchSharePointField()
+    report_generated_by = DRPSearchSharePointField()
+    donor = DRPSearchSharePointField()
+    donor_code = DRPSearchSharePointField()
+    grant_number = DRPSearchSharePointField()
+    grant_issue_year = DRPSearchSharePointField()
+    grant_expiry_date = DRPSearchSharePointField()
+    external_reference = DRPSearchSharePointField()
+    recipient_office = DRPSearchMultiSharePointField()
+    report_type = DRPSearchSharePointField()
+    report_end_date = DRPSearchSharePointField()
+    theme = DRPSearchSharePointField()
+    donor_document = DRPSearchSharePointField()
+    donor_report_category = DRPSearchSharePointField()
+    report_method = DRPSearchSharePointField()
+    report_group = DRPSearchSharePointField()
+    report_status = DRPSearchSharePointField()
+    retracted = DRPSearchSharePointField()
+    framework_agreement = DRPSearchSharePointField()
+    award_type = DRPSearchSharePointField()
 
 
 class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):

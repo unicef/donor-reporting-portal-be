@@ -1,3 +1,9 @@
+Release 2.0
+----------------
+* update do django 4
+* GAVI CTN
+
+
 Release 1.9.1
 ----------------
 * fix email template
