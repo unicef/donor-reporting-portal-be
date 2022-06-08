@@ -62,6 +62,7 @@ social-auth-app-django = "*"
 social-auth-core = {extras = ["azuread"],version = "*"}
 unicef-djangolib = "*"
 unicef-notification = "*"
+unicef-realm = "*"
 unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "*"

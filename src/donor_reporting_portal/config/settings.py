@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'donor_reporting_portal.web',
     'sharepoint_rest_api',
     'unicef_security',
+    'unicef_realm',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -43,7 +44,7 @@ INSTALLED_APPS = (
     'djcelery_email',
     'corsheaders',
     'social_django',
-    'admin_extra_urls',
+    'admin_extra_buttons',
     'adminactions',
     'rest_framework_social_oauth2',
     'unicef_vision.vision',
@@ -53,7 +54,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
-    'unicef_security.middleware.HealthCheckMiddleware',
+    'unicef_djangolib.middleware.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -114,7 +115,6 @@ SITE_ID = 1
 INTERNAL_IPS = ['127.0.0.1', 'localhost']
 
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
 
@@ -258,7 +258,7 @@ INSIGHT_LOGGER_MODEL = 'vision.VisionLog'
 INSIGHT_SUB_KEY = env.str('INSIGHT_SUB_KEY', 'invalid_vision_password')
 
 BUSINESSAREA_MODEL = 'unicef_security.BusinessArea'
-
+REALM_TARGET_MODEL = 'unicef_realm.BusinessArea'
 
 SHELL_PLUS_PRE_IMPORTS = (
     ('donor_reporting_portal.config', 'celery'),
@@ -288,7 +288,7 @@ TENANT_B2C_URL = f'{TENANT_NAME}.b2clogin.com'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
 POLICY = env('AZURE_B2C_POLICY_NAME', default='B2C_1A_UNICEF_SOCIAL_signup_signin')
 SOCIAL_PASSWORD_RESET_POLICY = env('AZURE_B2C_PASS_RESET_POLICY', default='B2C_1_PasswordResetPolicy')
 SOCIAL_AUTH_USER_MODEL = 'unicef_security.User'

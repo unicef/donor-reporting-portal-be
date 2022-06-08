@@ -73,7 +73,7 @@ class DonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
         qs = self.get_queryset()
         if not request.user.has_perm('roles.can_view_all_donors'):
             roles = UserRole.objects.by_permissions('report_metadata.view_donor').filter(user=request.user)
-            qs = qs.filter(roles__in=roles)
+            qs = qs.filter(user_roles__in=roles)
         serializer = self.get_serializer(qs, many=True)
         return Response(serializer.data)
 
@@ -81,7 +81,7 @@ class DonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     def my_admin_donors(self, request, *args, **kwargs):
         roles = UserRole.objects.by_permissions(['report_metadata.view_donor',
                                                  'roles.add_userrole']).filter(user=request.user)
-        serializer = self.get_serializer(self.get_queryset().filter(roles__in=roles), many=True)
+        serializer = self.get_serializer(self.get_queryset().filter(user_roles__in=roles), many=True)
         return Response(serializer.data)
 
 
