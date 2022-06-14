@@ -6,59 +6,57 @@ defaults = {
     "subject": "Updated GAVI reports available in UNICEF DRP",
     "content": strip_text("""Dear user,
 
-    The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).
+    The following CTNs have been uploaded in the UNICEF Reporting Portal:
 
     {% for report in reports %}
-        {{ report.title }} [{{ report.external_reference }}]
-        {{ report.download_url }}
-        Grant: {{ report.grant_number }}
-        Type: {{ report.report_type }}
-        End date: {{ report.report_end_date|slice:"0:10" }}
+        MOU # {{ report.m_o_u_number }}
+        CTN # {{ report.number }}
+        Country: {{ report.country_name }}
+        Gavi WBS: {{ report.g_a_v_i_w_b_s }}
+        Funds Due date: {{ report.funds_due_date|slice:"0:10" }}
+        Vaccine type: {{ report.vaccine_type }}
 
     {% endfor %}
 
-    You are receiving this system generated notification because of user setting in UNICEF’s Donor Reporting Portal.
     In case you do not wish to receive this email or change the frequency, please contact your local site administrator.
-    Please do not reply. For any questions on the reports, please contact your UNICEF colleague.
+    Please do not reply to this mail.  For any questions on these reports, please contact your UNICEF focal point.
 
     Regards.
     """),
     "html_content": """Dear user,<br/><br/>
 
-    The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).
+    The following CTNs have been uploaded in the UNICEF Reporting Portal:
     <br/><br/>
     <table>
     <tr>
         <th>#</th>
-        <th>Report</th>
-        <th>Reference No</th>
-        <th>Category</th>
-        <th>Grant No</th>
-        <th>Report Type</th>
-        <th>Report Date</th>
+        <th>MOU #</th>
+        <th>CTN #</th>
+        <th>Country</th>
+        <th>Gavi WBS</th>
+        <th>Funds Due date</th>
+        <th>Vaccine type</th>
     </tr>
     {% for report in reports %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td><a href="{{ report.download_url }}">{{ report.title }}</a></td>
-            <td>{{ report.external_reference }}</td>
-            <td>{{ report.donor_report_category }}</td>
-            <td>{{ report.grant_number }}</td>
-            <td>{{ report.report_type }}</td>
-            <td>{{ report.report_end_date|slice:"0:10" }}</td>
+            <td><a href="{{ report.download_url }}">{{ report.m_o_u_number }}</a></td>
+            <td>{{ report.number }}</td>
+            <td>{{ report.amount }}</td>
+            <td>{{ report.country_name }}</td>
+            <td>{{ report.g_a_v_i_w_b_s }}</td>
+            <td>{{ report.funds_due_date|slice:"0:10" }}</td>
+            <td>{{ report.vaccine_type }}</td>
         </tr>
     {% endfor %}
     </table>
     <br/><br/>
 
     <p>
-    You are receiving this system generated notification because of user setting in UNICEF’s Donor Reporting Portal.
-    </p>
-    <p>
     In case you do not wish to receive this email or change the frequency, please contact your local site administrator.
     </p>
     <p>
-    Please do not reply. For any questions on the reports, please contact your UNICEF colleague.</p>
+    Please do not reply to this mail.  For any questions on these reports, please contact your UNICEF focal point.</p>
 
     Regards.
     """,
