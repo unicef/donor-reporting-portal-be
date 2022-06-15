@@ -48,5 +48,53 @@
             8
         ]
     }
+},
+{
+    "model": "auth.group",
+    "pk": 4,
+    "fields": {
+        "name": "MOU 5 CTN",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 5,
+    "fields": {
+        "name": "MOU 8/9 CTN – vaccines",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 6,
+    "fields": {
+        "name": "MOU 8/9 CTN – devices",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 7,
+    "fields": {
+        "name": "MOU 8/9 CTN – CCEOP (cold chain)",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 8,
+    "fields": {
+        "name": "MOU 11 CTN – vaccines",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 9,
+    "fields": {
+        "name": "MOU 11 CTN – devices",
+        "permissions": []
+    }
 }
 ]

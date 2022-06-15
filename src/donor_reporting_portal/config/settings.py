@@ -309,6 +309,16 @@ SOCIAL_AUTH_PIPELINE = (
 
 USER_FIELDS = ['username', 'email', 'first_name', 'last_name']
 
+
+MATOMO_SITE_TRACKER = env('MATOMO_SITE_TRACKER', default='https://unisitetracker.unicef.io/')
+MATOMO_SITE_ID = env('MATOMO_SITE_ID', default=None)
+
+IMPERSONATE = {
+    'PAGINATE_COUNT': 50,
+    'REQUIRE_SUPERUSER': True,
+    'CUSTOM_USER_QUERYSET': 'donor_reporting_portal.libs.impersonate.queryset'
+}
+
 DRP_SOURCE_IDS = {
     'internal': env('DRP_SOURCE_ID_INTERNAL', default=None),
     'external': env('DRP_SOURCE_ID_EXTERNAL', default=None),
@@ -319,11 +329,4 @@ DRP_SOURCE_IDS = {
     'gavi': env('DRP_SOURCE_ID_GAVI', default=None),
 }
 
-MATOMO_SITE_TRACKER = env('MATOMO_SITE_TRACKER', default='https://unisitetracker.unicef.io/')
-MATOMO_SITE_ID = env('MATOMO_SITE_ID', default=None)
-
-IMPERSONATE = {
-    'PAGINATE_COUNT': 50,
-    'REQUIRE_SUPERUSER': True,
-    'CUSTOM_USER_QUERYSET': 'donor_reporting_portal.libs.impersonate.queryset'
-}
+GAVI_DONOR_CODE = 'I49928'
