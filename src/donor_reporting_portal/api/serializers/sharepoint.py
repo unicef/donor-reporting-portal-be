@@ -82,6 +82,9 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
     author = CapitalizeSearchSharePointField()
     path = CapitalizeSearchSharePointField()
 
+    created = DRPSearchSharePointField()
+    modified = DRPSearchSharePointField()
+
     is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()
 
@@ -104,15 +107,16 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
                 'filename': directories[-1]
             })
             base_url = f'{settings.HOST}{relative_url}'
-            donor_code = getvalue(obj, 'DRPDonorCode').replace(';', ',')
-            return f'{base_url}?donor_code={donor_code}'
+            donor_code = getvalue(obj, 'DRPDonorCode')
+            if donor_code:
+                donor_code = donor_code.replace(';', ',')
+                base_url = f'{base_url}?donor_code={donor_code}'
+            return base_url
         except BaseException:
             return None
 
 
 class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
-    created = DRPSearchSharePointField()
-    modified = DRPSearchSharePointField()
     report_generated_by = DRPSearchSharePointField()
     donor = DRPSearchSharePointField()
     donor_code = DRPSearchSharePointField()
