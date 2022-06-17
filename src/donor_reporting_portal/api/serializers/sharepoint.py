@@ -82,6 +82,9 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
     author = CapitalizeSearchSharePointField()
     path = CapitalizeSearchSharePointField()
 
+    created = DRPSearchSharePointField()
+    modified = DRPSearchSharePointField()
+
     is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()
 
@@ -114,8 +117,6 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
 
 
 class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
-    created = DRPSearchSharePointField()
-    modified = DRPSearchSharePointField()
     report_generated_by = DRPSearchSharePointField()
     donor = DRPSearchSharePointField()
     donor_code = DRPSearchSharePointField()
