@@ -104,8 +104,11 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
                 'filename': directories[-1]
             })
             base_url = f'{settings.HOST}{relative_url}'
-            donor_code = getvalue(obj, 'DRPDonorCode').replace(';', ',')
-            return f'{base_url}?donor_code={donor_code}'
+            donor_code = getvalue(obj, 'DRPDonorCode')
+            if donor_code:
+                donor_code = donor_code.replace(';', ',')
+                base_url = f'{base_url}?donor_code={donor_code}'
+            return base_url
         except BaseException:
             return None
 
