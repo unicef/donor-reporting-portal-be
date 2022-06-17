@@ -152,3 +152,4 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
     approval_year = CTNSearchSharePointField()
     prepaid_status = CTNSearchSharePointField()
     allocation_round = CTNSearchSharePointField()
+    vendor = CTNSearchSharePointField()
