@@ -994,5 +994,257 @@
         "description": "Thematic",
         "audience": "all"
     }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 84,
+    "fields": {
+        "created": "2022-06-21T13:40:57.508Z",
+        "modified": "2022-06-21T13:40:57.508Z",
+        "category": "vaccine_type",
+        "code": "covid-19_vaccine_(covid)",
+        "description": "Covid-19 Vaccine (COVID)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 85,
+    "fields": {
+        "created": "2022-06-21T13:40:57.520Z",
+        "modified": "2022-06-21T13:40:57.520Z",
+        "category": "vaccine_type",
+        "code": "covid-19_vaccine_supplies_(covid)",
+        "description": "Covid-19 Vaccine supplies (COVID)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 86,
+    "fields": {
+        "created": "2022-06-21T13:40:57.522Z",
+        "modified": "2022-06-21T13:40:57.522Z",
+        "category": "vaccine_type",
+        "code": "ebola_vaccine",
+        "description": "Ebola Vaccine",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 87,
+    "fields": {
+        "created": "2022-06-21T13:40:57.523Z",
+        "modified": "2022-06-21T13:40:57.523Z",
+        "category": "vaccine_type",
+        "code": "human_papillomavirus_vaccine_(hpv)",
+        "description": "Human papillomavirus Vaccine (HPV)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 88,
+    "fields": {
+        "created": "2022-06-21T13:40:57.525Z",
+        "modified": "2022-06-21T13:40:57.525Z",
+        "category": "vaccine_type",
+        "code": "inactivated_polio_vaccine_(ipv)",
+        "description": "Inactivated Polio Vaccine (IPV)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 89,
+    "fields": {
+        "created": "2022-06-21T13:40:57.526Z",
+        "modified": "2022-06-21T13:40:57.526Z",
+        "category": "vaccine_type",
+        "code": "injection_devices_(sie)",
+        "description": "Injection Devices (SIE)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 90,
+    "fields": {
+        "created": "2022-06-21T13:40:57.527Z",
+        "modified": "2022-06-21T13:40:57.527Z",
+        "category": "vaccine_type",
+        "code": "japanese_encephalitis_vaccine_(je)",
+        "description": "Japanese encephalitis Vaccine (JE)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 91,
+    "fields": {
+        "created": "2022-06-21T13:40:57.529Z",
+        "modified": "2022-06-21T13:40:57.529Z",
+        "category": "vaccine_type",
+        "code": "measles_vaccine",
+        "description": "Measles Vaccine",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 92,
+    "fields": {
+        "created": "2022-06-21T13:40:57.530Z",
+        "modified": "2022-06-21T13:40:57.530Z",
+        "category": "vaccine_type",
+        "code": "measles-rubella_vaccine_(mr)",
+        "description": "Measles-Rubella Vaccine (MR)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 93,
+    "fields": {
+        "created": "2022-06-21T13:40:57.532Z",
+        "modified": "2022-06-21T13:40:57.532Z",
+        "category": "vaccine_type",
+        "code": "meningitis_vaccine_(mena)",
+        "description": "Meningitis Vaccine (MenA)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 94,
+    "fields": {
+        "created": "2022-06-21T13:40:57.533Z",
+        "modified": "2022-06-21T13:40:57.533Z",
+        "category": "vaccine_type",
+        "code": "meningitis_vaccine,_pediatric_(mena)",
+        "description": "Meningitis Vaccine, Pediatric (MenA)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 95,
+    "fields": {
+        "created": "2022-06-21T13:40:57.535Z",
+        "modified": "2022-06-21T13:40:57.535Z",
+        "category": "vaccine_type",
+        "code": "oral_cholera_vaccine_(ocv)",
+        "description": "Oral Cholera Vaccine (OCV)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 96,
+    "fields": {
+        "created": "2022-06-21T13:40:57.536Z",
+        "modified": "2022-06-21T13:40:57.536Z",
+        "category": "vaccine_type",
+        "code": "pentavalent_vaccine_(dtp-hepb-hib)",
+        "description": "Pentavalent Vaccine (DTP-HepB-Hib)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 97,
+    "fields": {
+        "created": "2022-06-21T13:40:57.538Z",
+        "modified": "2022-06-21T13:40:57.538Z",
+        "category": "vaccine_type",
+        "code": "pneumococcal_vaccine_(pcv)",
+        "description": "Pneumococcal Vaccine (PCV)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 98,
+    "fields": {
+        "created": "2022-06-21T13:40:57.539Z",
+        "modified": "2022-06-21T13:40:57.539Z",
+        "category": "vaccine_type",
+        "code": "rotavirus_vaccine_(rv)",
+        "description": "Rotavirus Vaccine (RV)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 99,
+    "fields": {
+        "created": "2022-06-21T13:40:57.540Z",
+        "modified": "2022-06-21T13:40:57.540Z",
+        "category": "vaccine_type",
+        "code": "typhoid_vaccine_(tcv)",
+        "description": "Typhoid Vaccine (TCV)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 100,
+    "fields": {
+        "created": "2022-06-21T13:40:57.542Z",
+        "modified": "2022-06-21T13:40:57.542Z",
+        "category": "vaccine_type",
+        "code": "yellow_fever_diagnostics_(yd_dx)",
+        "description": "Yellow fever Diagnostics (YD Dx)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 101,
+    "fields": {
+        "created": "2022-06-21T13:40:57.544Z",
+        "modified": "2022-06-21T13:40:57.544Z",
+        "category": "vaccine_type",
+        "code": "yellow_fever_vaccine_(yf)",
+        "description": "Yellow fever Vaccine (YF)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 102,
+    "fields": {
+        "created": "2022-06-21T13:40:57.545Z",
+        "modified": "2022-06-21T13:40:57.545Z",
+        "category": "vaccine_type",
+        "code": "cceop",
+        "description": "CCEOP",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 103,
+    "fields": {
+        "created": "2022-06-21T13:40:57.546Z",
+        "modified": "2022-06-21T13:40:57.546Z",
+        "category": "vaccine_type",
+        "code": "tetanus-diphtheria_(td)",
+        "description": "Tetanus-Diphtheria (TD)",
+        "audience": "all"
+    }
+},
+{
+    "model": "report_metadata.drpmetadata",
+    "pk": 104,
+    "fields": {
+        "created": "2022-06-21T13:40:57.547Z",
+        "modified": "2022-06-21T13:40:57.547Z",
+        "category": "vaccine_type",
+        "code": "measles_mumps_rubella_(mmr)",
+        "description": "Measles Mumps Rubella (MMR)",
+        "audience": "all"
+    }
 }
 ]

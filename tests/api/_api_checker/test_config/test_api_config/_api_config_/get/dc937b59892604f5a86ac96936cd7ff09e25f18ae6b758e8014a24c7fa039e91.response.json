@@ -5,9 +5,10 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET",
         "X-Frame-Options": "DENY",
-        "Content-Length": "229",
+        "Content-Length": "256",
         "X-Content-Type-Options": "nosniff",
-        "Referrer-Policy": "same-origin"
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin"
     },
     "data": {
         "tracker": {
@@ -22,7 +23,8 @@
             "thematic_internal": null,
             "thematic_external": null,
             "gavi": null
-        }
+        },
+        "gavi_donor_code": "I49928"
     },
     "content_type": "application/json"
 }
