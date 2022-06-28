@@ -101,9 +101,9 @@ local:
 
 release:
 	@echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
-	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:dev
+	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:local
 	docker push ${DOCKER_IMAGE_NAME}:${TARGET}
-	docker push ${DOCKER_IMAGE_NAME}:dev
+	docker push ${DOCKER_IMAGE_NAME}:local
 
 # deploy:
 #	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
