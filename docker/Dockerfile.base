@@ -1,4 +1,4 @@
-FROM python:3.9.12-alpine3.15
+FROM python:3.9.13-alpine3.15
 
 ARG PIPENV_ARGS
 
@@ -28,7 +28,6 @@ RUN apk add --no-cache --virtual .build-deps \
 RUN apk add --no-cache --virtual .build-deps-edge \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        # proj-dev \
         protobuf-c-dev
 
 RUN apk add --no-cache --virtual .postgis-rundeps \
@@ -83,11 +82,6 @@ RUN pip install pip pipenv --upgrade
 RUN cd /code \
     && pipenv install --verbose --system --deploy --ignore-pipfile $PIPENV_ARGS \
     && sha1sum Pipfile.lock > /CHECKSUM
-
-# before compile site-packages
-RUN find /usr/local/lib/python3.9/ -name *.pyc | xargs rm -f \
-    && python -O -m compileall -fqb /usr/local/lib/python3.9 \
-    && find /usr/local/lib/python3.9/ -name *.py | xargs rm -f
 
 RUN apk del .fetch-deps .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
     && rm -rf /var/cache/apk/* \
