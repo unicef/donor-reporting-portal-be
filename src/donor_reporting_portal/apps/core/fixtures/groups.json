@@ -85,7 +85,7 @@
     "model": "auth.group",
     "pk": 8,
     "fields": {
-        "name": "MOU_8_9_YFDX",
+        "name": "MOU_11_VACCINES",
         "permissions": []
     }
 },
@@ -93,7 +93,7 @@
     "model": "auth.group",
     "pk": 9,
     "fields": {
-        "name": "MOU_11_VACCINES",
+        "name": "MOU_11_DEVICES",
         "permissions": []
     }
 },
@@ -101,7 +101,7 @@
     "model": "auth.group",
     "pk": 10,
     "fields": {
-        "name": "MOU_11_DEVICES",
+        "name": "MOU_8_9_YFDX",
         "permissions": []
     }
 }
