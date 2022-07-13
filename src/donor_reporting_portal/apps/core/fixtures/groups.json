@@ -53,7 +53,7 @@
     "model": "auth.group",
     "pk": 4,
     "fields": {
-        "name": "MOU 5 CTN",
+        "name": "MOU_5",
         "permissions": []
     }
 },
@@ -61,7 +61,7 @@
     "model": "auth.group",
     "pk": 5,
     "fields": {
-        "name": "MOU 8/9 CTN – vaccines",
+        "name": "MOU_8_9_VACCINES",
         "permissions": []
     }
 },
@@ -69,7 +69,7 @@
     "model": "auth.group",
     "pk": 6,
     "fields": {
-        "name": "MOU 8/9 CTN – devices",
+        "name": "MOU_8_9_DEVICES",
         "permissions": []
     }
 },
@@ -77,7 +77,7 @@
     "model": "auth.group",
     "pk": 7,
     "fields": {
-        "name": "MOU 8/9 CTN – CCEOP (cold chain)",
+        "name": "MOU_8_9_CCEOP",
         "permissions": []
     }
 },
@@ -85,7 +85,7 @@
     "model": "auth.group",
     "pk": 8,
     "fields": {
-        "name": "MOU 11 CTN – vaccines",
+        "name": "MOU_8_9_YFDX",
         "permissions": []
     }
 },
@@ -93,7 +93,15 @@
     "model": "auth.group",
     "pk": 9,
     "fields": {
-        "name": "MOU 11 CTN – devices",
+        "name": "MOU_11_VACCINES",
+        "permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 10,
+    "fields": {
+        "name": "MOU_11_DEVICES",
         "permissions": []
     }
 }

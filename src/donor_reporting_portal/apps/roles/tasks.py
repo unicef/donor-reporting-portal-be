@@ -119,7 +119,7 @@ def notify_donor(donor_code):
 
 
 @app.task
-def notify_gavi_donor(donor_code):
+def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
     logger.info('Notifing GAVI')
     for group_name in Group.objects.filter(name__startswith='MOU').values_list('name', flat=True):
         notify_gavi_donor_ctn.delay(group_name, donor_code)
