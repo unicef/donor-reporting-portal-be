@@ -29,7 +29,7 @@ django-webtest = "*"
 sync = "*"
 
 [packages]
-admin-extra-urls = "*"
+bleach = {extras = ["css"],version = "*"}
 celery = "*"
 dj-database-url = "*"
 dj-static = "*"

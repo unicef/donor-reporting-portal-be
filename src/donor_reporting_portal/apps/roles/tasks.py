@@ -139,9 +139,8 @@ def notify_gavi_donor_ctn(group_name, donor_code):
 
     for period, modified_date, _ in notification_periods:
         filters = {
-            'DRPDonorCode': donor_code,
             'DRPModified__gte': modified_date.strftime('%Y-%m-%d'),
-            'CTNMOUNumber': group_name,
+            'CTNMOUReference': group_name,
         }
 
         def to_drp(source, value):
