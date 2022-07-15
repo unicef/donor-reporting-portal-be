@@ -11,6 +11,7 @@ defaults = {
     {% for report in reports %}
         MOU # {{ report.m_o_u_number }}
         CTN # {{ report.number }}
+        Report: {{ report.download_url }}
         Country: {{ report.country_name }}
         Gavi WBS: {{ report.g_a_v_i_w_b_s }}
         Funds Due date: {{ report.funds_due_date|slice:"0:10" }}
