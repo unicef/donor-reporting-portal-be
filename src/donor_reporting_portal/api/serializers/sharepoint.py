@@ -13,6 +13,7 @@ from sharepoint_rest_api.serializers.fields import (
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
 from donor_reporting_portal.api.serializers.fields import (
+    CTNSearchMultiSharePointField,
     CTNSearchSharePointField,
     DRPSearchMultiSharePointField,
     DRPSearchSharePointField,
@@ -144,11 +145,11 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
     m_o_u_r_eference = CTNSearchSharePointField()
     sent_to_g_a_v_i_date = CTNSearchSharePointField()
     funds_due_date = CTNSearchSharePointField()
-    g_a_v_i_w_b_s = CTNSearchSharePointField()
-    country_name = CTNSearchSharePointField()
-    vaccine_type = CTNSearchSharePointField()
-    purchase_order = CTNSearchSharePointField()
-    material_code = CTNSearchSharePointField()
+    g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
+    country_name = CTNSearchMultiSharePointField()
+    vaccine_type = CTNSearchMultiSharePointField()
+    purchase_order = CTNSearchMultiSharePointField()
+    material_code = CTNSearchMultiSharePointField()
     approval_year = CTNSearchSharePointField()
     prepaid_status = CTNSearchSharePointField()
     allocation_round = CTNSearchSharePointField()

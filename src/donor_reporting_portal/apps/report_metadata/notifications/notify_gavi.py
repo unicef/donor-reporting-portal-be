@@ -41,8 +41,8 @@ defaults = {
     {% for report in reports %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td><a href="{{ report.download_url }}">{{ report.m_o_u_number }}</a></td>
-            <td>{{ report.number }}</td>
+            <td>{{ report.m_o_u_number }}</td>
+            <td><a href="{{ report.download_url }}">{{ report.number }}</a></td>
             <td>{{ report.amount }}</td>
             <td>{{ report.country_name }}</td>
             <td>{{ report.g_a_v_i_w_b_s }}</td>
