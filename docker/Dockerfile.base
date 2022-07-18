@@ -18,6 +18,7 @@ RUN apk add --no-cache --virtual .build-deps \
         autoconf \
         automake \
         pkgconf \
+        gcc \
         g++ \
         json-c-dev \
         libtool \
@@ -85,6 +86,4 @@ RUN cd /code \
 
 RUN apk del .fetch-deps .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
     && rm -rf /var/cache/apk/* \
-    && rm -fr /root/.cache/ \
-    && rm -fr /usr/include/
-
+    && rm -fr /root/.cache/
