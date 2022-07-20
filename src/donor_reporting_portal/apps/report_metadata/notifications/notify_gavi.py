@@ -43,7 +43,6 @@ defaults = {
             <td>{{ forloop.counter }}</td>
             <td>{{ report.m_o_u_number }}</td>
             <td><a href="{{ report.download_url }}">{{ report.number }}</a></td>
-            <td>{{ report.amount }}</td>
             <td>{{ report.country_name }}</td>
             <td>{{ report.g_a_v_i_w_b_s }}</td>
             <td>{{ report.funds_due_date|slice:"0:10" }}</td>
