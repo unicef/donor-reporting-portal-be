@@ -86,7 +86,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default='change-me')
 ALLOWED_HOSTS = (
     env('ALLOWED_HOST', default='localhost'),
     '0.0.0.0',
