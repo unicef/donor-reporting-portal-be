@@ -63,11 +63,13 @@ jobs:
             if (echo "$DEPLOY_BRANCHES" | grep -q "$CIRCLE_BRANCH"); then
               curl --user ${CIRCLE_TOKEN}: \
                 --data build_parameters[CIRCLE_JOB]=build_and_upload \
+                --data build_parameters[BASE_TAG]=$BASE_TAG \
                 --data revision=$CIRCLE_SHA1 \
                 https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
             else
               echo "not triggered - '$CIRCLE_BRANCH' is not a deployable branch: '$DEPLOY_BRANCHES'"
             fi
+
 
   build_and_upload:
     machine: true
@@ -76,16 +78,14 @@ jobs:
       - run:
           name: Building the image
           command: |
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            TAG=${CIRCLE_BRANCH}
-            docker pull unicef/donor-reporting-portal-backend:$BASE_TAG)
-            docker build --build-arg -t unicef/donor-reporting-portal-backend:$TAG .
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+            docker pull unicef/donor-reporting-portal-backend:2.0-base
+#            docker build -t unicef/donor-reporting-portal-backend:${CIRCLE_BRANCH} .
       - run:
           name: Pushing to Docker Hub
           command: |
-            TAG=${CIRCLE_BRANCH}
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push unicef/donor-reporting-portal-backend:$TAG
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+            docker push unicef/donor-reporting-portal-backend:${TAG}
 
 workflows:
   version: 2

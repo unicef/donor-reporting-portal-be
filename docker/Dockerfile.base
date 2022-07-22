@@ -7,12 +7,12 @@ ENV CPLUS_INCLUDE_PATH /usr/include/libxml2/
 ENV C_INCLUDE_PATH /usr/include/libxml2/
 ENV LD_PRELOAD=/lib/libssl.so.1.1
 
-
 RUN apk add --no-cache --virtual .fetch-deps \
         curl \
         ca-certificates \
         openssl \
-        tar
+        tar \
+        gcc
 
 RUN apk add --no-cache --virtual .build-deps \
         autoconf \
@@ -83,7 +83,7 @@ RUN cd /code \
     && pipenv install --verbose --system --deploy --ignore-pipfile $PIPENV_ARGS \
     && sha1sum Pipfile.lock > /CHECKSUM
 
-RUN apk del .fetch-deps .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
+RUN apk del .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
     && rm -rf /var/cache/apk/* \
     && rm -fr /root/.cache/ \
     && rm -fr /usr/include/
