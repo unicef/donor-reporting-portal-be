@@ -168,6 +168,7 @@ class GaviNotifier(Notifier):
         return {
             'DRPModified__gte': modified_date.strftime('%Y-%m-%d'),
             'CTNMOUReference': self.group_name,
+            'CTNUrgent__not': 'Yes',
         }
 
     def get_selected_fields(self):
@@ -187,9 +188,11 @@ class GaviUrgentNotifier(GaviNotifier):
         ]
 
     def get_filter_dict(self, modified_date):
-        filters = super().get_filter_dict(modified_date)
-        filters['CTNUrgent'] = 'True'
-        return filters
+        return {
+            'DRPModified__gte': modified_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            'CTNMOUReference': self.group_name,
+            'CTNUrgent': 'Yes',
+        }
 
 
 @app.task
