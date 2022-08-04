@@ -64,9 +64,6 @@ class Notifier:
 
             if users:
                 while exit_condition:
-                    print(users)
-                    print(filters)
-                    print(selected)
                     response, total_rows = client.search(
                         filters=filters,
                         select=selected,
@@ -182,6 +179,9 @@ class GaviNotifier(Notifier):
 
 
 class GaviUrgentNotifier(GaviNotifier):
+
+    template_name = 'notify_urgent_gavi'
+
     def get_notify_periods(self):
         return [
             (UserRole.EVERY_DAY, now() - timedelta(seconds=600), True),
