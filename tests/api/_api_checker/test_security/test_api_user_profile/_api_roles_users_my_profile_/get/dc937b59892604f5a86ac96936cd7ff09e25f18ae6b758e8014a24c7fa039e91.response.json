@@ -5,9 +5,10 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET, HEAD, OPTIONS",
         "X-Frame-Options": "DENY",
-        "Content-Length": "295",
+        "Content-Length": "318",
         "X-Content-Type-Options": "nosniff",
-        "Referrer-Policy": "same-origin"
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin"
     },
     "data": {
         "id": 135,
@@ -16,6 +17,7 @@
         "last_name": "Garcia",
         "email": "m001@mailinator.com",
         "is_superuser": true,
+        "is_unicef_user": false,
         "pk": 135,
         "donor": {
             "name": "",
