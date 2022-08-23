@@ -38,7 +38,7 @@ class Notifier:
         return [x for x in [
             (UserRole.EVERY_MONTH, today().replace(day=1) - relativedelta(months=1), today().day == 1),
             (UserRole.EVERY_MONDAY, today() - timedelta(7), today().weekday() == 0),
-            (UserRole.EVERY_DAY, today() - timedelta(1), True),
+            (UserRole.EVERY_DAY, today(), True),
         ] if x[2]]
 
     def get_filter_dict(self, modified_date):
@@ -163,7 +163,7 @@ class GaviNotifier(Notifier):
 
     def get_filter_dict(self, modified_date):
         return {
-            'DRPModified__gte': modified_date.strftime('%Y-%m-%d'),
+            'DRPModified': modified_date.strftime('%Y-%m-%d'),
             'CTNMOUReference': self.group_name,
             'CTNUrgent__not': 'Yes',
         }
