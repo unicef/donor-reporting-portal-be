@@ -57,7 +57,7 @@ office365-rest-client =  "*"
 psycopg2-binary = "*"
 sentry-sdk = "*"
 requests = "*"
-sharepoint-rest-api = "*"
+sharepoint-rest-api = "0.15"
 social-auth-app-django = "*"
 social-auth-core = {extras = ["azuread"],version = "*"}
 unicef-djangolib = "*"
