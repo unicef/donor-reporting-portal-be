@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 
 from rest_framework import serializers
-from unicef_security.models import BusinessArea
+from unicef_realm.models import BusinessArea
 
 from donor_reporting_portal.api.serializers.metadata import DonorSerializer, SecondaryDonorSerializer
 from donor_reporting_portal.apps.roles.models import UserRole
@@ -57,15 +57,20 @@ class UserProfileSerializer(UserSerializer):
     group = serializers.SerializerMethodField()
     secondary_donor = serializers.SerializerMethodField()
     roles = serializers.SerializerMethodField()
+    is_unicef_user = serializers.SerializerMethodField()
+
+    def get_is_unicef_user(self, obj):
+        unicef_user = obj.groups.filter(name='UNICEF User').first()
+        return bool(unicef_user)
 
     def get_roles(self, obj):
         qs = UserRole.objects.by_permissions(['report_metadata.view_donor', ]).filter(user=obj)
         return UserRoleSerializer(qs, many=True).data
 
     def get_instance(self, obj):
-        unicef_user = obj.groups.filter(name='UNICEF User').first()
-        if unicef_user:
-            return unicef_user, None, None
+        # unicef_user = obj.groups.filter(name='UNICEF User').first()
+        # if unicef_user:
+        #     return unicef_user, None, None
         if UserRole.objects.by_permissions(['report_metadata.view_donor', 'roles.add_userrole']).filter(user=obj):
             instance = UserRole.objects.by_permissions(['report_metadata.view_donor',
                                                         'roles.add_userrole']).filter(user=obj).first()
@@ -96,7 +101,7 @@ class UserProfileSerializer(UserSerializer):
         return serializer.data
 
     class Meta(UserSerializer.Meta):
-        fields = UserSerializer.Meta.fields + ('pk', 'donor', 'group', 'secondary_donor', 'roles')
+        fields = UserSerializer.Meta.fields + ('is_unicef_user', 'pk', 'donor', 'group', 'secondary_donor', 'roles')
 
     # donors = serializers.SerializerMethodField()
     # admin_donors = serializers.SerializerMethodField()

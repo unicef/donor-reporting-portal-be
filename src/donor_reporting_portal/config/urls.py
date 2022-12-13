@@ -4,14 +4,13 @@ from django.contrib import admin
 from django.urls import path
 
 from rest_framework_simplejwt.views import token_obtain_pair
-from unicef_security.views import UNICEFLogoutView
 
 urlpatterns = [
     path(r'admin/', admin.site.urls),
     path(r'api-token-auth/', token_obtain_pair),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path(r'social/unicef-logout/', UNICEFLogoutView.as_view()),
-    path(r'social', include('social_django.urls', namespace='social')),
+    path(r'security/', include('unicef_security.urls')),
+    path(r'social/', include('social_django.urls', namespace='social')),
     path(r'api/', include('donor_reporting_portal.api.urls', namespace='api')),
     path(r'api/', include('sharepoint_rest_api.urls', namespace='sharepoint')),
     path(r'accounts/', include('django.contrib.auth.urls')),

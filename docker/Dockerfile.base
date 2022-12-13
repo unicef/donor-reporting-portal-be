@@ -1,4 +1,4 @@
-FROM python:3.9.5-alpine3.13
+FROM python:3.9.13-alpine3.16
 
 ARG PIPENV_ARGS
 
@@ -7,12 +7,12 @@ ENV CPLUS_INCLUDE_PATH /usr/include/libxml2/
 ENV C_INCLUDE_PATH /usr/include/libxml2/
 ENV LD_PRELOAD=/lib/libssl.so.1.1
 
-
 RUN apk add --no-cache --virtual .fetch-deps \
         curl \
         ca-certificates \
         openssl \
-        tar
+        tar \
+        gcc
 
 RUN apk add --no-cache --virtual .build-deps \
         autoconf \
@@ -28,7 +28,6 @@ RUN apk add --no-cache --virtual .build-deps \
 RUN apk add --no-cache --virtual .build-deps-edge \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        # proj-dev \
         protobuf-c-dev
 
 RUN apk add --no-cache --virtual .postgis-rundeps \
@@ -84,15 +83,7 @@ RUN cd /code \
     && pipenv install --verbose --system --deploy --ignore-pipfile $PIPENV_ARGS \
     && sha1sum Pipfile.lock > /CHECKSUM
 
-# need to removes some code not py3.9 compliant
-RUN rm -fr /usr/local/lib/python3.9/site-packages/pipenv/patched/yaml2/*
-
-# before compile site-packages
-RUN find /usr/local/lib/python3.9/ -name *.pyc | xargs rm -f \
-    && python -O -m compileall -fqb /usr/local/lib/python3.9 \
-    && find /usr/local/lib/python3.9/ -name *.py | xargs rm -f
-
-RUN apk del .fetch-deps .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
+RUN apk del .build-deps .build-deps-edge .donor_reporting_portal-build-deps \
     && rm -rf /var/cache/apk/* \
     && rm -fr /root/.cache/ \
     && rm -fr /usr/include/

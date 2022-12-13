@@ -18,7 +18,7 @@ class MetadataStaticAPIView(APIView):
 
         years = [str(year) for year in range(2000, datetime.today().year + 2)]
         report_years = [str(year) for year in range(2019, datetime.today().year + 2)]
-        grant_issue_years = [str(year) for year in range(2018, datetime.today().year + 2)]
+        grant_issue_years = approval_year = [str(year) for year in range(2018, datetime.today().year + 2)]
         report_type = [
             'Quarterly',
             'Final',
@@ -135,7 +135,8 @@ class MetadataStaticAPIView(APIView):
                 'donor_reporting_category': list_to_json(donor_reporting_category),
                 'recertified': list_to_json(recertified),
                 'rp_status': list_to_json(rp_status),
-                'awards': list_to_json(awards)
+                'awards': list_to_json(awards),
+                'approval_year': list_to_json(approval_year),
             },
             status=status.HTTP_200_OK
         )

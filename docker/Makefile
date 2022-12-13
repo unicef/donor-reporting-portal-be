@@ -2,7 +2,7 @@
 DATABASE_URL?=
 DOCKER_PASS?=
 DOCKER_USER?=
-TARGET?=1.9.0
+TARGET?=2.0.0
 BASE?=$(shell echo "${TARGET}" | sed "s/\([0-9]\)\.\([0-9]\)\.\(.*\)/\1.\2/g" )
 # below vars are used internally
 BUILD_OPTIONS?=
@@ -101,9 +101,9 @@ local:
 
 release:
 	@echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin
-	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:dev
+	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:local
 	docker push ${DOCKER_IMAGE_NAME}:${TARGET}
-	docker push ${DOCKER_IMAGE_NAME}:dev
+	docker push ${DOCKER_IMAGE_NAME}:local
 
 # deploy:
 #	lazo rancher upgrade donor_reporting_portal:donor_reporting_portal ${DOCKER_IMAGE_NAME}:${TARGET}
@@ -180,4 +180,3 @@ shell:
 
 docker-remove:
 	docker-remove.sh ${IMAGE_NAME} -o ${ORGANIZATION}
-

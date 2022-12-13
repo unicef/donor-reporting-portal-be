@@ -1,0 +1,94 @@
+version: 2
+
+parameters:
+  base-tag:
+    type: string
+    default: "latest"
+
+jobs:
+  setup:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Triggering test workflow
+          command: |
+            BASE_TAG="2.0-base"
+            curl --user ${CIRCLE_TOKEN}: \
+                --data build_parameters[CIRCLE_JOB]=test \
+                --data build_parameters[BASE_TAG]=$BASE_TAG \
+                --data revision=$CIRCLE_SHA1 \
+                https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/donor-reporting-portal-be/tree/$CIRCLE_BRANCH
+  test:
+    working_directory: ~/code
+    docker:
+      - image: unicef/donor-reporting-portal-backend:$BASE_TAG
+        environment:
+          PGHOST: 127.0.0.1
+          PIPENV_VENV_IN_PROJECT: 1
+          DATABASE_URL: "postgis://postgres:postgres@127.0.0.1:5432/donor_reporting_portal"
+          CELERY_BROKER_URL: "redis://localhost:6379/0"
+          CELERY_RESULT_BACKEND: "redis://localhost:6379/0"
+          DEPLOY_BRANCHES: "develop|staging|master"
+      - image: cimg/redis:6.2
+      - image: cimg/postgres:12.9-postgis
+        environment:
+          POSTGRES_USER: postgres
+          PGUSER: postgres
+          POSTGRES_DB: donor_reporting_portal
+          POSTGRES_PASSWORD: postgres
+    steps:
+      - checkout
+      - restore_cache:
+          key: source-{{ .Branch }}--{{ checksum "Pipfile.lock" }}-{{ checksum ".circleci/config.yml" }}
+      - run:
+          name: run tests
+          no_output_timeout: 30m
+          command: |
+            export PATH=/home/circleci/.local/bin:$PATH
+            export PYTHONHASHSEED=${RANDOM}
+            pip install tox
+#            tox
+      - save_cache:
+          key: source-{{ .Branch }}--{{ checksum "Pipfile.lock" }}-{{ checksum ".circleci/config.yml" }}
+          paths:
+            - ".venv"
+            - "~/.cache/pip"
+      - store_artifacts:
+          path: build/coverage
+          destination: coverage
+      - run:
+          name: Triggering build_and_deploy job
+          command: |
+            if (echo "$DEPLOY_BRANCHES" | grep -q "$CIRCLE_BRANCH"); then
+              curl --user ${CIRCLE_TOKEN}: \
+                --data build_parameters[CIRCLE_JOB]=build_and_upload \
+                --data build_parameters[BASE_TAG]=$BASE_TAG \
+                --data revision=$CIRCLE_SHA1 \
+                https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH
+            else
+              echo "not triggered - '$CIRCLE_BRANCH' is not a deployable branch: '$DEPLOY_BRANCHES'"
+            fi
+
+
+  build_and_upload:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Building the image
+          command: |
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+            docker pull unicef/donor-reporting-portal-backend:2.0-base
+#            docker build -t unicef/donor-reporting-portal-backend:${CIRCLE_BRANCH} .
+      - run:
+          name: Pushing to Docker Hub
+          command: |
+            docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+            docker push unicef/donor-reporting-portal-backend:${TAG}
+
+workflows:
+  version: 2
+  all:
+    jobs:
+      - setup

@@ -12,7 +12,12 @@ from sharepoint_rest_api.serializers.fields import (
 )
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
 
-from donor_reporting_portal.api.serializers.fields import DRPSearchMultiSharePointField, DRPSearchSharePointField
+from donor_reporting_portal.api.serializers.fields import (
+    CTNSearchMultiSharePointField,
+    CTNSearchSharePointField,
+    DRPSearchMultiSharePointField,
+    DRPSearchSharePointField,
+)
 from donor_reporting_portal.api.serializers.utils import getvalue
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
@@ -73,32 +78,13 @@ class DRPSharePointSettingsSerializer(DRPSerializerMixin, SharePointSettingsSeri
     pass
 
 
-class DRPSharePointSearchSerializer(serializers.Serializer):
+class DRPSharePointBaseSerializer(serializers.Serializer):
     title = CapitalizeSearchSharePointField()
     author = CapitalizeSearchSharePointField()
     path = CapitalizeSearchSharePointField()
 
     created = DRPSearchSharePointField()
     modified = DRPSearchSharePointField()
-    report_generated_by = DRPSearchSharePointField()
-    donor = DRPSearchSharePointField()
-    donor_code = DRPSearchSharePointField()
-    grant_number = DRPSearchSharePointField()
-    grant_issue_year = DRPSearchSharePointField()
-    grant_expiry_date = DRPSearchSharePointField()
-    external_reference = DRPSearchSharePointField()
-    recipient_office = DRPSearchMultiSharePointField()
-    report_type = DRPSearchSharePointField()
-    report_end_date = DRPSearchSharePointField()
-    theme = DRPSearchSharePointField()
-    donor_document = DRPSearchSharePointField()
-    donor_report_category = DRPSearchSharePointField()
-    report_method = DRPSearchSharePointField()
-    report_group = DRPSearchSharePointField()
-    report_status = DRPSearchSharePointField()
-    retracted = DRPSearchSharePointField()
-    framework_agreement = DRPSearchSharePointField()
-    award_type = DRPSearchSharePointField()
 
     is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()
@@ -122,7 +108,50 @@ class DRPSharePointSearchSerializer(serializers.Serializer):
                 'filename': directories[-1]
             })
             base_url = f'{settings.HOST}{relative_url}'
-            donor_code = getvalue(obj, 'DRPDonorCode').replace(';', ',')
-            return f'{base_url}?donor_code={donor_code}'
+            donor_code = getvalue(obj, 'DRPDonorCode')
+            if donor_code:
+                donor_code = donor_code.replace(';', ',')
+                base_url = f'{base_url}?donor_code={donor_code}'
+            return base_url
         except BaseException:
             return None
+
+
+class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    report_generated_by = DRPSearchSharePointField()
+    donor = DRPSearchSharePointField()
+    donor_code = DRPSearchSharePointField()
+    grant_number = DRPSearchSharePointField()
+    grant_issue_year = DRPSearchSharePointField()
+    grant_expiry_date = DRPSearchSharePointField()
+    external_reference = DRPSearchSharePointField()
+    recipient_office = DRPSearchMultiSharePointField()
+    report_type = DRPSearchSharePointField()
+    report_end_date = DRPSearchSharePointField()
+    theme = DRPSearchSharePointField()
+    donor_document = DRPSearchSharePointField()
+    donor_report_category = DRPSearchSharePointField()
+    report_method = DRPSearchSharePointField()
+    report_group = DRPSearchSharePointField()
+    report_status = DRPSearchSharePointField()
+    retracted = DRPSearchSharePointField()
+    framework_agreement = DRPSearchSharePointField()
+    award_type = DRPSearchSharePointField()
+
+
+class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    number = CTNSearchSharePointField()
+    m_o_u_number = CTNSearchSharePointField()
+    m_o_u_r_eference = CTNSearchSharePointField()
+    sent_to_g_a_v_i_date = CTNSearchSharePointField()
+    funds_due_date = CTNSearchSharePointField()
+    g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
+    country_name = CTNSearchMultiSharePointField()
+    vaccine_type = CTNSearchMultiSharePointField()
+    purchase_order = CTNSearchMultiSharePointField()
+    material_code = CTNSearchMultiSharePointField()
+    approval_year = CTNSearchSharePointField()
+    prepaid_status = CTNSearchSharePointField()
+    allocation_round = CTNSearchSharePointField()
+    vendor = CTNSearchSharePointField()
+    urgent = CTNSearchSharePointField()

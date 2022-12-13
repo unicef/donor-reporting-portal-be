@@ -5,24 +5,24 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET, POST, HEAD, OPTIONS",
         "X-Frame-Options": "DENY",
-        "Content-Length": "251",
+        "Content-Length": "253",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "same-origin"
     },
     "data": [
         {
-            "id": 67,
-            "user": 178,
-            "group": 83,
-            "donor": 94,
+            "id": 140,
+            "user": 370,
+            "group": 168,
+            "donor": 127,
             "secondary_donor": null,
             "group_name": "name001",
             "donor_name": "",
-            "notification_period": "every_day",
+            "notification_period": "none",
             "user_last_login": null,
-            "user_email": "m010@mailinator.com",
-            "user_first_name": "David",
-            "user_last_name": "Pearson"
+            "user_email": "m009@mailinator.com",
+            "user_first_name": "Warren",
+            "user_last_name": "Richardson"
         }
     ],
     "content_type": "application/json"

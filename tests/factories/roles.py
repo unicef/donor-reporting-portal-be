@@ -4,7 +4,7 @@ from django.db.models import signals
 import factory
 import unicef_security
 from factory import SubFactory
-from unicef_security.models import BusinessArea, Region
+from unicef_realm.models import BusinessArea, Region
 
 from donor_reporting_portal.apps.roles.models import UserRole
 from tests.factories import DonorFactory
