@@ -101,7 +101,7 @@
     "model": "auth.group",
     "pk": 10,
     "fields": {
-        "name": "MOU 9 - YF-DIAG",
+        "name": "MOU 9 CTN - YF-DIAG",
         "permissions": []
     }
 }
