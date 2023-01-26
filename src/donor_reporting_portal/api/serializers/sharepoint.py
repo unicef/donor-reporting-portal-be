@@ -140,6 +140,7 @@ class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
 
 
 class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    donor_code = DRPSearchSharePointField()
     number = CTNSearchSharePointField()
     m_o_u_number = CTNSearchSharePointField()
     m_o_u_r_eference = CTNSearchSharePointField()
