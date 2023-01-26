@@ -1,6 +1,10 @@
+Release 2.0.1
+----------------
+* fix forget password feature
+
+
 Release 2.0
 ----------------
-* update do django 4
 * GAVI CTN
 
 
