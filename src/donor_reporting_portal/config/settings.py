@@ -280,7 +280,7 @@ EMAIL_PORT = env('EMAIL_PORT', default=25)
 EMAIL_USE_TLS = env('EMAIL_USE_TLS', default=False)
 EMAIL_USE_SSL = env('EMAIL_USE_SSL', default=False)
 
-SOCIAL_AUTH_KEY = env('AZURE_B2C_CLIENT_ID', default=None)
+KEY = SOCIAL_AUTH_KEY = env('AZURE_B2C_CLIENT_ID', default=None)
 SOCIAL_AUTH_SECRET = env('AZURE_B2C_CLIENT_SECRET', default=None)
 SOCIAL_AUTH_TENANT_NAME = env('TENANT_NAME', default='unicefpartners')
 SOCIAL_AUTH_TENANT_ID = f'{SOCIAL_AUTH_TENANT_NAME}.onmicrosoft.com'
