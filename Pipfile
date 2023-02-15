@@ -33,7 +33,7 @@ bleach = {extras = ["css"],version = "*"}
 celery = "*"
 dj-database-url = "*"
 dj-static = "*"
-Django = "<4.1"
+Django = "<4.2"
 django-adminactions = "*"
 django-celery-beat = "*"
 django-celery-email = "*"
