@@ -1,6 +1,13 @@
+Release 2.1
+----------------
+* updated to python 3.11
+* updated to django 4.2
+* updated office365 2.4
+
+
 Release 2.0.3
 ----------------
-* update vaccine type metadata
+* updated vaccine type metadata
 
 
 Release 2.0.2

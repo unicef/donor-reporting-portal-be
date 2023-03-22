@@ -206,7 +206,7 @@ def notify_donor(donor_code):
 @app.task
 def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
     """notify GAVI and spawn one task per group"""
-    logger.info('Notifing GAVI')
+    logger.info('Notifying GAVI')
     for group_name in Group.objects.filter(name__startswith='MOU').values_list('name', flat=True):
         notify_gavi_donor_ctn.delay(donor_code, group_name)
 
@@ -214,7 +214,7 @@ def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
 @app.task
 def notify_gavi_donor_ctn(donor_code, group_name):
     """notify a GAVI group"""
-    logger.info(f'Notifing {donor_code}')
+    logger.info(f'Notifying {donor_code}')
     notifier = GaviNotifier(donor_code, group_name)
     notifier.notify()
 

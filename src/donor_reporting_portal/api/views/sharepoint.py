@@ -1,6 +1,12 @@
+import csv
+
 from django.conf import settings
+from django.http import HttpResponse
+from django.utils import timezone
 
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
 from sharepoint_rest_api.views.settings_based import (
@@ -129,6 +135,30 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
 
 class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
     """DRP Search Viewset for settings based"""
+
+    @action(detail=False, methods=['get'])
+    def export(self, request, *args, **kwargs):
+
+        exit_condition = True
+        response = HttpResponse(content_type='text/csv')
+        filename = 'drp_export_{}.csv'.format(timezone.now().date())
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+        headers = ["CTNNumber", "CTNMOUNumber", "CTNMOUREference", "CTNSentToGAVIDate", "CTNFundsDueDate",
+                   "CTNGAVIWBS", "CTNCountryName", "CTNVaccineType", "CTNPurchaseOrder", "CTNMaterialCode",
+                   "CTNApprovalYear", "CTNPrepaidStatus", "CTNAllocationRound", "CTNVendor", "CTNUrgent", "Title"]
+        writer = csv.writer(response)
+        page = 1
+        qs = self.get_queryset(page=page)
+        writer.writerow([str(item['Key']).replace('CTN', "") for item in qs[0] if item['Key'] in headers])
+        while exit_condition:
+            for row in qs:
+                writer.writerow(
+                    [str(item['Value']) if item['Value'] else '-' for item in row if item['Key'] in headers])
+            exit_condition = page * SHAREPOINT_PAGE_SIZE < self.total_rows
+            page += 1
+            qs = self.get_queryset(page=page)
+        return response
 
 
 class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
