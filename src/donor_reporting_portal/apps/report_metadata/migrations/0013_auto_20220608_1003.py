@@ -5,16 +5,15 @@ from django.db import migrations
 
 def clean_metadata(apps, schema_editor):
     ContentType = apps.get_model("contenttypes", "ContentType")
-    qs = ContentType.objects.filter(app_label='unicef_security', model__in=['region', 'businessarea'])
+    qs = ContentType.objects.filter(
+        app_label="unicef_security", model__in=["region", "businessarea"]
+    )
     qs.delete()
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0012_grant_business_areas'),
+        ("report_metadata", "0012_grant_business_areas"),
     ]
 
-    operations = [
-        migrations.RunPython(clean_metadata, migrations.RunPython.noop)
-    ]
+    operations = [migrations.RunPython(clean_metadata, migrations.RunPython.noop)]

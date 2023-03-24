@@ -4,7 +4,8 @@ name = "access_grant_email"
 defaults = {
     "description": "Access to UNICEF Donor Reporting Portal",
     "subject": "Access to UNICEF Donor Reporting Portal",
-    "content": strip_text("""Dear {{ instance.first_name }},
+    "content": strip_text(
+        """Dear {{ instance.first_name }},
 
     You have been granted access to UNICEF Donor Reporting Portal.
 
@@ -12,7 +13,8 @@ defaults = {
     username is your e-mail address provided at the time of account registration.
 
     Thank you.
-    """),
+    """
+    ),
     "html_content": """Dear {{ instance.first_name }},<br/><br/>
 
     You have been granted access to UNICEF Donor Reporting Portal.<br/><br/>

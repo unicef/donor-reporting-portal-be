@@ -6,22 +6,27 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0008_secondarydonor'),
-        ('auth', '0011_update_proxy_permissions'),
+        ("report_metadata", "0008_secondarydonor"),
+        ("auth", "0011_update_proxy_permissions"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('roles', '0003_auto_20191007_1102'),
+        ("roles", "0003_auto_20191007_1102"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='userrole',
-            name='secondary_donor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='roles', to='report_metadata.SecondaryDonor'),
+            model_name="userrole",
+            name="secondary_donor",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="roles",
+                to="report_metadata.SecondaryDonor",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='userrole',
-            unique_together={('user', 'group', 'donor', 'secondary_donor')},
+            name="userrole",
+            unique_together={("user", "group", "donor", "secondary_donor")},
         ),
     ]

@@ -2,17 +2,15 @@
 
 from django.db import migrations
 
+
 def migrate_workspace(apps, schema_editor):
     UserRole = apps.get_model("roles", "UserRole")
-    UserRole.objects.update(notification_period='none')
+    UserRole.objects.update(notification_period="none")
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('roles', '0007_alter_userrole_notification_period'),
+        ("roles", "0007_alter_userrole_notification_period"),
     ]
 
-    operations = [
-        migrations.RunPython(migrate_workspace, migrations.RunPython.noop)
-    ]
+    operations = [migrations.RunPython(migrate_workspace, migrations.RunPython.noop)]

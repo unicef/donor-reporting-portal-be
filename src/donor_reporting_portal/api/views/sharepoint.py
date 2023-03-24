@@ -68,97 +68,103 @@ class DRPSharePointUrlFileViewSet(SharePointUrlFileViewSet):
 
 
 class DRPSharePointSettingsFileViewSet(SharePointSettingsFileViewSet):
-    permission_classes = (DonorPermission, )
+    permission_classes = (DonorPermission,)
 
 
 class DRPSharepointSearchViewSet(SharePointSearchViewSet):
-    prefix = 'DRP'
+    prefix = "DRP"
     serializer_class = DRPSharePointSearchSerializer
 
     def get_serializer_class(self):
         query_params = self.request.query_params
-        if query_params.get("serializer") == 'gavi':
+        if query_params.get("serializer") == "gavi":
             return GaviSharePointSearchSerializer
         return super().get_serializer_class()
 
     def is_public(self):
         """check if the source id is public or restricted to UNICEF users"""
-        source_id = self.request.query_params.get('source_id', None)
-        public = source_id in [settings.DRP_SOURCE_IDS['thematic_internal'],
-                               settings.DRP_SOURCE_IDS['thematic_external']]
+        source_id = self.request.query_params.get("source_id", None)
+        public = source_id in [
+            settings.DRP_SOURCE_IDS["thematic_internal"],
+            settings.DRP_SOURCE_IDS["thematic_external"],
+        ]
         if public:
             return True
-        unicef_user = self.request.user.username.endswith('@unicef.org')
-        return unicef_user and source_id in [settings.DRP_SOURCE_IDS['internal'],
-                                             settings.DRP_SOURCE_IDS['pool_internal']]
+        unicef_user = self.request.user.username.endswith("@unicef.org")
+        return unicef_user and source_id in [
+            settings.DRP_SOURCE_IDS["internal"],
+            settings.DRP_SOURCE_IDS["pool_internal"],
+        ]
 
     def get_selected(self, selected):
         def to_drp(source, value):
-            prefix = 'CTN' if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else 'DRP'
+            prefix = "CTN" if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else "DRP"
             return prefix + to_camel(source)
 
         autofields = [to_drp(key, value) for key, value in self.get_serializer_class()._declared_fields.items()]
-        selected = selected.split(',') if selected else autofields
+        selected = selected.split(",") if selected else autofields
         return selected + ["Title", "Author", "Path"]
 
     def get_filters(self, kwargs):
         # we can enforce filters here
-        kwargs.pop('serializer', None)
+        kwargs.pop("serializer", None)
         new_kwargs = {
             # 'IsDocument': '1',
         }
-        drp_fields = [key for key, value in self.get_serializer_class()._declared_fields.items()
-                      if isinstance(value, DRPSearchSharePointField)]
+        drp_fields = [
+            key
+            for key, value in self.get_serializer_class()._declared_fields.items()
+            if isinstance(value, DRPSearchSharePointField)
+        ]
 
-        ctn_fields = [key for key, value in self.get_serializer_class()._declared_fields.items()
-                      if isinstance(value, CTNSearchSharePointField)]
+        ctn_fields = [
+            key
+            for key, value in self.get_serializer_class()._declared_fields.items()
+            if isinstance(value, CTNSearchSharePointField)
+        ]
 
         for key, value in kwargs.items():
-            key_splits = key.split('__')
+            key_splits = key.split("__")
             filter_name = key_splits[0]
             filter_type = key_splits[-1] if len(key_splits) > 1 else None
             if filter_name in drp_fields:
                 new_key = self.prefix + to_camel(filter_name)
                 if filter_type:
-                    new_key = f'{new_key}__{filter_type}'
+                    new_key = f"{new_key}__{filter_type}"
                 new_kwargs[new_key] = value
             elif filter_name in ctn_fields:
-                new_key = 'CTN' + to_camel(filter_name)
+                new_key = "CTN" + to_camel(filter_name)
                 if filter_type:
-                    new_key = f'{new_key}__{filter_type}'
+                    new_key = f"{new_key}__{filter_type}"
                 new_kwargs[new_key] = value
             else:
                 new_kwargs[key] = value
 
         return new_kwargs
 
-
-class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
-    """DRP Search Viewset for settings based"""
-
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=["get"])
     def export(self, request, *args, **kwargs):
-
         exit_condition = True
-        response = HttpResponse(content_type='text/csv')
-        filename = 'drp_export_{}.csv'.format(timezone.now().date())
-        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        response = HttpResponse(content_type="text/csv")
+        filename = "drp_export_{}.csv".format(timezone.now().date())
+        response["Content-Disposition"] = f'attachment; filename="{filename}"'
 
-        headers = ["CTNNumber", "CTNMOUNumber", "CTNMOUREference", "CTNSentToGAVIDate", "CTNFundsDueDate",
-                   "CTNGAVIWBS", "CTNCountryName", "CTNVaccineType", "CTNPurchaseOrder", "CTNMaterialCode",
-                   "CTNApprovalYear", "CTNPrepaidStatus", "CTNAllocationRound", "CTNVendor", "CTNUrgent", "Title"]
+        headers = self.get_serializer_class().export_headers
         writer = csv.writer(response)
         page = 1
         qs = self.get_queryset(page=page)
-        writer.writerow([str(item['Key']).replace('CTN', "") for item in qs[0] if item['Key'] in headers])
+        writer.writerow([key.replace("CTN", "") for key in qs[0].keys() if key in headers])
         while exit_condition:
             for row in qs:
-                writer.writerow(
-                    [str(item['Value']) if item['Value'] else '-' for item in row if item['Key'] in headers])
+                writer.writerow([str(value) for key, value in row.items() if key in headers])
             exit_condition = page * SHAREPOINT_PAGE_SIZE < self.total_rows
             page += 1
             qs = self.get_queryset(page=page)
         return response
+
+
+class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
+    """DRP Search Viewset for settings based"""
 
 
 class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):

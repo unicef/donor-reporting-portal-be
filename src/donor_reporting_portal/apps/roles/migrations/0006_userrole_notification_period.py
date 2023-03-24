@@ -4,15 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('roles', '0005_auto_20200302_1609'),
+        ("roles", "0005_auto_20200302_1609"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='userrole',
-            name='notification_period',
-            field=models.CharField(choices=[('none', 'Disabled'), ('every_day', 'Every Day'), ('every_monday', 'Every Monday'), ('every_month', 'Every Month')], default='every_day', max_length=16, verbose_name='Notification Period'),
+            model_name="userrole",
+            name="notification_period",
+            field=models.CharField(
+                choices=[
+                    ("none", "Disabled"),
+                    ("every_day", "Every Day"),
+                    ("every_monday", "Every Monday"),
+                    ("every_month", "Every Month"),
+                ],
+                default="every_day",
+                max_length=16,
+                verbose_name="Notification Period",
+            ),
         ),
     ]

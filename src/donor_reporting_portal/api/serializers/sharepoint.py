@@ -23,15 +23,14 @@ from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
 class SharePointGroupSerializer(serializers.ModelSerializer):
-    libs = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+    libs = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
 
     class Meta:
         model = SharePointGroup
-        fields = '__all__'
+        fields = "__all__"
 
 
 class DRPSerializerMixin(serializers.Serializer):
-
     report_generated_by = SharePointPropertyField()
     year = SharePointPropertyField()
     donor = SharePointPropertyField()
@@ -58,7 +57,7 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_is_new(self, obj):
         try:
-            modified = parse(obj.properties['Modified'][:19], ignoretz=True)
+            modified = parse(obj.properties["Modified"][:19], ignoretz=True)
             day_difference = (datetime.now() - modified).days
             return day_difference <= 3
         except (TypeError, ValueError):
@@ -66,8 +65,8 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
-        donor_code = obj.properties['DonorCode'].replace(';', ',')
-        return f'{base_url}?donor_code={donor_code}'
+        donor_code = obj.properties["DonorCode"].replace(";", ",")
+        return f"{base_url}?donor_code={donor_code}"
 
 
 class DRPSharePointUrlSerializer(DRPSerializerMixin, SharePointUrlSerializer):
@@ -89,8 +88,12 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
     is_new = serializers.SerializerMethodField()
     download_url = serializers.SerializerMethodField()
 
+    export_headers = [
+        "Title",
+    ]
+
     def get_is_new(self, obj):
-        modified = getvalue(obj, 'DRPModified')
+        modified = getvalue(obj, "DRPModified")
 
         if modified:
             try:
@@ -101,17 +104,17 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
 
     def get_download_url(self, obj):
         try:
-            path = getvalue(obj, 'Path')
-            directories = path.split('/')
-            relative_url = reverse('sharepoint_rest_api:sharepoint-settings-files-download', kwargs={
-                'folder': directories[-2],
-                'filename': directories[-1]
-            })
-            base_url = f'{settings.HOST}{relative_url}'
-            donor_code = getvalue(obj, 'DRPDonorCode')
+            path = getvalue(obj, "Path")
+            directories = path.split("/")
+            relative_url = reverse(
+                "sharepoint_rest_api:sharepoint-settings-files-download",
+                kwargs={"folder": directories[-2], "filename": directories[-1]},
+            )
+            base_url = f"{settings.HOST}{relative_url}"
+            donor_code = getvalue(obj, "DRPDonorCode")
             if donor_code:
-                donor_code = donor_code.replace(';', ',')
-                base_url = f'{base_url}?donor_code={donor_code}'
+                donor_code = donor_code.replace(";", ",")
+                base_url = f"{base_url}?donor_code={donor_code}"
             return base_url
         except BaseException:
             return None
@@ -138,6 +141,21 @@ class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
     framework_agreement = DRPSearchSharePointField()
     award_type = DRPSearchSharePointField()
 
+    export_headers = [
+        "DRPDonor",
+        "DRPGrantNumber",
+        "DRPIssueYear",
+        "DRPExternalReference",
+        "DRPRecipientOffice",
+        "DRPReportType",
+        "DRPTheme",
+        "DRPDonorDocument" "DRPReportMethod",
+        "DRPReportGroup",
+        "DRPReportStatus" "DRPRetracted",
+        "DRPFrameworkAgreement",
+        "DRPAwardType",
+    ]
+
 
 class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
     donor_code = DRPSearchSharePointField()
@@ -156,3 +174,22 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
     allocation_round = CTNSearchSharePointField()
     vendor = CTNSearchSharePointField()
     urgent = CTNSearchSharePointField()
+
+    export_headers = [
+        "CTNNumber",
+        "CTNMOUNumber",
+        "CTNMOUREference",
+        "CTNSentToGAVIDate",
+        "CTNFundsDueDate",
+        "CTNGAVIWBS",
+        "CTNCountryName",
+        "CTNVaccineType",
+        "CTNPurchaseOrder",
+        "CTNMaterialCode",
+        "CTNApprovalYear",
+        "CTNPrepaidStatus",
+        "CTNAllocationRound",
+        "CTNVendor",
+        "CTNUrgent",
+        "Title",
+    ]

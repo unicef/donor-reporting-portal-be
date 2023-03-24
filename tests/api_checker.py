@@ -18,17 +18,19 @@ def frozenfixture(fixture_name=default_fixture_name, is_fixture=True):
 
         @wraps(func)
         def _inner(*args, **kwargs):
-            if is_fixture and 'request' not in kwargs:
-                raise ValueError('frozenfixture must have `request` argument')
-            request = kwargs.get('request', None)
-            parts = [os.path.dirname(func.__code__.co_filename),
-                     BASE_DATADIR,
-                     func.__module__,
-                     func.__name__]
+            if is_fixture and "request" not in kwargs:
+                raise ValueError("frozenfixture must have `request` argument")
+            request = kwargs.get("request", None)
+            parts = [
+                os.path.dirname(func.__code__.co_filename),
+                BASE_DATADIR,
+                func.__module__,
+                func.__name__,
+            ]
             seed = os.path.join(*parts)
             destination = fixture_name(seed, request)
 
-            if not os.path.exists(destination) or os.environ.get('API_CHECKER_RESET'):
+            if not os.path.exists(destination) or os.environ.get("API_CHECKER_RESET"):
                 mktree(os.path.dirname(destination))
                 data = func(*args, **kwargs)
                 dump_fixtures({func.__name__: data}, destination)
@@ -47,7 +49,6 @@ def get_user():
 
 
 class LastModifiedRecorder(Recorder):
-
     @property
     def client(self):
         user = get_user()
@@ -56,12 +57,12 @@ class LastModifiedRecorder(Recorder):
         return client
 
     def assert_modified(self, response: Response, stored: Response, path: str):
-        value = response['modified']
-        assert datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f%z')
+        value = response["modified"]
+        assert datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f%z")
 
     def assert_created(self, response: Response, stored: Response, path: str):
-        value = response['created']
-        assert datetime.datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f%z')
+        value = response["created"]
+        assert datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f%z")
 
 
 class ExpectedErrorRecorder(Recorder):

@@ -13,14 +13,13 @@ from donor_reporting_portal.apps.report_metadata.models import (
 class ThemeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Theme
-        fields = '__all__'
+        fields = "__all__"
 
 
 class DonorSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Donor
-        fields = '__all__'
+        fields = "__all__"
 
 
 class DonorSecondaryDonorSerializer(DonorSerializer):
@@ -34,22 +33,22 @@ class DonorSecondaryDonorSerializer(DonorSerializer):
 class ExternalGrantSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalGrant
-        fields = '__all__'
+        fields = "__all__"
 
 
 class GrantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Grant
-        fields = '__all__'
+        fields = "__all__"
 
 
 class SecondaryDonorSerializer(serializers.ModelSerializer):
     class Meta:
         model = SecondaryDonor
-        fields = '__all__'
+        fields = "__all__"
 
 
 class DRPMetadataSerializer(serializers.ModelSerializer):
     class Meta:
         model = DRPMetadata
-        fields = ('category', 'code', 'description', 'audience')
+        fields = ("category", "code", "description", "audience")

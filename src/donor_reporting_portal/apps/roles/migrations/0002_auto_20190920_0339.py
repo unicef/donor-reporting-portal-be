@@ -4,14 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('roles', '0001_initial'),
+        ("roles", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='userrole',
-            options={'permissions': (('is_unicef_user', 'Is UNICEF User'),), 'verbose_name': 'User Role', 'verbose_name_plural': 'User Roles'},
+            name="userrole",
+            options={
+                "permissions": (("is_unicef_user", "Is UNICEF User"),),
+                "verbose_name": "User Role",
+                "verbose_name_plural": "User Roles",
+            },
         ),
     ]

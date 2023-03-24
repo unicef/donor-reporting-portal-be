@@ -6,26 +6,63 @@ import model_utils.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0009_donor_active'),
+        ("report_metadata", "0009_donor_active"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DRPMetadata',
+            name="DRPMetadata",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('category', models.CharField(max_length=128, verbose_name='Category')),
-                ('code', models.CharField(blank=True, max_length=128, null=True, verbose_name='Code')),
-                ('description', models.CharField(max_length=128, verbose_name='Description')),
-                ('audience', models.CharField(choices=[('int', 'int'), ('ext', 'ext'), ('all', 'all')], default='all', max_length=4, verbose_name='Audience')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                ("category", models.CharField(max_length=128, verbose_name="Category")),
+                (
+                    "code",
+                    models.CharField(
+                        blank=True, max_length=128, null=True, verbose_name="Code"
+                    ),
+                ),
+                (
+                    "description",
+                    models.CharField(max_length=128, verbose_name="Description"),
+                ),
+                (
+                    "audience",
+                    models.CharField(
+                        choices=[("int", "int"), ("ext", "ext"), ("all", "all")],
+                        default="all",
+                        max_length=4,
+                        verbose_name="Audience",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Metadata',
-                'verbose_name_plural': 'Metadata',
+                "verbose_name": "Metadata",
+                "verbose_name_plural": "Metadata",
             },
         ),
     ]

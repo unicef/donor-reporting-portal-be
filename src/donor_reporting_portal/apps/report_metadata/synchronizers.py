@@ -9,30 +9,30 @@ from .models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 logger = logging.getLogger(__name__)
 
 
-def get_date(date_string, format='%d-%b-%y'):
+def get_date(date_string, format="%d-%b-%y"):
     if date_string:
         return datetime.strptime(date_string, format)
 
 
 def get_type(record):
-    if record['THEMATIC']:
+    if record["THEMATIC"]:
         return Grant.THEMATIC
-    elif record['USGOV_FLAG']:
+    elif record["USGOV_FLAG"]:
         return Grant.FFR
     return Grant.STANDARD
 
 
 class GrantSynchronizer(VisionDataSynchronizer):
-    ENDPOINT = 'dsgrants'
+    ENDPOINT = "dsgrants"
     GLOBAL_CALL = True
     REQUIRED_KEYS = (
-        'DONOR_CODE',
-        'DONOR_NAME',
-        'GRANT_REF',
+        "DONOR_CODE",
+        "DONOR_NAME",
+        "GRANT_REF",
     )
 
     def _convert_records(self, records):
-        return records['ROWSET']['ROW']
+        return records["ROWSET"]["ROW"]
 
     def _save_records(self, records):
         processed = 0
@@ -54,35 +54,42 @@ class GrantSynchronizer(VisionDataSynchronizer):
     def _item_save(record):
         logger.info(f'parsing {record["GRANT_REF"]}')
 
-        donor, _ = Donor.objects.update_or_create(code=record['DONOR_CODE'], defaults={
-            'name': record['DONOR_NAME'],
-            'us_gov': bool(record['USGOV_FLAG'])
-        })
+        donor, _ = Donor.objects.update_or_create(
+            code=record["DONOR_CODE"],
+            defaults={
+                "name": record["DONOR_NAME"],
+                "us_gov": bool(record["USGOV_FLAG"]),
+            },
+        )
         grant_defaults = {
-            'year': record['ISSUE_YEAR'],
-            'expiry_date': get_date(record['EXPIRY_DATE']),
-            'financial_close_date': get_date(record.get('FINANCIALLY_CLOSE_DATE', None)),
-            'description': record['DESCRIPTION'],
-            'donor': donor,
-            'category': get_type(record),
+            "year": record["ISSUE_YEAR"],
+            "expiry_date": get_date(record["EXPIRY_DATE"]),
+            "financial_close_date": get_date(record.get("FINANCIALLY_CLOSE_DATE", None)),
+            "description": record["DESCRIPTION"],
+            "donor": donor,
+            "category": get_type(record),
         }
-        grant, _ = Grant.objects.update_or_create(code=record['GRANT_REF'], defaults=grant_defaults)
-        if record['THEMATIC']:
-            theme, _ = Theme.objects.get_or_create(name=record['THEMATIC'])
-            grant_defaults['theme'] = theme
-        if record['EXTERNAL_REF']:
+        grant, _ = Grant.objects.update_or_create(code=record["GRANT_REF"], defaults=grant_defaults)
+        if record["THEMATIC"]:
+            theme, _ = Theme.objects.get_or_create(name=record["THEMATIC"])
+            grant_defaults["theme"] = theme
+        if record["EXTERNAL_REF"]:
             external_grant, _ = ExternalGrant.objects.get_or_create(
-                code=record['EXTERNAL_REF'], defaults={'donor': donor})
+                code=record["EXTERNAL_REF"], defaults={"donor": donor}
+            )
 
-        if record.get('RECIPIENT_OFFICE_CODE', None):
-            grant.business_areas.set(BusinessArea.objects.filter(code__in=record['RECIPIENT_OFFICE_CODE'].split('; ')))
+        if record.get("RECIPIENT_OFFICE_CODE", None):
+            grant.business_areas.set(BusinessArea.objects.filter(code__in=record["RECIPIENT_OFFICE_CODE"].split("; ")))
 
-        if record.get('SECONDARY_DONOR_CODE', None):
-            secondary_donors_codes = record['SECONDARY_DONOR_CODE'].split(';')
-            secondary_donors_names = record['SECONDARY_DONOR'].split(';')
+        if record.get("SECONDARY_DONOR_CODE", None):
+            secondary_donors_codes = record["SECONDARY_DONOR_CODE"].split(";")
+            secondary_donors_names = record["SECONDARY_DONOR"].split(";")
             assert len(secondary_donors_codes) == len(secondary_donors_names)
             for code, name in zip(secondary_donors_codes, secondary_donors_names):
-                secondary_donor, _, = SecondaryDonor.objects.get_or_create(code=code, defaults={'name': name})
+                (
+                    secondary_donor,
+                    _,
+                ) = SecondaryDonor.objects.get_or_create(code=code, defaults={"name": name})
                 secondary_donor.grants.add(grant)
 
         return 1

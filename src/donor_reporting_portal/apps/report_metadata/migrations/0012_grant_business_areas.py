@@ -4,16 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('unicef_realm', '0001_initial'),
-        ('report_metadata', '0011_remove_grant_business_areas'),
+        ("unicef_realm", "0001_initial"),
+        ("report_metadata", "0011_remove_grant_business_areas"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='grant',
-            name='business_areas',
-            field=models.ManyToManyField(blank=True, to='unicef_realm.businessarea', verbose_name='Business Areas'),
+            model_name="grant",
+            name="business_areas",
+            field=models.ManyToManyField(
+                blank=True,
+                to="unicef_realm.businessarea",
+                verbose_name="Business Areas",
+            ),
         ),
     ]

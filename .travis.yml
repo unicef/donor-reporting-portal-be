@@ -1,8 +1,8 @@
-dist: xenial
+dist: jammy
 language: python
 
 python:
-  - 3.9
+  - "3.11"
 
 env:
   global:
@@ -12,17 +12,18 @@ env:
     - INSIGHT_URL=https://uniapis.unicef.org/biapi/v1/
     - SHAREPOINT_CONNECTION=user
   jobs:
-    - DJANGO=4.0
-
-addons:
-  postgresql: "10"
-  apt:
-    packages:
-    - postgresql-10
-    - postgresql-client-10
+    - DJANGO=4.1
 
 services:
-  - redis
+  - postgres
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:chris-lea/redis-server'
+    packages:
+    - redis-tools
+    - redis-server
 
 install:
   - pip install tox codecov
