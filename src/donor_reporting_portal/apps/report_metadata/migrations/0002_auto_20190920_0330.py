@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0001_initial'),
+        ("report_metadata", "0001_initial"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='ExternalReferenceGrant',
-            new_name='ExternalGrant',
+            old_name="ExternalReferenceGrant",
+            new_name="ExternalGrant",
         ),
     ]

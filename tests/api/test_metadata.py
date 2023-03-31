@@ -35,40 +35,46 @@ def external_grant(request, db):
 
 
 @frozenfixture()
-def grant(request, db,):
+def grant(
+    request,
+    db,
+):
     return GrantFactory()
 
 
 @frozenfixture()
-def metadata(request, db,):
+def metadata(
+    request,
+    db,
+):
     return DRPMetadataFactory()
 
 
 @contract(recorder_class=LastModifiedRecorder)
 def test_api_theme_list(request, django_app, logged_user, theme):
-    return reverse('api:theme-list')
+    return reverse("api:theme-list")
 
 
 @contract(recorder_class=LastModifiedRecorder)
 def test_api_donor_list(request, django_app, logged_user, donor):
-    return reverse('api:donor-list')
+    return reverse("api:donor-list")
 
 
 @contract(recorder_class=LastModifiedRecorder)
 def test_api_my_donor_list_unicef_user(request, django_app, logged_user, donor):
-    with user_grant_permissions(logged_user, permissions=['roles.can_view_all_donors']):
-        return reverse('api:donor-my-donors')
+    with user_grant_permissions(logged_user, permissions=["roles.can_view_all_donors"]):
+        return reverse("api:donor-my-donors")
 
 
 @contract(recorder_class=LastModifiedRecorder)
 def test_api_my_donor_list_donor(request, django_app, logged_user, donor):
-    with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
-        return reverse('api:donor-my-donors')
+    with user_grant_role_permission(logged_user, donor, permissions=["report_metadata.view_donor"]):
+        return reverse("api:donor-my-donors")
 
 
 @contract(recorder_class=ExpectedErrorRecorder)
 def test_api_my_donor_list_fail(request, django_app, logged_user, donor):
-    return reverse('api:donor-my-donors')
+    return reverse("api:donor-my-donors")
 
 
 # @contract(recorder_class=LastModifiedRecorder)
@@ -81,17 +87,17 @@ def test_api_my_donor_list_fail(request, django_app, logged_user, donor):
 
 @contract(recorder_class=ExpectedErrorRecorder)
 def test_api_my_admin_donor_list_donor_fail(request, django_app, logged_user, donor):
-    return reverse('api:donor-my-admin-donors')
+    return reverse("api:donor-my-admin-donors")
 
 
 def test_api_external_grant_list(request, django_app, logged_user, external_grant):
-    return reverse('api:external_grant-list', kwargs={'donor_id': external_grant.donor.pk})
+    return reverse("api:external_grant-list", kwargs={"donor_id": external_grant.donor.pk})
 
 
 def test_api_grant_list(request, django_app, logged_user, grant):
-    return reverse('api:grant-list', kwargs={'donor_id': grant.donor.pk})
+    return reverse("api:grant-list", kwargs={"donor_id": grant.donor.pk})
 
 
 @contract(recorder_class=LastModifiedRecorder)
 def test_metadata_list(request, django_app, logged_user, metadata):
-    return reverse('api:drpmetadata-list')
+    return reverse("api:drpmetadata-list")

@@ -4,19 +4,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0003_auto_20190920_0615'),
+        ("report_metadata", "0003_auto_20190920_0615"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='grant',
-            name='external_grant',
+            model_name="grant",
+            name="external_grant",
         ),
         migrations.AddField(
-            model_name='grant',
-            name='description',
-            field=models.CharField(blank=True, max_length=516, null=True, verbose_name='Description'),
+            model_name="grant",
+            name="description",
+            field=models.CharField(
+                blank=True, max_length=516, null=True, verbose_name="Description"
+            ),
         ),
     ]

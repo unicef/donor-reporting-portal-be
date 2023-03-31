@@ -4,15 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0004_auto_20191011_0804'),
+        ("report_metadata", "0004_auto_20191011_0804"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='grant',
-            name='category',
-            field=models.CharField(choices=[('STD', 'Standard'), ('THE', 'Thematic'), ('FFR', 'Us Gov'), ('JPO', 'JPO Summary')], max_length=16, verbose_name='Category'),
+            model_name="grant",
+            name="category",
+            field=models.CharField(
+                choices=[
+                    ("STD", "Standard"),
+                    ("THE", "Thematic"),
+                    ("FFR", "Us Gov"),
+                    ("JPO", "JPO Summary"),
+                ],
+                max_length=16,
+                verbose_name="Category",
+            ),
         ),
     ]

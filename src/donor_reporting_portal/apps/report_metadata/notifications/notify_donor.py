@@ -4,7 +4,8 @@ name = "notify_donor"
 defaults = {
     "description": "Notify Donor",
     "subject": "Updated reports available in UNICEF DRP",
-    "content": strip_text("""Dear user,
+    "content": strip_text(
+        """Dear user,
 
     The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).
 
@@ -22,7 +23,8 @@ defaults = {
     Please do not reply. For any questions on the reports, please contact your UNICEF colleague.
 
     Regards.
-    """),
+    """
+    ),
     "html_content": """Dear user,<br/><br/>
 
     The following reports have been updated in the Donor Reporting Portal (drp.unicef.org).

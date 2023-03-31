@@ -25,7 +25,7 @@ elif [[ "$*" == "beat" ]];then
             --pidfile run/celerybeat.pid
 
 elif [[ "$*" == "w2" ]];then
-    django-admin db-isready --wait --timeout 60
+    django-admin db_isready --wait --timeout 60
 
 elif [[ "$*" == "donor_reporting_portal" ]];then
     rm -f /var/donor_reporting_portal/run/*
@@ -33,11 +33,11 @@ elif [[ "$*" == "donor_reporting_portal" ]];then
     django-admin diffsettings --output unified
 #    django-admin makemigrations --check --dry-run
 
-    django-admin db-isready --wait --timeout 60
+    django-admin db_isready --wait --timeout 60
     django-admin check --deploy
     django-admin remove_stale_contenttypes --noinput
-    django-admin init-setup --all --verbosity 2
-    django-admin db-isready --wait --timeout 300
+    django-admin init_setup --all --verbosity 2
+    django-admin db_isready --wait --timeout 300
     echo "uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}"
 #    exec gosu donor_reporting_portal uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}
 #    newrelic-admin run-program

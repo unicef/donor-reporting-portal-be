@@ -8,7 +8,6 @@ import model_utils.fields
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -17,61 +16,213 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Donor',
+            name="Donor",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('name', models.CharField(max_length=64, verbose_name='Name')),
-                ('code', models.CharField(max_length=16, unique=True, verbose_name='Code')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="Name")),
+                (
+                    "code",
+                    models.CharField(max_length=16, unique=True, verbose_name="Code"),
+                ),
             ],
             options={
-                'ordering': ['name'],
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='ExternalReferenceGrant',
+            name="ExternalReferenceGrant",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('code', models.CharField(max_length=64, verbose_name='Code')),
-                ('donor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='report_metadata.Donor', verbose_name='Donor')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                ("code", models.CharField(max_length=64, verbose_name="Code")),
+                (
+                    "donor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="report_metadata.Donor",
+                        verbose_name="Donor",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['code'],
+                "ordering": ["code"],
             },
         ),
         migrations.CreateModel(
-            name='Theme',
+            name="Theme",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('name', models.CharField(max_length=64, verbose_name='Name')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="Name")),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Grant',
+            name="Grant",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('code', models.CharField(max_length=16, unique=True, verbose_name='Code')),
-                ('expiry_date', models.DateField(blank=True, null=True, verbose_name='Expiry Date')),
-                ('financial_close_date', models.DateField(blank=True, null=True, verbose_name='Financial Close Date')),
-                ('year', models.CharField(max_length=4, verbose_name='Year')),
-                ('category', models.CharField(choices=[('STD', 'Standard'), ('THE', 'Thematic'), ('FFR', 'FFR')], max_length=16, verbose_name='Category')),
-                ('business_areas', models.ManyToManyField(blank=True, to=settings.BUSINESSAREA_MODEL, verbose_name='Business Areas')),
-                ('donor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='report_metadata.Donor', verbose_name='Donor')),
-                ('external_reference', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='report_metadata.ExternalReferenceGrant', verbose_name='External Reference')),
-                ('theme', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='report_metadata.Theme', verbose_name='Theme')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                (
+                    "code",
+                    models.CharField(max_length=16, unique=True, verbose_name="Code"),
+                ),
+                (
+                    "expiry_date",
+                    models.DateField(blank=True, null=True, verbose_name="Expiry Date"),
+                ),
+                (
+                    "financial_close_date",
+                    models.DateField(
+                        blank=True, null=True, verbose_name="Financial Close Date"
+                    ),
+                ),
+                ("year", models.CharField(max_length=4, verbose_name="Year")),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("STD", "Standard"),
+                            ("THE", "Thematic"),
+                            ("FFR", "FFR"),
+                        ],
+                        max_length=16,
+                        verbose_name="Category",
+                    ),
+                ),
+                (
+                    "business_areas",
+                    models.ManyToManyField(
+                        blank=True,
+                        to=settings.BUSINESSAREA_MODEL,
+                        verbose_name="Business Areas",
+                    ),
+                ),
+                (
+                    "donor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="report_metadata.Donor",
+                        verbose_name="Donor",
+                    ),
+                ),
+                (
+                    "external_reference",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="report_metadata.ExternalReferenceGrant",
+                        verbose_name="External Reference",
+                    ),
+                ),
+                (
+                    "theme",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="report_metadata.Theme",
+                        verbose_name="Theme",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['donor'],
+                "ordering": ["donor"],
             },
         ),
     ]

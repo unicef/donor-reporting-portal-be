@@ -5,16 +5,22 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0011_remove_grant_business_areas'),
-        ('roles', '0009_auto_20220511_1724'),
+        ("report_metadata", "0011_remove_grant_business_areas"),
+        ("roles", "0009_auto_20220511_1724"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='userrole',
-            name='secondary_donor',
-            field=models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='user_roles', to='report_metadata.secondarydonor'),
+            model_name="userrole",
+            name="secondary_donor",
+            field=models.ForeignKey(
+                blank=True,
+                default=None,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_roles",
+                to="report_metadata.secondarydonor",
+            ),
         ),
     ]

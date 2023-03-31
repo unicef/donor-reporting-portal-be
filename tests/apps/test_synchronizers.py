@@ -8,7 +8,7 @@ from tests.vcrpy import VCR
 
 
 @pytest.mark.django_db
-@VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/test_grant_sync.yml'))
+@VCR.use_cassette(str(Path(__file__).parent / "vcr_cassettes/test_grant_sync.yml"))
 def test_grant_sync():
     assert Donor.objects.count() == 0
     assert Grant.objects.count() == 0

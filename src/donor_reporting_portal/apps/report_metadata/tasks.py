@@ -8,6 +8,6 @@ logger = get_task_logger(__name__)
 
 @app.task
 def grant_sync():
-    logger.info('Grant Sync Area Sync Started')
+    logger.info("Grant Sync Area Sync Started")
     GrantSynchronizer().sync()
-    logger.info('Grant Sync Area Sync Ended')
+    logger.info("Grant Sync Area Sync Ended")

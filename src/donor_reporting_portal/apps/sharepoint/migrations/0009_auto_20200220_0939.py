@@ -4,23 +4,22 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('sharepoint', '0008_auto_20200206_1518'),
+        ("sharepoint", "0008_auto_20200206_1518"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='sharepointsite',
-            name='tenant',
+            model_name="sharepointsite",
+            name="tenant",
         ),
         migrations.DeleteModel(
-            name='SharePointLibrary',
+            name="SharePointLibrary",
         ),
         migrations.DeleteModel(
-            name='SharePointSite',
+            name="SharePointSite",
         ),
         migrations.DeleteModel(
-            name='SharePointTenant',
+            name="SharePointTenant",
         ),
     ]

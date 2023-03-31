@@ -4,7 +4,8 @@ name = "notify_urgent_gavi"
 defaults = {
     "description": "Urgent: Notify GAVI Donor",
     "subject": "Urgent: Updated GAVI reports available in UNICEF DRP",
-    "content": strip_text("""Dear user,
+    "content": strip_text(
+        """Dear user,
 
     The following CTNs have been uploaded in the UNICEF Reporting Portal:
 
@@ -23,7 +24,8 @@ defaults = {
     Please do not reply to this mail.  For any questions on these reports, please contact your UNICEF focal point.
 
     Regards.
-    """),
+    """
+    ),
     "html_content": """Dear user,<br/><br/>
 
     The following CTNs have been uploaded in the UNICEF Reporting Portal:

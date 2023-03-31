@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('sharepoint', '0002_auto_20191105_0444'),
+        ("sharepoint", "0002_auto_20191105_0444"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sharepointlibrary',
-            name='name',
-            field=models.CharField(max_length=64, verbose_name='Name'),
+            model_name="sharepointlibrary",
+            name="name",
+            field=models.CharField(max_length=64, verbose_name="Name"),
         ),
         migrations.AlterField(
-            model_name='sharepointsite',
-            name='wrapper_name',
-            field=models.CharField(max_length=16, verbose_name='Wrapper'),
+            model_name="sharepointsite",
+            name="wrapper_name",
+            field=models.CharField(max_length=16, verbose_name="Wrapper"),
         ),
     ]

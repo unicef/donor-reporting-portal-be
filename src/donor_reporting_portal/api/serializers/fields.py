@@ -13,15 +13,15 @@ class SearchSharePointField(serializers.ReadOnlyField):
 class SearchMultiSharePointField(serializers.ReadOnlyField):
     def get_attribute(self, instance):
         attrs = super().get_attribute(instance)
-        return list(filter(None, attrs.split(';'))) if attrs else []
+        return list(filter(None, attrs.split(";"))) if attrs else []
 
 
 class DRPSearchSharePointField(SearchSharePointField):
-    prefix = 'DRP'
+    prefix = "DRP"
 
 
 class CTNSearchSharePointField(SearchSharePointField):
-    prefix = 'CTN'
+    prefix = "CTN"
 
 
 class DRPSearchMultiSharePointField(SearchMultiSharePointField, DRPSearchSharePointField):
