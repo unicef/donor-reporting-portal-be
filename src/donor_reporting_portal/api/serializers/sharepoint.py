@@ -57,7 +57,7 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_is_new(self, obj):
         try:
-            modified = parse(obj.properties["Modified"][:19], ignoretz=True)
+            modified = parse(getvalue(obj, "Modified")[:19], ignoretz=True)
             day_difference = (datetime.now() - modified).days
             return day_difference <= 3
         except (TypeError, ValueError):

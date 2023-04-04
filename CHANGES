@@ -3,7 +3,7 @@ Release 2.1
 * updated to python 3.11
 * updated to django 4.2
 * updated office365 2.4
-* introduced black and precommit
+* introduced black and pre-commit
 
 
 Release 2.0.3
