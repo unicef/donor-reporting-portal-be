@@ -1,4 +1,4 @@
-FROM python:3.9.13-alpine3.16
+FROM python:3.11.2-alpine3.16
 
 ARG PIPENV_ARGS
 
@@ -55,11 +55,11 @@ RUN apk add --no-cache --virtual .postgis-rundeps-edge \
 RUN apk add --no-cache --virtual .donor_reporting_portal-build-deps \
         freetype-dev \
         fontconfig-dev \
-        freetype-dev \
         jpeg-dev \
         lcms2-dev \
         libffi-dev \
-        libressl-dev \
+        libc-dev \
+        libressl \
         linux-headers \
         musl-dev \
         openjpeg-dev \

@@ -4,16 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('sharepoint_rest_api', '0001_initial'),
-        ('sharepoint', '0010_sharepointgroup'),
+        ("sharepoint_rest_api", "0001_initial"),
+        ("sharepoint", "0010_sharepointgroup"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='sharepointgroup',
-            name='libs',
-            field=models.ManyToManyField(related_name='groups', to='sharepoint_rest_api.SharePointLibrary'),
+            model_name="sharepointgroup",
+            name="libs",
+            field=models.ManyToManyField(
+                related_name="groups", to="sharepoint_rest_api.SharePointLibrary"
+            ),
         ),
     ]

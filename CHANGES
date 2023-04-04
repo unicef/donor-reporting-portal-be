@@ -1,6 +1,14 @@
+Release 2.1
+----------------
+* updated to python 3.11
+* updated to django 4.2
+* updated office365 2.4
+* introduced black and precommit
+
+
 Release 2.0.3
 ----------------
-* update vaccine type metadata
+* updated vaccine type metadata
 
 
 Release 2.0.2
@@ -182,7 +190,7 @@ Release 0.6
 ----------------
 * handled not by donor libraries
 * allowed download of different file extentions (other than pdf)
-* tweaked init-setup
+* tweaked init_setup
 * tweaked static-metadata
 * added retracted field
 * added tenant model
@@ -224,7 +232,7 @@ Release 0.2
 * increased coverage
 * added static endpoint (/api/metadata/static/)
 * added business area endpoint (/api/roles/business-area/)
-* tweaked init-setup
+* tweaked init_setup
 * added my profile API
 
 

@@ -6,28 +6,39 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
+        ("auth", "0012_alter_user_first_name_max_length"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         # ('report_metadata', '0011_grant_businessareas'),
-        ('roles', '0008_auto_20220128_1054'),
+        ("roles", "0008_auto_20220128_1054"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='userrole',
-            name='donor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_roles', to='report_metadata.donor'),
+            model_name="userrole",
+            name="donor",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_roles",
+                to="report_metadata.donor",
+            ),
         ),
         migrations.AlterField(
-            model_name='userrole',
-            name='group',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_roles', to='auth.group'),
+            model_name="userrole",
+            name="group",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_roles",
+                to="auth.group",
+            ),
         ),
         migrations.AlterField(
-            model_name='userrole',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='user_roles', to=settings.AUTH_USER_MODEL),
+            model_name="userrole",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="user_roles",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

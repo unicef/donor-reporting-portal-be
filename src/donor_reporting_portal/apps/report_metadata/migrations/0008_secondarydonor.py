@@ -6,24 +6,48 @@ import model_utils.fields
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0007_auto_20200205_1148'),
+        ("report_metadata", "0007_auto_20200205_1148"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SecondaryDonor',
+            name="SecondaryDonor",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', model_utils.fields.AutoCreatedField(default=django.utils.timezone.now, editable=False, verbose_name='created')),
-                ('modified', model_utils.fields.AutoLastModifiedField(default=django.utils.timezone.now, editable=False, verbose_name='modified')),
-                ('name', models.CharField(max_length=64, verbose_name='Name')),
-                ('code', models.CharField(max_length=16, unique=True, verbose_name='Code')),
-                ('grants', models.ManyToManyField(to='report_metadata.Grant')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "created",
+                    model_utils.fields.AutoCreatedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="created",
+                    ),
+                ),
+                (
+                    "modified",
+                    model_utils.fields.AutoLastModifiedField(
+                        default=django.utils.timezone.now,
+                        editable=False,
+                        verbose_name="modified",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="Name")),
+                (
+                    "code",
+                    models.CharField(max_length=16, unique=True, verbose_name="Code"),
+                ),
+                ("grants", models.ManyToManyField(to="report_metadata.Grant")),
             ],
             options={
-                'ordering': ['name'],
+                "ordering": ["name"],
             },
         ),
     ]

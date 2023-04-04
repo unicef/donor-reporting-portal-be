@@ -14,12 +14,12 @@ class ConfigAPIView(APIView):
 
         return Response(
             {
-                'tracker': {
-                    'site_tracker': settings.MATOMO_SITE_TRACKER,
-                    'site_id': settings.MATOMO_SITE_ID
+                "tracker": {
+                    "site_tracker": settings.MATOMO_SITE_TRACKER,
+                    "site_id": settings.MATOMO_SITE_ID,
                 },
-                'source_id': settings.DRP_SOURCE_IDS,
-                'gavi_donor_code': settings.GAVI_DONOR_CODE
+                "source_id": settings.DRP_SOURCE_IDS,
+                "gavi_donor_code": settings.GAVI_DONOR_CODE,
             },
-            status=status.HTTP_200_OK
+            status=status.HTTP_200_OK,
         )

@@ -24,22 +24,22 @@ class GroupFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Group
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
 
 @factory.django.mute_signals(signals.post_save)
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = unicef_security.models.User
-        django_get_or_create = ('username',)
+        django_get_or_create = ("username",)
 
     username = factory.Sequence(lambda n: "user%03d" % n)
 
-    last_name = factory.Faker('last_name')
-    first_name = factory.Faker('first_name')
+    last_name = factory.Faker("last_name")
+    first_name = factory.Faker("first_name")
 
     email = factory.Sequence(lambda n: "m%03d@mailinator.com" % n)
-    password = 'password'
+    password = "password"
     is_superuser = False
     is_active = True
 
@@ -47,9 +47,9 @@ class UserFactory(factory.django.DjangoModelFactory):
     def _prepare(cls, create, **kwargs):
         from ..perms import user_grant_permissions
 
-        permissions = kwargs.pop('permissions', [])
+        permissions = kwargs.pop("permissions", [])
 
-        password = kwargs.pop('password')
+        password = kwargs.pop("password")
         user = super()._prepare(cls, create, **kwargs)
         if password:
             user.set_password(password)
@@ -64,7 +64,7 @@ class AdminFactory(UserFactory):
 
 
 class AnonUserFactory(UserFactory):
-    username = 'anonymous'
+    username = "anonymous"
 
 
 class RegionFactory(factory.django.DjangoModelFactory):
@@ -73,7 +73,7 @@ class RegionFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Region
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
 
 class BusinessAreaFactory(factory.django.DjangoModelFactory):
@@ -82,7 +82,7 @@ class BusinessAreaFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = BusinessArea
-        django_get_or_create = ('code',)
+        django_get_or_create = ("code",)
 
 
 class UserRoleFactory(factory.django.DjangoModelFactory):

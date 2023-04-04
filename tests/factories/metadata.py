@@ -15,7 +15,7 @@ class ThemeFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Theme
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
 
 class DonorFactory(factory.django.DjangoModelFactory):
@@ -23,7 +23,7 @@ class DonorFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Donor
-        django_get_or_create = ('code',)
+        django_get_or_create = ("code",)
 
 
 class ExternalGrantFactory(factory.django.DjangoModelFactory):
@@ -32,7 +32,7 @@ class ExternalGrantFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = ExternalGrant
-        django_get_or_create = ('code',)
+        django_get_or_create = ("code",)
 
 
 class GrantFactory(factory.django.DjangoModelFactory):
@@ -41,7 +41,7 @@ class GrantFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = Grant
-        django_get_or_create = ('code',)
+        django_get_or_create = ("code",)
 
 
 class SecondaryDonorFactory(factory.django.DjangoModelFactory):
@@ -49,7 +49,7 @@ class SecondaryDonorFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = SecondaryDonor
-        django_get_or_create = ('code',)
+        django_get_or_create = ("code",)
 
 
 class DRPMetadataFactory(factory.django.DjangoModelFactory):

@@ -35,11 +35,19 @@ class Notifier:
         self.donor = Donor.objects.get(code=donor_code)
 
     def get_notify_periods(self):
-        return [x for x in [
-            (UserRole.EVERY_MONTH, today().replace(day=1) - relativedelta(months=1), today().day == 1),
-            (UserRole.EVERY_MONDAY, today() - timedelta(7), today().weekday() == 0),
-            (UserRole.EVERY_DAY, today(), True),
-        ] if x[2]]
+        return [
+            x
+            for x in [
+                (
+                    UserRole.EVERY_MONTH,
+                    today().replace(day=1) - relativedelta(months=1),
+                    today().day == 1,
+                ),
+                (UserRole.EVERY_MONDAY, today() - timedelta(7), today().weekday() == 0),
+                (UserRole.EVERY_DAY, today(), True),
+            ]
+            if x[2]
+        ]
 
     def get_filter_dict(self, modified_date):
         return {}
@@ -49,7 +57,8 @@ class Notifier:
 
     def notify(self):
         client = SharePointClient(
-            url=f'{config.SHAREPOINT_TENANT}/{config.SHAREPOINT_SITE_TYPE}/{config.SHAREPOINT_SITE}')
+            url=f"{config.SHAREPOINT_TENANT}/{config.SHAREPOINT_SITE_TYPE}/{config.SHAREPOINT_SITE}"
+        )
 
         notification_periods = self.get_notify_periods()
 
@@ -68,7 +77,7 @@ class Notifier:
                         filters=filters,
                         select=selected,
                         source_id=self.source_id,
-                        page=page
+                        page=page,
                     )
                     exit_condition = page * SHAREPOINT_PAGE_SIZE < total_rows
                     page += 1
@@ -76,81 +85,86 @@ class Notifier:
                     reports.extend(qs.data)
 
                 if reports:
-                    context = {'reports': reports, 'donor': self.donor.name}
-                    recipients = list(set([str(user['user__email']) for user in users if user['user__email']]))
+                    context = {"reports": reports, "donor": self.donor.name}
+                    recipients = list(set([str(user["user__email"]) for user in users if user["user__email"]]))
                     send_notification_with_template(recipients, self.template_name, context)
 
 
 class DonorNotifier(Notifier):
-    source_id = settings.DRP_SOURCE_IDS['external']
+    source_id = settings.DRP_SOURCE_IDS["external"]
     serializer = DRPSharePointSearchSerializer
-    template_name = 'notify_donor'
+    template_name = "notify_donor"
 
     def get_filter_dict(self, modified_date):
         document_type_filter = [
-            'Certified Financial Statement - EC',
-            'Certified Financial Statement - US Government',
-            'Certified Statement of Account',
-            'Certified Statement of Account EU',
-            'Certified Statement of Account JPO',
-            'Donor Statement CERF',
-            'Certified Financial Report - Final',
-            'Certified Financial Report - Interim',
-            'Donor Statement Innovation',
-            'Donor Statement Joint Programme',
-            'Donor Statement Joint Programme PUNO',
-            'Donor Statement JPO Summary',
-            'Donor Statement Trust Fund',
-            'Donor Statement UN',
-            'Donor Statement UNICEF Hosted Funds',
-            'FFR Form (SF-425)',
-            'JPO Expenditure Summary',
-            'Statement of Account Thematic Funds',
-            'Donor Statement by Activity',
-            'Interim Statement by Nature of expense',
-            'Funds Request Report',
-            'Non-Standard Statement',
-            'Emergency Consolidated - Final',
-            'Emergency  Consolidated - Interim',
-            'Thematic Emergency Global - Final',
-            'Thematic Emergency Global - Interim',
-            'Emergency - Two Pager',
-            'Emergency - Final',
-            'Emergency - Interim',
-            'Human Interest / Photos',
-            'Narrative - Final',
-            'Narrative - Interim',
-            'Narrative Consolidated - Final',
-            'Narrative Consolidated - Interim',
-            'Thematic Consolidated - Final',
-            'Thematic Consolidated - Interim',
-            'Thematic Global - Final',
-            'Thematic Global - Interim',
-            'Thematic - Final',
-            'Thematic - Interim',
-            'Short Summary Update',
-            'Official Receipts',
-            'Quarterly Monitoring Report',
+            "Certified Financial Statement - EC",
+            "Certified Financial Statement - US Government",
+            "Certified Statement of Account",
+            "Certified Statement of Account EU",
+            "Certified Statement of Account JPO",
+            "Donor Statement CERF",
+            "Certified Financial Report - Final",
+            "Certified Financial Report - Interim",
+            "Donor Statement Innovation",
+            "Donor Statement Joint Programme",
+            "Donor Statement Joint Programme PUNO",
+            "Donor Statement JPO Summary",
+            "Donor Statement Trust Fund",
+            "Donor Statement UN",
+            "Donor Statement UNICEF Hosted Funds",
+            "FFR Form (SF-425)",
+            "JPO Expenditure Summary",
+            "Statement of Account Thematic Funds",
+            "Donor Statement by Activity",
+            "Interim Statement by Nature of expense",
+            "Funds Request Report",
+            "Non-Standard Statement",
+            "Emergency Consolidated - Final",
+            "Emergency  Consolidated - Interim",
+            "Thematic Emergency Global - Final",
+            "Thematic Emergency Global - Interim",
+            "Emergency - Two Pager",
+            "Emergency - Final",
+            "Emergency - Interim",
+            "Human Interest / Photos",
+            "Narrative - Final",
+            "Narrative - Interim",
+            "Narrative Consolidated - Final",
+            "Narrative Consolidated - Interim",
+            "Thematic Consolidated - Final",
+            "Thematic Consolidated - Interim",
+            "Thematic Global - Final",
+            "Thematic Global - Interim",
+            "Thematic - Final",
+            "Thematic - Interim",
+            "Short Summary Update",
+            "Official Receipts",
+            "Quarterly Monitoring Report",
         ]
         return {
-            'DRPDonorCode': self.donor.code,
-            'DRPDonorDocument': ','.join(document_type_filter),
-            'DRPModified__gte': modified_date.strftime('%Y-%m-%d')
+            "DRPDonorCode": self.donor.code,
+            "DRPDonorDocument": ",".join(document_type_filter),
+            "DRPModified__gte": modified_date.strftime("%Y-%m-%d"),
         }
 
     def get_selected_fields(self):
         serializer_fields = DRPSharePointSearchSerializer._declared_fields.keys()
-        return ['DRP' + to_camel(x) for x in serializer_fields] + ["Title", "Author", "Path"]
+        return ["DRP" + to_camel(x) for x in serializer_fields] + [
+            "Title",
+            "Author",
+            "Path",
+        ]
 
     def get_queryset(self, period):
         return UserRole.objects.filter(donor=self.donor, notification_period=period).values(
-            'user__first_name', 'user__email')
+            "user__first_name", "user__email"
+        )
 
 
 class GaviNotifier(Notifier):
-    source_id = settings.DRP_SOURCE_IDS['gavi']
+    source_id = settings.DRP_SOURCE_IDS["gavi"]
     serializer = GaviSharePointSearchSerializer
-    template_name = 'notify_gavi'
+    template_name = "notify_gavi"
 
     def __init__(self, donor_code, group_name):
         self.donor = Donor.objects.get(code=donor_code)
@@ -158,19 +172,19 @@ class GaviNotifier(Notifier):
 
     def get_queryset(self, period):
         return UserRole.objects.filter(
-            donor=self.donor, notification_period=period, group__name=self.group_name).values(
-            'user__first_name', 'user__email')
+            donor=self.donor, notification_period=period, group__name=self.group_name
+        ).values("user__first_name", "user__email")
 
     def get_filter_dict(self, modified_date):
         return {
-            'DRPModified': modified_date.strftime('%Y-%m-%d'),
-            'CTNMOUReference': self.group_name,
-            'CTNUrgent__not': 'Yes',
+            "DRPModified": modified_date.strftime("%Y-%m-%d"),
+            "CTNMOUReference": self.group_name,
+            "CTNUrgent__not": "Yes",
         }
 
     def get_selected_fields(self):
         def to_drp(source, value):
-            prefix = 'CTN' if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else 'DRP'
+            prefix = "CTN" if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else "DRP"
             return prefix + to_camel(source)
 
         selected = [to_drp(key, value) for key, value in self.serializer._declared_fields.items()]
@@ -179,8 +193,7 @@ class GaviNotifier(Notifier):
 
 
 class GaviUrgentNotifier(GaviNotifier):
-
-    template_name = 'notify_urgent_gavi'
+    template_name = "notify_urgent_gavi"
 
     def get_notify_periods(self):
         return [
@@ -189,16 +202,16 @@ class GaviUrgentNotifier(GaviNotifier):
 
     def get_filter_dict(self, modified_date):
         return {
-            'DRPModified__gte': modified_date.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'CTNMOUReference': self.group_name,
-            'CTNUrgent': 'Yes',
+            "DRPModified__gte": modified_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "CTNMOUReference": self.group_name,
+            "CTNUrgent": "Yes",
         }
 
 
 @app.task
 def notify_donor(donor_code):
     """notify one donor"""
-    logger.info(f'Notifing {donor_code}')
+    logger.info(f"Notifing {donor_code}")
     notifier = DonorNotifier(donor_code)
     notifier.notify()
 
@@ -206,23 +219,23 @@ def notify_donor(donor_code):
 @app.task
 def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
     """notify GAVI and spawn one task per group"""
-    logger.info('Notifing GAVI')
-    for group_name in Group.objects.filter(name__startswith='MOU').values_list('name', flat=True):
+    logger.info("Notifying GAVI")
+    for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_gavi_donor_ctn.delay(donor_code, group_name)
 
 
 @app.task
 def notify_gavi_donor_ctn(donor_code, group_name):
     """notify a GAVI group"""
-    logger.info(f'Notifing {donor_code}')
+    logger.info(f"Notifying {donor_code}")
     notifier = GaviNotifier(donor_code, group_name)
     notifier.notify()
 
 
 @app.task
 def notify_new_records():
-    logger.info('Notify Start')
-    for donor_code in Donor.objects.filter(active=True).values_list('code', flat=True):
+    logger.info("Notify Start")
+    for donor_code in Donor.objects.filter(active=True).values_list("code", flat=True):
         if donor_code == settings.GAVI_DONOR_CODE:
             notify_gavi_donor(donor_code)
         else:
@@ -239,6 +252,6 @@ def notify_urgent_by_group(group_name):
 @app.task
 def notify_urgent_records():
     """notify GAVI urgent records and spawn one task per group"""
-    logger.info('Notify Urgent CTNs Start')
-    for group_name in Group.objects.filter(name__startswith='MOU').values_list('name', flat=True):
+    logger.info("Notify Urgent CTNs Start")
+    for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_urgent_by_group.delay(group_name)

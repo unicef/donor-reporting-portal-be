@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('report_metadata', '0002_auto_20190920_0330'),
+        ("report_metadata", "0002_auto_20190920_0330"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='grant',
-            old_name='external_reference',
-            new_name='external_grant',
+            model_name="grant",
+            old_name="external_reference",
+            new_name="external_grant",
         ),
     ]
