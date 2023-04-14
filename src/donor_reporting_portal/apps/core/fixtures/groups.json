@@ -4,17 +4,7 @@
     "pk": 1,
     "fields": {
         "name": "UNICEF User",
-        "permissions": [
-            4,
-            16,
-            12,
-            8,
-            17,
-            21,
-            18,
-            20,
-            49
-        ]
+        "permissions": []
     }
 },
 {
@@ -22,18 +12,7 @@
     "pk": 2,
     "fields": {
         "name": "Donor Admin",
-        "permissions": [
-            4,
-            16,
-            12,
-            8,
-            17,
-            21,
-            18,
-            20,
-            46,
-            49
-        ]
+        "permissions": []
     }
 },
 {
@@ -41,12 +20,7 @@
     "pk": 3,
     "fields": {
         "name": "Donor User",
-        "permissions": [
-            4,
-            16,
-            12,
-            8
-        ]
+        "permissions": []
     }
 },
 {

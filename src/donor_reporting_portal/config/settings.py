@@ -125,14 +125,6 @@ CACHES = {
     }
 }
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#         'LOCATION': 'unique-snowflake',
-#     }
-# }
-
-
 ROOT_URLCONF = "donor_reporting_portal.config.urls"
 WSGI_APPLICATION = "donor_reporting_portal.config.wsgi.application"
 
