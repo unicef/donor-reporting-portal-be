@@ -1,13 +1,11 @@
 from rest_framework import serializers
 from sharepoint_rest_api.utils import to_camel
 
-from donor_reporting_portal.api.serializers.utils import getvalue
-
 
 class SearchSharePointField(serializers.ReadOnlyField):
     def get_attribute(self, instance):
         field_name = self.prefix + to_camel(self.source)
-        return getvalue(instance, field_name)
+        return instance.get(field_name, 'N/A')
 
 
 class SearchMultiSharePointField(serializers.ReadOnlyField):

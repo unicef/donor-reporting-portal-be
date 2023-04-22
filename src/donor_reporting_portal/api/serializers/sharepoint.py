@@ -18,7 +18,6 @@ from donor_reporting_portal.api.serializers.fields import (
     DRPSearchMultiSharePointField,
     DRPSearchSharePointField,
 )
-from donor_reporting_portal.api.serializers.utils import getvalue
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -56,12 +55,11 @@ class DRPSerializerMixin(serializers.Serializer):
     is_new = serializers.SerializerMethodField()
 
     def get_is_new(self, obj):
-        try:
-            modified = parse(getvalue(obj, "Modified")[:19], ignoretz=True)
+        modified = obj.get("Modified")
+        if modified:
+            modified = parse(modified[:19], ignoretz=True)
             day_difference = (datetime.now() - modified).days
             return day_difference <= 3
-        except (TypeError, ValueError):
-            pass
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
@@ -93,7 +91,7 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
     ]
 
     def get_is_new(self, obj):
-        modified = getvalue(obj, "DRPModified")
+        modified = obj.get("DRPModified")
 
         if modified:
             try:
@@ -104,14 +102,14 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
 
     def get_download_url(self, obj):
         try:
-            path = getvalue(obj, "Path")
+            path = obj.get("Path")
             directories = path.split("/")
             relative_url = reverse(
                 "sharepoint_rest_api:sharepoint-settings-files-download",
                 kwargs={"folder": directories[-2], "filename": directories[-1]},
             )
             base_url = f"{settings.HOST}{relative_url}"
-            donor_code = getvalue(obj, "DRPDonorCode")
+            donor_code = obj.get("DRPDonorCode")
             if donor_code:
                 donor_code = donor_code.replace(";", ",")
                 base_url = f"{base_url}?donor_code={donor_code}"
