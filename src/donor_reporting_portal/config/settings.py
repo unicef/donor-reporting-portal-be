@@ -267,7 +267,7 @@ SOCIAL_AUTH_TENANT_B2C_URL = f"{SOCIAL_AUTH_TENANT_NAME}.b2clogin.com"
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_SANITIZE_REDIRECTS = False
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
-SOCIAL_AUTH_POLICY = env("AZURE_B2C_POLICY_NAME", default="B2C_1A_UNICEF_SOCIAL_signup_signin")
+SOCIAL_AUTH_POLICY = env("AZURE_B2C_POLICY_NAME", default="B2C_1_UNICEF_SOCIAL_signup_signin")
 SOCIAL_PASSWORD_RESET_POLICY = env("AZURE_B2C_PASS_RESET_POLICY", default="B2C_1_PasswordResetPolicy")
 SOCIAL_AUTH_USER_MODEL = "unicef_security.User"
 
@@ -285,7 +285,7 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 USER_FIELDS = ["username", "email", "first_name", "last_name"]
-
+USERNAME_IS_FULL_EMAIL = True
 
 MATOMO_SITE_TRACKER = env("MATOMO_SITE_TRACKER", default="https://unisitetracker.unicef.io/")
 MATOMO_SITE_ID = env("MATOMO_SITE_ID", default=None)
