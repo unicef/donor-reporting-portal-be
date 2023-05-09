@@ -211,7 +211,7 @@ class GaviUrgentNotifier(GaviNotifier):
 @app.task
 def notify_donor(donor_code):
     """notify one donor"""
-    logger.info(f"Notifing {donor_code}")
+    logger.info(f"Notifying {donor_code}")
     notifier = DonorNotifier(donor_code)
     notifier.notify()
 
