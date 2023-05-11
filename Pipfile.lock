@@ -869,11 +869,11 @@
         },
         "unicef-security": {
             "hashes": [
-                "sha256:5296cba599e98b761d6640377e2c44a1b790618cee810afb9faeae540f5f3ea9",
-                "sha256:fd1654ffa487f24369f10c79675d12eb856c4045ec9ecdf4b38ceec1f1a113c1"
+                "sha256:10bd1739f4b307708b52385a7c466273de4955f6fc09346c2d54481ef82e22a7",
+                "sha256:1b42a12dd7eaf6f474a2c0787da89ec763e3dd1bdc985b76cb3eb7aa768aa40d"
             ],
             "index": "pypi",
-            "version": "==1.4.2"
+            "version": "==1.4.3"
         },
         "unicef-vision": {
             "hashes": [

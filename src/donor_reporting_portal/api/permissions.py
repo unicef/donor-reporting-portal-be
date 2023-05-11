@@ -29,6 +29,8 @@ class DonorPermission(permissions.BasePermission):
         user = request.user
         if NO_DONOR in request.query_params.values():  # handles Thematic
             return True
+        elif user.has_perm("roles.is_unicef_user"):
+            return True
         donor = self._get_donor(view, request.query_params, user)
         secondary_donor = self._get_secondary_donor(view, request.query_params, user)
         context_object = (donor, secondary_donor) if donor and secondary_donor else donor
