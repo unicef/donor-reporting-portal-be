@@ -59,7 +59,7 @@
     "model": "auth.group",
     "pk": 5,
     "fields": {
-        "name": "MOU 9 CTN - VACCINES ",
+        "name": "MOU 9 CTN - VACCINES",
         "permissions": []
     }
 },
