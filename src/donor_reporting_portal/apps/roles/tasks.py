@@ -30,6 +30,7 @@ class Notifier:
     source_id = None
     serializer = None
     template_name = None
+    group_name = None
 
     def __init__(self, donor_code):
         self.donor = Donor.objects.get(code=donor_code)
@@ -85,7 +86,7 @@ class Notifier:
                     reports.extend(qs.data)
 
                 if reports:
-                    context = {"reports": reports, "donor": self.donor.name}
+                    context = {"reports": reports, "donor": self.donor.name, "group_name": self.group_name}
                     recipients = list(set([str(user["user__email"]) for user in users if user["user__email"]]))
                     send_notification_with_template(recipients, self.template_name, context)
 

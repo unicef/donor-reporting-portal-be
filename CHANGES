@@ -1,3 +1,8 @@
+Release 2.1.1
+----------------
+* GAVI: added group name to emails subject
+
+
 Release 2.1
 ----------------
 * updated to python 3.11
