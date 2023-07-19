@@ -3,7 +3,7 @@ from unicef_notification.utils import strip_text
 name = "notify_gavi"
 defaults = {
     "description": "Notify GAVI Donor",
-    "subject": "Updated GAVI reports available in UNICEF DRP {group_name}",
+    "subject": "Updated GAVI reports available in UNICEF DRP {{ group_name }}",
     "content": strip_text(
         """Dear user,
 
