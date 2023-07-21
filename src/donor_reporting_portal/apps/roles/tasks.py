@@ -198,7 +198,7 @@ class GaviUrgentNotifier(GaviNotifier):
 
     def get_notify_periods(self):
         return [
-            (UserRole.EVERY_DAY, now() - timedelta(seconds=600), True),
+            (UserRole.EVERY_DAY, now() - timedelta(seconds=3600), True),
         ]
 
     def get_filter_dict(self, modified_date):
@@ -222,7 +222,7 @@ def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
     """notify GAVI and spawn one task per group"""
     logger.info("Notifying GAVI")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
-        notify_gavi_donor_ctn.delay(donor_code, group_name)
+        notify_gavi_donor_ctn.delay(donor_code, group_name.strip())
 
 
 @app.task
