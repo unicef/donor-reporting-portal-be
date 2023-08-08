@@ -1,3 +1,4 @@
+import time
 from datetime import timedelta
 
 from django.conf import settings
@@ -15,9 +16,7 @@ from unicef_notification.utils import send_notification_with_template
 
 from donor_reporting_portal.api.serializers.fields import CTNSearchMultiSharePointField, CTNSearchSharePointField
 from donor_reporting_portal.api.serializers.sharepoint import (
-    DRPSharePointSearchSerializer,
-    GaviSharePointSearchSerializer,
-)
+    DRPSharePointSearchSerializer, GaviSharePointSearchSerializer,)
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 from donor_reporting_portal.config.celery import app
@@ -223,6 +222,7 @@ def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
     logger.info("Notifying GAVI")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_gavi_donor_ctn.delay(donor_code, group_name.strip())
+        time.sleep(2)
 
 
 @app.task
@@ -256,3 +256,4 @@ def notify_urgent_records():
     logger.info("Notify Urgent CTNs Start")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_urgent_by_group.delay(group_name)
+        time.sleep(2)
