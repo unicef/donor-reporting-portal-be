@@ -76,7 +76,10 @@ class UserRole(TimeStampedModel):
         verbose_name = _("User Role")
         verbose_name_plural = _("User Roles")
         unique_together = (("user", "group", "donor", "secondary_donor"),)
-        permissions = (("can_view_all_donors", "Can views all Donors"),)
+        permissions = (
+            ("can_view_all_donors", "Can views all Donors"),
+            ("is_unicef_user", "Is UNICEF User"),
+        )
 
     def __str__(self):
         str = f"{self.user} - {self.group} | {self.donor}"
