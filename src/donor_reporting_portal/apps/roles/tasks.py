@@ -222,7 +222,7 @@ def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
     logger.info("Notifying GAVI")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_gavi_donor_ctn.delay(donor_code, group_name.strip())
-        time.sleep(2)
+        time.sleep(5)
 
 
 @app.task
@@ -256,4 +256,4 @@ def notify_urgent_records():
     logger.info("Notify Urgent CTNs Start")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_urgent_by_group.delay(group_name)
-        time.sleep(2)
+        time.sleep(5)
