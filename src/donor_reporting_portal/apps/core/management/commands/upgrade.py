@@ -75,6 +75,12 @@ class Command(BaseCommand):
             else:  # pragma: no cover
                 self.stdout.write(f"Superuser `{admin}` already exists`.")
 
+        if options["stale_ct"] or _all:
+            call_command("remove_stale_contenttypes", verbosity=verbosity - 1, interactive=False)
+
+        if options["permissions"] or _all:
+            call_command("update_permissions", verbosity=verbosity - 1)
+
         if options["metadata"] or _all:
             call_command("loaddata", "groups.json")
             call_command("loaddata", "libraries.json")
