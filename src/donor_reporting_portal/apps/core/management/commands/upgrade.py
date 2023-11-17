@@ -27,6 +27,22 @@ class Command(BaseCommand):
             help="",
         )
 
+        parser.add_argument(
+            "--stale_ct",
+            action="store_true",
+            dest="stale_ct",
+            default=False,
+            help="",
+        )
+
+        parser.add_argument(
+            "--permissions",
+            action="store_true",
+            dest="permissions",
+            default=False,
+            help="",
+        )
+
         parser.add_argument("--users", action="store_true", dest="users", default=False, help="")
 
         parser.add_argument("--metadata", action="store_true", dest="metadata", default=False, help="")
