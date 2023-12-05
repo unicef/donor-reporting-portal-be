@@ -303,6 +303,7 @@ DRP_SOURCE_IDS = {
     "thematic_internal": env("DRP_SOURCE_ID_THEMATIC_INTERNAL", default=None),
     "thematic_external": env("DRP_SOURCE_ID_THEMATIC_EXTERNAL", default=None),
     "gavi": env("DRP_SOURCE_ID_GAVI", default=None),
+    "gavi_soa": env("DRP_SOURCE_ID_GAVI_SOA", default=None),
 }
 
 GAVI_DONOR_CODE = "I49928"
