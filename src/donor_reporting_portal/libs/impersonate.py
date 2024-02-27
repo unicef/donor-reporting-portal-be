@@ -1,4 +1,4 @@
-from unicef_security.models import User
+from donor_reporting_portal.apps.core.models import User
 
 
 def queryset(request):

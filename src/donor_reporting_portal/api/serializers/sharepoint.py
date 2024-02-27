@@ -63,7 +63,7 @@ class DRPSerializerMixin(serializers.Serializer):
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
-        donor_code = obj.properties["DonorCode"].replace(";", ",")
+        donor_code = obj["DonorCode"].replace(";", ",")
         return f"{base_url}?donor_code={donor_code}"
 
 
