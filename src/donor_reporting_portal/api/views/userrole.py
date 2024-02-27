@@ -5,7 +5,6 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from unicef_realm.models import BusinessArea
-from unicef_security.models import User
 
 from donor_reporting_portal.api.filters import BusinessAreaFilter, GroupFilter, UserFilter, UserRoleFilter
 from donor_reporting_portal.api.serializers.userrole import (
@@ -16,6 +15,7 @@ from donor_reporting_portal.api.serializers.userrole import (
     UserSerializer,
 )
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
+from donor_reporting_portal.apps.core.models import User
 from donor_reporting_portal.apps.roles.models import UserRole
 
 

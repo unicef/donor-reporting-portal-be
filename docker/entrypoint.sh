@@ -35,6 +35,7 @@ elif [[ "$*" == "donor_reporting_portal" ]];then
 
     django-admin db_isready --wait --timeout 60
     django-admin check --deploy
+    django-admin migrate unicef_security --fake
     django-admin upgrade --all --verbosity 2
     django-admin db_isready --wait --timeout 300
     echo "uwsgi --static-map ${STATIC_URL}=${STATIC_ROOT}"

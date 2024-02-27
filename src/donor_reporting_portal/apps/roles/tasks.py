@@ -16,7 +16,9 @@ from unicef_notification.utils import send_notification_with_template
 
 from donor_reporting_portal.api.serializers.fields import CTNSearchMultiSharePointField, CTNSearchSharePointField
 from donor_reporting_portal.api.serializers.sharepoint import (
-    DRPSharePointSearchSerializer, GaviSharePointSearchSerializer,)
+    DRPSharePointSearchSerializer,
+    GaviSharePointSearchSerializer,
+)
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 from donor_reporting_portal.config.celery import app
