@@ -191,3 +191,28 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
         "CTNUrgent",
         "Title",
     ]
+
+
+class GaviSoaSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    donor_code = DRPSearchSharePointField()
+    g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
+    purchase_order = CTNSearchMultiSharePointField()
+    u_n_i_c_e_f_w_b_s = CTNSearchSharePointField()
+    s_o_a_issue_date = CTNSearchSharePointField()
+    country_name = CTNSearchMultiSharePointField()
+    m_o_u_number = CTNSearchSharePointField()
+    approval_year = CTNSearchSharePointField()
+    material_code = CTNSearchMultiSharePointField()
+    vaccine_type = CTNSearchMultiSharePointField()
+
+    export_headers = [
+        "CTNGAVIWBS",
+        "CTNPurchaseOrder",
+        "CTNUNICEFWBS",
+        "CTNSOAIssueDate",
+        "CTNCountryName",
+        "CTNMOUNumber",
+        "CTNApprovalYear",
+        "CTNMaterialCode",
+        "CTNVaccineType",
+    ]
