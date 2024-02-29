@@ -1,6 +1,7 @@
 Release 2.2
 ----------------
 * Changed User Model
+* Added soa serializer
 
 
 Release 2.1.1
