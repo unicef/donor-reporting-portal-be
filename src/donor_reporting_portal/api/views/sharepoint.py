@@ -33,7 +33,8 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointSettingsSerializer,
     DRPSharePointUrlSerializer,
     GaviSharePointSearchSerializer,
-    SharePointGroupSerializer, GaviSoaSharePointSearchSerializer,
+    SharePointGroupSerializer,
+    GaviSoaSharePointSearchSerializer,
 )
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 

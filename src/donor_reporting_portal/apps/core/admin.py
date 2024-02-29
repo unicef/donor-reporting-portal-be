@@ -8,4 +8,3 @@ from donor_reporting_portal.apps.core.models import User
 @admin.register(User)
 class UserAdminPlus(UserAdminPlus):
     pass
-
