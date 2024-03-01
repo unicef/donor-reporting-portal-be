@@ -2,10 +2,10 @@ from django.contrib.auth.models import Group
 from django.db.models import signals
 
 import factory
-import unicef_security
 from factory import SubFactory
 from unicef_realm.models import BusinessArea, Region
 
+from donor_reporting_portal.apps.core.models import User
 from donor_reporting_portal.apps.roles.models import UserRole
 from tests.factories import DonorFactory
 
@@ -30,7 +30,7 @@ class GroupFactory(factory.django.DjangoModelFactory):
 @factory.django.mute_signals(signals.post_save)
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = unicef_security.models.User
+        model = User
         django_get_or_create = ("username",)
 
     username = factory.Sequence(lambda n: "user%03d" % n)

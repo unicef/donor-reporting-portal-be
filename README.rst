@@ -36,7 +36,7 @@ Troubleshoot
 Get Started
 --------------------
 * populate your .env file from template .env_template
-* python manage.py init_setup --all
+* python manage.py upgrade --all
 
 
 Development Release

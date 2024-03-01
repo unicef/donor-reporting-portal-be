@@ -27,6 +27,22 @@ class Command(BaseCommand):
             help="",
         )
 
+        parser.add_argument(
+            "--stale_ct",
+            action="store_true",
+            dest="stale_ct",
+            default=False,
+            help="",
+        )
+
+        parser.add_argument(
+            "--permissions",
+            action="store_true",
+            dest="permissions",
+            default=False,
+            help="",
+        )
+
         parser.add_argument("--users", action="store_true", dest="users", default=False, help="")
 
         parser.add_argument("--metadata", action="store_true", dest="metadata", default=False, help="")
@@ -74,6 +90,12 @@ class Command(BaseCommand):
                 self.stdout.write(f"Created superuser `{admin}` with password `{pwd}`")
             else:  # pragma: no cover
                 self.stdout.write(f"Superuser `{admin}` already exists`.")
+
+        if options["stale_ct"] or _all:
+            call_command("remove_stale_contenttypes", verbosity=verbosity - 1, interactive=False)
+
+        if options["permissions"] or _all:
+            call_command("update_permissions", verbosity=verbosity - 1)
 
         if options["metadata"] or _all:
             call_command("loaddata", "groups.json")

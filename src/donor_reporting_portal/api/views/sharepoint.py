@@ -34,6 +34,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointUrlSerializer,
     GaviSharePointSearchSerializer,
     SharePointGroupSerializer,
+    GaviSoaSharePointSearchSerializer,
 )
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
@@ -79,6 +80,8 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         query_params = self.request.query_params
         if query_params.get("serializer") == "gavi":
             return GaviSharePointSearchSerializer
+        elif query_params.get("serializer") == "soa":
+            return GaviSoaSharePointSearchSerializer
         return super().get_serializer_class()
 
     def is_public(self):
