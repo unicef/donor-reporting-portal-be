@@ -179,9 +179,9 @@ class GaviNotifier(Notifier):
         ).values("user__first_name", "user__email")
 
     def get_filter_dict(self, modified_date):
-        date = self.specific_date if self.specific_date else modified_date
+        date = self.specific_date if self.specific_date else modified_date.strftime("%Y-%m-%d")
         return {
-            "DRPModified": date.strftime("%Y-%m-%d"),
+            "DRPModified": date,
             "CTNMOUReference": self.group_name,
             "CTNUrgent__not": "Yes",
         }
