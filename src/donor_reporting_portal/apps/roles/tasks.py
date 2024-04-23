@@ -168,9 +168,10 @@ class GaviNotifier(Notifier):
     serializer = GaviSharePointSearchSerializer
     template_name = "notify_gavi"
 
-    def __init__(self, donor_code, group_name):
+    def __init__(self, donor_code, group_name, specific_date):
         self.donor = Donor.objects.get(code=donor_code)
         self.group_name = group_name
+        self.specific_date = specific_date
 
     def get_queryset(self, period):
         return UserRole.objects.filter(
@@ -178,8 +179,9 @@ class GaviNotifier(Notifier):
         ).values("user__first_name", "user__email")
 
     def get_filter_dict(self, modified_date):
+        date = self.specific_date if self.specific_date else modified_date
         return {
-            "DRPModified": modified_date.strftime("%Y-%m-%d"),
+            "DRPModified": date.strftime("%Y-%m-%d"),
             "CTNMOUReference": self.group_name,
             "CTNUrgent__not": "Yes",
         }
@@ -219,19 +221,19 @@ def notify_donor(donor_code):
 
 
 @app.task
-def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE):
+def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE, specific_date=None):
     """notify GAVI and spawn one task per group"""
     logger.info("Notifying GAVI")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
-        notify_gavi_donor_ctn.delay(donor_code, group_name.strip())
+        notify_gavi_donor_ctn.delay(donor_code, group_name.strip(), specific_date)
         time.sleep(5)
 
 
 @app.task
-def notify_gavi_donor_ctn(donor_code, group_name):
+def notify_gavi_donor_ctn(donor_code, group_name, specific_date=None):
     """notify a GAVI group"""
     logger.info(f"Notifying {donor_code}")
-    notifier = GaviNotifier(donor_code, group_name)
+    notifier = GaviNotifier(donor_code, group_name, specific_date=specific_date)
     notifier.notify()
 
 
