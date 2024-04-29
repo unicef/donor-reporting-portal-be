@@ -194,6 +194,7 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
 
 
 class GaviSoaSharePointSearchSerializer(DRPSharePointBaseSerializer):
+    grant_number = DRPSearchSharePointField()
     donor_code = DRPSearchSharePointField()
     g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
     purchase_order = CTNSearchMultiSharePointField()
@@ -206,6 +207,7 @@ class GaviSoaSharePointSearchSerializer(DRPSharePointBaseSerializer):
     vaccine_type = CTNSearchMultiSharePointField()
 
     export_headers = [
+        "DRPGrantNumber",
         "CTNGAVIWBS",
         "CTNPurchaseOrder",
         "CTNUNICEFWBS",
