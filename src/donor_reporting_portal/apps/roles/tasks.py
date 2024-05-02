@@ -168,7 +168,7 @@ class GaviNotifier(Notifier):
     serializer = GaviSharePointSearchSerializer
     template_name = "notify_gavi"
 
-    def __init__(self, donor_code, group_name, specific_date):
+    def __init__(self, donor_code, group_name, specific_date=None):
         self.donor = Donor.objects.get(code=donor_code)
         self.group_name = group_name
         self.specific_date = specific_date
