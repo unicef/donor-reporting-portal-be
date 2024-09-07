@@ -197,6 +197,7 @@ class GaviSoaSharePointSearchSerializer(DRPSharePointBaseSerializer):
     grant_number = DRPSearchSharePointField()
     donor_code = DRPSearchSharePointField()
     g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
+    sent_to_g_a_v_i_date = CTNSearchSharePointField()
     purchase_order = CTNSearchMultiSharePointField()
     u_n_i_c_e_f_w_b_s = CTNSearchSharePointField()
     s_o_a_issue_date = CTNSearchSharePointField()
