@@ -74,17 +74,18 @@ class Command(BaseCommand):
                 pwd = "123"
                 admin = os.environ.get("USER", "admin")
             else:
-                pwd = os.environ.get("ADMIN_PASSWORD", ModelUser.objects.make_random_password())
+                pwd = os.environ.get("ADMIN_PASSWORD", None)
                 admin = os.environ.get("ADMIN_USERNAME", "admin")
 
-            _, created = ModelUser.objects.get_or_create(
-                username=admin,
-                defaults={
-                    "is_superuser": True,
-                    "is_staff": True,
-                    "password": make_password(pwd),
-                },
-            )
+            if pwd:
+                _, created = ModelUser.objects.get_or_create(
+                    username=admin,
+                    defaults={
+                        "is_superuser": True,
+                        "is_staff": True,
+                        "password": make_password(pwd),
+                    },
+                )
 
             if created:  # pragma: no cover
                 self.stdout.write(f"Created superuser `{admin}` with password `{pwd}`")
