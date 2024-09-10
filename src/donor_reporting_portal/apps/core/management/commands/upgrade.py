@@ -87,10 +87,10 @@ class Command(BaseCommand):
                     },
                 )
 
-            if created:  # pragma: no cover
-                self.stdout.write(f"Created superuser `{admin}` with password `{pwd}`")
-            else:  # pragma: no cover
-                self.stdout.write(f"Superuser `{admin}` already exists`.")
+                if created:  # pragma: no cover
+                    self.stdout.write(f"Created superuser `{admin}` with password `{pwd}`")
+                else:  # pragma: no cover
+                    self.stdout.write(f"Superuser `{admin}` already exists`.")
 
         if options["stale_ct"] or _all:
             call_command("remove_stale_contenttypes", verbosity=verbosity - 1, interactive=False)
