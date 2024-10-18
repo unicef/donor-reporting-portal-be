@@ -69,6 +69,7 @@ unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "*"
 django-picklefield = "*"
+django-anymail = "*"
 
 [requires]
 python_version = "3.11"
