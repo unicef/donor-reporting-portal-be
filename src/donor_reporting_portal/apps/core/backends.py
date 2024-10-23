@@ -1,5 +1,8 @@
 from django.contrib.auth.backends import ModelBackend
 
+from anymail.backends.mailjet import EmailBackend as MailjetEmailBackend
+from unicef_notification.backends import EmailBackend as UNICEFEmailBackend
+
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 
@@ -33,3 +36,7 @@ class DonorRoleBackend(ModelBackend):
         else:
             return set()
         return perm in {f"{app_label}.{perm_name}" for app_label, perm_name in perms}
+
+
+class EmailBackend(MailjetEmailBackend, UNICEFEmailBackend):
+    pass
