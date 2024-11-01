@@ -55,7 +55,7 @@ djangorestframework-xml = "*"
 django-rest-framework-social-oauth2 = "*"
 gunicorn = "*"
 newrelic = "*"
-psycopg2-binary = "<=2.9.9"
+psycopg2-binary = "<2.9.10"
 #psycopg = {extras = ["binary"], version = "*"}
 sentry-sdk = "*"
 requests = "*"
@@ -70,7 +70,7 @@ unicef-security = "*"
 unicef-vision = "*"
 uwsgi = "<2.0.28"
 django-picklefield = "*"
-#django-anymail = "*"
+django-anymail = "*"
 
 [requires]
 python_version = "3.11"
