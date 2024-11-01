@@ -1,8 +1,7 @@
 from ..settings import env
 
 DEFAULT_FROM_EMAIL = "donor_reporting_portal@mail.unicef.org"
-EMAIL_BACKEND = "unicef_notification.backends.EmailBackend"
-# EMAIL_BACKEND = "donor_reporting_portal.apps.core.backends.EmailBackend"
+EMAIL_BACKEND = "donor_reporting_portal.apps.core.email.DRPEmailBackend"
 
 EMAIL_HOST = env("EMAIL_HOST", default="")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="")
@@ -18,5 +17,5 @@ ANYMAIL = {
 
 POST_OFFICE = {
     "DEFAULT_PRIORITY": "now",
-    "BACKENDS": {"default": "djcelery_email.backends.CeleryEmailBackend"},
+    "BACKENDS": {"default": "donor_reporting_portal.apps.core.email.DRPCeleryEmailBackend"},
 }
