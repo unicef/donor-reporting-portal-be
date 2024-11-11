@@ -68,7 +68,7 @@ unicef-notification = "*"
 unicef-realm = "*"
 unicef-security = "*"
 unicef-vision = "*"
-uwsgi = "<2.0.28"
+uwsgi = "*"
 django-picklefield = "*"
 django-anymail = "*"
 
