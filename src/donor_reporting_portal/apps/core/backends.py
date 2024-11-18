@@ -1,5 +1,7 @@
 from django.contrib.auth.backends import ModelBackend
 
+from social_core.backends.azuread_b2c import AzureADB2COAuth2
+
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 
@@ -33,3 +35,9 @@ class DonorRoleBackend(ModelBackend):
         else:
             return set()
         return perm in {f"{app_label}.{perm_name}" for app_label, perm_name in perms}
+
+
+class UNICEFAzureADB2COAuth2(AzureADB2COAuth2):
+    """UNICEF Azure ADB2C Custom Backend"""
+
+    name = "unicef-azuread-b2c-oauth2"
