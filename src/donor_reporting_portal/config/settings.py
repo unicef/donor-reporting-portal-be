@@ -64,10 +64,12 @@ MIDDLEWARE = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    "unicef_security.backends.UNICEFAzureADB2COAuth2",
+    "donor_reporting_portal.apps.core.backends.UNICEFAzureADB2COAuth2",
     "django.contrib.auth.backends.ModelBackend",
     "donor_reporting_portal.apps.core.backends.DonorRoleBackend",
 )
+
+SOCIAL_AUTH_BACKEND_NAME = "unicef-azuread-b2c-oauth2"
 
 
 # path
