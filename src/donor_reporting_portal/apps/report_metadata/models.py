@@ -6,7 +6,7 @@ from unicef_realm.models import BusinessArea
 
 
 class Theme(TimeStampedModel):
-    """Represents Thematic"""
+    """Represents Thematic."""
 
     name = models.CharField(verbose_name=_("Name"), max_length=64)
 
@@ -15,7 +15,7 @@ class Theme(TimeStampedModel):
 
 
 class Donor(TimeStampedModel):
-    """Represents UNICEF Donors"""
+    """Represents UNICEF Donors."""
 
     name = models.CharField(verbose_name=_("Name"), max_length=64)
     code = models.CharField(verbose_name=_("Code"), max_length=16, unique=True)
@@ -30,7 +30,7 @@ class Donor(TimeStampedModel):
 
 
 class ExternalGrant(TimeStampedModel):
-    """Represents External Grant"""
+    """Represents External Grant."""
 
     code = models.CharField(verbose_name=_("Code"), max_length=64)
     donor = models.ForeignKey(Donor, verbose_name=_("Donor"), on_delete=models.CASCADE)
@@ -71,11 +71,11 @@ class Grant(TimeStampedModel):
         ordering = ["donor"]
 
     def __str__(self):
-        return "{}: {}".format(self.donor.name, self.code)
+        return f"{self.donor.name}: {self.code}"
 
 
 class SecondaryDonor(TimeStampedModel):
-    """Represents UNICEF Secondary Donors"""
+    """Represents UNICEF Secondary Donors."""
 
     name = models.CharField(verbose_name=_("Name"), max_length=64)
     code = models.CharField(verbose_name=_("Code"), max_length=16, unique=True)

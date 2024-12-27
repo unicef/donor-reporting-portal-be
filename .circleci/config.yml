@@ -79,8 +79,7 @@ jobs:
           name: Building the image
           command: |
             docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
-            docker pull unicef/donor-reporting-portal-backend:2.0-base
-#            docker build -t unicef/donor-reporting-portal-backend:${CIRCLE_BRANCH} .
+            docker pull unicef/donor-reporting-portal-backend:3.0-base
       - run:
           name: Pushing to Docker Hub
           command: |

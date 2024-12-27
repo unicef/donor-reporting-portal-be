@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
     dependencies = [
         ("auth", "0012_alter_user_first_name_max_length"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        # ('report_metadata', '0011_grant_businessareas'),
         ("roles", "0008_auto_20220128_1054"),
     ]
 

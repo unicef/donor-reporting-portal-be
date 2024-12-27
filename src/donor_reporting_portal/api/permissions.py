@@ -27,24 +27,18 @@ class DonorPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
-        if NO_DONOR in request.query_params.values():  # handles Thematic
-            return True
-        elif user.has_perm("roles.is_unicef_user"):
+        if NO_DONOR in request.query_params.values() or user.has_perm("roles.is_unicef_user"):  # handles Thematic
             return True
         donor = self._get_donor(view, request.query_params, user)
         secondary_donor = self._get_secondary_donor(view, request.query_params, user)
         context_object = (donor, secondary_donor) if donor and secondary_donor else donor
-        if (
+        return (
             donor
             and user.has_perm("roles.can_view_all_donors")
             or user.has_perm("report_metadata.view_donor", context_object)
-        ):
-            return True
-        return False
+        )
 
 
 class PublicLibraryPermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.user.is_authenticated and view.is_public():
-            return True
-        return False
+        return request.user.is_authenticated and view.is_public()

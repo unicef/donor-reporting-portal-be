@@ -39,7 +39,6 @@ class UserFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker("first_name")
 
     email = factory.Sequence(lambda n: "m%03d@mailinator.com" % n)
-    password = "password"
     is_superuser = False
     is_active = True
 

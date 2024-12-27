@@ -42,9 +42,7 @@ class Migration(migrations.Migration):
                 ("category", models.CharField(max_length=128, verbose_name="Category")),
                 (
                     "code",
-                    models.CharField(
-                        blank=True, max_length=128, null=True, verbose_name="Code"
-                    ),
+                    models.CharField(blank=True, max_length=128, null=True, verbose_name="Code"),
                 ),
                 (
                     "description",

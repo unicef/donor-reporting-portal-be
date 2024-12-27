@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
@@ -14,11 +16,11 @@ from donor_reporting_portal.apps.report_metadata.models import Donor, SecondaryD
 
 class UserRoleManager(models.Manager):
     def by_permissions(self, perms_name):
-        if not isinstance(perms_name, (set, list)):
+        if not isinstance(perms_name, Iterable):
             perms_name = (perms_name,)
         for perm_name in perms_name:
             app_label, codename = perm_name.split(".")
-            self = self.filter(
+            return self.filter(
                 group__permissions__codename=codename,
                 group__permissions__content_type__app_label=app_label,
             )
@@ -82,10 +84,10 @@ class UserRole(TimeStampedModel):
         )
 
     def __str__(self):
-        str = f"{self.user} - {self.group} | {self.donor}"
+        desc = f"{self.user} - {self.group} | {self.donor}"
         if self.secondary_donor:
-            str = f"{str} | {self.secondary_donor}"
-        return str
+            desc = f"{desc} | {self.secondary_donor}"
+        return desc
 
 
 @receiver(post_save, sender=get_user_model())
