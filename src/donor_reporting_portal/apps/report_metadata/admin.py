@@ -5,7 +5,7 @@ from django.urls import reverse
 from admin_extra_buttons.decorators import button
 from admin_extra_buttons.mixins import ExtraButtonsMixin
 
-from .models import Donor, DRPMetadata, ExternalGrant, Grant, Theme
+from .models import Donor, DRPMetadata, ExternalGrant, Grant, Theme, SourceId
 from .tasks import grant_sync
 
 
@@ -55,7 +55,13 @@ class SecondaryDonorAdmin(GrantSyncMixin, admin.ModelAdmin):
 
 
 @admin.register(DRPMetadata)
-class DRPMetadata(admin.ModelAdmin):
+class DRPMetadataAdmin(admin.ModelAdmin):
     search_fields = ("description", "code")
     list_display = ("category", "description", "audience")
     list_filter = ("category", "audience")
+
+
+@admin.register(SourceId)
+class SourceIdAdmin(admin.ModelAdmin):
+    search_fields = ("name", "source_id")
+    list_display = ("name", "source_id", "description")

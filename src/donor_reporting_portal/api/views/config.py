@@ -10,8 +10,7 @@ class ConfigAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        """Return All Static values used for drop-down in the frontend"""
-
+        """Return All Static values used for drop-down in the frontend."""
         return Response(
             {
                 "tracker": {

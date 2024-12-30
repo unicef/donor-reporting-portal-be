@@ -5,9 +5,7 @@ from django.db import migrations
 
 def clean_metadata(apps, schema_editor):
     ContentType = apps.get_model("contenttypes", "ContentType")
-    qs = ContentType.objects.filter(
-        app_label="unicef_security", model__in=["region", "businessarea"]
-    )
+    qs = ContentType.objects.filter(app_label="unicef_security", model__in=["region", "businessarea"])
     qs.delete()
 
 

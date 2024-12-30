@@ -80,12 +80,12 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         query_params = self.request.query_params
         if query_params.get("serializer") == "gavi":
             return GaviSharePointSearchSerializer
-        elif query_params.get("serializer") == "soa":
+        if query_params.get("serializer") == "soa":
             return GaviSoaSharePointSearchSerializer
         return super().get_serializer_class()
 
     def is_public(self):
-        """check if the source id is public or restricted to UNICEF users"""
+        """Check if the source id is public or restricted to UNICEF users."""
         source_id = self.request.query_params.get("source_id", None)
         public = source_id in [
             settings.DRP_SOURCE_IDS["thematic_internal"],
@@ -101,7 +101,7 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
 
     def get_selected(self, selected):
         def to_drp(source, value):
-            prefix = "CTN" if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else "DRP"
+            prefix = "CTN" if isinstance(value, CTNSearchSharePointField | CTNSearchMultiSharePointField) else "DRP"
             return prefix + to_camel(source)
 
         autofields = [to_drp(key, value) for key, value in self.get_serializer_class()._declared_fields.items()]
@@ -111,9 +111,7 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
     def get_filters(self, kwargs):
         # we can enforce filters here
         kwargs.pop("serializer", None)
-        new_kwargs = {
-            # 'IsDocument': '1',
-        }
+        new_kwargs = {}
         drp_fields = [
             key
             for key, value in self.get_serializer_class()._declared_fields.items()
@@ -149,14 +147,14 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
     def export(self, request, *args, **kwargs):
         exit_condition = True
         response = HttpResponse(content_type="text/csv")
-        filename = "drp_export_{}.csv".format(timezone.now().date())
+        filename = f"drp_export_{timezone.now().date()}.csv"
         response["Content-Disposition"] = f'attachment; filename="{filename}"'
 
         headers = self.get_serializer_class().export_headers
         writer = csv.writer(response)
         page = 1
         qs = self.get_queryset(page=page)
-        writer.writerow([key.replace("CTN", "") for key in qs[0].keys() if key in headers])
+        writer.writerow([key.replace("CTN", "") for key in qs[0] if key in headers])
         while exit_condition:
             for row in qs:
                 writer.writerow([str(value) for key, value in row.items() if key in headers])
@@ -167,8 +165,8 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
 
 
 class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
-    """DRP Search Viewset for settings based"""
+    """DRP Search Viewset for settings based."""
 
 
 class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
-    """DRP Search Viewset for url based"""
+    """DRP Search Viewset for url based."""

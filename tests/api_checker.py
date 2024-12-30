@@ -8,7 +8,7 @@ from drf_api_checker.recorder import BASE_DATADIR, Recorder
 from rest_framework.response import Response
 from rest_framework.test import APIClient
 
-from tests.factories import UserFactory
+from factories import UserFactory
 
 
 def frozenfixture(fixture_name=default_fixture_name, is_fixture=True):
@@ -20,7 +20,7 @@ def frozenfixture(fixture_name=default_fixture_name, is_fixture=True):
         def _inner(*args, **kwargs):
             if is_fixture and "request" not in kwargs:
                 raise ValueError("frozenfixture must have `request` argument")
-            request = kwargs.get("request", None)
+            request = kwargs.get("request")
             parts = [
                 os.path.dirname(func.__code__.co_filename),
                 BASE_DATADIR,

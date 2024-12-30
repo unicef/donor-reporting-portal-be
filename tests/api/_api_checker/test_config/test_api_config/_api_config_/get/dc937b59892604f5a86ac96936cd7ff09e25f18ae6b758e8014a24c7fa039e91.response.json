@@ -5,7 +5,7 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET",
         "X-Frame-Options": "DENY",
-        "Content-Length": "256",
+        "Content-Length": "272",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "same-origin",
         "Cross-Origin-Opener-Policy": "same-origin"
@@ -22,7 +22,8 @@
             "pool_external": null,
             "thematic_internal": null,
             "thematic_external": null,
-            "gavi": null
+            "gavi": null,
+            "gavi_soa": null
         },
         "gavi_donor_code": "I49928"
     },

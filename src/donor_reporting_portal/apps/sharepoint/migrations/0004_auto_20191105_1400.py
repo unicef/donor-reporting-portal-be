@@ -16,8 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="sharepointsite",
             name="site_type",
-            field=models.CharField(
-                default="sites", max_length=16, verbose_name="Site Type"
-            ),
+            field=models.CharField(default="sites", max_length=16, verbose_name="Site Type"),
         ),
     ]

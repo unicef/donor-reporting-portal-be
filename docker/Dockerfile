@@ -2,12 +2,6 @@ ARG BASE_IMAGE=3.0
 
 FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
 
-#ARG BUILD_DATE
-#ARG VERSION
-
-#ENV GITHUB_TOKEN=${GITHUB_TOKEN}
-#ENV DONOR_REPORTING_PORTAL_VERSION=${VERSION}
-
 RUN mkdir -p /code
 COPY . /code
 WORKDIR /code
@@ -26,8 +20,7 @@ LABEL org.label.name="Donor Reporting Portal" \
       org.label.vcs-url="https://github.com/unicef/donor-reporting-portal-be"
 
 
-ENV PIPENV_PYPI_MIRROR=${PIPENV_PYPI_MIRROR}, \
-    HOME=/root/ \
+ENV HOME=/root/ \
     PYTHONUNBUFFERED=1 \
     ALLOWED_HOSTS="*" \
     CACHE_URL="redis://127.0.0.1:6379/1" \

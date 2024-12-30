@@ -5,7 +5,7 @@
         "Vary": "Accept, Origin, Cookie",
         "Allow": "GET, HEAD, OPTIONS",
         "X-Frame-Options": "DENY",
-        "Content-Length": "1171",
+        "Content-Length": "1040",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "same-origin"
     },
@@ -37,7 +37,6 @@
             "created": "2020-08-21T17:48:22Z",
             "modified": "2020-08-24T15:55:28Z",
             "title": "CertifiedDonorStatement_DSINV_SM150124_21082020.pdf",
-            "resource_url": "https://unitst.sharepoint.com/sites/GLB-DRP/_api/Web/lists/GetByTitle('2020 Certified Reports')/getItemById(1566)",
             "download_url": "http://localhost:8000/api/sharepoint/unitst/GLB-DRP/2020%20Certified%20Reports/files/CertifiedDonorStatement_DSINV_SM150124_21082020.pdf/download/?donor_code=I49912",
             "file_leaf_ref": "CertifiedDonorStatement_DSINV_SM150124_21082020.pdf"
         }

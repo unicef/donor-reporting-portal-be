@@ -6,7 +6,7 @@ from unicef_realm.models import BusinessArea
 
 
 class Theme(TimeStampedModel):
-    """Represents Thematic"""
+    """Represents Thematic."""
 
     name = models.CharField(verbose_name=_("Name"), max_length=64)
 
@@ -15,7 +15,7 @@ class Theme(TimeStampedModel):
 
 
 class Donor(TimeStampedModel):
-    """Represents UNICEF Donors"""
+    """Represents UNICEF Donors."""
 
     name = models.CharField(verbose_name=_("Name"), max_length=64)
     code = models.CharField(verbose_name=_("Code"), max_length=16, unique=True)
@@ -30,7 +30,7 @@ class Donor(TimeStampedModel):
 
 
 class ExternalGrant(TimeStampedModel):
-    """Represents External Grant"""
+    """Represents External Grant."""
 
     code = models.CharField(verbose_name=_("Code"), max_length=64)
     donor = models.ForeignKey(Donor, verbose_name=_("Donor"), on_delete=models.CASCADE)
@@ -71,11 +71,11 @@ class Grant(TimeStampedModel):
         ordering = ["donor"]
 
     def __str__(self):
-        return "{}: {}".format(self.donor.name, self.code)
+        return f"{self.donor.name}: {self.code}"
 
 
 class SecondaryDonor(TimeStampedModel):
-    """Represents UNICEF Secondary Donors"""
+    """Represents UNICEF Secondary Donors."""
 
     name = models.CharField(verbose_name=_("Name"), max_length=64)
     code = models.CharField(verbose_name=_("Code"), max_length=16, unique=True)
@@ -119,3 +119,16 @@ class DRPMetadata(TimeStampedModel):
         if not self.code:
             self.code = self.create_code(self.description)
         super().save(*args, **kwargs)
+
+
+class SourceId(TimeStampedModel):
+    name = models.CharField(verbose_name=_("Name"), max_length=36)
+    source_id = models.CharField(verbose_name=_("Source ID"), max_length=36)
+    description = models.CharField(verbose_name=_("Description"), max_length=128, null=True, blank=True)
+    default_filters = models.JSONField(verbose_name=_("Default filters"), null=True, blank=True, default=dict)
+
+    def __str__(self):
+        return f"{self.name} | {self.source_id}"
+
+    class Meta:
+        ordering = ["name"]

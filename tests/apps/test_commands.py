@@ -10,14 +10,14 @@ import pytest
 pytestmark = pytest.mark.slow
 
 
-@pytest.fixture()
+@pytest.fixture
 def autocreate_users():
     os.environ["AUTOCREATE_USERS"] = "user1,pwd|user2,pwd"
     yield
     del os.environ["AUTOCREATE_USERS"]
 
 
-@pytest.fixture()
+@pytest.fixture
 def invalidate_cache():
     os.environ["INVALIDATE_CACHE"] = "1"
     yield

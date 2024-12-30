@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="sharepointgroup",
             name="libs",
-            field=models.ManyToManyField(
-                related_name="groups", to="sharepoint_rest_api.SharePointLibrary"
-            ),
+            field=models.ManyToManyField(related_name="groups", to="sharepoint_rest_api.SharePointLibrary"),
         ),
     ]

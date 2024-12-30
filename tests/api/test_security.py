@@ -3,8 +3,8 @@ from django.urls import reverse
 import pytest
 from drf_api_checker.pytest import contract, frozenfixture
 
-from tests.api_checker import LastModifiedRecorder
-from tests.factories import BusinessAreaFactory, UserFactory, UserRoleFactory
+from api_checker import LastModifiedRecorder
+from factories import BusinessAreaFactory, UserFactory, UserRoleFactory
 
 
 @frozenfixture()
