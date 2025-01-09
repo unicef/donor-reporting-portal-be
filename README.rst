@@ -12,8 +12,6 @@ Links
 +--------------------+----------------+--------------+--------------------+
 | Source Code        |https://github.com/unicef/donor-reporting-portal    |
 +--------------------+----------------+-----------------------------------+
-| Issue tracker      |https://app.clubhouse.io/stories                    |
-+--------------------+----------------+-----------------------------------+
 
 
 .. |master-cov| image:: https://circleci.com/gh/unicef/etools/tree/master.svg?style=svg
