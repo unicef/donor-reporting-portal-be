@@ -12,8 +12,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="sharepointlibrary",
             name="require_donor_permission",
-            field=models.BooleanField(
-                default=True, verbose_name="Require Donor Permission"
-            ),
+            field=models.BooleanField(default=True, verbose_name="Require Donor Permission"),
         ),
     ]

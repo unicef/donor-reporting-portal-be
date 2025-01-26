@@ -47,9 +47,7 @@ class Migration(migrations.Migration):
                 ("url", models.URLField()),
                 (
                     "wrapper_name",
-                    models.CharField(
-                        max_length=16, unique=True, verbose_name="Wrapper"
-                    ),
+                    models.CharField(max_length=16, unique=True, verbose_name="Wrapper"),
                 ),
             ],
             options={

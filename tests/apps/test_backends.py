@@ -2,7 +2,7 @@ from django.test import override_settings
 
 import pytest
 
-from tests.perms import user_grant_role_permission
+from perms import user_grant_role_permission
 
 
 @pytest.mark.django_db

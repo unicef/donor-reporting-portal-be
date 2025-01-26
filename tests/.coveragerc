@@ -3,7 +3,6 @@ branch = True
 source = donor_reporting_portal
 
 omit =
-        */reset-migrations.py
         */tests/**
         */migrations/*,
         */apps.py,

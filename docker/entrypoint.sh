@@ -4,9 +4,6 @@ mkdir -p /var/donor_reporting_portal/log
 mkdir -p /var/donor_reporting_portal/conf
 mkdir -p /var/donor_reporting_portal/run
 
-# chown donor_reporting_portal:donor_reporting_portal -R /var/donor_reporting_portal/
-
-
 if [[ "$*" == "worker" ]];then
     celery -A donor_reporting_portal.config \
             worker \
@@ -31,7 +28,6 @@ elif [[ "$*" == "donor_reporting_portal" ]];then
     rm -f /var/donor_reporting_portal/run/*
 
     django-admin diffsettings --output unified
-#    django-admin makemigrations --check --dry-run
 
     django-admin db_isready --wait --timeout 60
     django-admin check --deploy

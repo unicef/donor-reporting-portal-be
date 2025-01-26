@@ -88,7 +88,7 @@ class Notifier:
 
                 if reports:
                     context = {"reports": reports, "donor": self.donor.name, "group_name": self.group_name}
-                    recipients = list(set([str(user["user__email"]) for user in users if user["user__email"]]))
+                    recipients = {str(user["user__email"]) for user in users if user["user__email"]}
                     send_notification_with_template(recipients, self.template_name, context)
 
 
@@ -188,7 +188,7 @@ class GaviNotifier(Notifier):
 
     def get_selected_fields(self):
         def to_drp(source, value):
-            prefix = "CTN" if isinstance(value, (CTNSearchSharePointField, CTNSearchMultiSharePointField)) else "DRP"
+            prefix = "CTN" if isinstance(value, CTNSearchSharePointField | CTNSearchMultiSharePointField) else "DRP"
             return prefix + to_camel(source)
 
         selected = [to_drp(key, value) for key, value in self.serializer._declared_fields.items()]
@@ -214,7 +214,7 @@ class GaviUrgentNotifier(GaviNotifier):
 
 @app.task
 def notify_donor(donor_code):
-    """notify one donor"""
+    """Notify one donor."""
     logger.info(f"Notifying {donor_code}")
     notifier = DonorNotifier(donor_code)
     notifier.notify()
@@ -222,7 +222,7 @@ def notify_donor(donor_code):
 
 @app.task
 def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE, specific_date=None):
-    """notify GAVI and spawn one task per group"""
+    """Notify GAVI and spawn one task per group."""
     logger.info("Notifying GAVI")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_gavi_donor_ctn.delay(donor_code, group_name.strip(), specific_date)
@@ -231,7 +231,7 @@ def notify_gavi_donor(donor_code=settings.GAVI_DONOR_CODE, specific_date=None):
 
 @app.task
 def notify_gavi_donor_ctn(donor_code, group_name, specific_date=None):
-    """notify a GAVI group"""
+    """Notify a GAVI group."""
     logger.info(f"Notifying {donor_code}")
     notifier = GaviNotifier(donor_code, group_name, specific_date=specific_date)
     notifier.notify()
@@ -249,14 +249,14 @@ def notify_new_records():
 
 @app.task
 def notify_urgent_by_group(group_name):
-    """notify a GAVI group"""
+    """Notify a GAVI group."""
     notifier = GaviUrgentNotifier(settings.GAVI_DONOR_CODE, group_name)
     notifier.notify()
 
 
 @app.task
 def notify_urgent_records():
-    """notify GAVI urgent records and spawn one task per group"""
+    """Notify GAVI urgent records and spawn one task per group."""
     logger.info("Notify Urgent CTNs Start")
     for group_name in Group.objects.filter(name__startswith="MOU").values_list("name", flat=True):
         notify_urgent_by_group.delay(group_name)

@@ -7,15 +7,7 @@ from donor_reporting_portal.apps.roles.models import UserRole
 
 
 class DonorRoleBackend(ModelBackend):
-    """Backend with check if a user has a specific permission on a given Donor"""
-
-    # def has_perm(self, user_obj, perm, donor_obj):
-    #     if user_obj.is_superuser:  # pragma: no cover
-    #         return True
-    #     if not user_obj.is_active or user_obj.is_anonymous:
-    #         return set()
-    #     perms = UserRole.objects.get_permissions_by_donor(user_obj, donor_obj)
-    #     return perm in {f'{app_label}.{perm_name}' for app_label, perm_name in perms}
+    """Backend with check if a user has a specific permission on a given Donor."""
 
     def has_perm(self, user_obj, perm, context_obj):
         if user_obj.is_superuser:  # pragma: no cover
@@ -38,6 +30,6 @@ class DonorRoleBackend(ModelBackend):
 
 
 class UNICEFAzureADB2COAuth2(AzureADB2COAuth2):
-    """UNICEF Azure ADB2C Custom Backend"""
+    """UNICEF Azure ADB2C Custom Backend."""
 
     name = "unicef-azuread-b2c-oauth2"

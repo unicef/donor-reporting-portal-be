@@ -6,7 +6,7 @@ from django.core.management import call_command
 import pytest
 from rest_framework.test import APIClient
 
-from .factories import (
+from factories import (
     BusinessAreaFactory,
     DonorFactory,
     ExternalGrantFactory,
@@ -21,7 +21,12 @@ from .factories import (
 
 
 def pytest_configure(config):
-    # enable this to remove deprecations
+    os.environ["STATIC_ROOT"] = tempfile.gettempdir()
+
+
+@pytest.fixture(autouse=True)
+def use_override_settings(settings):
+    os.environ["SECRET_KEY"] = "6311bc92d3d1ebf12ae2aa54d8aaeeafa9e8cdb4"
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["STATIC_ROOT"] = tempfile.gettempdir()
 
@@ -32,64 +37,64 @@ def django_db_setup(django_db_setup, django_db_blocker):
         call_command("loaddata", "notifications.json")
 
 
-@pytest.fixture()
+@pytest.fixture
 def client(user):
     client = APIClient()
     client.force_authenticate(user)
     return client
 
 
-@pytest.fixture()
+@pytest.fixture
 def user(request, db):
     return UserFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def logged_user(client, user):
     client.force_authenticate(user)
     return user
 
 
-@pytest.fixture()
+@pytest.fixture
 def business_area():
     return BusinessAreaFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def userrole():
     return UserRoleFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def theme():
     return ThemeFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def donor():
     return DonorFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def sharepoint_group():
     return SharePointGroupFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def external_grant():
     return ExternalGrantFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def grant():
     return GrantFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def secondary_donor():
     return SecondaryDonorFactory()
 
 
-@pytest.fixture()
+@pytest.fixture
 def group():
     return GroupFactory()

@@ -7,7 +7,7 @@ from unicef_realm.models import BusinessArea, Region
 
 from donor_reporting_portal.apps.core.models import User
 from donor_reporting_portal.apps.roles.models import UserRole
-from tests.factories import DonorFactory
+from factories import DonorFactory
 
 
 class GroupFactory(factory.django.DjangoModelFactory):
@@ -39,7 +39,6 @@ class UserFactory(factory.django.DjangoModelFactory):
     first_name = factory.Faker("first_name")
 
     email = factory.Sequence(lambda n: "m%03d@mailinator.com" % n)
-    password = "password"
     is_superuser = False
     is_active = True
 
@@ -59,7 +58,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         return user
 
 
-class AdminFactory(UserFactory):
+class SuperUserFactory(UserFactory):
     is_superuser = True
 
 

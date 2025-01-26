@@ -9,15 +9,14 @@ from .models import Donor, ExternalGrant, Grant, SecondaryDonor, Theme
 logger = logging.getLogger(__name__)
 
 
-def get_date(date_string, format="%d-%b-%y"):
-    if date_string:
-        return datetime.strptime(date_string, format)
+def get_date(date_string, data_format="%d-%b-%y"):
+    return datetime.strptime(date_string, data_format) if date_string else None
 
 
 def get_type(record):
     if record["THEMATIC"]:
         return Grant.THEMATIC
-    elif record["USGOV_FLAG"]:
+    if record["USGOV_FLAG"]:
         return Grant.FFR
     return Grant.STANDARD
 
@@ -42,13 +41,7 @@ class GrantSynchronizer(VisionDataSynchronizer):
         return processed
 
     def _filter_records(self, records):
-        def is_valid_record(record):
-            for key in self.REQUIRED_KEYS:
-                if key not in record:
-                    return False
-            return True
-
-        return [rec for rec in records if is_valid_record(rec)]
+        return [rec for rec in records if all(key in rec for key in self.REQUIRED_KEYS)]
 
     @staticmethod
     def _item_save(record):
@@ -84,8 +77,9 @@ class GrantSynchronizer(VisionDataSynchronizer):
         if record.get("SECONDARY_DONOR_CODE", None):
             secondary_donors_codes = record["SECONDARY_DONOR_CODE"].split(";")
             secondary_donors_names = record["SECONDARY_DONOR"].split(";")
-            assert len(secondary_donors_codes) == len(secondary_donors_names)
-            for code, name in zip(secondary_donors_codes, secondary_donors_names):
+            if len(secondary_donors_codes) != len(secondary_donors_names):
+                return -1
+            for code, name in zip(secondary_donors_codes, secondary_donors_names, strict=True):
                 (
                     secondary_donor,
                     _,
