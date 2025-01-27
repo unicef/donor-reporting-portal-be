@@ -42,6 +42,14 @@ class Command(BaseCommand):
             help="",
         )
 
+        parser.add_argument(
+            "--with-check",
+            action="store_true",
+            dest="check",
+            default=False,
+            help="Run checks",
+        )
+
         parser.add_argument("--users", action="store_true", dest="users", default=False, help="")
 
         parser.add_argument("--metadata", action="store_true", dest="metadata", default=False, help="")
