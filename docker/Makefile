@@ -74,6 +74,7 @@ build:
 			-e DEBUG=false \
 			-e DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
 			-e SECURE_BROWSER_XSS_FILTER=0 \
+			-e SECRET_KEY=${SECRET_KEY} \
 			-e SECURE_CONTENT_TYPE_NOSNIFF=0 \
 			-e SECURE_FRAME_DENY=0 \
 			-e SECURE_HSTS_SECONDS=0 \
@@ -164,7 +165,7 @@ test:
 				 -e CSRF_COOKIE_SECURE=1 \
 				 -e SECURE_HSTS_PRELOAD=1 \
 				 -e SECURE_SSL_REDIRECT=1" \
-	CMD='bash -c "touch /var/donor_reporting_portal/.touch && django-admin check --deploy "' \
+	CMD='bash -c "mkdir /var/donor_reporting_portal && touch /var/donor_reporting_portal/.touch && django-admin check --deploy "' \
 	$(MAKE) .run
 
 scratch:

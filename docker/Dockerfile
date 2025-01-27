@@ -1,90 +1,167 @@
-ARG BASE_IMAGE=3.0
-
-FROM unicef/donor-reporting-portal-backend:${BASE_IMAGE}-base
-
-RUN mkdir -p /code
-COPY . /code
-WORKDIR /code
-
-RUN set -ex \
-    ls -al /code \
-    && sha1sum -c /CHECKSUM \
-    && pip3 install . \
-    && rm -fr /code
+FROM python:3.13-slim-bookworm AS base_os
+ARG GOSU_VERSION=1.17
+ARG GOSU_SHA256=bbc4136d03ab138b1ad66fa4fc051bafc6cc7ffae632b069a53657279a450de3
 
 
-LABEL org.label.name="Donor Reporting Portal" \
-      org.label.maintainer="ddinicola@unicef.org" \
-      org.label.description="" \
-      org.label.url="https://donor-reporting-portal.unicef.io/" \
-      org.label.vcs-url="https://github.com/unicef/donor-reporting-portal-be"
+RUN set -x \
+  && runtimeDeps=" \
+    libmagic1 \
+    libxml2 \
+  " \
+  && buildDeps=" \
+wget \
+" \
+  && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends ${buildDeps} ${runtimeDeps} \
+  && rm -rf /var/lib/apt/lists/* \
+  && wget --quiet -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" \
+  && echo "$GOSU_SHA256 /usr/local/bin/gosu" | sha256sum --check --status \
+  && chmod +x /usr/local/bin/gosu \
+  && apt-get purge -y --auto-remove $buildDeps
+
+RUN groupadd --gid 1024 unicef \
+    && adduser --disabled-login --disabled-password --no-create-home --ingroup unicef -q drp
 
 
-ENV HOME=/root/ \
-    PYTHONUNBUFFERED=1 \
-    ALLOWED_HOSTS="*" \
-    CACHE_URL="redis://127.0.0.1:6379/1" \
-    CELERY_AUTOSCALE="5,1" \
-    CELERY_BROKER_URL="redis://127.0.0.1:6379/2" \
-    CELERY_LOGLEVEL="INFO" \
-    CELERY_RESULT_BACKEND="redis://127.0.0.1:6379/3" \
-    CELERY_EXTRA="" \
-    CSRF_COOKIE_SECURE=True \
-    DATABASE_URL="postgres://postgres:@192.168.66.66:5432/donor_reporting_portal" \
-    DEBUG=0 \
+# ------- builder -------
+FROM base_os AS builder
+RUN set -x \
+    && buildDeps="build-essential \
+cmake \
+curl \
+gcc \
+git \
+libfontconfig1 \
+libgconf-2-4 \
+libglib2.0-0 \
+libnss3 \
+libssl-dev \
+libxml2-dev  \
+python3-dev \
+zlib1g-dev  \
+" \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends $buildDeps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends gnupg wget curl unzip && \
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
+    apt-get update -y && \
+    apt-get install -y --no-install-recommends google-chrome-stable && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/* && \
+    CHROME_VERSION=$(google-chrome --product-version) && \
+    wget -q --continue -P /chromedriver "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROME_VERSION/linux64/chromedriver-linux64.zip" && \
+    unzip /chromedriver/chromedriver* -d /usr/local/bin/ && \
+    rm -rf /chromedriver
+
+RUN pip install uv uwsgi
+
+# ------- tests -------
+FROM builder AS tests
+ARG BUILD_DATE
+ARG GIT_SHA
+
+LABEL distro="tests"
+LABEL org.opencontainers.image.created="$BUILD_DATE"
+LABEL org.opencontainers.image.version="$VERSION"
+
+ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
     DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
-    MEDIA_ROOT=/tmp/media \
-    STATIC_ROOT=/var/donor_reporting_portal/static \
-    SECRET_KEY="secret" \
-    SECURE_BROWSER_XSS_FILTER=True \
-    SECURE_CONTENT_TYPE_NOSNIFF=True \
-    SECURE_FRAME_DENY=True \
-    SECURE_HSTS_INCLUDE_SUBDOMAINS=True \
-    SECURE_HSTS_PRELOAD=True \
-    SECURE_HSTS_SECONDS=1 \
-    SECURE_SSL_REDIRECT=True \
-    SENTRY_DSN="" \
-    SESSION_COOKIE_HTTPONLY=True \
-    SESSION_COOKIE_SECURE=True
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    UV_PROJECT_ENVIRONMENT=/venv \
+    VIRTUAL_ENV=/venv \
+    UWSGI_PROCESSES=4
 
-ENV UWSGI_PROTOCOL=http \
-    UWSGI_WORKERS=4 \
-    UWSGI_AUTO_PROCNAME=true \
-    UWSGI_BUFFER_SIZE=32768 \
-    UWSGI_DIE_ON_TERM=true \
-    UWSGI_DISABLE_LOGGING=false \
-    UWSGI_DISABLE_WRITE_EXCEPTION=true \
-    UWSGI_FREEBIND=true \
-    UWSGI_HARAKIRI=180 \
-    UWSGI_HTTP_TIMEOUT=180 \
-    UWSGI_IGNORE_SIGPIPE=true \
-    UWSGI_IGNORE_WRITE_ERRORS=true \
-    UWSGI_LIMIT_POST=20971520 \
-    UWSGI_LOG_X_FORWARDED_FOR=false \
-    UWSGI_MEMORY_REPORT=false \
-    UWSGI_NEED_APP=true \
-    UWSGI_POST_BUFFERING=65536 \
-    UWSGI_PROCNAME_PREFIX_SPACED="[DonorReportingPortal]" \
-    UWSGI_RELOAD_ON_RSS=600 \
-    UWSGI_THREADS=4 \
-    UWSGI_THUNDER_LOCK=true \
-    UWSGI_VACUUM=true \
-    UWSGI_MODULE="donor_reporting_portal.config.wsgi:application" \
-    UWSGI_HTTP_SOCKET=0.0.0.0:8000 \
-    UWSGI_MASTER=true \
-    UWSGI_ENABLE_THREADS=true \
-    UWSGI_LAZY_APPS=true \
-    UWSGI_SINGLE_INTERPRETER=true
+WORKDIR /app
+COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
+COPY src /app/src/
+
+RUN --mount=type=cache,target=/root/.uv-cache \
+    uv sync --cache-dir=/root/.uv-cache \
+        --python=/usr/local/bin/python \
+        --python-preference=system \
+        --frozen
+
+# ------- production only deps-------
+FROM builder AS production
+ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
+    DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    UV_PROJECT_ENVIRONMENT=/venv \
+    VIRTUAL_ENV=/venv \
+    UWSGI_PROCESSES=4
+
+WORKDIR /app
+COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
+COPY src /app/src/
+
+RUN --mount=type=cache,target=/root/.uv-cache \
+    uv sync --cache-dir=/root/.uv-cache \
+        --python=/usr/local/bin/python \
+        --python-preference=system \
+        --no-dev --frozen --extra distribution
+
+
+
+# ------- dist -------
+FROM base_os AS dist
+ARG BUILD_DATE
+ARG GIT_SHA
+ARG BRANCH
+
+ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
+    BUILD_DATE=$BUILD_DATE \
+    GIT_SHA=$GIT_SHA \
+    VERSION=$VERSION \
+    BRANCH=$BRANCH \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    STATIC_URL="/static/" \
+    PYTHONPATH=""\
+    PGSSLCERT="/tmp/postgresql.crt" \
+    DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
+    UV_PROJECT_ENVIRONMENT=/venv \
+    VIRTUAL_ENV=/venv \
+    UWSGI_PROCESSES=4
+
+RUN <<EOF cat> /RELEASE
+{"version": "$VERSION",
+ "commit": "$GIT_SHA",
+ "date": "$BUILD_DATE",
+}
+EOF
+WORKDIR /app
+COPY docker/conf /conf/
+COPY docker/bin/* /usr/local/bin/
+
+COPY . /app/
+
+COPY --chown=drp:unicef --from=production /venv /venv
+COPY --from=builder /usr/local/bin/uwsgi /usr/local/bin/uv /usr/local/bin/
+RUN --mount=type=cache,target=/root/.uv-cache \
+    uv --cache-dir=/root/.uv-cache  pip install --no-deps . \
+    && rm -fr /app/*
+
 
 EXPOSE 8000
+ENTRYPOINT exec docker-entrypoint.sh "$0" "$@"
+CMD ["run"]
 
-ADD docker/*.sh /usr/local/bin/
 
-#RUN addgroup --gid 1024 donor_reporting_portal \
-#    && adduser --disabled-password --ingroup donor_reporting_portal -S donor_reporting_portal
-
-ENTRYPOINT ["entrypoint.sh"]
-RUN ["chmod", "+x", "/usr/local/bin/entrypoint.sh"]
-WORKDIR /var/donor_reporting_portal
-
-CMD ["donor_reporting_portal"]
+LABEL maintainer="drp@unicef.org"
+LABEL org.opencontainers.image.authors="drp@unicef.org"
+LABEL org.opencontainers.image.description="Donor Reporting Portal"
+LABEL org.opencontainers.image.documentation="https://github.com/unicef/donor-reporting-portal-be/"
+LABEL org.opencontainers.image.title="Hope Payment Gateway"
+LABEL org.opencontainers.image.licenses="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/blob/${GIT_SHA:-master}/LICENSE"
+LABEL org.opencontainers.image.revision=$GIT_SHA
+LABEL org.opencontainers.image.source="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/tree/${GIT_SHA:-master}/"
+LABEL org.opencontainers.image.url="https://hub.docker.com/repository/docker/unicef/donor-reporting-portal-be/tags/"
+LABEL org.opencontainers.image.vendor="UNICEF"
+LABEL org.opencontainers.image.created="$BUILD_DATE"
+LABEL org.opencontainers.image.version="$VERSION"
