@@ -19,9 +19,9 @@ case "$1" in
       set -- tini -- "$@"
 	    set -- uwsgi --http :8000 \
 	          -H /venv \
-	          --module hope_payment_gateway.config.wsgi \
+	          --module donor_reporting_portal.config.wsgi \
 	          --mimefile=/conf/mime.types \
-	          --uid hope \
+	          --uid drp \
 	          --gid unicef \
             --buffer-size 8192 \
             --http-buffer-size 8192 \
