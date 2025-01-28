@@ -1,6 +1,5 @@
 import os
 
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from django.core.management import call_command
@@ -43,6 +42,14 @@ class Command(BaseCommand):
             help="",
         )
 
+        parser.add_argument(
+            "--with-check",
+            action="store_true",
+            dest="check",
+            default=False,
+            help="Run checks",
+        )
+
         parser.add_argument("--users", action="store_true", dest="users", default=False, help="")
 
         parser.add_argument("--metadata", action="store_true", dest="metadata", default=False, help="")
@@ -59,7 +66,7 @@ class Command(BaseCommand):
         verbosity = options["verbosity"]
         migrate = options["migrate"]
         _all = options["all"]
-        ModelUser = get_user_model()
+        ModelUser = get_user_model()  # noqa
         if options["collectstatic"] or _all:
             self.stdout.write("Run collectstatic")
             call_command("collectstatic", verbosity=verbosity - 1, interactive=False)
@@ -70,12 +77,8 @@ class Command(BaseCommand):
 
         if options["users"] or _all:
             call_command("update_notifications", verbosity=verbosity - 1)
-            if settings.DEBUG:
-                pwd = "123"
-                admin = os.environ.get("USER", "admin")
-            else:
-                pwd = os.environ.get("ADMIN_PASSWORD", None)
-                admin = os.environ.get("ADMIN_USERNAME", "admin")
+            pwd = os.environ.get("ADMIN_PASSWORD")
+            admin = os.environ.get("ADMIN_USERNAME", "admin")
 
             if pwd:
                 _, created = ModelUser.objects.get_or_create(

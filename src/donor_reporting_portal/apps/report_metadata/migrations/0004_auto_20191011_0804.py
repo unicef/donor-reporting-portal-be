@@ -16,8 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="grant",
             name="description",
-            field=models.CharField(
-                blank=True, max_length=516, null=True, verbose_name="Description"
-            ),
+            field=models.CharField(blank=True, max_length=516, null=True, verbose_name="Description"),
         ),
     ]

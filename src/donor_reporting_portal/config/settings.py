@@ -74,7 +74,7 @@ SOCIAL_AUTH_BACKEND_NAME = "unicef-azuread-b2c-oauth2"
 
 # path
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-MEDIA_ROOT = env("MEDIA_ROOT", default="/tmp/etools/media/")
+MEDIA_ROOT = env("MEDIA_ROOT", default="/tmp/etools/media/")  # noqa
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "static"))
 MEDIA_URL = "/dm-media/"
 STATIC_URL = env("STATIC_URL", default="/static/")
@@ -86,10 +86,7 @@ STATICFILES_FINDERS = [
 
 SECRET_KEY = env("SECRET_KEY")
 HOST = env("HOST", default="http://localhost:8000")
-ALLOWED_HOSTS = (
-    env("ALLOWED_HOST", default="localhost"),
-    "0.0.0.0",
-)
+ALLOWED_HOSTS = (env("ALLOWED_HOST", default="localhost"),)
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"

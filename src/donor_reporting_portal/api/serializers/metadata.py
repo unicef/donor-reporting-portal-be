@@ -7,6 +7,7 @@ from donor_reporting_portal.apps.report_metadata.models import (
     Grant,
     SecondaryDonor,
     Theme,
+    SourceId,
 )
 
 
@@ -52,3 +53,9 @@ class DRPMetadataSerializer(serializers.ModelSerializer):
     class Meta:
         model = DRPMetadata
         fields = ("category", "code", "description", "audience")
+
+
+class SourceIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SourceId
+        fields = ("name", "source_id", "description", "default_filters")

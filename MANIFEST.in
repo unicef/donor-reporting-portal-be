@@ -9,12 +9,9 @@ recursive-include src/donor_reporting_portal *
 
 exclude .coverage
 exclude .coveragerc
-exclude .flake8
-exclude .isort.cfg
 exclude .gitignore
 exclude .dockerignore
 exclude conftest.py
-exclude tox.ini
 exclude tests
 exclude ~*
 
@@ -30,4 +27,3 @@ recursive-exclude dist *
 recursive-exclude docs *
 recursive-exclude db *
 recursive-exclude db_dumps *
-recursive-exclude .tox *

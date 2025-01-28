@@ -43,15 +43,11 @@ class Migration(migrations.Migration):
                 ("url", models.URLField(unique=True)),
                 (
                     "username",
-                    models.CharField(
-                        blank=True, max_length=64, null=True, verbose_name="Username"
-                    ),
+                    models.CharField(blank=True, max_length=64, null=True, verbose_name="Username"),
                 ),
                 (
                     "password",
-                    models.CharField(
-                        blank=True, max_length=64, null=True, verbose_name="Password"
-                    ),
+                    models.CharField(blank=True, max_length=64, null=True, verbose_name="Password"),
                 ),
             ],
             options={

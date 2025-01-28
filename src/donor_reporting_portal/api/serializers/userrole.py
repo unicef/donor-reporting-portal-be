@@ -84,9 +84,6 @@ class UserProfileSerializer(UserSerializer):
         return UserRoleSerializer(qs, many=True).data
 
     def get_instance(self, obj):
-        # unicef_user = obj.groups.filter(name='UNICEF User').first()
-        # if unicef_user:
-        #     return unicef_user, None, None
         if UserRole.objects.by_permissions(["report_metadata.view_donor", "roles.add_userrole"]).filter(user=obj):
             instance = (
                 UserRole.objects.by_permissions(["report_metadata.view_donor", "roles.add_userrole"])
@@ -128,21 +125,3 @@ class UserProfileSerializer(UserSerializer):
             "secondary_donor",
             "roles",
         )
-
-    # donors = serializers.SerializerMethodField()
-    # admin_donors = serializers.SerializerMethodField()
-
-    # def get_donors(self, obj):
-    #     qs = Donor.objects.all()
-    #     if not obj.has_perm('roles.can_view_all_donors'):
-    #         roles = UserRole.objects.by_permissions('report_metadata.view_donor').filter(user=obj)
-    #         qs = qs.filter(roles__in=roles)
-    #     serializer = DonorSerializer(instance=qs, many=True)
-    #     return serializer.data
-    #
-    # def get_admin_donors(self, obj):
-    #     roles = UserRole.objects.by_permissions(['report_metadata.view_donor',
-    #                                              'roles.add_userrole']).filter(user=obj)
-    #     donors = Donor.objects.filter(roles__in=roles)
-    #     serializer = DonorSerializer(instance=donors, many=True)
-    #     return serializer.data

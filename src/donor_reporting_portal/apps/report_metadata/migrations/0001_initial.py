@@ -167,9 +167,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "financial_close_date",
-                    models.DateField(
-                        blank=True, null=True, verbose_name="Financial Close Date"
-                    ),
+                    models.DateField(blank=True, null=True, verbose_name="Financial Close Date"),
                 ),
                 ("year", models.CharField(max_length=4, verbose_name="Year")),
                 (

@@ -2,8 +2,8 @@ from django.urls import reverse
 
 from drf_api_checker.pytest import contract, frozenfixture
 
-from tests.api_checker import ExpectedErrorRecorder, LastModifiedRecorder
-from tests.factories import (
+from api_checker import ExpectedErrorRecorder, LastModifiedRecorder
+from factories import (
     DonorFactory,
     DRPMetadataFactory,
     ExternalGrantFactory,
@@ -11,7 +11,7 @@ from tests.factories import (
     ThemeFactory,
     UserRoleFactory,
 )
-from tests.perms import user_grant_permissions, user_grant_role_permission
+from perms import user_grant_permissions, user_grant_role_permission
 
 
 @frozenfixture()
@@ -75,14 +75,6 @@ def test_api_my_donor_list_donor(request, django_app, logged_user, donor):
 @contract(recorder_class=ExpectedErrorRecorder)
 def test_api_my_donor_list_fail(request, django_app, logged_user, donor):
     return reverse("api:donor-my-donors")
-
-
-# @contract(recorder_class=LastModifiedRecorder)
-# def test_api_my_admin_donors_list_donor(request, django_app, logged_user):
-#     userrole = UserRoleFactory(user=logged_user)
-#     with user_grant_role_permission(userrole.user, userrole.donor,
-#                                     permissions=['report_metadata.view_donor', 'roles.add_userrole']):
-#         return reverse('api:donor-my-admin-donors')
 
 
 @contract(recorder_class=ExpectedErrorRecorder)

@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 
 from donor_reporting_portal.apps.roles.models import UserRole
-from tests.factories import GroupFactory, UserRoleFactory
+from factories import GroupFactory, UserRoleFactory
 
 
 def test_admin_userrole(django_app, admin_user, userrole, donor, group, secondary_donor):

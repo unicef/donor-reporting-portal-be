@@ -14,15 +14,16 @@ from donor_reporting_portal.apps.report_metadata.models import Donor, SecondaryD
 
 class UserRoleManager(models.Manager):
     def by_permissions(self, perms_name):
-        if not isinstance(perms_name, (set, list)):
+        qs = self
+        if not isinstance(perms_name, set | list):
             perms_name = (perms_name,)
         for perm_name in perms_name:
             app_label, codename = perm_name.split(".")
-            self = self.filter(
+            qs = self.filter(
                 group__permissions__codename=codename,
                 group__permissions__content_type__app_label=app_label,
             )
-        return self
+        return qs
 
     def get_permissions_by_donor(self, user, donor):
         return self.filter(user=user, donor=donor, secondary_donor=None).values_list(
@@ -82,10 +83,10 @@ class UserRole(TimeStampedModel):
         )
 
     def __str__(self):
-        str = f"{self.user} - {self.group} | {self.donor}"
+        desc = f"{self.user} - {self.group} | {self.donor}"
         if self.secondary_donor:
-            str = f"{str} | {self.secondary_donor}"
-        return str
+            desc = f"{desc} | {self.secondary_donor}"
+        return desc
 
 
 @receiver(post_save, sender=get_user_model())

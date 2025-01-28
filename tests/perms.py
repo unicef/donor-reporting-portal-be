@@ -2,6 +2,7 @@ import operator
 from contextlib import ContextDecorator
 from functools import reduce
 from random import choice
+from typing import Iterable
 
 from django.contrib.auth.models import Group, Permission
 from django.db.models import Q
@@ -10,7 +11,7 @@ from faker import Faker
 
 from donor_reporting_portal.apps.roles.models import UserRole
 
-from .factories import GroupFactory
+from factories import GroupFactory
 
 whitespace = " \t\n\r\v\f"
 lowercase = "abcdefghijklmnopqrstuvwxyz"
@@ -24,7 +25,7 @@ faker = Faker()
 
 
 def text(length, choices=ascii_letters):
-    """returns a random (fixed length) string
+    """Return a random (fixed length) string.
 
     :param length: string length
     :param choices: string containing all the chars can be used to build the string
@@ -42,7 +43,7 @@ def get_group(name=None, permissions=None):
         try:
             app_label, codename = permission_name.split(".")
         except ValueError:
-            raise ValueError("Invalid permission name `{0}`".format(permission_name))
+            raise ValueError(f"Invalid permission name `{permission_name}`")
         try:
             permission = Permission.objects.get(content_type__app_label=app_label, codename=codename)
         except Permission.DoesNotExist:
@@ -64,7 +65,7 @@ class user_grant_permissions(ContextDecorator):  # noqa
 
     def __init__(self, user, permissions=None):
         self.user = user
-        if not isinstance(permissions, (list, tuple)):
+        if not isinstance(permissions, Iterable):
             permissions = [permissions]
         self.permissions = permissions
         self.group = None
@@ -86,15 +87,14 @@ class user_grant_permissions(ContextDecorator):  # noqa
 
     def start(self):
         """Activate a patch, returning any created mock."""
-        result = self.__enter__()
-        return result
+        return self.__enter__()
 
     def stop(self):
         """Stop an active patch."""
         return self.__exit__(None, None, None)
 
 
-class user_grant_role_permission:
+class user_grant_role_permission:  # noqa
     def __init__(self, user, donor, permissions):
         self.user = user
         self.donor = donor
@@ -111,7 +111,7 @@ class user_grant_role_permission:
 
             for permission in self.permissions:
                 app, perm = permission.split(".")
-                or_queries.append(Q(**{"codename": perm, "content_type__app_label": app}))
+                or_queries.append(Q(codename=perm, content_type__app_label=app))
             self.group.permissions.set(Permission.objects.filter(reduce(operator.or_, or_queries)))
             self.group.save()
             self.user_role, _ = UserRole.objects.get_or_create(user=self.user, group=self.group, donor=self.donor)
@@ -123,8 +123,7 @@ class user_grant_role_permission:
 
     def start(self):
         """Activate a patch, returning any created mock."""
-        result = self.__enter__()
-        return result
+        return self.__enter__()
 
     def stop(self):
         """Stop an active patch."""

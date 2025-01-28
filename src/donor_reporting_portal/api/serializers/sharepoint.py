@@ -60,6 +60,7 @@ class DRPSerializerMixin(serializers.Serializer):
             modified = parse(modified[:19], ignoretz=True)
             day_difference = (datetime.now() - modified).days
             return day_difference <= 3
+        return False
 
     def get_download_url(self, obj):
         base_url = super().get_download_url(obj)
@@ -98,7 +99,8 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
                 day_difference = (datetime.now() - parse(modified, ignoretz=True)).days
                 return day_difference <= 3
             except (TypeError, ValueError):
-                return False
+                pass
+        return False
 
     def get_download_url(self, obj):
         try:
@@ -114,7 +116,7 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
                 donor_code = donor_code.replace(";", ",")
                 base_url = f"{base_url}?donor_code={donor_code}"
             return base_url
-        except BaseException:
+        except KeyError:
             return None
 
 

@@ -34,8 +34,8 @@ class UserViewSet(GenericAbstractViewSetMixin, viewsets.ModelViewSet):
 
     @action(detail=False, methods=["get"])
     def my_profile(self, request, *args, **kwargs):
-        object = self.request.user
-        serializer = UserProfileSerializer(object)
+        obj = self.request.user
+        serializer = UserProfileSerializer(obj)
         return Response(serializer.data)
 
     def get_permissions(self):

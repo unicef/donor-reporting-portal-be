@@ -14,8 +14,7 @@ class MetadataStaticAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        """Return All Static values used for drop-down in the frontend"""
-
+        """Return All Static values used for drop-down in the frontend."""
         years = [str(year) for year in range(2000, datetime.today().year + 2)]
         report_years = [str(year) for year in range(2019, datetime.today().year + 2)]
         grant_issue_years = approval_year = [str(year) for year in range(2018, datetime.today().year + 2)]

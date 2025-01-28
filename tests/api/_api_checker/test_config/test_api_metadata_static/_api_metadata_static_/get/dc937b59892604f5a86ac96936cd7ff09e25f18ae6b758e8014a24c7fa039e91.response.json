@@ -111,6 +111,14 @@
             {
                 "code": "2024",
                 "description": "2024"
+            },
+            {
+                "code": "2025",
+                "description": "2025"
+            },
+            {
+                "code": "2026",
+                "description": "2026"
             }
         ],
         "report_years": [
@@ -137,6 +145,14 @@
             {
                 "code": "2024",
                 "description": "2024"
+            },
+            {
+                "code": "2025",
+                "description": "2025"
+            },
+            {
+                "code": "2026",
+                "description": "2026"
             }
         ],
         "grant_issue_years": [
@@ -167,6 +183,14 @@
             {
                 "code": "2024",
                 "description": "2024"
+            },
+            {
+                "code": "2025",
+                "description": "2025"
+            },
+            {
+                "code": "2026",
+                "description": "2026"
             }
         ],
         "report_type": [
@@ -541,6 +565,14 @@
             {
                 "code": "2024",
                 "description": "2024"
+            },
+            {
+                "code": "2025",
+                "description": "2025"
+            },
+            {
+                "code": "2026",
+                "description": "2026"
             }
         ]
     },

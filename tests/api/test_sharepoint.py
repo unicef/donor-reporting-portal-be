@@ -5,16 +5,16 @@ from django.urls import reverse
 from drf_api_checker.pytest import api_checker_datadir, contract, frozenfixture  # noqa
 from drf_api_checker.recorder import Recorder
 
-from tests.api_checker import LastModifiedRecorder
-from tests.factories import (
+from api_checker import LastModifiedRecorder
+from factories import (
     DonorFactory,
     SharePointGroupFactory,
     SharePointLibraryFactory,
     SharePointSiteFactory,
     SharePointTenantFactory,
 )
-from tests.perms import user_grant_role_permission
-from tests.vcrpy import VCR
+from perms import user_grant_role_permission
+from vcrpy import VCR
 
 
 @frozenfixture()
@@ -76,16 +76,6 @@ def test_api_caml(api_checker_datadir, logged_user, library, donor):  # noqa
     with user_grant_role_permission(logged_user, donor, permissions=["report_metadata.view_donor"]):
         recorder = Recorder(api_checker_datadir, as_user=logged_user)
         recorder.assertGET(url, data=data)
-
-
-# @VCR.use_cassette(str(Path(__file__).parent / 'vcr_cassettes/caml-list-don.yml'))
-# def test_api_caml_sec_donor(api_checker_datadir, logged_user, library, donor, secondary_donor):
-#     url = reverse('api:sharepoint-caml-list',
-#                   kwargs={'tenant': library.site.tenant.name, 'site': library.site.name, 'folder': library.name})
-#     data = {'donor_code': donor.code, 'secondary_donor_code': secondary_donor.code}
-#     with user_grant_role_permission(logged_user, donor, permissions=['report_metadata.view_donor']):
-#         recorder = Recorder(api_checker_datadir, as_user=logged_user)
-#         recorder.assertGET(url, data=data)
 
 
 @contract(recorder_class=LastModifiedRecorder)

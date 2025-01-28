@@ -1,13 +1,81 @@
-[tool.black]
-line-length = 120
-exclude = '''
-/(
-    \.git
-  | \.tox
-  | \.venv
-  | _build
-  | build
-  | dist
-  | migrations
-)/
-'''
+[project]
+authors = [
+    {name = "ddinicola"},
+    {name = "Domenico DiNicola", email = "dom.dinicola@gmail.com"},
+]
+requires-python = ">=3.13"
+dependencies = [
+    "bleach[css]",
+    "celery",
+    "dj-database-url",
+    "dj-static",
+    "Django",
+    "django-adminactions",
+    "django-anymail",
+    "django-celery-beat",
+    "django-celery-email",
+    "django-celery-results",
+    "django-cors-headers",
+    "django-debug-toolbar",
+    "django-environ",
+    "django-extensions",
+    "django-filter",
+    "django-impersonate",
+    "django-picklefield",
+    "django-redis-cache",
+    "djangorestframework",
+    "djangorestframework-csv",
+    "djangorestframework-simplejwt",
+    "djangorestframework-recursive",
+    "djangorestframework-xml",
+    "django-rest-framework-social-oauth2",
+    "gunicorn",
+    "newrelic",
+    "psycopg2-binary",
+    "sentry-sdk",
+    "requests",
+    "sharepoint-rest-api",
+    "Office365-REST-Python-Client",
+    "social-auth-app-django",
+    "social-auth-core[azuread]",
+    "unicef-djangolib",
+    "unicef-notification",
+    "unicef-realm",
+    "unicef-security",
+    "unicef-vision",
+    "uwsgi",
+
+]
+name = "donor_reporting_portal"
+version = "3.0"
+description = "Donor Reporting Portal"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.uv]
+package = true
+dev-dependencies = [
+    "coverage",
+    "django-regex",
+    "django-webtest",
+    "drf-api-checker",
+    "factory-boy",
+    "freezegun",
+    "ipython",
+    "mock",
+    "pdbpp",
+    "pre_commit",
+    "pytest",
+    "pytest-coverage",
+    "pytest-django",
+    "pytest-echo",
+    "pytest-env",
+    "pytest-ignore-flaky",
+    "pytest-pythonpath",
+    "responses",
+    "ruff",
+    "sphinx",
+    "vcrpy",
+    "webtest",
+]

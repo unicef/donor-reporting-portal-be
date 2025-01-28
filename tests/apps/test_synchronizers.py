@@ -4,7 +4,7 @@ import pytest
 
 from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant
 from donor_reporting_portal.apps.report_metadata.synchronizers import GrantSynchronizer
-from tests.vcrpy import VCR
+from vcrpy import VCR
 
 
 @pytest.mark.django_db
