@@ -10,7 +10,7 @@ chown -R drp:unicef /app
 
 case "$1" in
     run)
-      django-admin upgrade --with-check
+      django-admin upgrade --all
 	    set -- tini -- "$@"
 	    MAPPING=""
 	    if [ "${STATIC_URL}" = "/static/" ]; then
@@ -28,7 +28,7 @@ case "$1" in
 	          $MAPPING
 	    ;;
     upgrade)
-      django-admin upgrade --with-check
+      django-admin upgrade --all
       ;;
     worker)
       set -- tini -- "$@"
