@@ -149,9 +149,9 @@ class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
         "DRPRecipientOffice",
         "DRPReportType",
         "DRPTheme",
-        "DRPDonorDocument" "DRPReportMethod",
+        "DRPDonorDocumentDRPReportMethod",
         "DRPReportGroup",
-        "DRPReportStatus" "DRPRetracted",
+        "DRPReportStatusDRPRetracted",
         "DRPFrameworkAgreement",
         "DRPAwardType",
     ]

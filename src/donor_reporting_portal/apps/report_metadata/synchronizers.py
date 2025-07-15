@@ -45,7 +45,7 @@ class GrantSynchronizer(VisionDataSynchronizer):
 
     @staticmethod
     def _item_save(record):
-        logger.info(f'parsing {record["GRANT_REF"]}')
+        logger.info(f"parsing {record['GRANT_REF']}")
 
         donor, _ = Donor.objects.update_or_create(
             code=record["DONOR_CODE"],
