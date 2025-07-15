@@ -4,7 +4,6 @@ from django.db.models import signals
 import factory
 from factory import SubFactory
 from unicef_realm.models import BusinessArea, Region
-
 from donor_reporting_portal.apps.core.models import User
 from donor_reporting_portal.apps.roles.models import UserRole
 from factories import DonorFactory
@@ -44,7 +43,7 @@ class UserFactory(factory.django.DjangoModelFactory):
 
     @classmethod
     def _prepare(cls, create, **kwargs):
-        from ..perms import user_grant_permissions
+        from perms import user_grant_permissions  # noqa
 
         permissions = kwargs.pop("permissions", [])
 
