@@ -54,9 +54,8 @@ dependencies = [
 
 ]
 
-[tool.uv]
-package = true
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "coverage",
   "django-regex",
   "django-webtest",
@@ -66,7 +65,7 @@ dev-dependencies = [
   "ipython",
   "mock",
   "pdbpp",
-  "pre_commit",
+  "pre-commit",
   "pytest",
   "pytest-coverage",
   "pytest-django",
