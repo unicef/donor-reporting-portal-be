@@ -9,6 +9,7 @@ from rest_framework.decorators import action
 from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
+from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet
 from sharepoint_rest_api.views.settings_based import (
     SharePointSettingsCamlViewSet,
     SharePointSettingsFileViewSet,
@@ -36,6 +37,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSoaSharePointSearchSerializer,
     SharePointGroupSerializer,
 )
+from donor_reporting_portal.apps.report_metadata.models import SourceId
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -170,3 +172,113 @@ class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet,
 
 class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
     """DRP Search Viewset for url based."""
+
+
+class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
+    """DRP Search Viewset for graph based.
+
+    Uses Graph Search API with KQL. Property name mapping is derived
+    dynamically from the serializer's field definitions, not from a
+    hardcoded map. The viewset builds the mapping and passes already-mapped
+    managed property names to GraphClient.
+    """
+
+    serializer_class = DRPSharePointSearchSerializer
+    SEARCHABLE_PROPERTIES = {"Donor"}
+
+    def get_serializer_class(self):
+        query_params = self.request.query_params
+        if query_params.get("serializer") == "gavi":
+            return GaviSharePointSearchSerializer
+        if query_params.get("serializer") == "soa":
+            return GaviSoaSharePointSearchSerializer
+        return super().get_serializer_class()
+
+    def get_filters(self, kwargs):
+        kwargs.pop("serializer", None)
+        return kwargs
+
+    def get_selected(self, selected):
+        serializer_class = self.get_serializer_class()
+        autofields = []
+        for name, field in serializer_class._declared_fields.items():
+            if hasattr(field, "get_search_property"):
+                prop = field.get_search_property()
+                autofields.append(prop if prop is not None else to_camel(name))
+            else:
+                autofields.append(to_camel(name))
+        selected = selected.split(",") if selected else autofields
+        return selected + ["Title", "Author", "Path"]
+
+    def _apply_source_id_filters(self, qp):
+        source_id = qp.get("source_id")
+        if not source_id:
+            return
+        try:
+            source_obj = SourceId.objects.get(source_id=source_id)
+            default_filters = source_obj.default_filters or {}
+        except SourceId.DoesNotExist:
+            default_filters = {}
+        for key, value in default_filters.get("filters", {}).items():
+            if key not in qp:
+                qp[key] = value
+        exclude_paths = default_filters.get("exclude_paths", [])
+        if exclude_paths:
+            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
+            existing_search = qp.get("search", "")
+            qp["search"] = f"{path_exclusions} {existing_search}".strip()
+        search_kql = default_filters.get("search_kql", "")
+        if search_kql:
+            existing_search = qp.get("search", "")
+            if existing_search:
+                qp["search"] = f"({search_kql}) AND ({existing_search})"
+            else:
+                qp["search"] = search_kql
+
+    def _map_filter_names(self, qp, property_name_map, reverse_map):
+        mapped_filters = {}
+        for name, value in qp.items():
+            if name in ("search", "selected", "serializer", "source_id", "page", "order_by"):
+                continue
+            parts = name.split("__")
+            raw_name = parts[0]
+            operator_key = f"__{parts[-1]}" if len(parts) > 1 else ""
+            if raw_name in property_name_map:
+                mapped_name = property_name_map[raw_name]
+            elif "_" in raw_name:
+                mapped_name = to_camel(raw_name)
+            else:
+                mapped_name = raw_name
+                if reverse_map:
+                    rev_inv = {v: k for k, v in reverse_map.items()}
+                    mapped_name = rev_inv.get(raw_name, raw_name)
+                if mapped_name == raw_name:
+                    for prefix in ("DRP", "CTN", "GAVI"):
+                        if raw_name.startswith(prefix):
+                            stripped = raw_name[len(prefix) :]
+                            if stripped:
+                                mapped_name = stripped
+                                break
+            mapped_filters[f"{mapped_name}{operator_key}"] = value
+        return mapped_filters
+
+    def get_queryset(self, **kwargs):
+        qp = self.request.query_params.dict()
+        self._apply_source_id_filters(qp)
+        qp.update(kwargs)
+
+        serializer_class = self.get_serializer_class()
+        property_name_map = serializer_class.get_property_name_map()
+        reverse_map = serializer_class.get_property_name_reverse()
+
+        search = qp.get("search")
+        page = int(qp.get("page", 1))
+
+        response, self.total_rows = self.client.search(
+            search=search,
+            filters=self._map_filter_names(qp, property_name_map, reverse_map),
+            page=page,
+            searchable_properties=self.SEARCHABLE_PROPERTIES,
+            reverse_map=reverse_map,
+        )
+        return response

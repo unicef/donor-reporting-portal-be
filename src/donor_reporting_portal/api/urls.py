@@ -15,10 +15,10 @@ from .views.metadata import (
     SourceIdViewSet,
 )
 from .views.sharepoint import (
+    DRPGraphBasedSearchViewSet,
     DRPSharePointSettingsCamlViewSet,
     DRPSharePointSettingsFileViewSet,
     DRPSharePointSettingsRestViewSet,
-    DRPSharePointSettingsSearchViewSet,
     DRPSharePointUrlCamlViewSet,
     DRPSharePointUrlFileViewSet,
     DRPSharePointUrlRestViewSet,
@@ -85,8 +85,13 @@ router.register(
 )
 router.register(
     r"sharepoint/search",
-    DRPSharePointSettingsSearchViewSet,
+    DRPGraphBasedSearchViewSet,
     basename="sharepoint-settings-search",
+)
+router.register(
+    r"graph/search",
+    DRPGraphBasedSearchViewSet,
+    basename="graph-settings-search",
 )
 
 urlpatterns = [
