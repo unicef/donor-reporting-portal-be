@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from django.test.utils import override_settings
+
 import pytest
 
 from donor_reporting_portal.apps.report_metadata.models import Donor, ExternalGrant, Grant
@@ -8,6 +10,7 @@ from vcrpy import VCR
 
 
 @pytest.mark.django_db
+@override_settings(INSIGHT_URL="http://invalid_vision_url")
 @VCR.use_cassette(str(Path(__file__).parent / "vcr_cassettes/test_grant_sync.yml"))
 def test_grant_sync():
     assert Donor.objects.count() == 0

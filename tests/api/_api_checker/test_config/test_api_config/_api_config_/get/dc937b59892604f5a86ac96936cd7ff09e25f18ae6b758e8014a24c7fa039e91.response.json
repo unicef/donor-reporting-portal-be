@@ -2,7 +2,7 @@
     "status_code": 200,
     "headers": {
         "Content-Type": "application/json",
-        "Vary": "Accept, Origin, Cookie",
+        "Vary": "Accept, origin, Cookie",
         "Allow": "GET",
         "X-Frame-Options": "DENY",
         "Content-Length": "272",

@@ -1,16 +1,15 @@
 from datetime import datetime
 
-from django.conf import settings
 
 from dateutil.parser import parse
 from rest_framework import serializers
-from rest_framework.reverse import reverse
 from sharepoint_rest_api.serializers.fields import (
     CapitalizeSearchSharePointField,
     SharePointPropertyField,
     SharePointPropertyManyField,
 )
 from sharepoint_rest_api.serializers.sharepoint import SharePointSettingsSerializer, SharePointUrlSerializer
+from sharepoint_rest_api.utils import to_camel
 
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchMultiSharePointField,
@@ -91,6 +90,41 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
         "Title",
     ]
 
+    @classmethod
+    def get_property_name_map(cls):
+        """Build dict mapping URL param names → search managed property names.
+
+        Derived dynamically from each field's `get_search_property()` method.
+        Fields without `get_search_property()` (e.g. CapitalizeSearchSharePointField)
+        default to `to_camel(source)`.
+        """
+        instance = cls()
+        mapping = {}
+        for name, field in instance.fields.items():
+            if hasattr(field, "get_search_property"):
+                mapping[name] = field.get_search_property()
+            else:
+                mapping[name] = to_camel(name)
+        return mapping
+
+    @classmethod
+    def get_property_name_reverse(cls):
+        """Build dict mapping managed property names → serializer field names.
+
+        e.g. {'DonorCode': 'DRPDonorCode', 'GrantNumber': 'DRPGrantNumber'}
+        Ensures the serializer's `DRPSearchSharePointField` can find values
+        by `DRP`+PascalCase name in the enriched item dict.
+        """
+        instance = cls()
+        mapping = {}
+        for name, field in instance.fields.items():
+            if hasattr(field, "get_serializer_field_name"):
+                managed_name = to_camel(name)
+                serializer_name = field.get_serializer_field_name()
+                if managed_name != serializer_name:
+                    mapping[managed_name] = serializer_name
+        return mapping
+
     def get_is_new(self, obj):
         modified = obj.get("DRPModified")
 
@@ -105,25 +139,21 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
     def get_download_url(self, obj):
         try:
             path = obj.get("Path")
-            directories = path.split("/")
-            relative_url = reverse(
-                "sharepoint_rest_api:sharepoint-settings-files-download",
-                kwargs={"folder": directories[-2], "filename": directories[-1]},
-            )
-            base_url = f"{settings.HOST}{relative_url}"
+            if not path:
+                return None
             donor_code = obj.get("DRPDonorCode")
             if donor_code:
                 donor_code = donor_code.replace(";", ",")
-                base_url = f"{base_url}?donor_code={donor_code}"
-            return base_url
-        except KeyError:
+                return f"{path}?donor_code={donor_code}"
+            return path
+        except (KeyError, IndexError):
             return None
 
 
 class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
     report_generated_by = DRPSearchSharePointField()
     donor = DRPSearchSharePointField()
-    donor_code = DRPSearchSharePointField()
+    donor_code = DRPSearchSharePointField(search_property="Donor")
     grant_number = DRPSearchSharePointField()
     grant_issue_year = DRPSearchSharePointField()
     grant_expiry_date = DRPSearchSharePointField()
@@ -158,7 +188,7 @@ class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
 
 
 class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
-    donor_code = DRPSearchSharePointField()
+    donor_code = DRPSearchSharePointField(search_property="Donor")
     number = CTNSearchSharePointField()
     m_o_u_number = CTNSearchSharePointField()
     m_o_u_r_eference = CTNSearchSharePointField()
@@ -197,7 +227,7 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
 
 class GaviSoaSharePointSearchSerializer(DRPSharePointBaseSerializer):
     grant_number = DRPSearchSharePointField()
-    donor_code = DRPSearchSharePointField()
+    donor_code = DRPSearchSharePointField(search_property="Donor")
     g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
     sent_to_g_a_v_i_date = CTNSearchSharePointField()
     purchase_order = CTNSearchMultiSharePointField()

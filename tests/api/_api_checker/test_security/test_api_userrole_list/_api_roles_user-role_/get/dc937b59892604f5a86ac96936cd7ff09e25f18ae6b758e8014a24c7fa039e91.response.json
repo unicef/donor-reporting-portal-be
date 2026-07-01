@@ -2,27 +2,28 @@
     "status_code": 200,
     "headers": {
         "Content-Type": "application/json",
-        "Vary": "Accept, Origin, Cookie",
+        "Vary": "Accept, origin, Cookie",
         "Allow": "GET, POST, HEAD, OPTIONS",
         "X-Frame-Options": "DENY",
-        "Content-Length": "253",
+        "Content-Length": "247",
         "X-Content-Type-Options": "nosniff",
-        "Referrer-Policy": "same-origin"
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin"
     },
     "data": [
         {
-            "id": 140,
-            "user": 370,
-            "group": 168,
-            "donor": 127,
+            "id": 53,
+            "user": 136,
+            "group": 65,
+            "donor": 79,
             "secondary_donor": null,
-            "group_name": "name001",
+            "group_name": "name000",
             "donor_name": "",
             "notification_period": "none",
             "user_last_login": null,
-            "user_email": "m009@mailinator.com",
-            "user_first_name": "Warren",
-            "user_last_name": "Richardson"
+            "user_email": "m002@mailinator.com",
+            "user_first_name": "Christian",
+            "user_last_name": "Paul"
         }
     ],
     "content_type": "application/json"
