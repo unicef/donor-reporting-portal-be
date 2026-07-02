@@ -2,21 +2,21 @@
     "get_user": {
         "master": {
             "model": "core.user",
-            "pk": 26,
+            "pk": 137,
             "fields": {
                 "password": "",
                 "last_login": null,
                 "is_superuser": true,
                 "username": "user999",
-                "first_name": "Suzanne",
-                "last_name": "Ferguson",
-                "email": "m000@mailinator.com",
+                "first_name": "Angela",
+                "last_name": "Morgan",
+                "email": "m003@mailinator.com",
                 "is_staff": false,
                 "is_active": true,
-                "date_joined": "2024-12-30T17:25:26.555Z",
+                "date_joined": "2026-07-01T04:17:51.171Z",
                 "azure_id": null,
                 "job_title": null,
-                "display_name": "Suzanne Ferguson:",
+                "display_name": "Angela Morgan:",
                 "groups": [],
                 "user_permissions": []
             }

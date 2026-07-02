@@ -4,13 +4,16 @@ version = "3.0"
 description = "Donor Reporting Portal"
 readme = "README.md"
 license = { text = "MIT" }
-
 authors = [
   { name = "ddinicola" },
   { name = "Domenico DiNicola", email = "dom.dinicola@gmail.com" },
 ]
 requires-python = ">=3.13"
-classifiers = [ "Programming Language :: Python :: 3 :: Only", "Programming Language :: Python :: 3.13" ]
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
 dependencies = [
   "bleach[css]",
   "celery",
@@ -44,19 +47,17 @@ dependencies = [
   "sentry-sdk",
   "sharepoint-rest-api",
   "social-auth-app-django",
-  "social-auth-core[azuread]",
+  "social-auth-core",
   "unicef-djangolib",
   "unicef-notification",
   "unicef-realm",
   "unicef-security",
   "unicef-vision",
   "uwsgi",
-
 ]
 
-[tool.uv]
-package = true
-dev-dependencies = [
+[dependency-groups]
+dev = [
   "coverage",
   "django-regex",
   "django-webtest",
@@ -66,7 +67,7 @@ dev-dependencies = [
   "ipython",
   "mock",
   "pdbpp",
-  "pre_commit",
+  "pre-commit",
   "pytest",
   "pytest-coverage",
   "pytest-django",

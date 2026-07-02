@@ -1,4 +1,4 @@
-FROM python:3.13-slim-bookworm AS base_os
+FROM python:3.14-slim-bookworm AS base_os
 ARG GOSU_VERSION=1.17
 ARG GOSU_SHA256=bbc4136d03ab138b1ad66fa4fc051bafc6cc7ffae632b069a53657279a450de3
 ARG BUILD_DATE
@@ -7,18 +7,14 @@ ARG SOURCE_COMMIT
 
 RUN set -x \
   && runtimeDeps=" \
+    gosu \
     libmagic1 \
     libxml2 \
+    tini \
   " \
-  && buildDeps=" \
-wget \
-" \
-  && apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends ${buildDeps} ${runtimeDeps} \
-  && rm -rf /var/lib/apt/lists/* \
-  && wget --quiet -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-amd64" \
-  && echo "$GOSU_SHA256 /usr/local/bin/gosu" | sha256sum --check --status \
-  && chmod +x /usr/local/bin/gosu \
-  && apt-get purge -y --auto-remove $buildDeps
+  && apt-get update \
+  && apt-get install -y --no-install-recommends $runtimeDeps \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN groupadd --gid 1024 unicef \
     && adduser --disabled-login --disabled-password --no-create-home --ingroup unicef -q drp
@@ -26,38 +22,20 @@ RUN groupadd --gid 1024 unicef \
 
 # ------- builder -------
 FROM base_os AS builder
+# Install build dependencies
 RUN set -x \
     && buildDeps="build-essential \
 cmake \
 curl \
 gcc \
 git \
-libfontconfig1 \
-libgconf-2-4 \
-libglib2.0-0 \
-libnss3 \
 libssl-dev \
-libxml2-dev  \
+libxml2-dev \
 python3-dev \
-zlib1g-dev  \
-" \
+zlib1g-dev" \
     && apt-get update \
-    && apt-get install -y --no-install-recommends $buildDeps \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends gnupg wget curl unzip && \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
-    apt-get update -y && \
-    apt-get install -y --no-install-recommends google-chrome-stable && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /var/cache/apt/* && \
-    CHROME_VERSION=$(google-chrome --product-version) && \
-    wget -q --continue -P /chromedriver "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/$CHROME_VERSION/linux64/chromedriver-linux64.zip" && \
-    unzip /chromedriver/chromedriver* -d /usr/local/bin/ && \
-    rm -rf /chromedriver
+    && apt-get install -y --no-install-recommends $buildDeps gnupg unzip \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN pip install uv uwsgi
 
@@ -90,7 +68,10 @@ RUN --mount=type=cache,target=/root/.uv-cache \
         --frozen
 
 # ------- production only deps-------
-FROM builder AS production
+FROM base_os AS production
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+RUN pip install uv uwsgi
 ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
     DJANGO_SETTINGS_MODULE=donor_reporting_portal.config.settings \
     PYTHONUNBUFFERED=1 \
@@ -144,13 +125,15 @@ WORKDIR /app
 COPY docker/conf /conf/
 COPY docker/bin/* /usr/local/bin/
 
-COPY . /app/
+COPY docker/conf /conf/
+COPY docker/bin/* /usr/local/bin/
 
 COPY --chown=drp:unicef --from=production /venv /venv
 COPY --from=builder /usr/local/bin/uwsgi /usr/local/bin/uv /usr/local/bin/
+COPY src /app/src/
+COPY uv.lock README.md MANIFEST.in pyproject.toml /app/
 RUN --mount=type=cache,target=/root/.uv-cache \
-    uv --cache-dir=/root/.uv-cache  pip install --no-deps . \
-    && rm -fr /app/*
+    uv --cache-dir=/root/.uv-cache  pip install --no-deps -e .
 
 
 EXPOSE 8000
