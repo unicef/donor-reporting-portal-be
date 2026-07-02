@@ -7,8 +7,10 @@ ARG SOURCE_COMMIT
 
 RUN set -x \
   && runtimeDeps=" \
+    gosu \
     libmagic1 \
     libxml2 \
+    tini \
   " \
   && apt-get update \
   && apt-get install -y --no-install-recommends $runtimeDeps \
