@@ -191,7 +191,7 @@ class GaviSharePointSearchSerializer(DRPSharePointBaseSerializer):
     donor_code = DRPSearchSharePointField(search_property="Donor")
     number = CTNSearchSharePointField()
     m_o_u_number = CTNSearchSharePointField()
-    m_o_u_r_eference = CTNSearchSharePointField()
+    m_o_u_r_eference = CTNSearchSharePointField(search_property="MOUReference")
     sent_to_g_a_v_i_date = CTNSearchSharePointField()
     funds_due_date = CTNSearchSharePointField()
     g_a_v_i_w_b_s = CTNSearchMultiSharePointField()
