@@ -1,0 +1,6 @@
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - SharePoint Access: sharepoint.md
+  - Setup: setup.md
+  - Contributing: contributing.md
