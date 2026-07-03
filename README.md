@@ -52,3 +52,10 @@ finish version
 * update CHANGES
 * update version (__init__.py)
 * update makefile version
+
+
+Documentation
+-------------
+
+Full documentation is available in the [docs/](docs/src/index.md) directory
+(served via MkDocs).

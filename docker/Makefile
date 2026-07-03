@@ -48,6 +48,8 @@ build-base:
 			${BUILD_OPTIONS} \
 			--build-arg BASE_IMAGE=${BASE} \
 			--build-arg VERSION=${TARGET} \
+			--build-arg BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ") \
+			--build-arg GIT_SHA=$(shell git rev-parse HEAD) \
 			-t ${DOCKER_IMAGE} \
 			-f docker/Dockerfile .
 	docker tag ${DOCKER_IMAGE_NAME}:${TARGET} ${DOCKER_IMAGE_NAME}:dev

@@ -3,17 +3,36 @@ ARG GOSU_VERSION=1.17
 ARG GOSU_SHA256=bbc4136d03ab138b1ad66fa4fc051bafc6cc7ffae632b069a53657279a450de3
 ARG BUILD_DATE
 ARG VERSION
+ARG GIT_SHA
 ARG SOURCE_COMMIT
 
 RUN set -x \
   && runtimeDeps=" \
-    gosu \
     libmagic1 \
     libxml2 \
     tini \
   " \
   && apt-get update \
   && apt-get install -y --no-install-recommends $runtimeDeps \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+RUN set -eux \
+  && savedAptMark="$(apt-mark showmanual)" \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends ca-certificates gnupg wget \
+  && dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+  && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch" \
+  && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc" \
+  && export GNUPGHOME="$(mktemp -d)" \
+  && gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+  && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+  && gpgconf --kill all \
+  && rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc \
+  && apt-mark auto '.*' > /dev/null \
+  && [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && chmod +x /usr/local/bin/gosu \
+  && gosu --version \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 RUN groupadd --gid 1024 unicef \
@@ -99,9 +118,11 @@ ARG GIT_SHA
 ARG BRANCH
 ARG VERSION
 ENV VERSION=$VERSION
+ENV GIT_SHA=$GIT_SHA
 
 ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
     BUILD_DATE=$BUILD_DATE \
+    GIT_SHA=$GIT_SHA \
     SOURCE_COMMIT=$SOURCE_COMMIT \
     VERSION=$VERSION \
     BRANCH=$BRANCH \
@@ -117,8 +138,9 @@ ENV PATH=/venv/bin:/usr/local/bin/:/usr/bin:/bin \
 
 RUN <<EOF cat> /RELEASE
 {"version": "$VERSION",
+ "commit_sha": "$GIT_SHA",
  "commit": "$SOURCE_COMMIT",
- "date": "$BUILD_DATE",
+ "date": "$BUILD_DATE"
 }
 EOF
 WORKDIR /app
