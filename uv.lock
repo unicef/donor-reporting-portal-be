@@ -1008,7 +1008,7 @@ requires-dist = [
     { name = "django-filter" },
     { name = "django-impersonate" },
     { name = "django-picklefield" },
-    { name = "django-redis", specifier = ">=7.0.0" },
+    { name = "django-redis" },
     { name = "django-rest-framework-social-oauth2" },
     { name = "djangorestframework" },
     { name = "djangorestframework-csv" },
@@ -2351,15 +2351,15 @@ wheels = [
 
 [[package]]
 name = "python-discovery"
-version = "1.4.2"
+version = "1.4.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
     { name = "platformdirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0b/1a/cbbaf13b730abb0a16b964d984e19f2fe520c21a4dc664051359a3f5a9e7/python_discovery-1.4.2.tar.gz", hash = "sha256:8f3746c4b4968d22afbb97d36e1a0e5b66e6c0f297290f2e95f05b9b8bf18690", size = 70277, upload-time = "2026-06-11T16:10:42.383Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/66/26/8b004cc36f430345136f6f00fa1aa9ed596c8ed1e8504625fa79522ff39c/python_discovery-1.4.3.tar.gz", hash = "sha256:ad57d7045a862460d4a235986c33f13ed707d3aeb9153fa47eb7dfd0d4673289", size = 70438, upload-time = "2026-07-03T13:21:51.621Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1a/82/a70006589557f267f15bd384c0642ad49f0d97b690c3a05b166b9dcbad3b/python_discovery-1.4.2-py3-none-any.whl", hash = "sha256:475803f53b7b2ed6e490e27373f9d8340f7d2eebf9acdaf645d7d714c97bb500", size = 33886, upload-time = "2026-06-11T16:10:41.192Z" },
+    { url = "https://files.pythonhosted.org/packages/28/78/9b77ecb4644d1bbea94d29abf78f21c47eca6eb79e9745b702ec0bed2e19/python_discovery-1.4.3-py3-none-any.whl", hash = "sha256:b6e1e4a7d9e3f6948c39746ffe8218225162d738ba39d05ab1d2f6c1cac4878c", size = 33885, upload-time = "2026-07-03T13:21:50.174Z" },
 ]
 
 [[package]]
@@ -2539,7 +2539,7 @@ wheels = [
 
 [[package]]
 name = "sharepoint-rest-api"
-version = "0.21.0"
+version = "0.21.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -2549,9 +2549,9 @@ dependencies = [
     { name = "msal" },
     { name = "office365-rest-python-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/80/e7/6f4660b4a9728ef1b67bf137efa2e9980f33ba6834216f0518c82a0a81ae/sharepoint_rest_api-0.21.0.tar.gz", hash = "sha256:e1b117820234d28fdad9c8321a2e0f0c4823873a85b87c64c5790a44e97fc5d7", size = 18824, upload-time = "2026-07-01T13:28:57.041Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2f/26/8027d3dd8a1eb15f8c5378fdf82ca58882489af39e9288ac875b3d8c8c6e/sharepoint_rest_api-0.21.1.tar.gz", hash = "sha256:c1b8c53de70c20117f7e43532146119122238d6524969d042c3ca1c6447181dd", size = 19002, upload-time = "2026-07-03T15:02:46.62Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/45/4c/e7772894e663632afc43fd48e4aea85e4f8f3c2f35ff41366dc474c16beb/sharepoint_rest_api-0.21.0-py3-none-any.whl", hash = "sha256:1ccffb5a544bf5234613dce18f090abf64f6b3d4167a8752fa0e5e305e20e713", size = 28853, upload-time = "2026-07-01T13:28:55.781Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/ee/e2ac51de3d95c4eceaa9c51965d3a63d90aaac77be86aec1963d7529f450/sharepoint_rest_api-0.21.1-py3-none-any.whl", hash = "sha256:91c4c1262836af955b9899f514d11a2f225237c8f52253f2485ed5c565fad218", size = 29017, upload-time = "2026-07-03T15:02:45.436Z" },
 ]
 
 [[package]]
