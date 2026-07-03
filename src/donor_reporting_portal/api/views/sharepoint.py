@@ -222,11 +222,6 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         for key, value in default_filters.get("filters", {}).items():
             if key not in qp:
                 qp[key] = value
-        exclude_paths = default_filters.get("exclude_paths", [])
-        if exclude_paths:
-            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
-            existing_search = qp.get("search", "")
-            qp["search"] = f"{path_exclusions} {existing_search}".strip()
         search_kql = default_filters.get("search_kql", "")
         if search_kql:
             existing_search = qp.get("search", "")
@@ -234,6 +229,10 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
                 qp["search"] = f"({search_kql}) AND ({existing_search})"
             else:
                 qp["search"] = search_kql
+        exclude_paths = default_filters.get("exclude_paths", [])
+        if exclude_paths:
+            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
+            qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
 
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
