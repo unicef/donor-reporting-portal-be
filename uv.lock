@@ -2539,7 +2539,7 @@ wheels = [
 
 [[package]]
 name = "sharepoint-rest-api"
-version = "0.21.1"
+version = "0.21.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
@@ -2549,9 +2549,9 @@ dependencies = [
     { name = "msal" },
     { name = "office365-rest-python-client" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2f/26/8027d3dd8a1eb15f8c5378fdf82ca58882489af39e9288ac875b3d8c8c6e/sharepoint_rest_api-0.21.1.tar.gz", hash = "sha256:c1b8c53de70c20117f7e43532146119122238d6524969d042c3ca1c6447181dd", size = 19002, upload-time = "2026-07-03T15:02:46.62Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/e2/4f/17d80d09b8669851a77f65472a9df586f0b377fdfbeef702e215fd67ca00/sharepoint_rest_api-0.21.3.tar.gz", hash = "sha256:2088030c53f5feece3e4b48ff39d5b9e4142f3549d0c4a358cba157755d85c33", size = 19277, upload-time = "2026-07-03T16:15:49.473Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f9/ee/e2ac51de3d95c4eceaa9c51965d3a63d90aaac77be86aec1963d7529f450/sharepoint_rest_api-0.21.1-py3-none-any.whl", hash = "sha256:91c4c1262836af955b9899f514d11a2f225237c8f52253f2485ed5c565fad218", size = 29017, upload-time = "2026-07-03T15:02:45.436Z" },
+    { url = "https://files.pythonhosted.org/packages/1a/80/66ff238f1c1648564582b241e14f85fce969fea95c1f91cddfe7f345e2cc/sharepoint_rest_api-0.21.3-py3-none-any.whl", hash = "sha256:c2b86fbef7d33b27458c22593273074832bf60aad1ac78f09cd8a05027a30e33", size = 29493, upload-time = "2026-07-03T16:15:48.421Z" },
 ]
 
 [[package]]
