@@ -168,6 +168,11 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         if exclude_paths:
             path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
             qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
+        order_by = default_filters.get("order_by")
+        if order_by and "order_by" not in qp:
+            qp["order_by"] = order_by
+        elif "order_by" not in qp:
+            qp["order_by"] = "LastModifiedTime desc"
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.copy()
@@ -264,6 +269,11 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         if exclude_paths:
             path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
             qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
+        order_by = default_filters.get("order_by")
+        if order_by and "order_by" not in qp:
+            qp["order_by"] = order_by
+        elif "order_by" not in qp:
+            qp["order_by"] = "LastModifiedTime desc"
 
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
@@ -303,6 +313,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
 
         search = qp.get("search")
         page = int(qp.get("page", 1))
+        order_by = qp.pop("order_by", None)
 
         response, self.total_rows = self.client.search(
             search=search,
@@ -310,5 +321,6 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             page=page,
             searchable_properties=self.SEARCHABLE_PROPERTIES,
             reverse_map=reverse_map,
+            order_by=order_by,
         )
         return response
