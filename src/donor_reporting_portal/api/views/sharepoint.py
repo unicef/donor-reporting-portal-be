@@ -145,6 +145,37 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
 
         return new_kwargs
 
+    def _apply_source_id_filters(self, qp):
+        source_id = qp.get("source_id")
+        if not source_id:
+            return
+        try:
+            source_obj = SourceId.objects.get(source_id=source_id)
+            default_filters = source_obj.default_filters or {}
+        except SourceId.DoesNotExist:
+            default_filters = {}
+        for key, value in default_filters.get("filters", {}).items():
+            if key not in qp:
+                qp[key] = value
+        search_kql = default_filters.get("search_kql", "")
+        if search_kql:
+            existing_search = qp.get("search", "")
+            if existing_search:
+                qp["search"] = f"({search_kql}) AND ({existing_search})"
+            else:
+                qp["search"] = search_kql
+        exclude_paths = default_filters.get("exclude_paths", [])
+        if exclude_paths:
+            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
+            qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
+
+    def get_queryset(self, **kwargs):
+        qp = self.request.query_params.copy()
+        self._apply_source_id_filters(qp)
+        qp.update(kwargs)
+        kwargs = qp
+        return super().get_queryset(**kwargs)
+
     @action(detail=False, methods=["get"])
     def export(self, request, *args, **kwargs):
         exit_condition = True
