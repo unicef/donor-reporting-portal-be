@@ -12,7 +12,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSoaSharePointSearchSerializer,
 )
 from donor_reporting_portal.api.views.sharepoint import DRPGraphBasedSearchViewSet
-from donor_reporting_portal.apps.report_metadata.models import SourceId
+from sharepoint_rest_api.models import SourceId
 
 
 @pytest.mark.django_db
