@@ -37,7 +37,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSoaSharePointSearchSerializer,
     SharePointGroupSerializer,
 )
-from donor_reporting_portal.apps.report_metadata.models import SourceId
+from sharepoint_rest_api.models import SourceId
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
@@ -245,35 +245,6 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
                 autofields.append(to_camel(name))
         selected = selected.split(",") if selected else autofields
         return selected + ["Title", "Author", "Path"]
-
-    def _apply_source_id_filters(self, qp):
-        source_id = qp.get("source_id")
-        if not source_id:
-            return
-        try:
-            source_obj = SourceId.objects.get(source_id=source_id)
-            default_filters = source_obj.default_filters or {}
-        except SourceId.DoesNotExist:
-            default_filters = {}
-        for key, value in default_filters.get("filters", {}).items():
-            if key not in qp:
-                qp[key] = value
-        search_kql = default_filters.get("search_kql", "")
-        if search_kql:
-            existing_search = qp.get("search", "")
-            if existing_search:
-                qp["search"] = f"({search_kql}) AND ({existing_search})"
-            else:
-                qp["search"] = search_kql
-        exclude_paths = default_filters.get("exclude_paths", [])
-        if exclude_paths:
-            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
-            qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
-        order_by = default_filters.get("order_by")
-        if order_by and "order_by" not in qp:
-            qp["order_by"] = order_by
-        elif "order_by" not in qp:
-            qp["order_by"] = "LastModifiedTime desc"
 
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
