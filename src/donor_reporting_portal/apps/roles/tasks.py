@@ -8,13 +8,9 @@ from django.utils.timezone import now
 from celery.utils.log import get_task_logger
 from dateutil.relativedelta import relativedelta
 from dateutil.utils import today
-from sharepoint_rest_api import config
-from sharepoint_rest_api.client import SharePointClient
-from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
-from sharepoint_rest_api.utils import to_camel
+from sharepoint_rest_api.graph_client import GraphClient
 from unicef_notification.utils import send_notification_with_template
 
-from donor_reporting_portal.api.serializers.fields import CTNSearchMultiSharePointField, CTNSearchSharePointField
 from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointSearchSerializer,
     GaviSharePointSearchSerializer,
@@ -28,10 +24,10 @@ logger = get_task_logger(__name__)
 
 class Notifier:
     donor_code = None
-    source_id = None
     serializer = None
     template_name = None
     group_name = None
+    page_size = 500
 
     def __init__(self, donor_code):
         self.donor = Donor.objects.get(code=donor_code)
@@ -54,19 +50,23 @@ class Notifier:
     def get_filter_dict(self, modified_date):
         return {}
 
-    def get_selected_fields(self):
+    def get_searchable_properties(self):
+        return set()
+
+    def get_reverse_map(self):
+        if self.serializer:
+            return self.serializer.get_property_name_reverse()
         return None
 
     def notify(self):
-        client = SharePointClient(
-            url=f"{config.SHAREPOINT_TENANT}/{config.SHAREPOINT_SITE_TYPE}/{config.SHAREPOINT_SITE}"
-        )
+        client = GraphClient()
 
         notification_periods = self.get_notify_periods()
 
         for period, modified_date, _ in notification_periods:
             filters = self.get_filter_dict(modified_date)
-            selected = self.get_selected_fields()
+            searchable_properties = self.get_searchable_properties()
+            reverse_map = self.get_reverse_map()
             page = 1
             exit_condition = True
             reports = []
@@ -76,12 +76,14 @@ class Notifier:
             if users:
                 while exit_condition:
                     response, total_rows = client.search(
+                        search=None,
                         filters=filters,
-                        select=selected,
-                        source_id=self.source_id,
                         page=page,
+                        searchable_properties=searchable_properties,
+                        reverse_map=reverse_map,
+                        page_size=self.page_size,
                     )
-                    exit_condition = page * SHAREPOINT_PAGE_SIZE < total_rows
+                    exit_condition = page * self.page_size < total_rows
                     page += 1
                     qs = self.serializer(response, many=True)
                     reports.extend(qs.data)
@@ -93,69 +95,64 @@ class Notifier:
 
 
 class DonorNotifier(Notifier):
-    source_id = settings.DRP_SOURCE_IDS["external"]
     serializer = DRPSharePointSearchSerializer
     template_name = "notify_donor"
 
+    document_type_filter = [
+        "Certified Financial Statement - EC",
+        "Certified Financial Statement - US Government",
+        "Certified Statement of Account",
+        "Certified Statement of Account EU",
+        "Certified Statement of Account JPO",
+        "Donor Statement CERF",
+        "Certified Financial Report - Final",
+        "Certified Financial Report - Interim",
+        "Donor Statement Innovation",
+        "Donor Statement Joint Programme",
+        "Donor Statement Joint Programme PUNO",
+        "Donor Statement JPO Summary",
+        "Donor Statement Trust Fund",
+        "Donor Statement UN",
+        "Donor Statement UNICEF Hosted Funds",
+        "FFR Form (SF-425)",
+        "JPO Expenditure Summary",
+        "Statement of Account Thematic Funds",
+        "Donor Statement by Activity",
+        "Interim Statement by Nature of expense",
+        "Funds Request Report",
+        "Non-Standard Statement",
+        "Emergency Consolidated - Final",
+        "Emergency  Consolidated - Interim",
+        "Thematic Emergency Global - Final",
+        "Thematic Emergency Global - Interim",
+        "Emergency - Two Pager",
+        "Emergency - Final",
+        "Emergency - Interim",
+        "Human Interest / Photos",
+        "Narrative - Final",
+        "Narrative - Interim",
+        "Narrative Consolidated - Final",
+        "Narrative Consolidated - Interim",
+        "Thematic Consolidated - Final",
+        "Thematic Consolidated - Interim",
+        "Thematic Global - Final",
+        "Thematic Global - Interim",
+        "Thematic - Final",
+        "Thematic - Interim",
+        "Short Summary Update",
+        "Official Receipts",
+        "Quarterly Monitoring Report",
+    ]
+
     def get_filter_dict(self, modified_date):
-        document_type_filter = [
-            "Certified Financial Statement - EC",
-            "Certified Financial Statement - US Government",
-            "Certified Statement of Account",
-            "Certified Statement of Account EU",
-            "Certified Statement of Account JPO",
-            "Donor Statement CERF",
-            "Certified Financial Report - Final",
-            "Certified Financial Report - Interim",
-            "Donor Statement Innovation",
-            "Donor Statement Joint Programme",
-            "Donor Statement Joint Programme PUNO",
-            "Donor Statement JPO Summary",
-            "Donor Statement Trust Fund",
-            "Donor Statement UN",
-            "Donor Statement UNICEF Hosted Funds",
-            "FFR Form (SF-425)",
-            "JPO Expenditure Summary",
-            "Statement of Account Thematic Funds",
-            "Donor Statement by Activity",
-            "Interim Statement by Nature of expense",
-            "Funds Request Report",
-            "Non-Standard Statement",
-            "Emergency Consolidated - Final",
-            "Emergency  Consolidated - Interim",
-            "Thematic Emergency Global - Final",
-            "Thematic Emergency Global - Interim",
-            "Emergency - Two Pager",
-            "Emergency - Final",
-            "Emergency - Interim",
-            "Human Interest / Photos",
-            "Narrative - Final",
-            "Narrative - Interim",
-            "Narrative Consolidated - Final",
-            "Narrative Consolidated - Interim",
-            "Thematic Consolidated - Final",
-            "Thematic Consolidated - Interim",
-            "Thematic Global - Final",
-            "Thematic Global - Interim",
-            "Thematic - Final",
-            "Thematic - Interim",
-            "Short Summary Update",
-            "Official Receipts",
-            "Quarterly Monitoring Report",
-        ]
         return {
-            "DRPDonorCode": self.donor.code,
-            "DRPDonorDocument": ",".join(document_type_filter),
-            "DRPModified__gte": modified_date.strftime("%Y-%m-%d"),
+            "Donor": self.donor.code,
+            "DonorDocument": ",".join(self.document_type_filter),
+            "Modified__gte": modified_date.strftime("%Y-%m-%d"),
         }
 
-    def get_selected_fields(self):
-        serializer_fields = DRPSharePointSearchSerializer._declared_fields.keys()
-        return ["DRP" + to_camel(x) for x in serializer_fields] + [
-            "Title",
-            "Author",
-            "Path",
-        ]
+    def get_searchable_properties(self):
+        return {"Donor", "DonorDocument", "Modified"}
 
     def get_queryset(self, period):
         return UserRole.objects.filter(donor=self.donor, notification_period=period).values(
@@ -164,7 +161,6 @@ class DonorNotifier(Notifier):
 
 
 class GaviNotifier(Notifier):
-    source_id = settings.DRP_SOURCE_IDS["gavi"]
     serializer = GaviSharePointSearchSerializer
     template_name = "notify_gavi"
 
@@ -181,19 +177,13 @@ class GaviNotifier(Notifier):
     def get_filter_dict(self, modified_date):
         date = self.specific_date or modified_date.strftime("%Y-%m-%d")
         return {
-            "DRPModified": date,
-            "CTNMOUReference": self.group_name,
-            "CTNUrgent__not": "Yes",
+            "Modified": date,
+            "MOUReference": self.group_name,
+            "Urgent__not": "Yes",
         }
 
-    def get_selected_fields(self):
-        def to_drp(source, value):
-            prefix = "CTN" if isinstance(value, CTNSearchSharePointField | CTNSearchMultiSharePointField) else "DRP"
-            return prefix + to_camel(source)
-
-        selected = [to_drp(key, value) for key, value in self.serializer._declared_fields.items()]
-        selected += ["Title", "Author", "Path"]
-        return selected
+    def get_searchable_properties(self):
+        return {"Modified", "MOUReference", "Urgent"}
 
 
 class GaviUrgentNotifier(GaviNotifier):
@@ -206,10 +196,13 @@ class GaviUrgentNotifier(GaviNotifier):
 
     def get_filter_dict(self, modified_date):
         return {
-            "DRPModified__gte": modified_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "CTNMOUReference": self.group_name,
-            "CTNUrgent": "Yes",
+            "Modified__gte": modified_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "MOUReference": self.group_name,
+            "Urgent": "Yes",
         }
+
+    def get_searchable_properties(self):
+        return {"Modified", "MOUReference", "Urgent"}
 
 
 @app.task
