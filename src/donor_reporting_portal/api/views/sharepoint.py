@@ -1,5 +1,4 @@
 import csv
-from datetime import datetime
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -10,7 +9,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
 from sharepoint_rest_api import config as sp_config
-from sharepoint_rest_api.builders.rest_builder import RestBuilder
 from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
 from sharepoint_rest_api.graph_client import GraphClient, GraphClientError
 from sharepoint_rest_api.utils import to_camel
@@ -226,7 +224,29 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """
 
     serializer_class = DRPSharePointSearchSerializer
-    SEARCHABLE_PROPERTIES = {"Donor"}
+    _PROPERTY_TO_KQL = {
+        "Donor": "Donor",
+        "GrantNumber": "RefinableString161",
+        "ReportGroup": "RefinableString164",
+        "ReportStatus": "RefinableString166",
+        "AwardType": "RefinableString176",
+        "Retracted": "RefinableString173",
+        "Created": "RefinableDate09",
+        "Modified": "RefinableDate11",
+        "GrantExpiryDate": "RefinableDate14",
+        "ReportEndDate": "RefinableDate15",
+        "DonorDocument": "RefinableString163",
+        "DonorReportCategory": "RefinableString171",
+        "ExternalReference": "RefinableString168",
+        "FrameworkAgreement": "RefinableString162",
+        "GrantIssueYear": "RefinableString167",
+        "RecipientOffice": "RefinableString165",
+        "ReportGeneratedBy": "RefinableString174",
+        "ReportMethod": "RefinableString172",
+        "ReportType": "RefinableString169",
+        "Theme": "RefinableString170",
+        "DonorCode": "RefinableString175",
+    }
 
     def get_serializer_class(self):
         query_params = self.request.query_params
@@ -292,7 +312,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.dict()
-        qp.setdefault("order_by", "LastModifiedTime desc")
+        qp.setdefault("order_by", "DRPMODIFIED desc")
         self._apply_source_id_filters(qp)
         qp.update(kwargs)
 
@@ -304,50 +324,29 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         page = int(qp.get("page", 1))
         order_by = qp.pop("order_by", None)
 
+        mapped = self._map_filter_names(qp, property_name_map, reverse_map)
+
+        converted = {}
+        for name, value in mapped.items():
+            parts = name.split("__")
+            raw = parts[0].lstrip("-")
+            suffix = f"__{parts[-1]}" if len(parts) > 1 else ""
+            kql_name = self._PROPERTY_TO_KQL.get(raw, raw)
+            if parts[0].startswith("-"):
+                converted[f"-{kql_name}{suffix}"] = value
+            else:
+                converted[f"{kql_name}{suffix}"] = value
+
         response, self.total_rows = self.client.search(
             search=search,
-            filters=self._map_filter_names(qp, property_name_map, reverse_map),
+            filters=converted,
             page=page,
-            searchable_properties=self.SEARCHABLE_PROPERTIES,
+            searchable_properties=set(self._PROPERTY_TO_KQL.values()),
             reverse_map=reverse_map,
             order_by=order_by,
         )
         return response
 
 
-def _parse_last_modified(item):
-    val = item.get("LastModifiedTime") or ""
-    if not val:
-        return datetime.min
-    try:
-        return datetime.fromisoformat(val)
-    except (ValueError, TypeError):
-        return datetime.min
-
-
 class DRPGraphClient(GraphClient):
-    """GraphClient that properly sorts results by LastModifiedTime."""
-
-    def search(self, search=None, filters=None, page=1, searchable_properties=None, **kwargs):
-        order_by = kwargs.pop("order_by", None)
-        reverse_map = kwargs.pop("reverse_map", None)
-        page_size = kwargs.pop("page_size", None) or sp_config.GRAPH_PAGE_SIZE
-
-        searchable_filters = {}
-        post_filters = {}
-        if filters:
-            for name, value in filters.items():
-                raw_name = name.split("__")[0].lstrip("-")
-                if searchable_properties and raw_name in searchable_properties:
-                    searchable_filters[name] = value
-                else:
-                    post_filters[name] = value
-
-        kql = RestBuilder.build_kql(search=search, filters=searchable_filters)
-        items, total_rows = self._execute_paginated_search(kql, page, page_size, post_filters, reverse_map)
-
-        if order_by:
-            desc = order_by.endswith(" desc")
-            items = sorted(items, key=_parse_last_modified, reverse=desc)
-
-        return items, total_rows
+    """GraphClient that delegates sorting to the parent's search()."""
