@@ -4,10 +4,15 @@ from datetime import datetime
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.functional import cached_property
 
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
+from sharepoint_rest_api import config as sp_config
+from sharepoint_rest_api.builders.rest_builder import RestBuilder
 from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
+from sharepoint_rest_api.graph_client import GraphClient, GraphClientError
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
 from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet
@@ -274,20 +279,20 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             mapped_filters[f"{mapped_name}{operator_key}"] = value
         return mapped_filters
 
-    def _sort_by_modified(self, items, desc=True):
-        def _parse_dt(item):
-            val = item.get("LastModifiedTime") or ""
-            if not val:
-                return datetime.min
-            try:
-                return datetime.fromisoformat(val)
-            except (ValueError, TypeError):
-                return datetime.min
-
-        return sorted(items, key=_parse_dt, reverse=desc)
+    @cached_property
+    def client(self):
+        try:
+            return DRPGraphClient(
+                url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
+                relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
+                folder=self.folder,
+            )
+        except GraphClientError:
+            raise PermissionDenied
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.dict()
+        qp.setdefault("order_by", "LastModifiedTime desc")
         self._apply_source_id_filters(qp)
         qp.update(kwargs)
 
@@ -307,8 +312,42 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             reverse_map=reverse_map,
             order_by=order_by,
         )
+        return response
+
+
+def _parse_last_modified(item):
+    val = item.get("LastModifiedTime") or ""
+    if not val:
+        return datetime.min
+    try:
+        return datetime.fromisoformat(val)
+    except (ValueError, TypeError):
+        return datetime.min
+
+
+class DRPGraphClient(GraphClient):
+    """GraphClient that properly sorts results by LastModifiedTime."""
+
+    def search(self, search=None, filters=None, page=1, searchable_properties=None, **kwargs):
+        order_by = kwargs.pop("order_by", None)
+        reverse_map = kwargs.pop("reverse_map", None)
+        page_size = kwargs.pop("page_size", None) or sp_config.GRAPH_PAGE_SIZE
+
+        searchable_filters = {}
+        post_filters = {}
+        if filters:
+            for name, value in filters.items():
+                raw_name = name.split("__")[0].lstrip("-")
+                if searchable_properties and raw_name in searchable_properties:
+                    searchable_filters[name] = value
+                else:
+                    post_filters[name] = value
+
+        kql = RestBuilder.build_kql(search=search, filters=searchable_filters)
+        items, total_rows = self._execute_paginated_search(kql, page, page_size, post_filters, reverse_map)
 
         if order_by:
             desc = order_by.endswith(" desc")
-            response = self._sort_by_modified(response, desc=desc)
-        return response
+            items = sorted(items, key=_parse_last_modified, reverse=desc)
+
+        return items, total_rows
