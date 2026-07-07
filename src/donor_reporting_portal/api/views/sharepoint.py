@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime
 
 from django.conf import settings
 from django.http import HttpResponse
@@ -273,6 +274,18 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             mapped_filters[f"{mapped_name}{operator_key}"] = value
         return mapped_filters
 
+    def _sort_by_modified(self, items, desc=True):
+        def _parse_dt(item):
+            val = item.get("LastModifiedTime") or ""
+            if not val:
+                return datetime.min
+            try:
+                return datetime.fromisoformat(val)
+            except (ValueError, TypeError):
+                return datetime.min
+
+        return sorted(items, key=_parse_dt, reverse=desc)
+
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.dict()
         self._apply_source_id_filters(qp)
@@ -294,4 +307,8 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             reverse_map=reverse_map,
             order_by=order_by,
         )
+
+        if order_by:
+            desc = order_by.endswith(" desc")
+            response = self._sort_by_modified(response, desc=desc)
         return response
