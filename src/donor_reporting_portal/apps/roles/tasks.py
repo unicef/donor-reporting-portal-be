@@ -100,6 +100,7 @@ class Notifier:
                     reports.extend(qs.data)
 
                 if reports:
+                    reports.sort(key=lambda r: r.get("DRPModified", "") or "", reverse=True)
                     context = {"reports": reports, "donor": self.donor.name, "group_name": self.group_name}
                     recipients = list({str(user["user__email"]) for user in users if user["user__email"]})
                     send_notification_with_template(recipients, self.template_name, context)

@@ -236,6 +236,24 @@ PROPERTY_TO_MANAGED = {
     "ReportType": "RefinableString169",
     "Theme": "RefinableString170",
     "DonorCode": "RefinableString175",
+    "SOAIssueDate": "RefinableDate06",
+    "FundsDueDate": "RefinableDate07",
+    "SentToGAVIDate": "RefinableDate08",
+    "UNICEFWBS": "RefinableString136",
+    "Urgent": "RefinableString137",
+    "ReportModifiedBy": "RefinableString138",
+    "Vendor": "RefinableString139",
+    "Number": "RefinableString140",
+    "MOUNumber": "RefinableString141",
+    "MOUReference": "RefinableString142",
+    "GAVIWBS": "RefinableString143",
+    "CountryName": "RefinableString144",
+    "VaccineType": "RefinableString145",
+    "PurchaseOrder": "RefinableString146",
+    "MaterialCode": "RefinableString147",
+    "ApprovalYear": "RefinableString148",
+    "PrepaidStatus": "RefinableString149",
+    "AllocationRound": "RefinableString150",
 }
 
 
@@ -277,7 +295,16 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     def _apply_source_id_filters(self, qp):
         super()._apply_source_id_filters(qp)
         if qp.get("order_by") == "-LastModifiedTime":
-            qp["order_by"] = "DRPMODIFIED desc"
+            qp["order_by"] = "modified desc"
+
+    @staticmethod
+    def _map_order_by(order_by, property_name_map):
+        parts = order_by.rsplit(" ", 1)
+        field = parts[0]
+        direction = f" {parts[1]}" if len(parts) > 1 else ""
+        search_prop = property_name_map.get(field) or to_camel(field)
+        managed = PROPERTY_TO_MANAGED.get(search_prop, search_prop)
+        return f"{managed}{direction}"
 
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
@@ -319,7 +346,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.dict()
-        qp.setdefault("order_by", "DRPMODIFIED desc")
+        qp.setdefault("order_by", "modified desc")
         self._apply_source_id_filters(qp)
         qp.update(kwargs)
 
@@ -330,6 +357,8 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         search = qp.get("search")
         page = int(qp.get("page", 1))
         order_by = qp.pop("order_by", None)
+        if order_by:
+            order_by = self._map_order_by(order_by, property_name_map)
 
         mapped = self._map_filter_names(qp, property_name_map, reverse_map)
 
