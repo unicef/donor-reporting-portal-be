@@ -1,5 +1,5 @@
 properties = {
-    "RefinableDate09": {
+    "RefinableDate06": {
         "Type": "Date and Time",
         "Multi": "Multi",
         "Query": "Query",
@@ -8,10 +8,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_DATE_CREATED",
-        "Alias": "DRPCREATED",
+        "Mapped Crawled Property": "OWS_Q_DATE_SOAISSUEDATE",
+        "Alias": "CTNSOAISSUEDATE",
     },
-    "RefinableDate11": {
+    "RefinableDate07": {
         "Type": "Date and Time",
         "Multi": "Multi",
         "Query": "Query",
@@ -20,10 +20,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_DATE_MODIFIED",
-        "Alias": "DRPMODIFIED",
+        "Mapped Crawled Property": "OWS_Q_DATE_FUNDSDUEDATE",
+        "Alias": "CTNFUNDSDUEDATE",
     },
-    "RefinableDate14": {
+    "RefinableDate08": {
         "Type": "Date and Time",
         "Multi": "Multi",
         "Query": "Query",
@@ -32,22 +32,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_DATE_GRANTEXPIRYDATE",
-        "Alias": "DRPGRANTEXPIRYDATE",
+        "Mapped Crawled Property": "OWS_Q_DATE_SENTTOGAVIDATE",
+        "Alias": "CTNSENTTOGAVIDATE",
     },
-    "RefinableDate15": {
-        "Type": "Date and Time",
-        "Multi": "Multi",
-        "Query": "Query",
-        "Search": "-",
-        "Retrieve": "Retrieve",
-        "Refine": "Refine",
-        "Sort": "Sort",
-        "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_DATE_REPORTENDDATE",
-        "Alias": "DRPREPORTENDDATE",
-    },
-    "RefinableString160": {
+    "RefinableString136": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -56,10 +44,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_DONOR",
-        "Alias": "DRPDONOR",
+        "Mapped Crawled Property": "OWS_Q_TEXT_UNICEFWBS",
+        "Alias": "CTNUNICEFWBS",
     },
-    "RefinableString161": {
+    "RefinableString137": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -68,10 +56,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_GRANTNUMBER",
-        "Alias": "DRPGRANTNUMBER",
+        "Mapped Crawled Property": "OWS_Q_CHCS_URGENT",
+        "Alias": "CTNURGENT",
     },
-    "RefinableString162": {
+    "RefinableString138": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -80,10 +68,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_FRAMEWORKAGREEMENT",
-        "Alias": "DRPFRAMEWORKAGREEMENT",
+        "Mapped Crawled Property": "OWS_Q_TEXT_REPORTMODIFIEDBY",
+        "Alias": "CTNREPORTMODIFIEDBY",
     },
-    "RefinableString163": {
+    "RefinableString139": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -92,10 +80,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_DONORDOCUMENT",
-        "Alias": "DRPDONORDOCUMENT",
+        "Mapped Crawled Property": "OWS_Q_TEXT_VENDOR",
+        "Alias": "CTNVENDOR",
     },
-    "RefinableString164": {
+    "RefinableString140": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -104,10 +92,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_CHCS_REPORTGROUP",
-        "Alias": "DRPREPORTGROUP",
+        "Mapped Crawled Property": "OWS_Q_TEXT_CTNNUMBER",
+        "Alias": "CTNNUMBER",
     },
-    "RefinableString165": {
+    "RefinableString141": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -116,10 +104,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_R_MTXT_RECIPIENTOFFICE",
-        "Alias": "DRPRECIPIENTOFFICE",
+        "Mapped Crawled Property": "OWS_Q_TEXT_MOLNUMBER",
+        "Alias": "CTNMOLNUMBER",
     },
-    "RefinableString166": {
+    "RefinableString142": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -128,10 +116,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_CHCS_REPORTSTATUS",
-        "Alias": "DRPREPORTSTATUS",
+        "Mapped Crawled Property": "OWS_Q_TEXT_MOUREFERENCE",
+        "Alias": "CTNMOUREFERENCE",
     },
-    "RefinableString167": {
+    "RefinableString143": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -140,10 +128,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_GRANTISSUEYEAR",
-        "Alias": "DRPGRANTISSUEYEAR",
+        "Mapped Crawled Property": "OWS_R_MTXT_GAVIWBS",
+        "Alias": "CTNGAVIWBS",
     },
-    "RefinableString168": {
+    "RefinableString144": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -152,10 +140,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_EXTERNALREFERENCE",
-        "Alias": "DRPEXTERNALREFERENCE",
+        "Mapped Crawled Property": "OWS_R_MTXT_COUNTRYNAME",
+        "Alias": "CTNCOUNTRYNAME",
     },
-    "RefinableString169": {
+    "RefinableString145": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -164,10 +152,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_CHCS_REPORTTYPE",
-        "Alias": "DRPREPORTTYPE",
+        "Mapped Crawled Property": "OWS_R_MTXT_VACCINETYPE",
+        "Alias": "CTNVACCINETYPE",
     },
-    "RefinableString170": {
+    "RefinableString146": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -176,10 +164,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_THEME",
-        "Alias": "DRPTHEME",
+        "Mapped Crawled Property": "OWS_R_MTXT_PURCHASEORDER",
+        "Alias": "CTNPURCHASEORDER",
     },
-    "RefinableString171": {
+    "RefinableString147": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -188,10 +176,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_CHCS_DONORREPORTCATEGORY",
-        "Alias": "DRPDONORREPORTCATEGORY",
+        "Mapped Crawled Property": "OWS_R_MTXT_MATERIALCODE",
+        "Alias": "CTNMATERIALCODE",
     },
-    "RefinableString172": {
+    "RefinableString148": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -200,10 +188,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_CHCS_REPORTMETHOD",
-        "Alias": "DRPREPORTMETHOD",
+        "Mapped Crawled Property": "OWS_Q_TEXT_APPROVALYEAR",
+        "Alias": "CTNAPPROVALYEAR",
     },
-    "RefinableString173": {
+    "RefinableString149": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -212,10 +200,10 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_CHCS_RETRACTED",
-        "Alias": "DRPRETRACTED",
+        "Mapped Crawled Property": "OWS_Q_CHCS_PREPAIDSTATUS",
+        "Alias": "CTNPREPAIDSTATUS",
     },
-    "RefinableString174": {
+    "RefinableString150": {
         "Type": "Text",
         "Multi": "Multi",
         "Query": "Query",
@@ -224,31 +212,7 @@ properties = {
         "Refine": "Refine",
         "Sort": "Sort",
         "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_REPORTGENERATEDBY",
-        "Alias": "DRPREPORTGENERATEDBY",
-    },
-    "RefinableString175": {
-        "Type": "Text",
-        "Multi": "Multi",
-        "Query": "Query",
-        "Search": "-",
-        "Retrieve": "Retrieve",
-        "Refine": "Refine",
-        "Sort": "Sort",
-        "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_DONORCODE",
-        "Alias": "DRPDONORCODE",
-    },
-    "RefinableString176": {
-        "Type": "Text",
-        "Multi": "Multi",
-        "Query": "Query",
-        "Search": "-",
-        "Retrieve": "Retrieve",
-        "Refine": "Refine",
-        "Sort": "Sort",
-        "Safe": "Safe",
-        "Mapped Crawled Property": "OWS_Q_TEXT_AWARDTYPE",
-        "Alias": "DRPAWARDTYPE",
+        "Mapped Crawled Property": "OWS_CASENUMBER, OWS_Q_TEXT_ALLOCATIONROUND",
+        "Alias": "CTNALLOCATIONROUND",
     },
 }
