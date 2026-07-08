@@ -15,6 +15,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointSearchSerializer,
     GaviSharePointSearchSerializer,
 )
+from donor_reporting_portal.api.views.sharepoint import PROPERTY_TO_MANAGED
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 from donor_reporting_portal.config.celery import app
@@ -58,14 +59,23 @@ class Notifier:
             return self.serializer.get_property_name_reverse()
         return None
 
+    @staticmethod
+    def _map_name_to_managed(name):
+        parts = name.split("__")
+        raw_name = parts[0].lstrip("-")
+        managed = PROPERTY_TO_MANAGED.get(raw_name, raw_name)
+        prefix = "-" if parts[0].startswith("-") else ""
+        suffix = f"__{parts[-1]}" if len(parts) > 1 else ""
+        return f"{prefix}{managed}{suffix}"
+
     def notify(self):
         client = GraphClient()
 
         notification_periods = self.get_notify_periods()
 
         for period, modified_date, _ in notification_periods:
-            filters = self.get_filter_dict(modified_date)
-            searchable_properties = self.get_searchable_properties()
+            filters = {self._map_name_to_managed(k): v for k, v in self.get_filter_dict(modified_date).items()}
+            searchable_properties = {PROPERTY_TO_MANAGED.get(p, p) for p in self.get_searchable_properties()}
             reverse_map = self.get_reverse_map()
             page = 1
             exit_condition = True
@@ -82,6 +92,7 @@ class Notifier:
                         searchable_properties=searchable_properties,
                         reverse_map=reverse_map,
                         page_size=self.page_size,
+                        order_by="DRPMODIFIED desc",
                     )
                     exit_condition = page * self.page_size < total_rows
                     page += 1
@@ -165,7 +176,7 @@ class GaviNotifier(Notifier):
     template_name = "notify_gavi"
 
     def __init__(self, donor_code, group_name, specific_date=None):
-        self.donor = Donor.objects.get(code=donor_code)
+        super().__init__(donor_code)
         self.group_name = group_name
         self.specific_date = specific_date
 
@@ -235,7 +246,7 @@ def notify_new_records():
     logger.info("Notify Start")
     for donor_code in Donor.objects.filter(active=True).values_list("code", flat=True):
         if donor_code == settings.GAVI_DONOR_CODE:
-            notify_gavi_donor(donor_code)
+            notify_gavi_donor.delay(donor_code)
         else:
             notify_donor.delay(donor_code)
 

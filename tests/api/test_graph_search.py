@@ -11,7 +11,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSharePointSearchSerializer,
     GaviSoaSharePointSearchSerializer,
 )
-from donor_reporting_portal.api.views.sharepoint import DRPGraphBasedSearchViewSet
+from donor_reporting_portal.api.views.sharepoint import DRPGraphBasedSearchViewSet, PROPERTY_TO_MANAGED
 from sharepoint_rest_api.models import SourceId
 
 
@@ -201,7 +201,7 @@ class TestDRPGraphBasedSearchViewSet:
         assert call_kwargs["search"] is None
         assert call_kwargs["filters"] == {"Donor": "I49901"}
         assert call_kwargs["page"] == 1
-        assert call_kwargs["searchable_properties"] == set(DRPGraphBasedSearchViewSet._PROPERTY_TO_KQL.values())
+        assert call_kwargs["searchable_properties"] == set(PROPERTY_TO_MANAGED.values())
         assert result == []
 
     @override_settings(DRP_SOURCE_IDS={"internal": "test-uuid"})
