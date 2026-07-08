@@ -214,6 +214,31 @@ class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, Shar
     """DRP Search Viewset for url based."""
 
 
+PROPERTY_TO_MANAGED = {
+    "Donor": "Donor",
+    "GrantNumber": "RefinableString161",
+    "ReportGroup": "RefinableString164",
+    "ReportStatus": "RefinableString166",
+    "AwardType": "RefinableString176",
+    "Retracted": "RefinableString173",
+    "Created": "RefinableDate09",
+    "Modified": "RefinableDate11",
+    "GrantExpiryDate": "RefinableDate14",
+    "ReportEndDate": "RefinableDate15",
+    "DonorDocument": "RefinableString163",
+    "DonorReportCategory": "RefinableString171",
+    "ExternalReference": "RefinableString168",
+    "FrameworkAgreement": "RefinableString162",
+    "GrantIssueYear": "RefinableString167",
+    "RecipientOffice": "RefinableString165",
+    "ReportGeneratedBy": "RefinableString174",
+    "ReportMethod": "RefinableString172",
+    "ReportType": "RefinableString169",
+    "Theme": "RefinableString170",
+    "DonorCode": "RefinableString175",
+}
+
+
 class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """DRP Search Viewset for graph based.
 
@@ -224,29 +249,6 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """
 
     serializer_class = DRPSharePointSearchSerializer
-    _PROPERTY_TO_KQL = {
-        "Donor": "Donor",
-        "GrantNumber": "RefinableString161",
-        "ReportGroup": "RefinableString164",
-        "ReportStatus": "RefinableString166",
-        "AwardType": "RefinableString176",
-        "Retracted": "RefinableString173",
-        "Created": "RefinableDate09",
-        "Modified": "RefinableDate11",
-        "GrantExpiryDate": "RefinableDate14",
-        "ReportEndDate": "RefinableDate15",
-        "DonorDocument": "RefinableString163",
-        "DonorReportCategory": "RefinableString171",
-        "ExternalReference": "RefinableString168",
-        "FrameworkAgreement": "RefinableString162",
-        "GrantIssueYear": "RefinableString167",
-        "RecipientOffice": "RefinableString165",
-        "ReportGeneratedBy": "RefinableString174",
-        "ReportMethod": "RefinableString172",
-        "ReportType": "RefinableString169",
-        "Theme": "RefinableString170",
-        "DonorCode": "RefinableString175",
-    }
 
     def get_serializer_class(self):
         query_params = self.request.query_params
@@ -336,7 +338,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             parts = name.split("__")
             raw = parts[0].lstrip("-")
             suffix = f"__{parts[-1]}" if len(parts) > 1 else ""
-            kql_name = self._PROPERTY_TO_KQL.get(raw, raw)
+            kql_name = PROPERTY_TO_MANAGED.get(raw, raw)
             if parts[0].startswith("-"):
                 converted[f"-{kql_name}{suffix}"] = value
             else:
@@ -346,7 +348,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             search=search,
             filters=converted,
             page=page,
-            searchable_properties=set(self._PROPERTY_TO_KQL.values()),
+            searchable_properties=set(PROPERTY_TO_MANAGED.values()),
             reverse_map=reverse_map,
             order_by=order_by,
         )
