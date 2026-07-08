@@ -146,7 +146,7 @@ class TestDRPGraphBasedSearchViewSet:
         view = self._make_viewset(self._make_request(query_params={"source_id": "nonexistent"}))
         qp = {"source_id": "nonexistent"}
         view._apply_source_id_filters(qp)
-        assert qp == {"source_id": "nonexistent", "order_by": "DRPMODIFIED desc"}
+        assert qp == {"source_id": "nonexistent", "order_by": "modified desc"}
 
     def test_map_filter_names_from_property_map(self):
         view = self._make_viewset(self._make_request())
