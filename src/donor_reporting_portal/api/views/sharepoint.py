@@ -277,7 +277,16 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     def _apply_source_id_filters(self, qp):
         super()._apply_source_id_filters(qp)
         if qp.get("order_by") == "-LastModifiedTime":
-            qp["order_by"] = "DRPMODIFIED desc"
+            qp["order_by"] = "modified desc"
+
+    @staticmethod
+    def _map_order_by(order_by, property_name_map):
+        parts = order_by.rsplit(" ", 1)
+        field = parts[0]
+        direction = f" {parts[1]}" if len(parts) > 1 else ""
+        search_prop = property_name_map.get(field) or to_camel(field)
+        managed = PROPERTY_TO_MANAGED.get(search_prop, search_prop)
+        return f"{managed}{direction}"
 
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
@@ -319,7 +328,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.dict()
-        qp.setdefault("order_by", "DRPMODIFIED desc")
+        qp.setdefault("order_by", "modified desc")
         self._apply_source_id_filters(qp)
         qp.update(kwargs)
 
@@ -330,6 +339,8 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         search = qp.get("search")
         page = int(qp.get("page", 1))
         order_by = qp.pop("order_by", None)
+        if order_by:
+            order_by = self._map_order_by(order_by, property_name_map)
 
         mapped = self._map_filter_names(qp, property_name_map, reverse_map)
 
