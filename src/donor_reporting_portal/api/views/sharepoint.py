@@ -1,13 +1,16 @@
 import csv
-from datetime import datetime
 
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.functional import cached_property
 
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import PermissionDenied
+from sharepoint_rest_api import config as sp_config
 from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
+from sharepoint_rest_api.graph_client import GraphClient, GraphClientError
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
 from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet
@@ -173,7 +176,7 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         if order_by and "order_by" not in qp:
             qp["order_by"] = order_by
         elif "order_by" not in qp:
-            qp["order_by"] = "LastModifiedTime desc"
+            qp["order_by"] = "DRPMODIFIED desc"
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.copy()
@@ -211,6 +214,31 @@ class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, Shar
     """DRP Search Viewset for url based."""
 
 
+PROPERTY_TO_MANAGED = {
+    "Donor": "Donor",
+    "GrantNumber": "RefinableString161",
+    "ReportGroup": "RefinableString164",
+    "ReportStatus": "RefinableString166",
+    "AwardType": "RefinableString176",
+    "Retracted": "RefinableString173",
+    "Created": "RefinableDate09",
+    "Modified": "RefinableDate11",
+    "GrantExpiryDate": "RefinableDate14",
+    "ReportEndDate": "RefinableDate15",
+    "DonorDocument": "RefinableString163",
+    "DonorReportCategory": "RefinableString171",
+    "ExternalReference": "RefinableString168",
+    "FrameworkAgreement": "RefinableString162",
+    "GrantIssueYear": "RefinableString167",
+    "RecipientOffice": "RefinableString165",
+    "ReportGeneratedBy": "RefinableString174",
+    "ReportMethod": "RefinableString172",
+    "ReportType": "RefinableString169",
+    "Theme": "RefinableString170",
+    "DonorCode": "RefinableString175",
+}
+
+
 class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """DRP Search Viewset for graph based.
 
@@ -221,7 +249,6 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """
 
     serializer_class = DRPSharePointSearchSerializer
-    SEARCHABLE_PROPERTIES = {"Donor"}
 
     def get_serializer_class(self):
         query_params = self.request.query_params
@@ -246,6 +273,11 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
                 autofields.append(to_camel(name))
         selected = selected.split(",") if selected else autofields
         return selected + ["Title", "Author", "Path"]
+
+    def _apply_source_id_filters(self, qp):
+        super()._apply_source_id_filters(qp)
+        if qp.get("order_by") == "-LastModifiedTime":
+            qp["order_by"] = "DRPMODIFIED desc"
 
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
@@ -274,20 +306,20 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             mapped_filters[f"{mapped_name}{operator_key}"] = value
         return mapped_filters
 
-    def _sort_by_modified(self, items, desc=True):
-        def _parse_dt(item):
-            val = item.get("LastModifiedTime") or ""
-            if not val:
-                return datetime.min
-            try:
-                return datetime.fromisoformat(val)
-            except (ValueError, TypeError):
-                return datetime.min
-
-        return sorted(items, key=_parse_dt, reverse=desc)
+    @cached_property
+    def client(self):
+        try:
+            return DRPGraphClient(
+                url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
+                relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
+                folder=self.folder,
+            )
+        except GraphClientError:
+            raise PermissionDenied
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.dict()
+        qp.setdefault("order_by", "DRPMODIFIED desc")
         self._apply_source_id_filters(qp)
         qp.update(kwargs)
 
@@ -299,16 +331,29 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         page = int(qp.get("page", 1))
         order_by = qp.pop("order_by", None)
 
+        mapped = self._map_filter_names(qp, property_name_map, reverse_map)
+
+        converted = {}
+        for name, value in mapped.items():
+            parts = name.split("__")
+            raw = parts[0].lstrip("-")
+            suffix = f"__{parts[-1]}" if len(parts) > 1 else ""
+            kql_name = PROPERTY_TO_MANAGED.get(raw, raw)
+            if parts[0].startswith("-"):
+                converted[f"-{kql_name}{suffix}"] = value
+            else:
+                converted[f"{kql_name}{suffix}"] = value
+
         response, self.total_rows = self.client.search(
             search=search,
-            filters=self._map_filter_names(qp, property_name_map, reverse_map),
+            filters=converted,
             page=page,
-            searchable_properties=self.SEARCHABLE_PROPERTIES,
+            searchable_properties=set(PROPERTY_TO_MANAGED.values()),
             reverse_map=reverse_map,
             order_by=order_by,
         )
-
-        if order_by:
-            desc = order_by.endswith(" desc")
-            response = self._sort_by_modified(response, desc=desc)
         return response
+
+
+class DRPGraphClient(GraphClient):
+    """GraphClient that delegates sorting to the parent's search()."""
