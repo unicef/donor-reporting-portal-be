@@ -146,7 +146,7 @@ class TestDRPGraphBasedSearchViewSet:
         view = self._make_viewset(self._make_request(query_params={"source_id": "nonexistent"}))
         qp = {"source_id": "nonexistent"}
         view._apply_source_id_filters(qp)
-        assert qp == {"source_id": "nonexistent", "order_by": "LastModifiedTime desc"}
+        assert qp == {"source_id": "nonexistent", "order_by": "DRPMODIFIED desc"}
 
     def test_map_filter_names_from_property_map(self):
         view = self._make_viewset(self._make_request())
@@ -201,7 +201,7 @@ class TestDRPGraphBasedSearchViewSet:
         assert call_kwargs["search"] is None
         assert call_kwargs["filters"] == {"Donor": "I49901"}
         assert call_kwargs["page"] == 1
-        assert call_kwargs["searchable_properties"] == {"Donor"}
+        assert call_kwargs["searchable_properties"] == set(DRPGraphBasedSearchViewSet._PROPERTY_TO_KQL.values())
         assert result == []
 
     @override_settings(DRP_SOURCE_IDS={"internal": "test-uuid"})
@@ -230,5 +230,5 @@ class TestDRPGraphBasedSearchViewSet:
         view.client = mock_client
         view.get_queryset()
         call_kwargs = mock_client.search.call_args[1]
-        assert call_kwargs["filters"]["GrantNumber"] == "SC130572"
-        assert call_kwargs["filters"]["ReportGeneratedBy"] == "smoon"
+        assert call_kwargs["filters"]["RefinableString161"] == "SC130572"
+        assert call_kwargs["filters"]["RefinableString174"] == "smoon"
