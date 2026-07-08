@@ -272,6 +272,11 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         selected = selected.split(",") if selected else autofields
         return selected + ["Title", "Author", "Path"]
 
+    def _apply_source_id_filters(self, qp):
+        super()._apply_source_id_filters(qp)
+        if qp.get("order_by") == "-LastModifiedTime":
+            qp["order_by"] = "DRPMODIFIED desc"
+
     def _map_filter_names(self, qp, property_name_map, reverse_map):
         mapped_filters = {}
         for name, value in qp.items():
