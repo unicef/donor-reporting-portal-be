@@ -176,7 +176,7 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         if order_by and "order_by" not in qp:
             qp["order_by"] = order_by
         elif "order_by" not in qp:
-            qp["order_by"] = "LastModifiedTime desc"
+            qp["order_by"] = "DRPMODIFIED desc"
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.copy()
