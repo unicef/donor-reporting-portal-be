@@ -1,42 +1,39 @@
 import pytest
 
+from donor_reporting_portal.apps.report_metadata.notifications.notify_donor import (
+    defaults as donor_defaults,
+    name as donor_name,
+)
+from donor_reporting_portal.apps.report_metadata.notifications.notify_gavi import (
+    defaults as gavi_defaults,
+    name as gavi_name,
+)
+from donor_reporting_portal.apps.report_metadata.notifications.notify_urgent_gavi import (
+    defaults as urgent_gavi_defaults,
+    name as urgent_gavi_name,
+)
+from donor_reporting_portal.apps.roles.notifications.access_grant_email import (
+    defaults as access_grant_defaults,
+    name as access_grant_name,
+)
+
 
 def test_notify_donor_template():
-    from donor_reporting_portal.apps.report_metadata.notifications.notify_donor import (
-        defaults,
-        name,
-    )
-
-    assert name == "notify_donor"
-    assert "subject" in defaults
+    assert donor_name == "notify_donor"
+    assert "subject" in donor_defaults
 
 
 def test_notify_gavi_template():
-    from donor_reporting_portal.apps.report_metadata.notifications.notify_gavi import (
-        defaults,
-        name,
-    )
-
-    assert name == "notify_gavi"
-    assert "subject" in defaults
+    assert gavi_name == "notify_gavi"
+    assert "subject" in gavi_defaults
 
 
 def test_notify_urgent_gavi_template():
-    from donor_reporting_portal.apps.report_metadata.notifications.notify_urgent_gavi import (
-        defaults,
-        name,
-    )
-
-    assert name == "notify_urgent_gavi"
-    assert "subject" in defaults
+    assert urgent_gavi_name == "notify_urgent_gavi"
+    assert "subject" in urgent_gavi_defaults
 
 
 @pytest.mark.django_db
 def test_access_grant_email_template():
-    from donor_reporting_portal.apps.roles.notifications.access_grant_email import (
-        defaults,
-        name,
-    )
-
-    assert name == "access_grant_email"
-    assert "subject" in defaults
+    assert access_grant_name == "access_grant_email"
+    assert "subject" in access_grant_defaults
