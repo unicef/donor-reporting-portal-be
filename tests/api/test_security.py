@@ -41,3 +41,23 @@ def test_api_userrole_list(request, django_app, logged_user, userrole):
 @contract(LastModifiedRecorder)
 def test_api_business_area_list(request, django_app, business_area):
     return reverse("api:businessarea-list")
+
+
+@pytest.mark.django_db
+def test_userrole_delete_deletes_user_when_no_other_roles(db):
+    from rest_framework.test import APIClient
+
+    from donor_reporting_portal.apps.core.models import User
+
+    admin = UserFactory(is_superuser=True)
+    client = APIClient()
+    client.force_authenticate(admin)
+
+    userrole = UserRoleFactory()
+    user_id = userrole.user.pk
+    assert User.objects.filter(pk=user_id).exists()
+
+    url = reverse("api:userrole-detail", kwargs={"pk": userrole.pk})
+    response = client.delete(url)
+    assert response.status_code == 204
+    assert not User.objects.filter(pk=user_id).exists()

@@ -12,7 +12,6 @@ from .views.metadata import (
     GrantViewSet,
     SecondaryDonorViewSet,
     ThemeViewSet,
-    SourceIdViewSet,
 )
 from .views.sharepoint import (
     DRPGraphBasedSearchViewSet,
@@ -34,7 +33,6 @@ router.register(r"roles/groups", GroupViewSet)
 router.register(r"roles/users", UserViewSet)
 router.register(r"roles/user-role", UserRoleViewSet)
 router.register(r"roles/business-area", BusinessAreaViewSet)
-router.register(r"sites/source_ids", SourceIdViewSet)
 router.register(r"metadata/themes", ThemeViewSet)
 router.register(r"metadata/donors", DonorViewSet)
 router.register(

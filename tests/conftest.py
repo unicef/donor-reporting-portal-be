@@ -18,6 +18,7 @@ from factories import (
     UserFactory,
     UserRoleFactory,
 )
+from donor_reporting_portal.apps.report_metadata.models import DRPMetadata
 
 
 def pytest_configure(config):
@@ -98,3 +99,8 @@ def secondary_donor():
 @pytest.fixture
 def group():
     return GroupFactory()
+
+
+@pytest.fixture
+def drp_metadata():
+    return DRPMetadata.objects.create(category="Report", description="Test Metadata", audience="int")

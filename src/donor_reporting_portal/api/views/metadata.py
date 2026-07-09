@@ -20,7 +20,6 @@ from donor_reporting_portal.api.serializers.metadata import (
     GrantSerializer,
     SecondaryDonorSerializer,
     ThemeSerializer,
-    SourceIdSerializer,
 )
 from donor_reporting_portal.api.views.base import GenericAbstractViewSetMixin
 from donor_reporting_portal.apps.report_metadata.models import (
@@ -30,7 +29,6 @@ from donor_reporting_portal.apps.report_metadata.models import (
     Grant,
     SecondaryDonor,
     Theme,
-    SourceId,
 )
 from donor_reporting_portal.apps.roles.models import UserRole
 
@@ -114,9 +112,3 @@ class DRPMetadataViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelView
     serializer_class = DRPMetadataSerializer
     filterset_class = DRPMetadataFilter
     search_fields = ("description", "code")
-
-
-class SourceIdViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
-    queryset = SourceId.objects.all()
-    serializer_class = SourceIdSerializer
-    search_fields = ("name", "source_id")

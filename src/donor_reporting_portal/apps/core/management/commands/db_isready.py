@@ -78,6 +78,6 @@ class Command(BaseCommand):
                     self.stdout.write(f"Connection {options['connection']} successful")
                     retcode = 0
                     break
-        except KeyboardInterrupt:  # pragma: no-cover
+        except KeyboardInterrupt:  # pragma: no cover
             self.stdout.write("Interrupted")
         sys.exit(retcode)
