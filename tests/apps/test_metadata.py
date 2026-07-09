@@ -2,6 +2,10 @@ from unittest import mock
 
 from django.urls import reverse
 
+import pytest
+
+from donor_reporting_portal.apps.report_metadata.models import DRPMetadata
+
 
 def test_admin_theme(django_app, admin_user, theme):
     assert str(theme) is not None
@@ -36,3 +40,44 @@ def test_grant_sync_url(django_app, admin_user):
         url = "/admin/report_metadata/externalgrant/_sync_grants/"
         response = django_app.get(url, user=admin_user)
         assert response
+
+
+@pytest.mark.django_db
+def test_drp_metadata_str():
+    m = DRPMetadata(category="cat", description="desc", audience="int")
+    assert str(m) == "cat | desc | int"
+
+
+@pytest.mark.django_db
+def test_drp_metadata_create_code():
+    assert DRPMetadata.create_code("Hello World") == "hello_world"
+    assert DRPMetadata.create_code("Input Report") == "input_report"
+
+
+@pytest.mark.django_db
+def test_drp_metadata_save_code_auto():
+    m = DRPMetadata(category="cat", description="Input Report", audience="int")
+    m.save()
+    assert m.code == "input_report"
+
+
+@pytest.mark.django_db
+def test_drp_metadata_save_code_explicit():
+    m = DRPMetadata(category="cat", description="Input Report", code="custom_code", audience="int")
+    m.save()
+    assert m.code == "custom_code"
+
+
+@pytest.mark.django_db
+def test_admin_drp_metadata(django_app, admin_user, drp_metadata):
+    assert str(drp_metadata) is not None
+    url = reverse("admin:report_metadata_drpmetadata_changelist")
+    response = django_app.get(url, user=admin_user)
+    assert response
+
+
+@pytest.mark.django_db
+def test_admin_user(django_app, admin_user):
+    url = reverse("admin:core_user_changelist")
+    response = django_app.get(url, user=admin_user)
+    assert response

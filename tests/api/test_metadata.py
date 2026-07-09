@@ -1,5 +1,6 @@
 from django.urls import reverse
 
+import pytest
 from drf_api_checker.pytest import contract, frozenfixture
 
 from api_checker import ExpectedErrorRecorder, LastModifiedRecorder
@@ -8,6 +9,7 @@ from factories import (
     DRPMetadataFactory,
     ExternalGrantFactory,
     GrantFactory,
+    SecondaryDonorFactory,
     ThemeFactory,
     UserRoleFactory,
 )
@@ -93,3 +95,26 @@ def test_api_grant_list(request, django_app, logged_user, grant):
 @contract(recorder_class=LastModifiedRecorder)
 def test_metadata_list(request, django_app, logged_user, metadata):
     return reverse("api:drpmetadata-list")
+
+
+@pytest.mark.django_db
+def test_api_grant_list_filtered_by_secondary_donor_code(db):
+    from rest_framework.test import APIClient
+
+    from factories import UserFactory
+
+    admin = UserFactory(is_superuser=True)
+    client = APIClient()
+    client.force_authenticate(admin)
+
+    grant1 = GrantFactory()
+    GrantFactory(donor=grant1.donor)
+    secondary_donor = SecondaryDonorFactory()
+    secondary_donor.grants.add(grant1)
+
+    url = reverse("api:grant-list", kwargs={"donor_id": grant1.donor.pk})
+    response = client.get(url, {"secondary_donor_code": secondary_donor.code})
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) == 1
+    assert data[0]["id"] == grant1.pk
