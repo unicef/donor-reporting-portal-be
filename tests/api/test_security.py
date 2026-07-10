@@ -2,8 +2,10 @@ from django.urls import reverse
 
 import pytest
 from drf_api_checker.pytest import contract, frozenfixture
+from rest_framework.test import APIClient
 
 from api_checker import LastModifiedRecorder
+from donor_reporting_portal.apps.core.models import User
 from factories import BusinessAreaFactory, UserFactory, UserRoleFactory
 
 
@@ -45,10 +47,6 @@ def test_api_business_area_list(request, django_app, business_area):
 
 @pytest.mark.django_db
 def test_userrole_delete_deletes_user_when_no_other_roles(db):
-    from rest_framework.test import APIClient
-
-    from donor_reporting_portal.apps.core.models import User
-
     admin = UserFactory(is_superuser=True)
     client = APIClient()
     client.force_authenticate(admin)

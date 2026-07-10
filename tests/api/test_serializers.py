@@ -2,6 +2,7 @@ from datetime import datetime
 from unittest import mock
 
 from django.test import TestCase
+from rest_framework import serializers
 
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchSharePointField,
@@ -10,6 +11,7 @@ from donor_reporting_portal.api.serializers.fields import (
     SearchMultiSharePointField,
     SearchSharePointField,
 )
+from donor_reporting_portal.api.serializers.metadata import DonorSecondaryDonorSerializer
 from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSerializerMixin,
     DRPSharePointBaseSerializer,
@@ -17,6 +19,8 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSharePointSearchSerializer,
     GaviSoaSharePointSearchSerializer,
 )
+from donor_reporting_portal.api.serializers.userrole import UserSerializer
+from factories import DonorFactory, GrantFactory, SecondaryDonorFactory
 import pytest
 
 
@@ -214,10 +218,6 @@ class TestDRPSerializerMixin(TestCase):
 
 class TestDonorSecondaryDonorSerializer(TestCase):
     def test_get_secondary_donors(self):
-        from donor_reporting_portal.api.serializers.metadata import DonorSecondaryDonorSerializer
-
-        from factories import DonorFactory, GrantFactory, SecondaryDonorFactory
-
         donor = DonorFactory()
         grant = GrantFactory(donor=donor)
         secondary_donor = SecondaryDonorFactory()
@@ -231,16 +231,11 @@ class TestDonorSecondaryDonorSerializer(TestCase):
 
 class TestUserSerializerValidateEmail(TestCase):
     def test_validate_email_lowercase(self):
-        from donor_reporting_portal.api.serializers.userrole import UserSerializer
-
         serializer = UserSerializer()
         result = serializer.validate_email("test@example.com")
         assert result == "test@example.com"
 
     def test_validate_email_uppercase_raises_error(self):
-        from donor_reporting_portal.api.serializers.userrole import UserSerializer
-        from rest_framework import serializers
-
         serializer = UserSerializer()
         with pytest.raises(serializers.ValidationError):
             serializer.validate_email("Test@Example.com")

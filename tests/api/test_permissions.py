@@ -1,10 +1,12 @@
 from unittest import mock
 
 import pytest
+from django.contrib.auth.models import AnonymousUser
 from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
+from perms import user_grant_permissions
 
 
 class TestDonorPermission:
@@ -18,8 +20,6 @@ class TestDonorPermission:
 
     @pytest.mark.django_db
     def test_unicef_user(self, user):
-        from perms import user_grant_permissions
-
         perm = DonorPermission()
         factory = APIRequestFactory()
         request = Request(factory.get("/?donor_code=test"))
@@ -50,8 +50,6 @@ class TestPublicLibraryPermission:
         assert perm.has_permission(request, view) is True
 
     def test_unauthenticated_user(self):
-        from django.contrib.auth.models import AnonymousUser
-
         perm = PublicLibraryPermission()
         factory = APIRequestFactory()
         request = Request(factory.get("/"))

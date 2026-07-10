@@ -1,7 +1,10 @@
+from django.contrib.auth.models import AnonymousUser, Permission
 from django.test import override_settings
 
 import pytest
 
+from factories import DonorFactory, SecondaryDonorFactory
+from donor_reporting_portal.apps.roles.models import UserRole
 from perms import user_grant_role_permission
 
 
@@ -30,11 +33,6 @@ def test_donor_role_ok(userrole):
 @pytest.mark.django_db
 @override_settings(AUTHENTICATION_BACKENDS=("donor_reporting_portal.apps.core.backends.DonorRoleBackend",))
 def test_donor_role_tuple_context(userrole):
-    from django.contrib.auth.models import Permission
-
-    from factories import SecondaryDonorFactory
-    from donor_reporting_portal.apps.roles.models import UserRole
-
     perm = Permission.objects.get(content_type__app_label="roles", codename="can_view_all_donors")
     userrole.group.permissions.add(perm)
     secondary_donor = SecondaryDonorFactory()
@@ -51,10 +49,6 @@ def test_donor_role_tuple_context(userrole):
 @pytest.mark.django_db
 @override_settings(AUTHENTICATION_BACKENDS=("donor_reporting_portal.apps.core.backends.DonorRoleBackend",))
 def test_donor_role_anonymous(db):
-    from django.contrib.auth.models import AnonymousUser
-
-    from factories import DonorFactory
-
     anon = AnonymousUser()
     donor = DonorFactory()
     assert not anon.has_perm("roles.can_view_all_donors", donor)

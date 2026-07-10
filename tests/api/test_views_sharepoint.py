@@ -8,6 +8,7 @@ from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 
 from donor_reporting_portal.api.serializers.sharepoint import (
+    DRPSerializerMixin,
     DRPSharePointSearchSerializer,
     GaviSharePointSearchSerializer,
     GaviSoaSharePointSearchSerializer,
@@ -173,8 +174,6 @@ class TestDRPSharepointSearchViewSet:
 @pytest.mark.django_db
 class TestDRPSharePointBaseSerializer:
     def test_get_is_new_with_modified(self):
-        from donor_reporting_portal.api.serializers.sharepoint import DRPSerializerMixin
-
         with mock.patch("donor_reporting_portal.api.serializers.sharepoint.datetime") as mock_dt:
             mock_dt.now.return_value = datetime(2026, 6, 30, 12, 0, 0)
             serializer = DRPSerializerMixin()
@@ -182,15 +181,11 @@ class TestDRPSharePointBaseSerializer:
             assert serializer.get_is_new(obj) is True
 
     def test_get_is_new_no_modified(self):
-        from donor_reporting_portal.api.serializers.sharepoint import DRPSerializerMixin
-
         serializer = DRPSerializerMixin()
         obj = {}
         assert serializer.get_is_new(obj) is False
 
     def test_get_download_url_base(self):
-        from donor_reporting_portal.api.serializers.sharepoint import DRPSerializerMixin
-
         serializer = DRPSerializerMixin()
         with mock.patch(
             "sharepoint_rest_api.serializers.sharepoint.SharePointUrlSerializer.get_download_url",

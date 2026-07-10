@@ -2,6 +2,7 @@ from django.urls import reverse
 
 import pytest
 from drf_api_checker.pytest import contract, frozenfixture
+from rest_framework.test import APIClient
 
 from api_checker import ExpectedErrorRecorder, LastModifiedRecorder
 from factories import (
@@ -11,6 +12,7 @@ from factories import (
     GrantFactory,
     SecondaryDonorFactory,
     ThemeFactory,
+    UserFactory,
     UserRoleFactory,
 )
 from perms import user_grant_permissions, user_grant_role_permission
@@ -99,10 +101,6 @@ def test_metadata_list(request, django_app, logged_user, metadata):
 
 @pytest.mark.django_db
 def test_api_grant_list_filtered_by_secondary_donor_code(db):
-    from rest_framework.test import APIClient
-
-    from factories import UserFactory
-
     admin = UserFactory(is_superuser=True)
     client = APIClient()
     client.force_authenticate(admin)
