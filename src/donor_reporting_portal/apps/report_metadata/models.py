@@ -119,16 +119,3 @@ class DRPMetadata(TimeStampedModel):
         if not self.code:
             self.code = self.create_code(self.description)
         super().save(*args, **kwargs)
-
-
-class SourceId(TimeStampedModel):
-    name = models.CharField(verbose_name=_("Name"), max_length=36)
-    source_id = models.CharField(verbose_name=_("Source ID"), max_length=36)
-    description = models.CharField(verbose_name=_("Description"), max_length=128, null=True, blank=True)
-    default_filters = models.JSONField(verbose_name=_("Default filters"), null=True, blank=True, default=dict)
-
-    def __str__(self):
-        return f"{self.name} | {self.source_id}"
-
-    class Meta:
-        ordering = ["name"]

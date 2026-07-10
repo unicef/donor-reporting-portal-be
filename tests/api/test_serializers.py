@@ -2,6 +2,7 @@ from datetime import datetime
 from unittest import mock
 
 from django.test import TestCase
+from rest_framework import serializers
 
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchSharePointField,
@@ -10,12 +11,17 @@ from donor_reporting_portal.api.serializers.fields import (
     SearchMultiSharePointField,
     SearchSharePointField,
 )
+from donor_reporting_portal.api.serializers.metadata import DonorSecondaryDonorSerializer
 from donor_reporting_portal.api.serializers.sharepoint import (
+    DRPSerializerMixin,
     DRPSharePointBaseSerializer,
     DRPSharePointSearchSerializer,
     GaviSharePointSearchSerializer,
     GaviSoaSharePointSearchSerializer,
 )
+from donor_reporting_portal.api.serializers.userrole import UserSerializer
+from factories import DonorFactory, GrantFactory, SecondaryDonorFactory
+import pytest
 
 
 class TestSearchSharePointField(TestCase):
@@ -189,3 +195,47 @@ class TestDRPSharePointBaseSerializer(TestCase):
         obj = {}
         url = serializer.get_download_url(obj)
         assert url is None
+
+    def test_get_download_url_keyerror(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = mock.MagicMock()
+        obj.get.side_effect = KeyError("test")
+        url = serializer.get_download_url(obj)
+        assert url is None
+
+
+class TestDRPSerializerMixin(TestCase):
+    def test_get_is_new_empty_modified(self):
+        serializer = DRPSerializerMixin()
+        obj = {}
+        assert serializer.get_is_new(obj) is False
+
+    def test_get_is_new_none_modified(self):
+        serializer = DRPSerializerMixin()
+        obj = {"Modified": None}
+        assert serializer.get_is_new(obj) is False
+
+
+class TestDonorSecondaryDonorSerializer(TestCase):
+    def test_get_secondary_donors(self):
+        donor = DonorFactory()
+        grant = GrantFactory(donor=donor)
+        secondary_donor = SecondaryDonorFactory()
+        secondary_donor.grants.add(grant)
+
+        serializer = DonorSecondaryDonorSerializer(donor)
+        assert "secondary_donors" in serializer.data
+        assert len(serializer.data["secondary_donors"]) == 1
+        assert serializer.data["secondary_donors"][0]["id"] == secondary_donor.pk
+
+
+class TestUserSerializerValidateEmail(TestCase):
+    def test_validate_email_lowercase(self):
+        serializer = UserSerializer()
+        result = serializer.validate_email("test@example.com")
+        assert result == "test@example.com"
+
+    def test_validate_email_uppercase_raises_error(self):
+        serializer = UserSerializer()
+        with pytest.raises(serializers.ValidationError):
+            serializer.validate_email("Test@Example.com")
