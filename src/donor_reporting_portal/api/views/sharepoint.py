@@ -29,7 +29,6 @@ from sharepoint_rest_api.views.url_based import (
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
 from donor_reporting_portal.api.serializers.fields import (
-    CTNSearchMultiSharePointField,
     CTNSearchSharePointField,
     DRPSearchSharePointField,
 )
@@ -94,40 +93,46 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         """Check if the source id is public or restricted to UNICEF users."""
         source_id = self.request.query_params.get("source_id", None)
         public = source_id in [
-            settings.DRP_SOURCE_IDS["thematic_internal"],
-            settings.DRP_SOURCE_IDS["thematic_external"],
+            settings.DRP_SOURCE_IDS.get("thematic_internal"),
+            settings.DRP_SOURCE_IDS.get("thematic_external"),
         ]
         if public:
             return True
         unicef_user = self.request.user.username.endswith("@unicef.org")
         return unicef_user and source_id in [
-            settings.DRP_SOURCE_IDS["internal"],
-            settings.DRP_SOURCE_IDS["pool_internal"],
+            settings.DRP_SOURCE_IDS.get("internal"),
+            settings.DRP_SOURCE_IDS.get("pool_internal"),
         ]
 
     def get_selected(self, selected):
-        def to_drp(source, value):
-            prefix = "CTN" if isinstance(value, CTNSearchSharePointField | CTNSearchMultiSharePointField) else "DRP"
-            return prefix + to_camel(source)
-
-        autofields = [to_drp(key, value) for key, value in self.get_serializer_class()._declared_fields.items()]
+        serializer_class = self.get_serializer_class()
+        autofields = []
+        for name, field in serializer_class._declared_fields.items():
+            if hasattr(field, "get_search_property"):
+                prop = field.get_search_property()
+                autofields.append(prop if prop is not None else to_camel(name))
+            else:
+                autofields.append(to_camel(name))
         selected = selected.split(",") if selected else autofields
         return selected + ["Title", "Author", "Path"]
 
     def get_filters(self, kwargs):
         # we can enforce filters here
-        kwargs.pop("serializer", None)
+        serializer_name = kwargs.pop("serializer", None)
+
+        serializer_classes = {
+            "gavi": GaviSharePointSearchSerializer,
+            "soa": GaviSoaSharePointSearchSerializer,
+        }
+        serializer_cls = serializer_classes.get(serializer_name, self.get_serializer_class())
+
         new_kwargs = {}
         drp_fields = [
-            key
-            for key, value in self.get_serializer_class()._declared_fields.items()
-            if isinstance(value, DRPSearchSharePointField)
+            key for key, value in serializer_cls._declared_fields.items() if isinstance(value, DRPSearchSharePointField)
         ]
 
         ctn_fields = [
-            key
-            for key, value in self.get_serializer_class()._declared_fields.items()
-            if isinstance(value, CTNSearchSharePointField)
+            key for key, value in serializer_cls._declared_fields.items() if isinstance(value, CTNSearchSharePointField)
         ]
 
         for key, value in kwargs.items():
@@ -135,12 +140,20 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
             filter_name = key_splits[0]
             filter_type = key_splits[-1] if len(key_splits) > 1 else None
             if filter_name in drp_fields:
-                new_key = self.prefix + to_camel(filter_name)
+                field = serializer_cls._declared_fields[filter_name]
+                search_prop = field.get_search_property() if hasattr(field, "get_search_property") else None
+                if not search_prop:
+                    search_prop = to_camel(filter_name)
+                new_key = self.prefix + search_prop
                 if filter_type:
                     new_key = f"{new_key}__{filter_type}"
                 new_kwargs[new_key] = value
             elif filter_name in ctn_fields:
-                new_key = "CTN" + to_camel(filter_name)
+                field = serializer_cls._declared_fields[filter_name]
+                search_prop = field.get_search_property() if hasattr(field, "get_search_property") else None
+                if not search_prop:
+                    search_prop = to_camel(filter_name)
+                new_key = "CTN" + search_prop
                 if filter_type:
                     new_key = f"{new_key}__{filter_type}"
                 new_kwargs[new_key] = value

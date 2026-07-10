@@ -26,6 +26,7 @@ from donor_reporting_portal.api.views.sharepoint import (
     SharePointGroupViewSet,
     DRPGraphClient,
 )
+from sharepoint_rest_api.graph_client import GraphClient
 from sharepoint_rest_api.models import SourceId
 
 
@@ -230,4 +231,4 @@ class TestDRPViewSetSubclasses:
 
 class TestDRPGraphClient:
     def test_graph_client_subclass(self):
-        assert issubclass(DRPGraphClient, mock.ANY)  # pragma: no cover
+        assert issubclass(DRPGraphClient, GraphClient)  # pragma: no cover

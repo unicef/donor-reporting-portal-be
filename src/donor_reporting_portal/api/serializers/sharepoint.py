@@ -62,7 +62,10 @@ class DRPSerializerMixin(serializers.Serializer):
         return False
 
     def get_download_url(self, obj):
-        base_url = super().get_download_url(obj)
+        try:
+            base_url = super().get_download_url(obj)
+        except AttributeError:
+            base_url = obj.get("Path", "")
         donor_code = obj["DonorCode"].replace(";", ",")
         return f"{base_url}?donor_code={donor_code}"
 
