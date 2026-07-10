@@ -9,12 +9,14 @@ from rest_framework.test import APIRequestFactory
 
 from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSerializerMixin,
+    DRPSharePointBaseSerializer,
     DRPSharePointSearchSerializer,
     GaviSharePointSearchSerializer,
     GaviSoaSharePointSearchSerializer,
 )
 from donor_reporting_portal.api.views.sharepoint import (
     DRPSharepointSearchViewSet,
+    DRPGraphBasedSearchViewSet,
     DRPSharePointUrlFileViewSet,
     DRPSharePointSettingsFileViewSet,
     DRPSharePointSettingsRestViewSet,
@@ -232,3 +234,144 @@ class TestDRPViewSetSubclasses:
 class TestDRPGraphClient:
     def test_graph_client_subclass(self):
         assert issubclass(DRPGraphClient, GraphClient)  # pragma: no cover
+
+
+@pytest.mark.django_db
+class TestDRPGraphBasedSearchViewSetIsPublic:
+    def _make_request(self, query_params=None):
+        factory = APIRequestFactory()
+        qs = "&".join(f"{k}={v}" for k, v in (query_params or {}).items())
+        url = f"/api/graph/search/?{qs}" if qs else "/api/graph/search/"
+        wsgi_request = factory.get(url)
+        return Request(wsgi_request)
+
+    def _make_viewset(self, request):
+        view = DRPGraphBasedSearchViewSet()
+        view.request = request
+        view.action = "list"
+        view.format_kwarg = None
+        return view
+
+    @override_settings(DRP_SOURCE_IDS={"thematic_internal": "thematic-int"})
+    def test_is_public_thematic_internal(self):
+        request = self._make_request(query_params={"source_id": "thematic-int"})
+        request.user = mock.Mock()
+        request.user.username = "user@unicef.org"
+        view = self._make_viewset(request)
+        assert view.is_public() is True
+
+    @override_settings(DRP_SOURCE_IDS={"thematic_external": "thematic-ext"})
+    def test_is_public_thematic_external(self):
+        request = self._make_request(query_params={"source_id": "thematic-ext"})
+        request.user = mock.Mock()
+        request.user.username = "user@example.com"
+        view = self._make_viewset(request)
+        assert view.is_public() is True
+
+    @override_settings(DRP_SOURCE_IDS={"internal": "int-uuid", "pool_internal": "other"})
+    def test_is_public_internal_unicef(self):
+        request = self._make_request(query_params={"source_id": "int-uuid"})
+        request.user = mock.Mock()
+        request.user.username = "user@unicef.org"
+        view = self._make_viewset(request)
+        assert view.is_public() is True
+
+    @override_settings(DRP_SOURCE_IDS={"internal": "int-uuid"})
+    def test_is_public_non_unicef_denied(self):
+        request = self._make_request(query_params={"source_id": "int-uuid"})
+        request.user = mock.Mock()
+        request.user.username = "user@example.com"
+        view = self._make_viewset(request)
+        assert view.is_public() is False
+
+    def test_is_public_no_source_id(self):
+        request = self._make_request()
+        request.user = mock.Mock()
+        request.user.username = "user@example.com"
+        view = self._make_viewset(request)
+        assert view.is_public() is False
+
+
+class TestFileViewSetPermissions:
+    def test_url_file_permission_classes_not_none(self):
+        assert DRPSharePointUrlFileViewSet.permission_classes is not None
+
+    def test_settings_file_permission_classes_not_none(self):
+        assert DRPSharePointSettingsFileViewSet.permission_classes is not None
+
+
+class TestDRPSharePointBaseSerializerDownloadUrl:
+    @override_settings(HOST="http://localhost:8000")
+    def test_get_download_url_backend_proxied(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
+            "DRPDonorCode": "I49901",
+        }
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/sharepoint/" in url
+        assert "file.pdf/download/" in url
+        assert "donor_code=I49901" in url
+
+    @override_settings(HOST="http://localhost:8000")
+    def test_get_download_url_no_donor_code(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
+        }
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/sharepoint/" in url
+        assert "file.pdf/download/" in url
+        assert "donor_code" not in url
+
+    def test_get_download_url_no_path(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {"DRPDonorCode": "I49901"}
+        assert serializer.get_download_url(obj) is None
+
+    def test_get_download_url_empty_path(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {"Path": "", "DRPDonorCode": "I49901"}
+        assert serializer.get_download_url(obj) is None
+
+    def test_extract_site_relative_path_full_url(self):
+        path = DRPSharePointBaseSerializer._extract_site_relative_path(
+            "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf"
+        )
+        assert path == "Shared Documents/file.pdf"
+
+    def test_extract_site_relative_path_server_relative(self):
+        path = DRPSharePointBaseSerializer._extract_site_relative_path("/sites/GLB-DRP/Shared%20Documents/file.pdf")
+        assert path == "Shared Documents/file.pdf"
+
+    def test_extract_site_relative_path_nested_folder(self):
+        path = DRPSharePointBaseSerializer._extract_site_relative_path(
+            "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/Subfolder/file.pdf"
+        )
+        assert path == "Shared Documents/Subfolder/file.pdf"
+
+    def test_extract_site_relative_path_no_match(self):
+        path = DRPSharePointBaseSerializer._extract_site_relative_path("https://example.com/other/path/file.pdf")
+        assert path == "path/file.pdf"
+
+    @override_settings(HOST="http://localhost:8000")
+    def test_get_download_url_donor_code_semicolon(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
+            "DRPDonorCode": "I49901;I49902",
+        }
+        url = serializer.get_download_url(obj)
+        assert "donor_code=I49901,I49902" in url
+
+    @override_settings(HOST="http://localhost:8000")
+    def test_get_download_url_subfolder(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/Subfolder/nested%20file.pdf",
+            "DRPDonorCode": "G01001",
+        }
+        url = serializer.get_download_url(obj)
+        assert "Subfolder" in url
+        assert "nested%20file.pdf/download/" in url
+        assert "donor_code=G01001" in url

@@ -70,11 +70,11 @@ class DRPSharePointUrlCamlViewSet(DRPViewSet, SharePointUrlCamlViewSet):
 
 
 class DRPSharePointUrlFileViewSet(SharePointUrlFileViewSet):
-    permission_classes = (DonorPermission,)
+    permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
 
 class DRPSharePointSettingsFileViewSet(SharePointSettingsFileViewSet):
-    permission_classes = (DonorPermission,)
+    permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
 
 class DRPSharepointSearchViewSet(SharePointSearchViewSet):
@@ -280,6 +280,21 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """
 
     serializer_class = DRPSharePointSearchSerializer
+
+    def is_public(self):
+        """Check if the source id is public or restricted to UNICEF users."""
+        source_id = self.request.query_params.get("source_id", None)
+        public = source_id in [
+            settings.DRP_SOURCE_IDS.get("thematic_internal"),
+            settings.DRP_SOURCE_IDS.get("thematic_external"),
+        ]
+        if public:
+            return True
+        unicef_user = self.request.user.username.endswith("@unicef.org")
+        return unicef_user and source_id in [
+            settings.DRP_SOURCE_IDS.get("internal"),
+            settings.DRP_SOURCE_IDS.get("pool_internal"),
+        ]
 
     def get_serializer_class(self):
         query_params = self.request.query_params
