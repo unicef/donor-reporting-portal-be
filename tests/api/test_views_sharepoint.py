@@ -284,6 +284,7 @@ class TestDRPGraphBasedSearchViewSetIsPublic:
         view = self._make_viewset(request)
         assert view.is_public() is False
 
+    @override_settings(DRP_SOURCE_IDS={"thematic_internal": "thematic-int", "thematic_external": "thematic-ext"})
     def test_is_public_no_source_id(self):
         request = self._make_request()
         request.user = mock.Mock()
