@@ -15,6 +15,7 @@ from .views.metadata import (
 )
 from .views.sharepoint import (
     DRPGraphBasedSearchViewSet,
+    DRPGraphFileDownloadViewSet,
     DRPSharePointSettingsCamlViewSet,
     DRPSharePointSettingsFileViewSet,
     DRPSharePointSettingsRestViewSet,
@@ -80,6 +81,11 @@ router.register(
     r"sharepoint/(?P<folder>[\w\W]+)/files",
     DRPSharePointSettingsFileViewSet,
     basename="sharepoint-settings-files",
+)
+router.register(
+    r"sharepoint/(?P<folder>[\w\W]+)/graph-files",
+    DRPGraphFileDownloadViewSet,
+    basename="sharepoint-settings-graph-files",
 )
 router.register(
     r"sharepoint/search",
