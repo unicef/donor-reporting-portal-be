@@ -433,9 +433,13 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, viewsets.ViewSet):
     def download(self, request, *args, **kwargs):
         filename = kwargs.get("filename")
         folder = kwargs.get("folder", "")
-        file_path = f"{folder}/{filename}" if folder else filename
         try:
-            graph_response = self.client.download_file(file_path)
+            drive_id = self.client.get_drive_id_by_name(folder)
+            if drive_id:
+                file_path = filename
+            else:
+                file_path = f"{folder}/{filename}" if folder else filename
+            graph_response = self.client.download_file(file_path, drive_id=drive_id)
             django_response = HttpResponse(
                 content=graph_response.content,
                 status=graph_response.status_code,
