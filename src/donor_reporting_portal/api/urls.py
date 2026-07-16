@@ -83,7 +83,7 @@ router.register(
     basename="sharepoint-settings-files",
 )
 router.register(
-    r"sharepoint/(?P<folder>[\w\W]+)/graph-files",
+    r"graph/(?P<folder>[\w\W]+)/files",
     DRPGraphFileDownloadViewSet,
     basename="sharepoint-settings-graph-files",
 )

@@ -173,9 +173,11 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
             doc_id = obj.get("DocId")
             if doc_id:
                 params.append(f"item_id={doc_id}")
-            if params:
-                return f"{base_url}?{'&'.join(params)}"
-            return base_url
+            has_site_id = bool(site_id)
+            has_drive_and_item = bool(drive_id and doc_id)
+            if not has_site_id and not has_drive_and_item:
+                return None
+            return f"{base_url}?{'&'.join(params)}"
         except (KeyError, IndexError):
             return None
 
