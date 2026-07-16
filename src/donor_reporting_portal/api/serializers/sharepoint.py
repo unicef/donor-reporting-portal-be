@@ -1,8 +1,12 @@
 from datetime import datetime
+from urllib.parse import unquote, urlparse
 
+from django.conf import settings
+from django.urls import reverse
 
 from dateutil.parser import parse
 from rest_framework import serializers
+from sharepoint_rest_api import config as sp_config
 from sharepoint_rest_api.serializers.fields import (
     CapitalizeSearchSharePointField,
     SharePointPropertyField,
@@ -144,13 +148,54 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
             path = obj.get("Path")
             if not path:
                 return None
+            relative_path = self._extract_site_relative_path(path)
+            if not relative_path:
+                return None
+            parts = relative_path.rsplit("/", 1)
+            if len(parts) != 2:
+                return None
+            folder, filename = parts
+            relative_url = reverse(
+                "api:sharepoint-settings-graph-files-download",
+                kwargs={"folder": folder, "filename": filename},
+            )
+            base_url = f"{settings.HOST}{relative_url}"
+            params = []
             donor_code = obj.get("DRPDonorCode")
             if donor_code:
-                donor_code = donor_code.replace(";", ",")
-                return f"{path}?donor_code={donor_code}"
-            return path
+                params.append(f"donor_code={donor_code.replace(';', ',')}")
+            site_id = obj.get("SiteId")
+            if site_id:
+                params.append(f"site_id={site_id}")
+            drive_id = obj.get("DriveId")
+            if drive_id:
+                params.append(f"drive_id={drive_id}")
+            doc_id = obj.get("DocId")
+            if doc_id:
+                params.append(f"item_id={doc_id}")
+            if params:
+                return f"{base_url}?{'&'.join(params)}"
+            return base_url
         except (KeyError, IndexError):
             return None
+
+    @staticmethod
+    def _extract_site_relative_path(path):
+        """Extract the site-relative path from a SharePoint webUrl.
+
+        Converts e.g. 'https://tenant.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf'
+        to 'Shared Documents/file.pdf'.
+        """
+        parsed = urlparse(path)
+        url_path = unquote(parsed.path) if parsed.scheme else unquote(path)
+        url_path = url_path.lstrip("/")
+        site_prefix = f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}/"
+        if url_path.startswith(site_prefix):
+            return url_path[len(site_prefix) :]
+        segments = url_path.split("/")
+        if len(segments) >= 3 and segments[0] == sp_config.SHAREPOINT_SITE_TYPE:
+            return "/".join(segments[2:])
+        return "/".join(segments[1:]) if len(segments) > 1 else None
 
 
 class DRPSharePointSearchSerializer(DRPSharePointBaseSerializer):
