@@ -310,6 +310,7 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         }
         url = serializer.get_download_url(obj)
         assert "http://localhost:8000/api/sharepoint/" in url
+        assert "graph-files" in url
         assert "file.pdf/download/" in url
         assert "donor_code=I49901" in url
 
@@ -321,6 +322,7 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         }
         url = serializer.get_download_url(obj)
         assert "http://localhost:8000/api/sharepoint/" in url
+        assert "graph-files" in url
         assert "file.pdf/download/" in url
         assert "donor_code" not in url
 
@@ -373,5 +375,6 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         }
         url = serializer.get_download_url(obj)
         assert "Subfolder" in url
+        assert "graph-files" in url
         assert "nested%20file.pdf/download/" in url
         assert "donor_code=G01001" in url

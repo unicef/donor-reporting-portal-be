@@ -1,7 +1,7 @@
 import csv
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import timezone
 from django.utils.functional import cached_property
 
@@ -410,6 +410,41 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
             order_by=order_by,
         )
         return response
+
+
+class DRPGraphFileDownloadViewSet(DRPViewSet, viewsets.ViewSet):
+    """ViewSet that downloads files via the Microsoft Graph API."""
+
+    lookup_field = "filename"
+    lookup_value_regex = "[^/]+"
+
+    @cached_property
+    def client(self):
+        try:
+            return DRPGraphClient(
+                url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
+                relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
+                folder="Documents",
+            )
+        except GraphClientError:
+            raise PermissionDenied
+
+    @action(detail=True, methods=["get"])
+    def download(self, request, *args, **kwargs):
+        filename = kwargs.get("filename")
+        folder = kwargs.get("folder", "")
+        file_path = f"{folder}/{filename}" if folder else filename
+        try:
+            graph_response = self.client.download_file(file_path)
+            django_response = HttpResponse(
+                content=graph_response.content,
+                status=graph_response.status_code,
+                content_type=graph_response.headers.get("Content-Type", "application/octet-stream"),
+            )
+            django_response["Content-Disposition"] = "attachment; filename=%s" % filename
+            return django_response
+        except GraphClientError as e:
+            return HttpResponseBadRequest(str(e))
 
 
 class DRPGraphClient(GraphClient):

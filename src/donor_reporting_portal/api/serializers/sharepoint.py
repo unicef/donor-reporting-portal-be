@@ -156,7 +156,7 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
                 return None
             folder, filename = parts
             relative_url = reverse(
-                "api:sharepoint-settings-files-download",
+                "api:sharepoint-settings-graph-files-download",
                 kwargs={"folder": folder, "filename": filename},
             )
             base_url = f"{settings.HOST}{relative_url}"
