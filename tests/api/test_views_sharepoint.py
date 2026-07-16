@@ -307,24 +307,48 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         obj = {
             "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
             "DRPDonorCode": "I49901",
+            "SiteId": "site123",
+            "DriveId": "drive456",
+            "DocId": "item789",
         }
         url = serializer.get_download_url(obj)
         assert "http://localhost:8000/api/sharepoint/" in url
         assert "graph-files" in url
         assert "file.pdf/download/" in url
         assert "donor_code=I49901" in url
+        assert "site_id=site123" in url
+        assert "drive_id=drive456" in url
+        assert "item_id=item789" in url
 
     @override_settings(HOST="http://localhost:8000")
     def test_get_download_url_no_donor_code(self):
         serializer = DRPSharePointBaseSerializer()
         obj = {
             "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
+            "SiteId": "site123",
+            "DriveId": "drive456",
+            "DocId": "item789",
         }
         url = serializer.get_download_url(obj)
         assert "http://localhost:8000/api/sharepoint/" in url
         assert "graph-files" in url
         assert "file.pdf/download/" in url
         assert "donor_code" not in url
+        assert "site_id=site123" in url
+        assert "drive_id=drive456" in url
+        assert "item_id=item789" in url
+
+    @override_settings(HOST="http://localhost:8000")
+    def test_get_download_url_no_site_id(self):
+        serializer = DRPSharePointBaseSerializer()
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
+        }
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/sharepoint/" in url
+        assert "site_id" not in url
+        assert "drive_id" not in url
+        assert "item_id" not in url
 
     def test_get_download_url_no_path(self):
         serializer = DRPSharePointBaseSerializer()

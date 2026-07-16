@@ -160,10 +160,21 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
                 kwargs={"folder": folder, "filename": filename},
             )
             base_url = f"{settings.HOST}{relative_url}"
+            params = []
             donor_code = obj.get("DRPDonorCode")
             if donor_code:
-                donor_code = donor_code.replace(";", ",")
-                return f"{base_url}?donor_code={donor_code}"
+                params.append(f"donor_code={donor_code.replace(';', ',')}")
+            site_id = obj.get("SiteId")
+            if site_id:
+                params.append(f"site_id={site_id}")
+            drive_id = obj.get("DriveId")
+            if drive_id:
+                params.append(f"drive_id={drive_id}")
+            doc_id = obj.get("DocId")
+            if doc_id:
+                params.append(f"item_id={doc_id}")
+            if params:
+                return f"{base_url}?{'&'.join(params)}"
             return base_url
         except (KeyError, IndexError):
             return None

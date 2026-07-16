@@ -433,13 +433,21 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, viewsets.ViewSet):
     def download(self, request, *args, **kwargs):
         filename = kwargs.get("filename")
         folder = kwargs.get("folder", "")
+        site_id = request.query_params.get("site_id")
+        drive_id = request.query_params.get("drive_id")
+        item_id = request.query_params.get("item_id")
         try:
-            drive_id = self.client.get_drive_id_by_name(folder)
-            if drive_id:
-                file_path = filename
+            if drive_id and item_id:
+                graph_response = self.client.download_item(drive_id, item_id)
             else:
-                file_path = f"{folder}/{filename}" if folder else filename
-            graph_response = self.client.download_file(file_path, drive_id=drive_id)
+                if not site_id:
+                    return HttpResponseBadRequest("site_id or drive_id+item_id query parameter is required")
+                drive_id = self.client.get_drive_id_by_name(folder, site_id=site_id)
+                if drive_id:
+                    file_path = filename
+                else:
+                    file_path = f"{folder}/{filename}" if folder else filename
+                graph_response = self.client.download_file(file_path, drive_id=drive_id, site_id=site_id)
             django_response = HttpResponse(
                 content=graph_response.content,
                 status=graph_response.status_code,
