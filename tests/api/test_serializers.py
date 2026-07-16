@@ -177,7 +177,7 @@ class TestDRPSharePointBaseSerializer(TestCase):
             "DocId": "item789",
         }
         url = serializer.get_download_url(obj)
-        assert "http://localhost:8000/api/sharepoint/" in url
+        assert "http://localhost:8000/api/graph/" in url
         assert "doc.pdf/download/" in url
         assert "donor_code=I49901" in url
         assert "site_id=site123" in url
@@ -195,7 +195,7 @@ class TestDRPSharePointBaseSerializer(TestCase):
             "DocId": "item789",
         }
         url = serializer.get_download_url(obj)
-        assert "http://localhost:8000/api/sharepoint/" in url
+        assert "http://localhost:8000/api/graph/" in url
         assert "doc.pdf/download/" in url
         assert "donor_code=I49901,I49902" in url
         assert "site_id=site123" in url
@@ -205,9 +205,12 @@ class TestDRPSharePointBaseSerializer(TestCase):
     @override_settings(HOST="http://localhost:8000")
     def test_get_download_url_without_donor(self):
         serializer = DRPSharePointBaseSerializer()
-        obj = {"Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/doc.pdf"}
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/doc.pdf",
+            "SiteId": "site123",
+        }
         url = serializer.get_download_url(obj)
-        assert "http://localhost:8000/api/sharepoint/" in url
+        assert "http://localhost:8000/api/graph/" in url
         assert "doc.pdf/download/" in url
         assert "donor_code" not in url
 

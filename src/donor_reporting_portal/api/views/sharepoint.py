@@ -1,7 +1,7 @@
 import csv
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.functional import cached_property
 
@@ -13,7 +13,7 @@ from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
 from sharepoint_rest_api.graph_client import GraphClient, GraphClientError
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
-from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet
+from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet, GraphFileDownloadViewSet
 from sharepoint_rest_api.views.settings_based import (
     SharePointSettingsCamlViewSet,
     SharePointSettingsFileViewSet,
@@ -412,51 +412,8 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         return response
 
 
-class DRPGraphFileDownloadViewSet(DRPViewSet, viewsets.ViewSet):
-    """ViewSet that downloads files via the Microsoft Graph API."""
-
-    lookup_field = "filename"
-    lookup_value_regex = "[^/]+"
-
-    @cached_property
-    def client(self):
-        try:
-            return DRPGraphClient(
-                url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
-                relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
-                folder="Documents",
-            )
-        except GraphClientError:
-            raise PermissionDenied
-
-    @action(detail=True, methods=["get"])
-    def download(self, request, *args, **kwargs):
-        filename = kwargs.get("filename")
-        folder = kwargs.get("folder", "")
-        site_id = request.query_params.get("site_id")
-        drive_id = request.query_params.get("drive_id")
-        item_id = request.query_params.get("item_id")
-        try:
-            if drive_id and item_id:
-                graph_response = self.client.download_item(drive_id, item_id)
-            else:
-                if not site_id:
-                    return HttpResponseBadRequest("site_id or drive_id+item_id query parameter is required")
-                drive_id = self.client.get_drive_id_by_name(folder, site_id=site_id)
-                if drive_id:
-                    file_path = filename
-                else:
-                    file_path = f"{folder}/{filename}" if folder else filename
-                graph_response = self.client.download_file(file_path, drive_id=drive_id, site_id=site_id)
-            django_response = HttpResponse(
-                content=graph_response.content,
-                status=graph_response.status_code,
-                content_type=graph_response.headers.get("Content-Type", "application/octet-stream"),
-            )
-            django_response["Content-Disposition"] = "attachment; filename=%s" % filename
-            return django_response
-        except GraphClientError as e:
-            return HttpResponseBadRequest(str(e))
+class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
+    """DRP file download via Microsoft Graph API."""
 
 
 class DRPGraphClient(GraphClient):

@@ -313,8 +313,7 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
             "DocId": "item789",
         }
         url = serializer.get_download_url(obj)
-        assert "http://localhost:8000/api/sharepoint/" in url
-        assert "graph-files" in url
+        assert "http://localhost:8000/api/graph/" in url
         assert "file.pdf/download/" in url
         assert "donor_code=I49901" in url
         assert "site_id=site123" in url
@@ -331,8 +330,7 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
             "DocId": "item789",
         }
         url = serializer.get_download_url(obj)
-        assert "http://localhost:8000/api/sharepoint/" in url
-        assert "graph-files" in url
+        assert "http://localhost:8000/api/graph/" in url
         assert "file.pdf/download/" in url
         assert "donor_code" not in url
         assert "site_id=site123" in url
@@ -346,10 +344,7 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
             "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
         }
         url = serializer.get_download_url(obj)
-        assert "http://localhost:8000/api/sharepoint/" in url
-        assert "site_id" not in url
-        assert "drive_id" not in url
-        assert "item_id" not in url
+        assert url is None
 
     def test_get_download_url_no_path(self):
         serializer = DRPSharePointBaseSerializer()
@@ -387,6 +382,7 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         obj = {
             "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/file.pdf",
             "DRPDonorCode": "I49901;I49902",
+            "SiteId": "site123",
         }
         url = serializer.get_download_url(obj)
         assert "donor_code=I49901,I49902" in url
@@ -397,9 +393,10 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         obj = {
             "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/Subfolder/nested%20file.pdf",
             "DRPDonorCode": "G01001",
+            "SiteId": "site123",
         }
         url = serializer.get_download_url(obj)
         assert "Subfolder" in url
-        assert "graph-files" in url
+        assert "/api/graph/" in url
         assert "nested%20file.pdf/download/" in url
         assert "donor_code=G01001" in url
