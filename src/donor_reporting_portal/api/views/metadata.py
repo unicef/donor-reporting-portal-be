@@ -93,7 +93,7 @@ class ExternalGrantViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelVi
     search_fields = ("code", "donor__name")
 
 
-class GrantViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class GrantViewSet(AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     model = Grant
     serializer_class = GrantSerializer
     filterset_class = GrantFilter
