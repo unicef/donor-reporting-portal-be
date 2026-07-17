@@ -86,14 +86,14 @@ class DonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class ExternalGrantViewSet(AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class ExternalGrantViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     model = ExternalGrant
     serializer_class = ExternalGrantSerializer
     filterset_class = ExternalGrantFilter
     search_fields = ("code", "donor__name")
 
 
-class GrantViewSet(AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class GrantViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     model = Grant
     serializer_class = GrantSerializer
     filterset_class = GrantFilter
