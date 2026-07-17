@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import ContentType, Group, Permission
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -94,6 +94,13 @@ def assign_to_unicef_group(instance, created, **kwargs):
     if created and instance.email:
         if instance.username.endswith("@unicef.org"):
             unicef_group, _ = Group.objects.get_or_create(name="UNICEF User")
+            content_type = ContentType.objects.get_for_model(UserRole)
+            unicef_permission, _ = Permission.objects.get_or_create(
+                codename="is_unicef_user",
+                content_type=content_type,
+                defaults={"name": "Is UNICEF User"},
+            )
+            unicef_group.permissions.add(unicef_permission)
             instance.groups.add(unicef_group)
         else:
             context = {"instance": instance, "home_link": settings.HOST}
