@@ -86,7 +86,7 @@ class DonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class ExternalGrantViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class ExternalGrantViewSet(AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     model = ExternalGrant
     serializer_class = ExternalGrantSerializer
     filterset_class = ExternalGrantFilter
