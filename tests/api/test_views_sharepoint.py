@@ -4,6 +4,7 @@ from unittest import mock
 from django.test import override_settings
 
 import pytest
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.request import Request
 from rest_framework.test import APIRequestFactory
 
@@ -17,6 +18,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
 from donor_reporting_portal.api.views.sharepoint import (
     DRPSharepointSearchViewSet,
     DRPGraphBasedSearchViewSet,
+    DRPGraphFileDownloadViewSet,
     SharePointGroupViewSet,
     DRPGraphClient,
 )
@@ -357,3 +359,50 @@ class TestDRPSharePointBaseSerializerDownloadUrl:
         assert "/api/graph/" in url
         assert "nested%20file.pdf/download/" in url
         assert "donor_code=G01001" in url
+
+
+class TestDRPGraphFileDownloadViewSet:
+    def _make_request(self, query_params=None):
+        factory = APIRequestFactory()
+        qs = "&".join(f"{k}={v}" for k, v in (query_params or {}).items())
+        url = (
+            f"/api/graph/Documents/files/test.pdf/download/?{qs}"
+            if qs
+            else "/api/graph/Documents/files/test.pdf/download/"
+        )
+        wsgi_request = factory.get(url)
+        return Request(wsgi_request)
+
+    def _make_viewset(self, request):
+        view = DRPGraphFileDownloadViewSet()
+        view.request = request
+        view.action = "download"
+        view.format_kwarg = None
+        view.kwargs = {"folder": "Documents", "filename": "test.pdf"}
+        return view
+
+    def test_download_no_donor_code_denied(self):
+        request = self._make_request(query_params={"site_id": "site123"})
+        view = self._make_viewset(request)
+        with pytest.raises(PermissionDenied, match="donor_code is required"):
+            view.download(request, folder="Documents", filename="test.pdf")
+
+    def test_download_donor_code_various_allowed(self):
+        request = self._make_request(query_params={"donor_code": "Various", "site_id": "site123"})
+        view = self._make_viewset(request)
+        with mock.patch.object(view, "client") as mock_client:
+            mock_client.download_file.return_value = mock.Mock(
+                content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
+            )
+            response = view.download(request, folder="Documents", filename="test.pdf")
+            assert response.status_code == 200
+
+    def test_download_donor_code_present_allowed(self):
+        request = self._make_request(query_params={"donor_code": "D001", "site_id": "site123"})
+        view = self._make_viewset(request)
+        with mock.patch.object(view, "client") as mock_client:
+            mock_client.download_file.return_value = mock.Mock(
+                content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
+            )
+            response = view.download(request, folder="Documents", filename="test.pdf")
+            assert response.status_code == 200
