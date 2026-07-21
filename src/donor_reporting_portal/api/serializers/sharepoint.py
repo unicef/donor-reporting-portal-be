@@ -23,6 +23,36 @@ from donor_reporting_portal.api.serializers.fields import (
 )
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
+GRAPH_FILES_DOWNLOAD = "api:sharepoint-graph-files-download"
+
+
+def _normalize_filename(raw):
+    """Ensure *raw* has a double extension (e.g. ``file.pdf``).
+
+    SharePoint stores files with a single extension like ``file.pdf``.
+    The download endpoint expects ``file..pdf`` so that it can split on
+    the last dot and reconstruct the original name.  If *raw* already
+    has a dot, the extension is duplicated; otherwise ``.pdf`` is appended.
+    """
+    if not raw:
+        return raw
+    k = raw.rfind(".")
+    if k > 0:
+        return raw[:k] + "." + raw[k + 1 :]
+    return f"{raw}.pdf"
+
+
+def _graph_download_url(folder, filename, params=None):
+    """Build a full download URL pointing at the Graph API proxy."""
+    relative_url = reverse(
+        GRAPH_FILES_DOWNLOAD,
+        kwargs={"folder": folder, "filename": _normalize_filename(filename)},
+    )
+    base = f"{settings.HOST}{relative_url}"
+    if params:
+        return f"{base}?{'&'.join(params)}"
+    return base
+
 
 class SharePointGroupSerializer(serializers.ModelSerializer):
     libs = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
@@ -66,12 +96,13 @@ class DRPSerializerMixin(serializers.Serializer):
         return False
 
     def get_download_url(self, obj):
-        try:
-            base_url = super().get_download_url(obj)
-        except AttributeError:
-            base_url = obj.get("Path", "")
-        donor_code = obj["DonorCode"].replace(";", ",")
-        return f"{base_url}?donor_code={donor_code}"
+        folder = self.context.get("folder", "Documents")
+        filename = obj.get("FileLeafRef") or obj.get("Title", "")
+        params = []
+        donor_code = obj.get("DonorCode", "")
+        if donor_code:
+            params.append(f"donor_code={donor_code.replace(';', ',')}")
+        return _graph_download_url(folder, filename, params or None)
 
 
 class DRPSharePointUrlSerializer(DRPSerializerMixin, SharePointUrlSerializer):
@@ -155,11 +186,6 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
             if len(parts) != 2:
                 return None
             folder, filename = parts
-            relative_url = reverse(
-                "api:sharepoint-settings-graph-files-download",
-                kwargs={"folder": folder, "filename": filename},
-            )
-            base_url = f"{settings.HOST}{relative_url}"
             params = []
             donor_code = obj.get("DRPDonorCode")
             if donor_code:
@@ -173,11 +199,9 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
             doc_id = obj.get("DocId")
             if doc_id:
                 params.append(f"item_id={doc_id}")
-            has_site_id = bool(site_id)
-            has_drive_and_item = bool(drive_id and doc_id)
-            if not has_site_id and not has_drive_and_item:
+            if not site_id and not (drive_id and doc_id):
                 return None
-            return f"{base_url}?{'&'.join(params)}"
+            return _graph_download_url(folder, filename, params)
         except (KeyError, IndexError):
             return None
 
