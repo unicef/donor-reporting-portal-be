@@ -13,7 +13,7 @@ It integrates with SharePoint through three mechanisms — **REST API**, **CAML 
 
 | Component | Technology |
 |---|---|
-| Language | Python >= 3.13 |
+| Language | Python >= 3.14 |
 | Framework | Django 6.0 |
 | REST API | Django REST Framework 3.17 |
 | SharePoint SDK | sharepoint-rest-api 0.20, Office365-REST-Python-Client 2.6 |

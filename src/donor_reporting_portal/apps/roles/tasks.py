@@ -92,7 +92,7 @@ class Notifier:
                         searchable_properties=searchable_properties,
                         reverse_map=reverse_map,
                         page_size=self.page_size,
-                        order_by="DRPMODIFIED desc",
+                        order_by="RefinableDate11 desc",
                     )
                     exit_condition = page * self.page_size < total_rows
                     page += 1
