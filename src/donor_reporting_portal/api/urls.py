@@ -16,13 +16,6 @@ from .views.metadata import (
 from .views.sharepoint import (
     DRPGraphBasedSearchViewSet,
     DRPGraphFileDownloadViewSet,
-    DRPSharePointSettingsCamlViewSet,
-    DRPSharePointSettingsFileViewSet,
-    DRPSharePointSettingsRestViewSet,
-    DRPSharePointUrlCamlViewSet,
-    DRPSharePointUrlFileViewSet,
-    DRPSharePointUrlRestViewSet,
-    DRPSharePointUrlSearchViewSet,
     SharePointGroupViewSet,
 )
 from .views.userrole import BusinessAreaViewSet, GroupViewSet, UserRoleViewSet, UserViewSet
@@ -47,55 +40,19 @@ router.register(r"metadata/secondary-donors", SecondaryDonorViewSet, basename="s
 router.register(r"sharepoint/groups", SharePointGroupViewSet, basename="sharepoint-group")
 
 router.register(
-    r"sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w\W]+)/files",
-    DRPSharePointUrlFileViewSet,
-    basename="sharepoint-url-files",
-)
-router.register(
-    r"sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/rest",
-    DRPSharePointUrlRestViewSet,
-    basename="sharepoint-url",
-)
-router.register(
-    r"sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/(?P<folder>[\w|\W]+)/caml",
-    DRPSharePointUrlCamlViewSet,
-    basename="sharepoint-url-caml",
-)
-router.register(
-    r"sharepoint/(?P<tenant>[\w\-]+)/(?P<site>[\w\-]+)/search",
-    DRPSharePointUrlSearchViewSet,
-    basename="sharepoint-url-search",
-)
-
-router.register(
-    r"sharepoint/(?P<folder>[\w\W]+)/rest",
-    DRPSharePointSettingsRestViewSet,
-    basename="sharepoint-settings-rest",
-)
-router.register(
-    r"sharepoint/(?P<folder>[\w\W]+)/caml",
-    DRPSharePointSettingsCamlViewSet,
-    basename="sharepoint-settings-caml",
-)
-router.register(
-    r"sharepoint/(?P<folder>[\w\W]+)/files",
-    DRPSharePointSettingsFileViewSet,
-    basename="sharepoint-settings-files",
-)
-router.register(
     r"graph/(?P<folder>[\w\W]+)/files",
     DRPGraphFileDownloadViewSet,
-    basename="sharepoint-settings-graph-files",
+    basename="sharepoint-graph-files",
 )
 router.register(
     r"sharepoint/search",
     DRPGraphBasedSearchViewSet,
-    basename="sharepoint-settings-search",
+    basename="sharepoint-search",
 )
 router.register(
     r"graph/search",
     DRPGraphBasedSearchViewSet,
-    basename="graph-settings-search",
+    basename="graph-search",
 )
 
 urlpatterns = [
