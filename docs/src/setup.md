@@ -2,9 +2,11 @@
 
 ## Prerequisites
 
-- Python >= 3.14
-- PostgreSQL
-- Redis
+- [Python](https://www.python.org/) >= 3.14
+- [direnv](https://direnv.net/) (optional but recommended)
+- [uv](https://docs.astral.sh/uv/) (package manager)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
 
 ## Getting Started
 
@@ -18,9 +20,10 @@ cd donor-reporting-portal
 2. Create a virtual environment and install dependencies:
 
 ```bash
-python -m venv .venv
+uv venv .venv --python 3.14
 source .venv/bin/activate
-pip install -e ".[dev]"
+uv sync
+pre-commit install
 ```
 
 3. Configure environment:
@@ -29,7 +32,13 @@ pip install -e ".[dev]"
 cp .env_template .env
 ```
 
-Edit `.env` with your credentials (see [SharePoint Access](sharepoint.md#configuration) for required variables).
+Check which environment variables are required:
+
+```bash
+python manage.py env --check
+```
+
+Edit `.env` with your credentials (see [Settings](settings.md) for all available variables).
 
 4. Run database migrations and load fixtures:
 
