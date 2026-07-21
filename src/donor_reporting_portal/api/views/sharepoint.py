@@ -1,7 +1,7 @@
 import csv
 
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.utils import timezone
 from django.utils.functional import cached_property
 
@@ -15,17 +15,10 @@ from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
 from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet, GraphFileDownloadViewSet
 from sharepoint_rest_api.views.settings_based import (
-    SharePointSettingsCamlViewSet,
-    SharePointSettingsFileViewSet,
     SharePointSettingsRestViewSet,
     SharePointSettingsSearchViewSet,
 )
-from sharepoint_rest_api.views.url_based import (
-    SharePointUrlCamlViewSet,
-    SharePointUrlFileViewSet,
-    SharePointUrlRestViewSet,
-    SharePointUrlSearchViewSet,
-)
+
 
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
 from donor_reporting_portal.api.serializers.fields import (
@@ -35,7 +28,6 @@ from donor_reporting_portal.api.serializers.fields import (
 from donor_reporting_portal.api.serializers.sharepoint import (
     DRPSharePointSearchSerializer,
     DRPSharePointSettingsSerializer,
-    DRPSharePointUrlSerializer,
     GaviSharePointSearchSerializer,
     GaviSoaSharePointSearchSerializer,
     SharePointGroupSerializer,
@@ -55,26 +47,6 @@ class DRPViewSet:
 
 class DRPSharePointSettingsRestViewSet(DRPViewSet, SharePointSettingsRestViewSet):
     serializer_class = DRPSharePointSettingsSerializer
-
-
-class DRPSharePointSettingsCamlViewSet(DRPViewSet, SharePointSettingsCamlViewSet):
-    serializer_class = DRPSharePointSettingsSerializer
-
-
-class DRPSharePointUrlRestViewSet(DRPViewSet, SharePointUrlRestViewSet):
-    serializer_class = DRPSharePointUrlSerializer
-
-
-class DRPSharePointUrlCamlViewSet(DRPViewSet, SharePointUrlCamlViewSet):
-    serializer_class = DRPSharePointUrlSerializer
-
-
-class DRPSharePointUrlFileViewSet(SharePointUrlFileViewSet):
-    permission_classes = ((DonorPermission | PublicLibraryPermission),)
-
-
-class DRPSharePointSettingsFileViewSet(SharePointSettingsFileViewSet):
-    permission_classes = ((DonorPermission | PublicLibraryPermission),)
 
 
 class DRPSharepointSearchViewSet(SharePointSearchViewSet):
@@ -221,10 +193,6 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
 
 class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
     """DRP Search Viewset for settings based."""
-
-
-class DRPSharePointUrlSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointUrlSearchViewSet):
-    """DRP Search Viewset for url based."""
 
 
 PROPERTY_TO_MANAGED = {
@@ -414,6 +382,37 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
 
 class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
     """DRP file download via Microsoft Graph API."""
+
+    @action(detail=True, methods=["get"])
+    def download(self, request, *args, **kwargs):
+        filename = kwargs.get("filename")
+        folder = kwargs.get("folder", "")
+        site_id = request.query_params.get("site_id")
+        drive_id = request.query_params.get("drive_id")
+        item_id = request.query_params.get("item_id")
+        if not site_id and not (drive_id and item_id):
+            site_id = self.client.site_id
+        try:
+            if drive_id and item_id:
+                graph_response = self.client.download_item(drive_id, item_id)
+            else:
+                if not site_id:
+                    return HttpResponseBadRequest("site_id or drive_id+item_id query parameter is required")
+                drive_id = self.client.get_drive_id_by_name(folder, site_id=site_id)
+                if drive_id:
+                    file_path = filename
+                else:
+                    file_path = f"{folder}/{filename}" if folder else filename
+                graph_response = self.client.download_file(file_path, drive_id=drive_id, site_id=site_id)
+            django_response = HttpResponse(
+                content=graph_response.content,
+                status=graph_response.status_code,
+                content_type=graph_response.headers.get("Content-Type", "application/octet-stream"),
+            )
+            django_response["Content-Disposition"] = "attachment; filename=%s" % filename
+            return django_response
+        except GraphClientError as e:
+            return HttpResponseBadRequest(str(e))
 
 
 class DRPGraphClient(GraphClient):

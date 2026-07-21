@@ -17,14 +17,6 @@ from donor_reporting_portal.api.serializers.sharepoint import (
 from donor_reporting_portal.api.views.sharepoint import (
     DRPSharepointSearchViewSet,
     DRPGraphBasedSearchViewSet,
-    DRPSharePointUrlFileViewSet,
-    DRPSharePointSettingsFileViewSet,
-    DRPSharePointSettingsRestViewSet,
-    DRPSharePointSettingsCamlViewSet,
-    DRPSharePointUrlRestViewSet,
-    DRPSharePointUrlCamlViewSet,
-    DRPSharePointSettingsSearchViewSet,
-    DRPSharePointUrlSearchViewSet,
     SharePointGroupViewSet,
     DRPGraphClient,
 )
@@ -188,47 +180,20 @@ class TestDRPSharePointBaseSerializer:
         obj = {}
         assert serializer.get_is_new(obj) is False
 
+    @override_settings(HOST="http://localhost:8000")
     def test_get_download_url_base(self):
-        serializer = DRPSerializerMixin()
-        with mock.patch(
-            "sharepoint_rest_api.serializers.sharepoint.SharePointUrlSerializer.get_download_url",
-            return_value="https://example.com/doc.pdf",
-        ):
-            obj = {"DonorCode": "I49901"}
-            url = serializer.get_download_url(obj)
-            assert "donor_code=I49901" in url
+        serializer = DRPSerializerMixin(context={"folder": "Shared Documents"})
+        obj = {"FileLeafRef": "report.pdf", "DonorCode": "I49901"}
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/graph/" in url
+        assert "report.pdf/download/" in url
+        assert "donor_code=I49901" in url
 
 
 class TestSharePointGroupViewSet:
     def test_viewset_attributes(self):
         assert SharePointGroupViewSet.queryset is not None
         assert SharePointGroupViewSet.serializer_class is not None
-
-
-class TestDRPViewSetSubclasses:
-    def test_settings_rest(self):
-        assert DRPSharePointSettingsRestViewSet.serializer_class is not None
-
-    def test_settings_caml(self):
-        assert DRPSharePointSettingsCamlViewSet.serializer_class is not None
-
-    def test_url_rest(self):
-        assert DRPSharePointUrlRestViewSet.serializer_class is not None
-
-    def test_url_caml(self):
-        assert DRPSharePointUrlCamlViewSet.serializer_class is not None
-
-    def test_url_file(self):
-        assert DRPSharePointUrlFileViewSet.permission_classes is not None
-
-    def test_settings_file(self):
-        assert DRPSharePointSettingsFileViewSet.permission_classes is not None
-
-    def test_settings_search(self):
-        assert DRPSharePointSettingsSearchViewSet is not None
-
-    def test_url_search(self):
-        assert DRPSharePointUrlSearchViewSet is not None
 
 
 class TestDRPGraphClient:
@@ -291,14 +256,6 @@ class TestDRPGraphBasedSearchViewSetIsPublic:
         request.user.username = "user@example.com"
         view = self._make_viewset(request)
         assert view.is_public() is False
-
-
-class TestFileViewSetPermissions:
-    def test_url_file_permission_classes_not_none(self):
-        assert DRPSharePointUrlFileViewSet.permission_classes is not None
-
-    def test_settings_file_permission_classes_not_none(self):
-        assert DRPSharePointSettingsFileViewSet.permission_classes is not None
 
 
 class TestDRPSharePointBaseSerializerDownloadUrl:
