@@ -385,6 +385,9 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
 
     @action(detail=True, methods=["get"])
     def download(self, request, *args, **kwargs):
+        donor_code = request.query_params.get("donor_code")
+        if not donor_code:
+            raise PermissionDenied("donor_code is required")
         filename = kwargs.get("filename")
         folder = kwargs.get("folder", "")
         site_id = request.query_params.get("site_id")
