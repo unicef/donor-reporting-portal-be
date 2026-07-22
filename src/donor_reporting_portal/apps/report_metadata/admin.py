@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from admin_extra_buttons.decorators import button
 from admin_extra_buttons.mixins import ExtraButtonsMixin
+
+from donor_reporting_portal.apps.roles.tasks import notify_donor, notify_gavi_donor
 
 from .models import Donor, DRPMetadata, ExternalGrant, Grant, Theme
 from .tasks import grant_sync
@@ -30,10 +33,20 @@ class ExternalGrantAdmin(GrantSyncMixin, admin.ModelAdmin):
 
 
 @admin.register(Donor)
-class DonorAdmin(GrantSyncMixin, admin.ModelAdmin):
+class DonorAdmin(GrantSyncMixin, ExtraButtonsMixin, admin.ModelAdmin):
     search_fields = ("name", "code")
     list_display = ("name", "code", "us_gov", "active")
     list_filter = ("us_gov", "active")
+
+    @button(change_form=True)
+    def _send_notifications(self, request, object_id):
+        obj = self.get_object(request, object_id)
+        if obj.code == settings.GAVI_DONOR_CODE:
+            notify_gavi_donor.delay(obj.code)
+        else:
+            notify_donor.delay(obj.code)
+        messages.add_message(request, messages.INFO, f"Notifications scheduled for {obj.name}")
+        return HttpResponseRedirect(reverse("admin:report_metadata_donor_change", args=[object_id]))
 
 
 @admin.register(Grant)
