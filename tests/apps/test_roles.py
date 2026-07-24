@@ -6,7 +6,7 @@ from donor_reporting_portal.apps.roles.models import UserRole
 from factories import GroupFactory, UserRoleFactory
 
 
-def test_admin_userrole(django_app, admin_user, userrole, donor, group, secondary_donor):
+def test_admin_userrole(django_app, admin_user, userrole, donor, group, secondary_donor):  # noqa: PLR0917
     assert str(userrole) is not None
     userrole_secondary_donor = UserRoleFactory(
         user=admin_user, donor=donor, group=group, secondary_donor=secondary_donor
