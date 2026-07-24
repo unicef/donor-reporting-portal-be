@@ -9,7 +9,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
 from sharepoint_rest_api import config as sp_config
-from sharepoint_rest_api.config import SHAREPOINT_PAGE_SIZE
+from sharepoint_rest_api.config import GRAPH_PAGE_SIZE
 from sharepoint_rest_api.graph_client import GraphClient, GraphClientError
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
@@ -170,26 +170,6 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         kwargs = qp
         return super().get_queryset(**kwargs)
 
-    @action(detail=False, methods=["get"])
-    def export(self, request, *args, **kwargs):
-        exit_condition = True
-        response = HttpResponse(content_type="text/csv")
-        filename = f"drp_export_{timezone.now().date()}.csv"
-        response["Content-Disposition"] = f'attachment; filename="{filename}"'
-
-        headers = self.get_serializer_class().export_headers
-        writer = csv.writer(response)
-        page = 1
-        qs = self.get_queryset(page=page)
-        writer.writerow([key.replace("CTN", "") for key in qs[0] if key in headers])
-        while exit_condition:
-            for row in qs:
-                writer.writerow([str(value) for key, value in row.items() if key in headers])
-            exit_condition = page * SHAREPOINT_PAGE_SIZE < self.total_rows
-            page += 1
-            qs = self.get_queryset(page=page)
-        return response
-
 
 class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet, SharePointSettingsSearchViewSet):
     """DRP Search Viewset for settings based."""
@@ -332,7 +312,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     @cached_property
     def client(self):
         try:
-            return DRPGraphClient(
+            return GraphClient(
                 url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
                 relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
                 folder=self.folder,
@@ -379,6 +359,27 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
         )
         return response
 
+    @action(detail=False, methods=["get"])
+    def export(self, request, *args, **kwargs):
+        response = HttpResponse(content_type="text/csv")
+        filename = f"drp_export_{timezone.now().date()}.csv"
+        response["Content-Disposition"] = f'attachment; filename="{filename}"'
+
+        headers = self.get_serializer_class().export_headers
+        writer = csv.writer(response)
+        page = 1
+        qs = self.get_queryset(page=page)
+        if qs:
+            writer.writerow([key.replace("CTN", "") for key in qs[0] if key in headers])
+        while qs:
+            for row in qs:
+                writer.writerow([str(value) for key, value in row.items() if key in headers])
+            if len(qs) < GRAPH_PAGE_SIZE:
+                break
+            page += 1
+            qs = self.get_queryset(page=page)
+        return response
+
 
 class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
     """DRP file download via Microsoft Graph API."""
@@ -416,7 +417,3 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
             return django_response
         except GraphClientError as e:
             return HttpResponseBadRequest(str(e))
-
-
-class DRPGraphClient(GraphClient):
-    """GraphClient that delegates sorting to the parent's search()."""

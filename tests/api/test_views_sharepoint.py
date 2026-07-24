@@ -20,9 +20,7 @@ from donor_reporting_portal.api.views.sharepoint import (
     DRPGraphBasedSearchViewSet,
     DRPGraphFileDownloadViewSet,
     SharePointGroupViewSet,
-    DRPGraphClient,
 )
-from sharepoint_rest_api.graph_client import GraphClient
 from sharepoint_rest_api.models import SourceId
 
 
@@ -196,11 +194,6 @@ class TestSharePointGroupViewSet:
     def test_viewset_attributes(self):
         assert SharePointGroupViewSet.queryset is not None
         assert SharePointGroupViewSet.serializer_class is not None
-
-
-class TestDRPGraphClient:
-    def test_graph_client_subclass(self):
-        assert issubclass(DRPGraphClient, GraphClient)  # pragma: no cover
 
 
 @pytest.mark.django_db
