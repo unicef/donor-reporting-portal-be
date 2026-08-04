@@ -374,6 +374,11 @@ class TestDRPGraphFileDownloadViewSet:
         view.kwargs = {"folder": "Documents", "filename": "test.pdf"}
         return view
 
+    def test_is_public_false(self):
+        request = self._make_request(query_params={"site_id": "site123"})
+        view = self._make_viewset(request)
+        assert view.is_public() is False
+
     def test_download_no_donor_code_denied(self):
         request = self._make_request(query_params={"site_id": "site123"})
         view = self._make_viewset(request)

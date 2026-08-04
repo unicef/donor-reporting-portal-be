@@ -384,6 +384,10 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
 class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
     """DRP file download via Microsoft Graph API."""
 
+    def is_public(self):
+        """State that downloads require donor_code and are not public."""
+        return False
+
     @action(detail=True, methods=["get"])
     def download(self, request, *args, **kwargs):
         donor_code = request.query_params.get("donor_code")
