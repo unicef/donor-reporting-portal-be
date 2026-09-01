@@ -3,6 +3,8 @@ from unittest import mock
 
 from django.test import TestCase, override_settings
 from rest_framework import serializers
+from rest_framework.request import Request
+from rest_framework.test import APIRequestFactory
 
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchSharePointField,
@@ -213,6 +215,58 @@ class TestDRPSharePointBaseSerializer(TestCase):
         assert "http://localhost:8000/api/graph/" in url
         assert "doc.pdf/download/" in url
         assert "donor_code" not in url
+
+    def _make_request_with_source_id(self, source_id):
+        factory = APIRequestFactory()
+        wsgi_request = factory.get(f"/api/graph/search/?source_id={source_id}")
+        return Request(wsgi_request)
+
+    def _make_request_without_source_id(self):
+        factory = APIRequestFactory()
+        wsgi_request = factory.get("/api/graph/search/")
+        return Request(wsgi_request)
+
+    @override_settings(
+        HOST="http://localhost:8000",
+        DRP_SOURCE_IDS={"thematic_internal": "thematic-int", "thematic_external": "thematic-ext"},
+    )
+    def test_get_download_url_with_thematic_source_id(self):
+        serializer = DRPSharePointBaseSerializer(context={"request": self._make_request_with_source_id("thematic-int")})
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/doc.pdf",
+            "SiteId": "site123",
+        }
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/graph/" in url
+        assert "source_id=thematic-int" in url
+
+    @override_settings(
+        HOST="http://localhost:8000",
+        DRP_SOURCE_IDS={"thematic_internal": "thematic-int", "thematic_external": "thematic-ext"},
+    )
+    def test_get_download_url_with_request_but_no_source_id(self):
+        serializer = DRPSharePointBaseSerializer(context={"request": self._make_request_without_source_id()})
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/doc.pdf",
+            "SiteId": "site123",
+        }
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/graph/" in url
+        assert "source_id" not in url
+
+    @override_settings(
+        HOST="http://localhost:8000",
+        DRP_SOURCE_IDS={"internal": "int-uuid"},
+    )
+    def test_get_download_url_with_non_thematic_source_id(self):
+        serializer = DRPSharePointBaseSerializer(context={"request": self._make_request_with_source_id("int-uuid")})
+        obj = {
+            "Path": "https://unitst.sharepoint.com/sites/GLB-DRP/Shared%20Documents/doc.pdf",
+            "SiteId": "site123",
+        }
+        url = serializer.get_download_url(obj)
+        assert "http://localhost:8000/api/graph/" in url
+        assert "source_id" not in url
 
     def test_get_download_url_without_path(self):
         serializer = DRPSharePointBaseSerializer()
