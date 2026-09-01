@@ -186,24 +186,47 @@ class DRPSharePointBaseSerializer(serializers.Serializer):
             if len(parts) != 2:
                 return None
             folder, filename = parts
-            params = []
-            donor_code = obj.get("DRPDonorCode")
-            if donor_code:
-                params.append(f"donor_code={donor_code.replace(';', ',')}")
-            site_id = obj.get("SiteId")
-            if site_id:
-                params.append(f"site_id={site_id}")
-            drive_id = obj.get("DriveId")
-            if drive_id:
-                params.append(f"drive_id={drive_id}")
-            doc_id = obj.get("DocId")
-            if doc_id:
-                params.append(f"item_id={doc_id}")
-            if not site_id and not (drive_id and doc_id):
+            params = self._get_download_params(obj)
+            if not params:
                 return None
             return _graph_download_url(folder, filename, params)
         except (KeyError, IndexError):
             return None
+
+    def _get_download_params(self, obj):
+        """Build download URL query params, or None when the file cannot be located."""
+        params = []
+        donor_code = obj.get("DRPDonorCode")
+        if donor_code:
+            params.append(f"donor_code={donor_code.replace(';', ',')}")
+        source_id = self._get_public_source_id()
+        if source_id:
+            params.append(f"source_id={source_id}")
+        site_id = obj.get("SiteId")
+        if site_id:
+            params.append(f"site_id={site_id}")
+        drive_id = obj.get("DriveId")
+        if drive_id:
+            params.append(f"drive_id={drive_id}")
+        doc_id = obj.get("DocId")
+        if doc_id:
+            params.append(f"item_id={doc_id}")
+        if not site_id and not (drive_id and doc_id):
+            return None
+        return params
+
+    def _get_public_source_id(self):
+        """Return the requesting source id if it designates a public (thematic) library."""
+        request = self.context.get("request")
+        if not request:
+            return None
+        source_id = request.query_params.get("source_id")
+        if source_id and source_id in [
+            settings.DRP_SOURCE_IDS.get("thematic_internal"),
+            settings.DRP_SOURCE_IDS.get("thematic_external"),
+        ]:
+            return source_id
+        return None
 
     @staticmethod
     def _extract_site_relative_path(path):

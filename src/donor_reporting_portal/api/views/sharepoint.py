@@ -385,13 +385,19 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
     """DRP file download via Microsoft Graph API."""
 
     def is_public(self):
-        """State that downloads require donor_code and are not public."""
-        return False
+        """Check if the source id is public (thematic reports)."""
+        source_id = self.request.query_params.get("source_id")
+        if not source_id:
+            return False
+        return source_id in [
+            settings.DRP_SOURCE_IDS.get("thematic_internal"),
+            settings.DRP_SOURCE_IDS.get("thematic_external"),
+        ]
 
     @action(detail=True, methods=["get"])
     def download(self, request, *args, **kwargs):
         donor_code = request.query_params.get("donor_code")
-        if not donor_code:
+        if not self.is_public() and not donor_code:
             raise PermissionDenied("donor_code is required")
         filename = kwargs.get("filename")
         folder = kwargs.get("folder", "")
