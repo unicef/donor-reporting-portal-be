@@ -379,11 +379,34 @@ class TestDRPGraphFileDownloadViewSet:
         view = self._make_viewset(request)
         assert view.is_public() is False
 
+    @override_settings(DRP_SOURCE_IDS={"thematic_internal": "thematic-int"})
+    def test_is_public_thematic_internal(self):
+        request = self._make_request(query_params={"source_id": "thematic-int", "site_id": "site123"})
+        view = self._make_viewset(request)
+        assert view.is_public() is True
+
+    @override_settings(DRP_SOURCE_IDS={"thematic_external": "thematic-ext"})
+    def test_is_public_thematic_external(self):
+        request = self._make_request(query_params={"source_id": "thematic-ext", "site_id": "site123"})
+        view = self._make_viewset(request)
+        assert view.is_public() is True
+
     def test_download_no_donor_code_denied(self):
         request = self._make_request(query_params={"site_id": "site123"})
         view = self._make_viewset(request)
         with pytest.raises(PermissionDenied, match="donor_code is required"):
             view.download(request, folder="Documents", filename="test.pdf")
+
+    @override_settings(DRP_SOURCE_IDS={"thematic_internal": "thematic-int"})
+    def test_download_public_thematic_no_donor_allowed(self):
+        request = self._make_request(query_params={"source_id": "thematic-int", "site_id": "site123"})
+        view = self._make_viewset(request)
+        with mock.patch.object(view, "client") as mock_client:
+            mock_client.download_file.return_value = mock.Mock(
+                content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
+            )
+            response = view.download(request, folder="Documents", filename="test.pdf")
+            assert response.status_code == 200
 
     def test_download_donor_code_various_allowed(self):
         request = self._make_request(query_params={"donor_code": "Various", "site_id": "site123"})
