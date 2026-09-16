@@ -5,14 +5,14 @@
         "Vary": "Accept, origin, Cookie",
         "Allow": "GET",
         "X-Frame-Options": "DENY",
-        "Content-Length": "272",
+        "Content-Length": "266",
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "same-origin",
         "Cross-Origin-Opener-Policy": "same-origin"
     },
     "data": {
         "tracker": {
-            "site_tracker": "https://unisitetracker.unicef.io/",
+            "site_tracker": "https://observa.unicef.org/",
             "site_id": null
         },
         "source_id": {
