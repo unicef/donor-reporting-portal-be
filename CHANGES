@@ -1,6 +1,14 @@
-Release 3.0.0
+Release 4.0.0
 ----------------
 * Version upgrade to graph api
+* updated to python 3.14
+* updated to django 6.0
+
+
+Release 3.0.0
+----------------
+* updated to python 3.13
+* updated to django 5.2
 
 
 Release 2.2
