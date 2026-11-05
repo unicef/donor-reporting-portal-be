@@ -12,6 +12,8 @@ SOCIAL_AUTH_JSONFIELD_ENABLED = True
 SOCIAL_AUTH_POLICY = env("AZURE_B2C_POLICY_NAME", default="B2C_1_UNICEF_SOCIAL_signup_signin")
 SOCIAL_AUTH_USER_MODEL = "core.User"
 
+SOCIAL_AUTH_UNICEF_AZUREAD_B2C_OAUTH2_ALLOW_UNVERIFIED_LEGACY_UID_MIGRATION = True
+
 SOCIAL_AUTH_PIPELINE = (
     "unicef_security.pipeline.social_details",
     "social_core.pipeline.social_auth.social_uid",

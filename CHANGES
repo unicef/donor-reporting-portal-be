@@ -1,3 +1,55 @@
+Release 4.0.7 (unreleased)
+----------------
+* fixed config api contract for observa tracker URL
+
+
+Release 4.0.6
+----------------
+* fixed permission denied errors on thematic financial statement downloads
+* added is_public to DRPGraphFileDownloadViewSet to prevent AttributeError
+* updated office365 sharepoint rest api
+* fixed observa
+
+
+Release 4.0.5
+----------------
+* added send notifications button on donor admin detail page
+* required donor_code query param on the file download endpoint
+* assigned is_unicef_user permission to UNICEF User group on user creation
+* fixed Graph Search order_by bug
+* improved documentation
+
+
+Release 4.0.4
+----------------
+* added Graph-based file download viewset with correct drive resolution
+* allowed non-UNICEF users to download files from Graph API
+* checked permissions on all comma-separated donor_code values
+* added AllowedDonorMixin to GrantViewSet and ExternalGrantViewSet
+
+
+Release 4.0.3
+----------------
+* upgraded sharepoint rest api
+* added manual KQL property mapping to Refinable names
+* set DRPMODIFIED as default sort, fixed ordering across all pages
+* fixed serializer property name mapping in tasks and notifiers
+* removed unused report_metadata.SourceId model
+
+
+Release 4.0.2
+----------------
+* migrated to GraphClient, added source_id filters to sharepoint search view
+* fixed auth and redis
+* updated dependencies
+
+
+Release 4.0.1
+----------------
+* updated docs
+* updated docker
+
+
 Release 4.0.0
 ----------------
 * Version upgrade to graph api
