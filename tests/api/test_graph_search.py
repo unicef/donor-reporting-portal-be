@@ -199,7 +199,7 @@ class TestDRPGraphBasedSearchViewSet:
         mock_client.search.assert_called_once()
         call_kwargs = mock_client.search.call_args[1]
         assert call_kwargs["search"] is None
-        assert call_kwargs["filters"] == {"Donor": "I49901"}
+        assert call_kwargs["filters"] == {"RefinableString175": "I49901"}
         assert call_kwargs["page"] == 1
         assert call_kwargs["searchable_properties"] == set(PROPERTY_TO_MANAGED.values())
         assert result == []
