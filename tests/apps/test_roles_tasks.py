@@ -99,7 +99,7 @@ class TestNotifier:
     @pytest.mark.parametrize(
         ("name", "expected"),
         [
-            ("Donor", "Donor"),
+            ("Donor", "RefinableString175"),
             ("Modified__gte", "RefinableDate11__gte"),
             ("-Modified", "-RefinableDate11"),
             ("-Modified__gte", "-RefinableDate11__gte"),

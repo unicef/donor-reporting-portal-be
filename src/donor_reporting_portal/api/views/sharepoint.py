@@ -176,7 +176,7 @@ class DRPSharePointSettingsSearchViewSet(DRPViewSet, DRPSharepointSearchViewSet,
 
 
 PROPERTY_TO_MANAGED = {
-    "Donor": "Donor",
+    "Donor": "RefinableString175",
     "GrantNumber": "RefinableString161",
     "ReportGroup": "RefinableString164",
     "ReportStatus": "RefinableString166",
@@ -221,10 +221,11 @@ PROPERTY_TO_MANAGED = {
 class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """DRP Search Viewset for graph based.
 
-    Uses Graph Search API with KQL. Property name mapping is derived
-    dynamically from the serializer's field definitions, not from a
-    hardcoded map. The viewset builds the mapping and passes already-mapped
-    managed property names to GraphClient.
+    Uses the Graph Search API with KQL. Serializer field names are first
+    mapped to their search property names, then translated to the actual
+    SharePoint managed properties via ``PROPERTY_TO_MANAGED`` (e.g.
+    ``donor_code`` -> ``Donor`` -> ``RefinableString175``). Already-mapped
+    managed property names are passed to ``GraphClient``.
     """
 
     serializer_class = DRPSharePointSearchSerializer
