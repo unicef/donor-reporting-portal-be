@@ -46,7 +46,7 @@ dependencies = [
   "sentry-sdk",
   "sharepoint-rest-api",
   "social-auth-app-django",
-  "social-auth-core<5",                  # pin because sso is now POST
+  "social-auth-core",
   "unicef-djangolib",
   "unicef-notification",
   "unicef-realm",
