@@ -18,11 +18,13 @@ SOCIAL_AUTH_UNICEF_AZUREAD_B2C_OAUTH2_ALLOW_UNVERIFIED_LEGACY_UID_MIGRATION = Tr
 
 SOCIAL_AUTH_PIPELINE = (
     "unicef_security.pipeline.social_details",
+    "social_core.pipeline.social_auth.social_names",
     "social_core.pipeline.social_auth.social_uid",
     "social_core.pipeline.social_auth.auth_allowed",
     "social_core.pipeline.social_auth.social_user",
     "social_core.pipeline.user.get_username",
     "social_core.pipeline.social_auth.associate_by_email",
+    "donor_reporting_portal.apps.core.pipeline.ensure_user_names",
     "unicef_security.pipeline.create_unicef_user",
     "social_core.pipeline.social_auth.associate_user",
     "social_core.pipeline.social_auth.load_extra_data",

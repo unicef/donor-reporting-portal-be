@@ -34,6 +34,19 @@ DRP uses [django-environ](https://github.com/joke2k/django-environ) to manage co
 | `AZURE_CLIENT_SECRET` | Azure AD app registration client secret | - | Yes |
 | `AZURE_TENANT` | Azure AD tenant domain | `unicef.org` | Yes |
 
+### Microsoft Graph API (SharePoint search/downloads)
+
+| Variable | Description | Default | Required |
+|----------|-------------|---------|----------|
+| `GRAPH_TENANT` | Azure AD tenant ID or domain used to build the MSAL authority `https://login.microsoftonline.com/{tenant}` | - (empty) | Yes |
+| `GRAPH_CLIENT_ID` | Azure AD app registration client ID for Graph | `invalid_graph_client_id` | Yes |
+| `GRAPH_CLIENT_SECRET` | Azure AD app registration client secret for Graph | `invalid_graph_client_secret` | Yes |
+
+!!! warning
+    `GRAPH_TENANT` must not be empty. With no tenant, MSAL rejects the
+    authority `https://login.microsoftonline.com/` because it has no path
+    segment.
+
 ### Azure AD B2C (Authentication)
 
 | Variable | Description | Default | Required |

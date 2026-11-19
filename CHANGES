@@ -1,5 +1,7 @@
 Release 4.0.7 (unreleased)
 ----------------
+* fixed social auth login failure when Azure AD B2C omits given_name/family_name claims
+* documented required Microsoft Graph `GRAPH_TENANT` setting (empty tenant produces an invalid MSAL authority URL)
 * fixed config api contract for observa tracker URL
 
 

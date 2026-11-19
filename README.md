@@ -89,6 +89,9 @@ Navigate to http://localhost:8000/admin/ and login using `admin@example.com/pass
 | `AZURE_CLIENT_ID` | Azure AD app registration client ID | Yes |
 | `AZURE_CLIENT_SECRET` | Azure AD app registration client secret | Yes |
 | `AZURE_TENANT` | Azure AD tenant (e.g., `unicef.org`) | Yes |
+| `GRAPH_TENANT` | Azure AD tenant ID/domain for Graph API (must be non-empty) | Yes |
+| `GRAPH_CLIENT_ID` | Graph API app registration client ID | Yes |
+| `GRAPH_CLIENT_SECRET` | Graph API app registration client secret | Yes |
 | `AZURE_B2C_CLIENT_ID` | Azure AD B2C client ID | Yes |
 | `AZURE_B2C_CLIENT_SECRET` | Azure AD B2C client secret | Yes |
 | `AZURE_B2C_TENANT` | Azure AD B2C tenant | Yes |
