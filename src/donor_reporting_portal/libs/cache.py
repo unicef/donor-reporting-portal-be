@@ -1,8 +1,9 @@
 import hashlib
 import json
-from contextlib import nullcontext
+from contextlib import contextmanager
 
 from django.core.cache import cache
+from redis.exceptions import LockNotOwnedError
 
 DEFAULT_TIMEOUT = 300
 GENERATION_KEY = "drp:gen:{namespace}"
@@ -25,9 +26,19 @@ def bump_generation(namespace):
         cache.set(key, generation(namespace) + 1)
 
 
-def cache_lock(key, timeout=10):
+@contextmanager
+def cache_lock(key, timeout=60, blocking_timeout=5):
     lock = getattr(cache, "lock", None)
-    return lock(key, timeout=timeout) if lock else nullcontext()
+    if not lock:
+        yield
+        return
+    acquired = lock(key, timeout=timeout, blocking_timeout=blocking_timeout)
+    try:
+        with acquired:
+            yield
+    except LockNotOwnedError:
+        # The lock expired or was taken over; do not release another worker's lock.
+        pass
 
 
 def get_or_compute(key, producer, timeout=DEFAULT_TIMEOUT):
