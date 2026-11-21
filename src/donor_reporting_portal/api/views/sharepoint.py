@@ -20,7 +20,7 @@ from sharepoint_rest_api.views.settings_based import (
 )
 
 
-from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission
+from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission, SourceTierPermission
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchSharePointField,
     DRPSearchSharePointField,
@@ -41,15 +41,29 @@ class SharePointGroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = SharePointGroupSerializer
 
 
+class SourceVisibilityMixin:
+    """Shared source visibility check for the DRP SharePoint viewsets."""
+
+    def is_public(self):
+        source_id = self.request.query_params.get("source_id", None)
+        if not source_id:
+            return False
+        source_ids = settings.DRP_SOURCE_IDS
+        if source_id in (source_ids.get("thematic_internal"), source_ids.get("thematic_external")):
+            return True
+        unicef_user = self.request.user.username.endswith("@unicef.org")
+        return unicef_user and source_id in (source_ids.get("internal"), source_ids.get("pool_internal"))
+
+
 class DRPViewSet:
-    permission_classes = ((DonorPermission | PublicLibraryPermission),)
+    permission_classes = ((DonorPermission & SourceTierPermission) | PublicLibraryPermission,)
 
 
 class DRPSharePointSettingsRestViewSet(DRPViewSet, SharePointSettingsRestViewSet):
     serializer_class = DRPSharePointSettingsSerializer
 
 
-class DRPSharepointSearchViewSet(SharePointSearchViewSet):
+class DRPSharepointSearchViewSet(SourceVisibilityMixin, SharePointSearchViewSet):
     prefix = "DRP"
     serializer_class = DRPSharePointSearchSerializer
 
@@ -60,21 +74,6 @@ class DRPSharepointSearchViewSet(SharePointSearchViewSet):
         if query_params.get("serializer") == "soa":
             return GaviSoaSharePointSearchSerializer
         return super().get_serializer_class()
-
-    def is_public(self):
-        """Check if the source id is public or restricted to UNICEF users."""
-        source_id = self.request.query_params.get("source_id", None)
-        public = source_id in [
-            settings.DRP_SOURCE_IDS.get("thematic_internal"),
-            settings.DRP_SOURCE_IDS.get("thematic_external"),
-        ]
-        if public:
-            return True
-        unicef_user = self.request.user.username.endswith("@unicef.org")
-        return unicef_user and source_id in [
-            settings.DRP_SOURCE_IDS.get("internal"),
-            settings.DRP_SOURCE_IDS.get("pool_internal"),
-        ]
 
     def get_selected(self, selected):
         serializer_class = self.get_serializer_class()
@@ -218,7 +217,7 @@ PROPERTY_TO_MANAGED = {
 }
 
 
-class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
+class DRPGraphBasedSearchViewSet(DRPViewSet, SourceVisibilityMixin, GraphBasedSearchViewSet):
     """DRP Search Viewset for graph based.
 
     Uses the Graph Search API with KQL. Serializer field names are first
@@ -229,21 +228,6 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, GraphBasedSearchViewSet):
     """
 
     serializer_class = DRPSharePointSearchSerializer
-
-    def is_public(self):
-        """Check if the source id is public or restricted to UNICEF users."""
-        source_id = self.request.query_params.get("source_id", None)
-        public = source_id in [
-            settings.DRP_SOURCE_IDS.get("thematic_internal"),
-            settings.DRP_SOURCE_IDS.get("thematic_external"),
-        ]
-        if public:
-            return True
-        unicef_user = self.request.user.username.endswith("@unicef.org")
-        return unicef_user and source_id in [
-            settings.DRP_SOURCE_IDS.get("internal"),
-            settings.DRP_SOURCE_IDS.get("pool_internal"),
-        ]
 
     def get_serializer_class(self):
         query_params = self.request.query_params

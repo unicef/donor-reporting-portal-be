@@ -12,7 +12,12 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSoaSharePointSearchSerializer,
 )
 from donor_reporting_portal.api.views.sharepoint import DRPGraphBasedSearchViewSet, PROPERTY_TO_MANAGED
+from sharepoint_rest_api import config as sp_config
 from sharepoint_rest_api.models import SourceId
+
+
+def test_graph_cache_ttl_forced_off():
+    assert sp_config.GRAPH_CACHE_TTL == 0
 
 
 @pytest.mark.django_db

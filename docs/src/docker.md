@@ -129,6 +129,7 @@ The Docker image provides the following services (configured via `SERVICES` envi
 docker run \
     -e DATABASE_URL=postgres://... \
     -e REDIS_URL=redis://... \
+    -e GRAPH_CACHE_TTL=0 \
     -e SERVICES="redis,workers,beat,donor_reporting_portal,flower" \
     unicef/donor-reporting-portal-backend:3.0.0
 ```
@@ -152,6 +153,7 @@ Key environment variables for Docker deployment:
 |----------|-------------|----------|
 | `DATABASE_URL` | PostgreSQL connection string | Yes |
 | `REDIS_URL` | Redis connection string | Yes |
+| `GRAPH_CACHE_TTL` | Set to `0` to disable shared Graph response cache (temporary security mitigation) | No |
 | `SECRET_KEY` | Django secret key | Yes |
 | `AZURE_CLIENT_ID` | Azure AD client ID | Yes |
 | `AZURE_CLIENT_SECRET` | Azure AD client secret | Yes |

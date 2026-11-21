@@ -1,4 +1,9 @@
+import os
+
 from ..settings import env
+
+os.environ["GRAPH_CACHE_TTL"] = "0"
+GRAPH_CACHE_TTL = 0
 
 CACHES = {
     "default": {
