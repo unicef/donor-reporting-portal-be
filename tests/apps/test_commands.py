@@ -18,13 +18,6 @@ def autocreate_users():
     del os.environ["AUTOCREATE_USERS"]
 
 
-@pytest.fixture
-def invalidate_cache():
-    os.environ["INVALIDATE_CACHE"] = "1"
-    yield
-    del os.environ["INVALIDATE_CACHE"]
-
-
 @pytest.mark.django_db
 def test_db_is_ready(db, monkeypatch):
     monkeypatch.setattr("sys.exit", lambda v: v)

@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from donor_reporting_portal.api.cache import CachedReadOnlyMixin
 from donor_reporting_portal.api.filters import (
     DonorFilter,
     DRPMetadataFilter,
@@ -46,22 +47,23 @@ class AllowedDonorMixin:
         return qs
 
 
-class ThemeViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class ThemeViewSet(CachedReadOnlyMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     queryset = Theme.objects.all()
     serializer_class = ThemeSerializer
     filterset_class = ThemeFilter
     search_fields = ("name",)
 
 
-class DonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class DonorViewSet(CachedReadOnlyMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     queryset = Donor.objects.all()
+    uncached_actions = ("my_donors", "my_admin_donors")
     serializer_class = DonorSerializer
     filterset_class = DonorFilter
     search_fields = ("name", "code")
 
     def retrieve(self, *args, **kwargs):
         self.serializer_class = DonorSecondaryDonorSerializer
-        return viewsets.ModelViewSet.retrieve(self, *args, **kwargs)
+        return super().retrieve(*args, **kwargs)
 
     def get_permissions(self):
         if self.action in ("my_donors", "my_admin_donors"):
@@ -86,28 +88,30 @@ class DonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class ExternalGrantViewSet(AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class ExternalGrantViewSet(
+    CachedReadOnlyMixin, AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet
+):
     model = ExternalGrant
     serializer_class = ExternalGrantSerializer
     filterset_class = ExternalGrantFilter
     search_fields = ("code", "donor__name")
 
 
-class GrantViewSet(AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class GrantViewSet(CachedReadOnlyMixin, AllowedDonorMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     model = Grant
     serializer_class = GrantSerializer
     filterset_class = GrantFilter
     search_fields = ("code", "donor__name")
 
 
-class SecondaryDonorViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class SecondaryDonorViewSet(CachedReadOnlyMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     queryset = SecondaryDonor.objects.all()
     serializer_class = SecondaryDonorSerializer
     filterset_class = SecondaryDonorFilter
     search_fields = ("name", "code")
 
 
-class DRPMetadataViewSet(GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class DRPMetadataViewSet(CachedReadOnlyMixin, GenericAbstractViewSetMixin, viewsets.ReadOnlyModelViewSet):
     queryset = DRPMetadata.objects.all()
     serializer_class = DRPMetadataSerializer
     filterset_class = DRPMetadataFilter

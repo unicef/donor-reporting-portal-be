@@ -1,5 +1,7 @@
+from importlib import import_module, reload
 from unittest import mock
 
+from django.conf import settings
 from django.test import override_settings
 
 import pytest
@@ -16,8 +18,21 @@ from sharepoint_rest_api import config as sp_config
 from sharepoint_rest_api.models import SourceId
 
 
-def test_graph_cache_ttl_forced_off():
+def test_graph_cache_ttl_defaults_off():
+    assert settings.GRAPH_CACHE_TTL == 0
     assert sp_config.GRAPH_CACHE_TTL == 0
+
+
+def test_graph_cache_ttl_reads_env(monkeypatch):
+    fragment = import_module("donor_reporting_portal.config.fragments.cache")
+
+    with monkeypatch.context() as patch:
+        patch.setenv("GRAPH_CACHE_TTL", "1800")
+        reloaded = reload(fragment)
+        assert reloaded.GRAPH_CACHE_TTL == 1800
+
+    reload(fragment)
+    assert fragment.GRAPH_CACHE_TTL == 0
 
 
 @pytest.mark.django_db

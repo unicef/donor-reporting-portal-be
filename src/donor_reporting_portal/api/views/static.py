@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from donor_reporting_portal.api.cache import STATIC_NAMESPACE, scoped_get
+
 
 def list_to_json(items, key="code", value="description"):
     return [{key: x.lower().replace(" ", "_"), value: x} for x in items]
@@ -15,6 +17,10 @@ class MetadataStaticAPIView(APIView):
 
     def get(self, request):
         """Return All Static values used for drop-down in the frontend."""
+        data = scoped_get(request, STATIC_NAMESPACE, self._build_payload, timeout=None)
+        return Response(data, status=status.HTTP_200_OK)
+
+    def _build_payload(self):
         years = [str(year) for year in range(2000, datetime.today().year + 2)]
         report_years = [str(year) for year in range(2019, datetime.today().year + 2)]
         grant_issue_years = approval_year = [str(year) for year in range(2018, datetime.today().year + 2)]
@@ -124,18 +130,15 @@ class MetadataStaticAPIView(APIView):
                 ]
             ]
 
-        return Response(
-            {
-                "years": list_to_json(years),
-                "report_years": list_to_json(report_years),
-                "grant_issue_years": list_to_json(grant_issue_years),
-                "report_type": list_to_json(report_type),
-                "donor_document": list_to_json(donor_document),
-                "donor_reporting_category": list_to_json(donor_reporting_category),
-                "recertified": list_to_json(recertified),
-                "rp_status": list_to_json(rp_status),
-                "awards": list_to_json(awards),
-                "approval_year": list_to_json(approval_year),
-            },
-            status=status.HTTP_200_OK,
-        )
+        return {
+            "years": list_to_json(years),
+            "report_years": list_to_json(report_years),
+            "grant_issue_years": list_to_json(grant_issue_years),
+            "report_type": list_to_json(report_type),
+            "donor_document": list_to_json(donor_document),
+            "donor_reporting_category": list_to_json(donor_reporting_category),
+            "recertified": list_to_json(recertified),
+            "rp_status": list_to_json(rp_status),
+            "awards": list_to_json(awards),
+            "approval_year": list_to_json(approval_year),
+        }

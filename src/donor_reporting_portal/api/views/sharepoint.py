@@ -20,6 +20,13 @@ from sharepoint_rest_api.views.settings_based import (
 )
 
 
+from donor_reporting_portal.api.cache import (
+    CachedReadOnlyMixin,
+    GRAPH_SEARCH_NAMESPACE,
+    get_source_defaults,
+    permission_scope,
+    scoped_get,
+)
 from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission, SourceTierPermission
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchSharePointField,
@@ -32,17 +39,21 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     GaviSoaSharePointSearchSerializer,
     SharePointGroupSerializer,
 )
-from sharepoint_rest_api.models import SourceId
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
 
 
-class SharePointGroupViewSet(viewsets.ReadOnlyModelViewSet):
+class SharePointGroupViewSet(CachedReadOnlyMixin, viewsets.ReadOnlyModelViewSet):
     queryset = SharePointGroup.objects.all()
     serializer_class = SharePointGroupSerializer
 
 
 class SourceVisibilityMixin:
     """Shared source visibility check for the DRP SharePoint viewsets."""
+
+    source_default_order_by = "-LastModifiedTime"
+
+    def get_cache_key(self, **kwargs):
+        return f"{super().get_cache_key(**kwargs)}:{permission_scope(self.request)}"
 
     def is_public(self):
         source_id = self.request.query_params.get("source_id", None)
@@ -53,6 +64,28 @@ class SourceVisibilityMixin:
             return True
         unicef_user = self.request.user.username.endswith("@unicef.org")
         return unicef_user and source_id in (source_ids.get("internal"), source_ids.get("pool_internal"))
+
+    def _apply_source_id_filters(self, qp):
+        source_id = qp.get("source_id")
+        if not source_id:
+            return
+        default_filters = get_source_defaults(source_id) or {}
+        for key, value in default_filters.get("filters", {}).items():
+            if key not in qp:
+                qp[key] = value
+        search_kql = default_filters.get("search_kql", "")
+        if search_kql:
+            existing_search = qp.get("search", "")
+            qp["search"] = f"({search_kql}) AND ({existing_search})" if existing_search else search_kql
+        exclude_paths = default_filters.get("exclude_paths", [])
+        if exclude_paths:
+            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
+            qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
+        order_by = default_filters.get("order_by")
+        if order_by and "order_by" not in qp:
+            qp["order_by"] = order_by
+        elif "order_by" not in qp:
+            qp["order_by"] = self.source_default_order_by
 
 
 class DRPViewSet:
@@ -66,6 +99,7 @@ class DRPSharePointSettingsRestViewSet(DRPViewSet, SharePointSettingsRestViewSet
 class DRPSharepointSearchViewSet(SourceVisibilityMixin, SharePointSearchViewSet):
     prefix = "DRP"
     serializer_class = DRPSharePointSearchSerializer
+    source_default_order_by = "DRPMODIFIED desc"
 
     def get_serializer_class(self):
         query_params = self.request.query_params
@@ -132,35 +166,6 @@ class DRPSharepointSearchViewSet(SourceVisibilityMixin, SharePointSearchViewSet)
                 new_kwargs[key] = value
 
         return new_kwargs
-
-    def _apply_source_id_filters(self, qp):
-        source_id = qp.get("source_id")
-        if not source_id:
-            return
-        try:
-            source_obj = SourceId.objects.get(source_id=source_id)
-            default_filters = source_obj.default_filters or {}
-        except SourceId.DoesNotExist:
-            default_filters = {}
-        for key, value in default_filters.get("filters", {}).items():
-            if key not in qp:
-                qp[key] = value
-        search_kql = default_filters.get("search_kql", "")
-        if search_kql:
-            existing_search = qp.get("search", "")
-            if existing_search:
-                qp["search"] = f"({search_kql}) AND ({existing_search})"
-            else:
-                qp["search"] = search_kql
-        exclude_paths = default_filters.get("exclude_paths", [])
-        if exclude_paths:
-            path_exclusions = " ".join(f'-Path:"{p}"' for p in exclude_paths)
-            qp["search"] = f"{path_exclusions} {qp.get('search', '')}".strip()
-        order_by = default_filters.get("order_by")
-        if order_by and "order_by" not in qp:
-            qp["order_by"] = order_by
-        elif "order_by" not in qp:
-            qp["order_by"] = "DRPMODIFIED desc"
 
     def get_queryset(self, **kwargs):
         qp = self.request.query_params.copy()
@@ -334,14 +339,27 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, SourceVisibilityMixin, GraphBasedSe
             else:
                 converted[f"{kql_name}{suffix}"] = value
 
-        response, self.total_rows = self.client.search(
-            search=search,
-            filters=converted,
-            page=page,
-            searchable_properties=set(PROPERTY_TO_MANAGED.values()),
-            reverse_map=reverse_map,
-            order_by=order_by,
-        )
+        searchable_properties = set(PROPERTY_TO_MANAGED.values())
+        cache_extra = {
+            "search": search,
+            "filters": converted,
+            "page": page,
+            "order_by": order_by,
+            "reverse_map": reverse_map,
+            "searchable_properties": sorted(searchable_properties),
+        }
+
+        def compute():
+            return self.client.search(
+                search=search,
+                filters=converted,
+                page=page,
+                searchable_properties=searchable_properties,
+                reverse_map=reverse_map,
+                order_by=order_by,
+            )
+
+        response, self.total_rows = scoped_get(self.request, GRAPH_SEARCH_NAMESPACE, compute, extra=cache_extra)
         return response
 
     @action(detail=False, methods=["get"])

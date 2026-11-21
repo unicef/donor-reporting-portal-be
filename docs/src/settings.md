@@ -25,7 +25,9 @@ DRP uses [django-environ](https://github.com/joke2k/django-environ) to manage co
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
 | `REDIS_URL` | Redis connection string (format: `redis://host:port/db`) | - | Yes |
-| `GRAPH_CACHE_TTL` | TTL in seconds for cached SharePoint Graph responses; `0` disables the cache. Currently forced to `0` in application settings while donor permission checks are being hardened | `0` (library default is `1800`) | No |
+| `REDIS_CACHE_URL` | Redis connection string used for the Django application cache. Defaults to `REDIS_URL` with database `/2` | `REDIS_URL` path `/2` | No |
+| `CACHE_TIMEOUT` | Default lifetime in seconds for cached API responses | `300` | No |
+| `GRAPH_CACHE_TTL` | TTL in seconds for cached SharePoint Graph responses; `0` disables the cache. A value above `0` re-enables the shared library cache, which is not scoped by user permissions | `0` (library default is `1800`) | No |
 
 ### Azure AD
 

@@ -1,6 +1,7 @@
 import os
 import tempfile
 
+from django.core.cache import cache
 from django.core.management import call_command
 
 import pytest
@@ -30,6 +31,13 @@ def use_override_settings(settings):
     os.environ["SECRET_KEY"] = "6311bc92d3d1ebf12ae2aa54d8aaeeafa9e8cdb4"
     os.environ["CELERY_TASK_ALWAYS_EAGER"] = "1"
     os.environ["STATIC_ROOT"] = tempfile.gettempdir()
+
+
+@pytest.fixture(autouse=True)
+def isolate_cache():
+    cache.clear()
+    yield
+    cache.clear()
 
 
 @pytest.fixture(scope="session")
