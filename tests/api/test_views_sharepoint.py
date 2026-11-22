@@ -401,29 +401,32 @@ class TestDRPGraphFileDownloadViewSet:
     def test_download_public_thematic_no_donor_allowed(self):
         request = self._make_request(query_params={"source_id": "thematic-int", "site_id": "site123"})
         view = self._make_viewset(request)
-        with mock.patch.object(view, "client") as mock_client:
-            mock_client.download_file.return_value = mock.Mock(
-                content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
-            )
+        mock_client = mock.Mock()
+        mock_client.download_file.return_value = mock.Mock(
+            content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
+        )
+        with mock.patch("donor_reporting_portal.api.views.sharepoint.get_graph_client", return_value=mock_client):
             response = view.download(request, folder="Documents", filename="test.pdf")
             assert response.status_code == 200
 
     def test_download_donor_code_various_allowed(self):
         request = self._make_request(query_params={"donor_code": "Various", "site_id": "site123"})
         view = self._make_viewset(request)
-        with mock.patch.object(view, "client") as mock_client:
-            mock_client.download_file.return_value = mock.Mock(
-                content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
-            )
+        mock_client = mock.Mock()
+        mock_client.download_file.return_value = mock.Mock(
+            content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
+        )
+        with mock.patch("donor_reporting_portal.api.views.sharepoint.get_graph_client", return_value=mock_client):
             response = view.download(request, folder="Documents", filename="test.pdf")
             assert response.status_code == 200
 
     def test_download_donor_code_present_allowed(self):
         request = self._make_request(query_params={"donor_code": "D001", "site_id": "site123"})
         view = self._make_viewset(request)
-        with mock.patch.object(view, "client") as mock_client:
-            mock_client.download_file.return_value = mock.Mock(
-                content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
-            )
+        mock_client = mock.Mock()
+        mock_client.download_file.return_value = mock.Mock(
+            content=b"file", status_code=200, headers={"Content-Type": "application/pdf"}
+        )
+        with mock.patch("donor_reporting_portal.api.views.sharepoint.get_graph_client", return_value=mock_client):
             response = view.download(request, folder="Documents", filename="test.pdf")
             assert response.status_code == 200

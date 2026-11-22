@@ -8,11 +8,15 @@ from sharepoint_rest_api import config as sp_config
 
 
 def test_get_graph_client_uses_shared_configuration():
-    with mock.patch("donor_reporting_portal.libs.graph.GraphClient") as client_cls:
+    tenant = "test-tenant"
+    with (
+        mock.patch.object(sp_config, "GRAPH_TENANT", tenant),
+        mock.patch("donor_reporting_portal.libs.graph.GraphClient") as client_cls,
+    ):
         client = get_graph_client(folder="Reports")
 
     client_cls.assert_called_once_with(
-        tenant=sp_config.GRAPH_TENANT,
+        tenant=tenant,
         url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
         relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
         folder="Reports",
