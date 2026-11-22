@@ -120,7 +120,7 @@ class TestNotifier:
         n.template_name = "t"
         n.get_queryset = mock.MagicMock(return_value=[])
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient") as gc,
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client") as gc,
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -152,7 +152,7 @@ class TestNotifier:
         mock_ser_data.data = [{"DRPModified": "2026-01-01"}]
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -193,7 +193,7 @@ class TestNotifier:
         mock_ser_cls = mock.MagicMock(return_value=mock_ser)
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template"),
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -217,7 +217,7 @@ class TestNotifier:
         mock_client.search.return_value = ([], 0)
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -250,7 +250,7 @@ class TestNotifier:
         mock_client.search.return_value = ([{"x": 1}], 1)
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -283,7 +283,7 @@ class TestNotifier:
         ]
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):

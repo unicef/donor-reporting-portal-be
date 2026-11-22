@@ -46,7 +46,10 @@ DRP uses [django-environ](https://github.com/joke2k/django-environ) to manage co
 | `GRAPH_CLIENT_SECRET` | Azure AD app registration client secret for Graph | `invalid_graph_client_secret` | Yes |
 
 !!! warning
-    `GRAPH_TENANT` must not be empty. With no tenant, MSAL rejects the
+    `GRAPH_TENANT` must be set in every process that calls Microsoft Graph,
+    including Celery workers. The API views and notification tasks share
+    `donor_reporting_portal.libs.graph.get_graph_client()`, which reports a
+    configuration error when the tenant is empty. Otherwise MSAL rejects the
     authority `https://login.microsoftonline.com/` because it has no path
     segment.
 

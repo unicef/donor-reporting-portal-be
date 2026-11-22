@@ -8,7 +8,6 @@ from django.utils.timezone import now
 from celery.utils.log import get_task_logger
 from dateutil.relativedelta import relativedelta
 from dateutil.utils import today
-from sharepoint_rest_api.graph_client import GraphClient
 from unicef_notification.utils import send_notification_with_template
 
 from donor_reporting_portal.api.serializers.sharepoint import (
@@ -19,6 +18,7 @@ from donor_reporting_portal.api.views.sharepoint import PROPERTY_TO_MANAGED
 from donor_reporting_portal.apps.report_metadata.models import Donor
 from donor_reporting_portal.apps.roles.models import UserRole
 from donor_reporting_portal.config.celery import app
+from donor_reporting_portal.libs.graph import get_graph_client
 
 logger = get_task_logger(__name__)
 
@@ -69,7 +69,7 @@ class Notifier:
         return f"{prefix}{managed}{suffix}"
 
     def notify(self):
-        client = GraphClient()
+        client = get_graph_client()
 
         notification_periods = self.get_notify_periods()
 

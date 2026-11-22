@@ -8,9 +8,8 @@ from django.utils.functional import cached_property
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.exceptions import PermissionDenied
-from sharepoint_rest_api import config as sp_config
 from sharepoint_rest_api.config import GRAPH_PAGE_SIZE
-from sharepoint_rest_api.graph_client import GraphClient, GraphClientError
+from sharepoint_rest_api.graph_client import GraphClientError
 from sharepoint_rest_api.utils import to_camel
 from sharepoint_rest_api.views.base import SharePointSearchViewSet
 from sharepoint_rest_api.views.graph_based import GraphBasedSearchViewSet, GraphFileDownloadViewSet
@@ -40,6 +39,7 @@ from donor_reporting_portal.api.serializers.sharepoint import (
     SharePointGroupSerializer,
 )
 from donor_reporting_portal.apps.sharepoint.models import SharePointGroup
+from donor_reporting_portal.libs.graph import get_graph_client
 
 
 class SharePointGroupViewSet(CachedReadOnlyMixin, viewsets.ReadOnlyModelViewSet):
@@ -302,11 +302,7 @@ class DRPGraphBasedSearchViewSet(DRPViewSet, SourceVisibilityMixin, GraphBasedSe
     @cached_property
     def client(self):
         try:
-            return GraphClient(
-                url=f"{sp_config.SHAREPOINT_TENANT}/{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
-                relative_url=f"{sp_config.SHAREPOINT_SITE_TYPE}/{sp_config.SHAREPOINT_SITE}",
-                folder=self.folder,
-            )
+            return get_graph_client(folder=self.folder or "Documents")
         except GraphClientError:
             raise PermissionDenied
 
@@ -396,6 +392,13 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
             settings.DRP_SOURCE_IDS.get("thematic_internal"),
             settings.DRP_SOURCE_IDS.get("thematic_external"),
         ]
+
+    @cached_property
+    def client(self):
+        try:
+            return get_graph_client()
+        except GraphClientError:
+            raise PermissionDenied
 
     @action(detail=True, methods=["get"])
     def download(self, request, *args, **kwargs):
