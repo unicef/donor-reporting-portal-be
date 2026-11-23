@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 from datetime import timedelta
 from unittest import mock
 
@@ -29,7 +29,7 @@ pytestmark = pytest.mark.django_db
 # ---------------------------------------------------------------------------
 
 
-FIXED_TODAY = datetime.datetime(2026, 6, 3, 12, 0, 0)  # Wednesday, not day 1
+FIXED_TODAY = dt.datetime(2026, 6, 3, 12, 0, 0)  # Wednesday, not day 1
 
 
 class TestNotifier:
@@ -45,9 +45,9 @@ class TestNotifier:
     def test_get_notify_periods_all(self):
         """Day 1 and Monday -> EVERY_MONTH + EVERY_MONDAY + EVERY_DAY."""
         # June 1, 2026 is a Monday
-        dt = datetime.datetime(2026, 6, 1, 12, 0, 0)
+        date = dt.datetime(2026, 6, 1, 12, 0, 0)
         donor = DonorFactory(name="D")
-        with mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=dt):
+        with mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=date):
             periods = Notifier(donor.code).get_notify_periods()
         assert len(periods) == 3
         assert periods[0][0] == UserRole.EVERY_MONTH
@@ -57,9 +57,9 @@ class TestNotifier:
     def test_get_notify_periods_monday_only(self):
         """Monday but not day 1 -> EVERY_MONDAY + EVERY_DAY."""
         # June 8, 2026 is a Monday
-        dt = datetime.datetime(2026, 6, 8, 12, 0, 0)
+        date = dt.datetime(2026, 6, 8, 12, 0, 0)
         donor = DonorFactory(name="D")
-        with mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=dt):
+        with mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=date):
             periods = Notifier(donor.code).get_notify_periods()
         assert len(periods) == 2
         assert periods[0][0] == UserRole.EVERY_MONDAY
@@ -68,9 +68,9 @@ class TestNotifier:
     def test_get_notify_periods_other_day(self):
         """Neither day 1 nor Monday -> EVERY_DAY only."""
         # June 3, 2026 is a Wednesday
-        dt = datetime.datetime(2026, 6, 3, 12, 0, 0)
+        date = dt.datetime(2026, 6, 3, 12, 0, 0)
         donor = DonorFactory(name="D")
-        with mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=dt):
+        with mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=date):
             periods = Notifier(donor.code).get_notify_periods()
         assert len(periods) == 1
         assert periods[0][0] == UserRole.EVERY_DAY
@@ -120,7 +120,7 @@ class TestNotifier:
         n.template_name = "t"
         n.get_queryset = mock.MagicMock(return_value=[])
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient") as gc,
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client") as gc,
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -152,7 +152,7 @@ class TestNotifier:
         mock_ser_data.data = [{"DRPModified": "2026-01-01"}]
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -193,7 +193,7 @@ class TestNotifier:
         mock_ser_cls = mock.MagicMock(return_value=mock_ser)
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template"),
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -217,7 +217,7 @@ class TestNotifier:
         mock_client.search.return_value = ([], 0)
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -250,7 +250,7 @@ class TestNotifier:
         mock_client.search.return_value = ([{"x": 1}], 1)
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -283,7 +283,7 @@ class TestNotifier:
         ]
 
         with (
-            mock.patch("donor_reporting_portal.apps.roles.tasks.GraphClient", return_value=mock_client),
+            mock.patch("donor_reporting_portal.apps.roles.tasks.get_graph_client", return_value=mock_client),
             mock.patch("donor_reporting_portal.apps.roles.tasks.send_notification_with_template") as send,
             mock.patch("donor_reporting_portal.apps.roles.tasks.today", return_value=FIXED_TODAY),
         ):
@@ -308,7 +308,7 @@ class TestDonorNotifier:
     def test_get_filter_dict(self):
         donor = DonorFactory(name="D", code="C001")
         n = DonorNotifier(donor.code)
-        modified_date = datetime.datetime(2026, 3, 15, 10, 0, 0)
+        modified_date = dt.datetime(2026, 3, 15, 10, 0, 0)
         result = n.get_filter_dict(modified_date)
         assert result["Donor"] == "C001"
         assert "Certified Financial Statement" in result["DonorDocument"]
@@ -397,7 +397,7 @@ class TestGaviNotifier:
     def test_get_filter_dict_falls_back_to_modified_date(self):
         donor = DonorFactory(name="GAVI", code="G001")
         n = GaviNotifier(donor.code, "MOU-X")
-        modified_date = datetime.datetime(2026, 8, 15, 12, 0, 0)
+        modified_date = dt.datetime(2026, 8, 15, 12, 0, 0)
         result = n.get_filter_dict(modified_date)
         assert result["Modified"] == "2026-08-15"
 
@@ -428,7 +428,7 @@ class TestGaviUrgentNotifier:
     def test_get_filter_dict(self):
         donor = DonorFactory(name="GAVI")
         n = GaviUrgentNotifier(donor.code, "MOU-X")
-        modified_date = datetime.datetime(2026, 9, 1, 14, 30, 0)
+        modified_date = dt.datetime(2026, 9, 1, 14, 30, 0)
         result = n.get_filter_dict(modified_date)
         assert result["Modified__gte"] == "2026-09-01T14:30:00Z"
         assert result["MOUReference"] == "MOU-X"

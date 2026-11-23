@@ -1,7 +1,7 @@
 # Donor Reporting Portal Backend
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.14+](https://img.shields.io/badge/python-3.14+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.15+](https://img.shields.io/badge/python-3.15+-blue.svg)](https://www.python.org/downloads/)
 [![Django 6.0](https://img.shields.io/badge/django-6.0-green.svg)](https://www.djangoproject.com/)
 
 The **Donor Reporting Portal (DRP)** is a Django-based backend API that provides UNICEF staff and donors with access to donor reports stored in Microsoft SharePoint.
@@ -19,7 +19,7 @@ Access control is enforced via **Azure AD B2C** authentication with role-based p
 
 | Component | Technology |
 |-----------|------------|
-| Language | Python >= 3.14 |
+| Language | Python >= 3.15 |
 | Framework | Django 6.0 |
 | REST API | Django REST Framework 3.17 |
 | SharePoint | sharepoint-rest-api 0.20, Office365-REST-Python-Client 2.6 |
@@ -34,7 +34,7 @@ Access control is enforced via **Azure AD B2C** authentication with role-based p
 
 ### Prerequisites
 
-- Python 3.14+
+- Python 3.15+
 - PostgreSQL
 - Redis
 
@@ -46,7 +46,7 @@ git clone https://github.com/unicef/donor-reporting-portal.git
 cd donor-reporting-portal
 
 # Create virtual environment and install dependencies
-uv venv .venv --python 3.14
+uv venv .venv --python 3.15
 source .venv/bin/activate
 uv sync
 
@@ -89,6 +89,9 @@ Navigate to http://localhost:8000/admin/ and login using `admin@example.com/pass
 | `AZURE_CLIENT_ID` | Azure AD app registration client ID | Yes |
 | `AZURE_CLIENT_SECRET` | Azure AD app registration client secret | Yes |
 | `AZURE_TENANT` | Azure AD tenant (e.g., `unicef.org`) | Yes |
+| `GRAPH_TENANT` | Azure AD tenant ID/domain for Graph API (must be non-empty) | Yes |
+| `GRAPH_CLIENT_ID` | Graph API app registration client ID | Yes |
+| `GRAPH_CLIENT_SECRET` | Graph API app registration client secret | Yes |
 | `AZURE_B2C_CLIENT_ID` | Azure AD B2C client ID | Yes |
 | `AZURE_B2C_CLIENT_SECRET` | Azure AD B2C client secret | Yes |
 | `AZURE_B2C_TENANT` | Azure AD B2C tenant | Yes |

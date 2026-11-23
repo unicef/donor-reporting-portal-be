@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [Python](https://www.python.org/) >= 3.14
+- [Python](https://www.python.org/) >= 3.15
 - [direnv](https://direnv.net/) (optional but recommended)
 - [uv](https://docs.astral.sh/uv/) (package manager)
 - [PostgreSQL](https://www.postgresql.org/)
@@ -20,7 +20,7 @@ cd donor-reporting-portal
 2. Create a virtual environment and install dependencies:
 
 ```bash
-uv venv .venv --python 3.14
+uv venv .venv --python 3.15
 source .venv/bin/activate
 uv sync
 pre-commit install

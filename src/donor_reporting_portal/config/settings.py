@@ -52,6 +52,7 @@ INSTALLED_APPS = (
 MIDDLEWARE = (
     "unicef_djangolib.middleware.HealthCheckMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "django.middleware.csp.ContentSecurityPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "impersonate.middleware.ImpersonateMiddleware",
@@ -87,6 +88,56 @@ STATICFILES_FINDERS = [
 SECRET_KEY = env("SECRET_KEY")
 HOST = env("HOST", default="http://localhost:8000")
 ALLOWED_HOSTS = (env("ALLOWED_HOST", default="localhost"),)
+
+# HTTP/HTTPS security headers enforced by django.middleware.security.SecurityMiddleware.
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
+SESSION_COOKIE_HTTPONLY = env.bool("SESSION_COOKIE_HTTPONLY", default=True)
+SESSION_COOKIE_AGE = env("SESSION_COOKIE_AGE", default=86400)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = env.bool("SESSION_EXPIRE_AT_BROWSER_CLOSE", default=False)
+
+SECURE_HSTS_SECONDS = env("SECURE_HSTS_SECONDS", default=31536000)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool("SECURE_CONTENT_TYPE_NOSNIFF", default=True)
+SECURE_REFERRER_POLICY = env("SECURE_REFERRER_POLICY", default="strict-origin-when-cross-origin")
+SECURE_PROXY_SSL_HEADER = env.tuple("SECURE_PROXY_SSL_HEADER", default=("HTTP_X_FORWARDED_PROTO", "https"))
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)  # terminate TLS at the proxy
+
+# Keep the strict clickjacking default from Django, set explicitly.
+X_FRAME_OPTIONS = "DENY"
+
+# X-XSS-Protection is deliberately NOT set: the header is obsolete and can
+# actually weaken a site's defence against reflected XSS in some browsers.
+# Modern hosts get equivalent (and stronger) protection from CSP below.
+
+# Native Content Security Policy (django.middleware.csp.ContentSecurityPolicyMiddleware).
+# 'unsafe-inline'/'unsafe-eval' are required by the legacy admin UI and the
+# bundled jQuery/DRF assets; keep going until those are refactored, then
+# tighten by trialling a stricter policy via SECURE_CSP_REPORT_ONLY first.
+SECURE_CSP = {
+    "default-src": [
+        "'self'",
+        "https://observa.unicef.org",  # Matomo analytics
+        "https://tenant.sharepoint.com",  # linked SharePoint documents
+    ],
+    "script-src": [
+        "'self'",
+        "'unsafe-inline'",
+        "'unsafe-eval'",
+        "https://observa.unicef.org",
+    ],
+    "style-src": ["'self'", "'unsafe-inline'"],
+    "img-src": ["'self'", "data:", "blob:", "https://observa.unicef.org"],
+    "font-src": ["'self'", "data:"],
+    "connect-src": ["'self'", "https://observa.unicef.org", "https://tenant.sharepoint.com"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"],
+    "frame-ancestors": ["'self'"],
+    "frame-src": ["'self'", "https://tenant.sharepoint.com"],
+}
+# Before tightening further, trial the stricter policy in report-only mode by
+# mirroring the dict above into the SECURE_CSP_REPORT_ONLY setting.
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"

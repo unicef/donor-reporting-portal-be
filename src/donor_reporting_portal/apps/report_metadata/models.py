@@ -107,6 +107,7 @@ class DRPMetadata(TimeStampedModel):
     class Meta:
         verbose_name = "Metadata"
         verbose_name_plural = "Metadata"
+        ordering = ("category", "description")
 
     def __str__(self):
         return f"{self.category} | {self.description} | {self.audience}"
