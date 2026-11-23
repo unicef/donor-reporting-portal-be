@@ -4,6 +4,7 @@ Release 4.0.7 (unreleased)
 * fixed social auth login failure when Azure AD B2C omits given_name/family_name claims
 * shared Microsoft Graph client configuration between API views and notification tasks, with an actionable error for a missing `GRAPH_TENANT`
 * fixed config api contract for observa tracker URL
+* fixed Sentry initialization with sentry-sdk 3.x by removing the removed `send_default_pii` option
 
 
 Release 4.0.6
