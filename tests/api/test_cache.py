@@ -1,12 +1,13 @@
 from unittest import mock
 
 from django.test import override_settings
+from django.urls import reverse
 
 import pytest
 from rest_framework.request import Request
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIClient, APIRequestFactory
 
-from factories import DonorFactory, UserFactory, UserRoleFactory
+from factories import DonorFactory, DRPMetadataFactory, UserFactory, UserRoleFactory
 from donor_reporting_portal.api.cache import (
     REFERENCE_NAMESPACE,
     SOURCE_FILTERS_NAMESPACE,
@@ -136,6 +137,22 @@ def test_config_payload_is_cached():
 
     assert first.data["tracker"]["site_id"] == "first"
     assert second.data == first.data
+
+
+@pytest.mark.django_db
+def test_cached_viewsets_do_not_share_responses():
+    donor = DonorFactory()
+    metadata = DRPMetadataFactory()
+    client = APIClient()
+    client.force_authenticate(UserFactory(is_superuser=True))
+
+    # Populate the shared reference cache from a different viewset first.
+    metadata_response = client.get(reverse("api:drpmetadata-list"))
+    assert metadata_response.json()[0]["description"] == metadata.description
+
+    donor_response = client.get(reverse("api:donor-list"))
+    assert donor_response.status_code == 200
+    assert [row["id"] for row in donor_response.json()] == [donor.pk]
 
 
 @pytest.mark.django_db

@@ -71,6 +71,16 @@ class CachedReadOnlyMixin:
     cache_timeout = DEFAULT_TIMEOUT
     uncached_actions = ()
 
+    def _cache_extra(self, action, request, kwargs):
+        # Viewsets share the reference namespace, so the cache key must identify
+        # the endpoint as well as the action, otherwise one viewset serves another's data.
+        return {
+            "action": action,
+            "path": request.path,
+            "view": f"{self.__class__.__module__}.{self.__class__.__name__}",
+            "kwargs": kwargs,
+        }
+
     def list(self, request, *args, **kwargs):
         if self.action in self.uncached_actions:
             return super().list(request, *args, **kwargs)
@@ -78,7 +88,7 @@ class CachedReadOnlyMixin:
             request,
             self.cache_namespace,
             lambda: super(CachedReadOnlyMixin, self).list(request, *args, **kwargs).data,
-            {"action": "list", "kwargs": kwargs},
+            self._cache_extra("list", request, kwargs),
             self.cache_timeout,
         )
         return Response(data)
@@ -90,7 +100,7 @@ class CachedReadOnlyMixin:
             request,
             self.cache_namespace,
             lambda: super(CachedReadOnlyMixin, self).retrieve(request, *args, **kwargs).data,
-            {"action": "retrieve", "kwargs": kwargs},
+            self._cache_extra("retrieve", request, kwargs),
             self.cache_timeout,
         )
         return Response(data)
