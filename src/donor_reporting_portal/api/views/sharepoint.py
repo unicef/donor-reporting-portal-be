@@ -26,7 +26,12 @@ from donor_reporting_portal.api.cache import (
     permission_scope,
     scoped_get,
 )
-from donor_reporting_portal.api.permissions import DonorPermission, PublicLibraryPermission, SourceTierPermission
+from donor_reporting_portal.api.permissions import (
+    DonorPermission,
+    PublicLibraryPermission,
+    SourceTierPermission,
+    is_open_donor,
+)
 from donor_reporting_portal.api.serializers.fields import (
     CTNSearchSharePointField,
     DRPSearchSharePointField,
@@ -384,14 +389,20 @@ class DRPGraphFileDownloadViewSet(DRPViewSet, GraphFileDownloadViewSet):
     """DRP file download via Microsoft Graph API."""
 
     def is_public(self):
-        """Check if the source id is public (thematic reports)."""
+        """Check whether a file may be downloaded by any authenticated user.
+
+        Thematic sources and files with donor ``Various`` are open. Restricted
+        internal sources stay limited to UNICEF users even when a donor code is
+        supplied.
+        """
         source_id = self.request.query_params.get("source_id")
-        if not source_id:
-            return False
-        return source_id in [
-            settings.DRP_SOURCE_IDS.get("thematic_internal"),
-            settings.DRP_SOURCE_IDS.get("thematic_external"),
-        ]
+        source_ids = settings.DRP_SOURCE_IDS
+        if source_id:
+            if source_id in (source_ids.get("thematic_internal"), source_ids.get("thematic_external")):
+                return True
+            if source_id in (source_ids.get("internal"), source_ids.get("pool_internal")):
+                return False
+        return is_open_donor(self.request.query_params.get("donor_code"))
 
     @cached_property
     def client(self):

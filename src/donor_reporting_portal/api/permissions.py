@@ -7,6 +7,13 @@ from donor_reporting_portal.apps.report_metadata.models import Donor, SecondaryD
 NO_DONOR = "Various"
 
 
+def is_open_donor(donor_code):
+    """Return True when the requested donor code marks an open (``Various``) file."""
+    if not donor_code:
+        return False
+    return NO_DONOR in [code.strip() for code in str(donor_code).split(",")]
+
+
 class DonorPermission(permissions.BasePermission):
     @staticmethod
     def _get_instances(view, query_params, mapping_dict, model):
@@ -33,7 +40,7 @@ class DonorPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         user = request.user
-        if NO_DONOR in (request.query_params.get("donor_code") or "").split(","):
+        if is_open_donor(request.query_params.get("donor_code")):
             return True
         if user.has_perm("roles.is_unicef_user") or user.has_perm("roles.can_view_all_donors"):
             return True
